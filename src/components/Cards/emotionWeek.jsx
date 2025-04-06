@@ -2,17 +2,17 @@ import React from 'react';
 import { SentimentSatisfiedAlt } from '@mui/icons-material';
 
 const EmotionWeek = ({ compact = false }) => {
-	// Styles based on the size
 	const containerStyle = {
 		display: 'flex',
 		width: compact ? '428px' : '544px',
-		height: compact ? '268px' : '341px',
-		padding: compact ? '24px 30px 53px 31px' : '31px 38px 67px 39px',
+		height: compact ? '268.29px' : '341px',
+		padding: compact ? '24.39px 29.90px 52.71px 30.68px' : '31px 38px 67px 39px',
 		flexDirection: 'column',
 		alignItems: 'flex-start',
-		gap: compact ? '39px' : '50px',
-		borderRadius: '16px',
+		gap: compact ? '39.42px' : '50.1px',
+		borderRadius: '20px', // según --Radio-2
 		background: '#E3E9CF',
+		boxSizing: 'border-box',
 	};
 
 	const headerStyle = {
@@ -45,15 +45,16 @@ const EmotionWeek = ({ compact = false }) => {
 	};
 
 	const dayColumnStyle = {
-		width: compact ? '42px' : '53px',
-		height: compact ? '118px' : '150px',
+		width: compact ? '41.7px' : '53px',
+		height: compact ? '118.01px' : '150px',
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
 		justifyContent: 'space-between',
 		padding: '15px 0',
-		borderRadius: '30px',
+		borderRadius: compact ? '23.6px' : '30px',
 		backgroundColor: '#C8D39F',
+		boxSizing: 'border-box',
 	};
 
 	const dayTextStyle = {
@@ -73,7 +74,6 @@ const EmotionWeek = ({ compact = false }) => {
 		fontSize: compact ? '24px' : '32px',
 	};
 
-	// Data for the emotion week
 	const weekData = [
 		{ day: 'Mon', emoji: '😊' },
 		{ day: 'Tus', emoji: '😣' },
