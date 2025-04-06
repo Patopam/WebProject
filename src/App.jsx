@@ -5,7 +5,7 @@ import Dashboard from './screens/dashboard/dashboard';
 // Importa otras pantallas si las tienes
 
 function App() {
-	return (
+  return (
 		<Router>
 			<Routes>
 				<Route path='/' element={<Dashboard />} />
