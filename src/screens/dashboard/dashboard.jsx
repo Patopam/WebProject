@@ -8,6 +8,7 @@ import EmotionWeek from '../../components/Cards/emotionWeek';
 import CustomIconButton from '../../components/Buttons/icon';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
+import Menu from '../../components/Menu/menu';
 
 function Dashboard() {
 	// Funciones para manejar los clics
@@ -23,6 +24,7 @@ function Dashboard() {
 
 	return (
 		<div className='dashboard-container'>
+			<Menu />
 			<Header title='Welcome Evan!' subtitle='How are you feeling today?' emoji='😊' />
 			<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' />
 			<CustomIconButton icon={<LogoutIcon />} ariaLabel='logut' />
