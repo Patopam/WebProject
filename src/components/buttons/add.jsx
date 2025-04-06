@@ -37,30 +37,10 @@ const ExactButton = styled(Button)(({ theme }) => ({
 
 const CustomAddIcon = () => <AddIcon sx={{ fontSize: '24px', color: '#000000' }} />;
 
-// Dauly Jornal
-
-export default function DailyJournalButton({ onClick }) {
+export default function AddButton({ onClick, text }) {
 	return (
 		<ExactButton variant='contained' startIcon={<CustomAddIcon />} onClick={onClick}>
-			Daily journal
-		</ExactButton>
-	);
-}
-
-// Add spent button
-export function AddSpendButton({ onClick }) {
-	return (
-		<ExactButton variant='contained' startIcon={<CustomAddIcon />} onClick={onClick}>
-			Add spend
-		</ExactButton>
-	);
-}
-
-// New Goal Button
-export function SetNewGoalButton({ onClick }) {
-	return (
-		<ExactButton variant='contained' startIcon={<CustomAddIcon />} onClick={onClick}>
-			Set new Goal
+			{text}
 		</ExactButton>
 	);
 }

@@ -1,6 +1,6 @@
 // src/screens/Dashboard.jsx
 import React from 'react';
-import DailyJournalButton, { AddSpendButton, SetNewGoalButton } from '../../components/buttons/add';
+import AddButton from '../../components/buttons/add';
 import Stack from '@mui/material/Stack';
 
 function Dashboard() {
@@ -20,10 +20,8 @@ function Dashboard() {
 			<h1>Welcome Evan!</h1>
 			<p>How are you feeling today? 😊</p>
 
-			<Stack direction='row' spacing={2}>
-				<DailyJournalButton onClick={handleJournalClick} />
-				<AddSpendButton onClick={handleSpendClick} />
-			</Stack>
+			<AddButton onClick={handleJournalClick} text={'DailyJournal'} />
+			<AddButton onClick={handleSpendClick} text={'Add spending'} />
 
 			{/* Resto del contenido del dashboard */}
 		</div>
