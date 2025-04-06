@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import { styled } from '@mui/material/styles';
 
-const ExactButton = styled(Button)(({ theme }) => ({
+const ExactButton = styled(Button)(({}) => ({
 	height: '56px',
 	borderRadius: '16px',
 	backgroundColor: '#CBCBE7',
