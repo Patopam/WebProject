@@ -53,7 +53,7 @@ const EmotionWeek = ({ compact = false }) => {
 		flexDirection: 'column',
 		alignItems: 'center',
 		justifyContent: 'space-between',
-		padding: '30px 20px',
+		padding: compact ? '20px 10px' : '30px 20px ',
 		borderRadius: compact ? '30px' : '30px',
 		backgroundColor: '#C8D39F',
 		boxSizing: 'border-box',
@@ -95,7 +95,7 @@ const EmotionWeek = ({ compact = false }) => {
 		<div style={containerStyle}>
 			<div style={headerStyle}>
 				<div style={iconContainerStyle}>
-					<SentimentSatisfiedAlt style={{ fontSize: compact ? '20px' : '24px', color: '#333' }} />
+					<SentimentSatisfiedAlt style={{ fontSize: compact ? '24px' : '24px', color: '#333' }} />
 				</div>
 				<div style={titleStyle}>Emotion week</div>
 			</div>
@@ -114,3 +114,15 @@ const EmotionWeek = ({ compact = false }) => {
 };
 
 export default EmotionWeek;
+
+//Tamaños
+
+{
+	/* Versión normal */
+}
+//<EmotionWeek />
+
+{
+	/* Versión compacta */
+}
+//<EmotionWeek compact={true} />
