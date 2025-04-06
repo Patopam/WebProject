@@ -8,6 +8,7 @@ export default function CustomIconButton({ icon, onClick, ariaLabel = 'button' }
 			aria-label={ariaLabel}
 			onClick={onClick}
 			sx={{
+				alignItems: 'center',
 				backgroundColor: '#33336F', // Fondo morado oscuro
 				color: '#ffffff', // Icono blanco
 				width: '55px',
