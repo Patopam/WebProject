@@ -1,6 +1,7 @@
 // src/screens/Dashboard.jsx
 import React from 'react';
-import AddButton from '../../components/buttons/add';
+import AddButton from '../../components/Buttons/add';
+import Header from '../../components/Header/header';
 import Stack from '@mui/material/Stack';
 
 function Dashboard() {
@@ -17,8 +18,7 @@ function Dashboard() {
 
 	return (
 		<div className='dashboard-container'>
-			<h1>Welcome Evan!</h1>
-			<p>How are you feeling today? 😊</p>
+			<Header title='Welcome Evan!' subtitle='How are you feeling today?' emoji='😊' />
 
 			<AddButton onClick={handleJournalClick} text={'DailyJournal'} />
 			<AddButton onClick={handleSpendClick} text={'Add spending'} />
