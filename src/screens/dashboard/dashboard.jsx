@@ -5,6 +5,7 @@ import Header from '../../components/Header/header';
 import ReminderCard from '../../components/Cards/remainder';
 import GoalProgressCard from '../../components/Cards/goal';
 import Stack from '@mui/material/Stack';
+import EmotionWeek from '../../components/Cards/emotionWeek';
 
 function Dashboard() {
 	// Funciones para manejar los clics
@@ -23,6 +24,7 @@ function Dashboard() {
 			<Header title='Welcome Evan!' subtitle='How are you feeling today?' emoji='😊' />
 			<ReminderCard title='Understanding yourself starts here!' />
 			<GoalProgressCard spent={150000} total={200000} compact={true} />
+			<EmotionWeek />
 			<AddButton onClick={handleJournalClick} text={'DailyJournal'} />
 			<AddButton onClick={handleSpendClick} text={'Add spending'} />
 
