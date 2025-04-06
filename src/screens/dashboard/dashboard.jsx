@@ -23,7 +23,6 @@ function Dashboard() {
 			<Header title='Welcome Evan!' subtitle='How are you feeling today?' emoji='😊' />
 			<ReminderCard title='Understanding yourself starts here!' />
 			<GoalProgressCard spent={150000} total={200000} compact={true} />
-
 			<AddButton onClick={handleJournalClick} text={'DailyJournal'} />
 			<AddButton onClick={handleSpendClick} text={'Add spending'} />
 
