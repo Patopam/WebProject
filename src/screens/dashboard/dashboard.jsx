@@ -2,6 +2,7 @@
 import React from 'react';
 import AddButton from '../../components/Buttons/add';
 import Header from '../../components/Header/header';
+import ReminderCard from '../../components/Cards/remainder';
 import Stack from '@mui/material/Stack';
 
 function Dashboard() {
@@ -19,6 +20,7 @@ function Dashboard() {
 	return (
 		<div className='dashboard-container'>
 			<Header title='Welcome Evan!' subtitle='How are you feeling today?' emoji='😊' />
+			<ReminderCard title='Understanding yourself starts here!' />
 
 			<AddButton onClick={handleJournalClick} text={'DailyJournal'} />
 			<AddButton onClick={handleSpendClick} text={'Add spending'} />
