@@ -41,9 +41,9 @@ function Dashboard() {
 
 				{/* Top row with three equal cards */}
 				<div className='dashboard-cards-row'>
-					<ReminderCard dashboard={true} />
-					<FeelingsCard dashboard={true} />
-					<GoalProgressCard spent={150000} total={200000} dashboard={true} />
+					<ReminderCard/>
+					<FeelingsCard/>
+					<GoalProgressCard spent={150000} total={200000} />
 				</div>
 
 				{/* Bottom row with expenses table on left and emotion week on right */}
