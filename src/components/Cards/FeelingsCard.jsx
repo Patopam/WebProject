@@ -5,19 +5,28 @@ import styled from '@emotion/styled';
 const CardContainer = styled.div`
 	background-color: #fcd8c2;
 	padding: 20px;
-	border-radius: 20px;
-	width: 280px;
+	border-radius: 24px;
+	width: 427px;
+	height: 238px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	font-family: 'Manrope', sans-serif;
+	box-sizing: border-box;
 `;
+
 const ContentWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 16px;
+	width: 371px;
+	height: 190px;
 `;
 
 const Header = styled.div`
 	display: flex;
 	align-items: center;
+	width: 100%;
 `;
 
 const IconContainer = styled.div`
@@ -27,12 +36,14 @@ const IconContainer = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 15px;
-	height: 15px;
+	width: 17px;
+	height: 17px;
+	margin-right: 10px;
 `;
+
 const Title = styled.div`
-	margin-left: 10px;
-	font-weight: 500;
+	font-weight: 300;
+	font-size: 18px;
 	color: #333;
 `;
 
@@ -40,6 +51,7 @@ const Stats = styled.div`
 	display: flex;
 	align-items: flex-start;
 	gap: 10px;
+	margin-top: 10px;
 `;
 
 const Percentage = styled.div`
@@ -59,9 +71,11 @@ const Text = styled.div`
 `;
 
 const Emotion = styled.div`
-	font-size: 1.8rem;
-	font-weight: 400;
+	font-size: 28px;
+	font-weight: 700;
 	color: #333;
+	line-height: 125%;
+	margin-top: auto;
 `;
 
 const FeelingsCard = () => {
