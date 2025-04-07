@@ -4,8 +4,7 @@ import Header from '../../components/Header/header';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CustomIconButton from '../../components/Buttons/icon';
-import './finance.css';
-import { Analytics } from '@mui/icons-material';
+import './analytics.css';
 
 function Analytics() {
 	return (
