@@ -39,13 +39,22 @@ const StyledTabs = styled(Tabs)(({ theme }) => ({
 const StyledTab = styled(Tab)(({ theme }) => ({
 	color: '#333', // color del texto cuando no está seleccionado
 	fontFamily: 'Manrope, sans-serif',
-	fontSize: '18px',
+	fontSize: '22px',
 	textTransform: 'none',
-	fontWeight: 500,
+	fontWeight: 700,
 	'&.Mui-selected': {
-		color: '#9C9CD2', // color del texto cuando está seleccionado
+		color: '#49499D', // color del texto cuando está seleccionado
 		fontWeight: 700,
 	},
+}));
+
+const EntryText = styled('div')(() => ({
+	color: '#333', // o usa 'var(--Neutral-1000)' si ya lo tienes en tus variables
+	fontFamily: 'Manrope, sans-serif',
+	fontSize: '26px',
+	fontStyle: 'normal',
+	fontWeight: 600,
+	lineHeight: 'normal',
 }));
 
 const StyledListItem = styled(ListItem)(({ theme }) => ({
