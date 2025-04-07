@@ -1,108 +1,122 @@
 import React from 'react';
-import SellOutlinedIcon from '@mui/icons-material/SellOutlined';
-import styled from '@emotion/styled';
-
-const CardContainer = styled.div`
-	background-color: #fcd8c2;
-	padding: 20px;
-	border-radius: 24px;
-	width: 427px;
-	height: 238px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-family: 'Manrope', sans-serif;
-	box-sizing: border-box;
-`;
-
-const ContentWrapper = styled.div`
-	display: flex;
-	flex-direction: column;
-	gap: 16px;
-	width: 371px;
-	height: 190px;
-`;
-
-const Header = styled.div`
-	display: flex;
-	align-items: center;
-	width: 100%;
-`;
-
-const IconContainer = styled.div`
-	background-color: #f99f75;
-	border-radius: 50%;
-	padding: 10px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 17px;
-	height: 17px;
-	margin-right: 10px;
-`;
-
-const Title = styled.div`
-	font-weight: 300;
-	font-size: 18px;
-	color: #333;
-`;
-
-const Stats = styled.div`
-	display: flex;
-	align-items: flex-start;
-	gap: 10px;
-	margin-top: 10px;
-`;
-
-const Percentage = styled.div`
-	font-size: 2.5rem;
-	font-weight: 600;
-	color: #000;
-`;
-
-const Text = styled.div`
-	font-size: 0.9rem;
-	color: #444;
-	line-height: 1.2;
-
-	p {
-		margin: 0;
-	}
-`;
-
-const Emotion = styled.div`
-	font-size: 28px;
-	font-weight: 700;
-	color: #333;
-	line-height: 125%;
-	margin-top: auto;
-`;
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import FlashOnOutlinedIcon from '@mui/icons-material/FlashOnOutlined';
 
 const FeelingsCard = () => {
 	return (
-		<CardContainer>
-			<ContentWrapper>
-				<Header>
-					<IconContainer>
-						<SellOutlinedIcon style={{ color: '#000000' }} />
-					</IconContainer>
-					<Title>Feelings & Finances</Title>
-				</Header>
+		<Card
+			sx={{
+				display: 'flex',
+				width: '427px',
+				height: '238px',
+				justifyContent: 'center',
+				alignItems: 'center',
+				borderRadius: '24px',
+				background: '#FCD8C2',
+				boxShadow: 'none',
+			}}
+		>
+			<CardContent
+				sx={{
+					display: 'flex',
+					width: '371px',
+					height: '190px',
+					flexDirection: 'column',
+					alignItems: 'flex-start',
+					gap: '20px',
+					padding: 0,
+					'&:last-child': { paddingBottom: 0 },
+				}}
+			>
+				{/* Header */}
+				<Box
+					sx={{
+						display: 'flex',
+						alignItems: 'center',
+						width: '100%',
+					}}
+				>
+					<Box
+						sx={{
+							backgroundColor: '#F99F75',
+							borderRadius: '50%',
+							width: '37px',
+							height: '37px',
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
+							marginRight: '10px',
+						}}
+					>
+						<FlashOnOutlinedIcon sx={{ color: '#000' }} />
+					</Box>
+					<Typography
+						sx={{
+							fontFamily: "'Manrope', sans-serif",
+							fontSize: '18px',
+							fontWeight: 300,
+							color: '#333',
+							lineHeight: 'normal',
+						}}
+					>
+						Feelings & Finances
+					</Typography>
+				</Box>
 
-				<Stats>
-					<Percentage>50%</Percentage>
-					<Text>
-						<p>
-							Of your <strong>expenses</strong>
-							<br />
+				{/* Content */}
+				<Box
+					sx={{
+						display: 'flex',
+						flexDirection: 'row',
+						alignItems: 'flex-start',
+						gap: '10px',
+					}}
+				>
+					<Typography
+						sx={{
+							fontFamily: "'Manrope', sans-serif",
+							fontSize: '48px',
+							fontWeight: 600,
+							color: '#000',
+							lineHeight: 1,
+						}}
+					>
+						50%
+					</Typography>
+					<Typography
+						sx={{
+							fontFamily: "'Manrope', sans-serif",
+							fontSize: '16px',
+							fontWeight: 400,
+							color: '#444',
+							lineHeight: '125%',
+							display: 'flex',
+							alignItems: 'center',
+						}}
+					>
+						<p style={{ margin: 0 }}>
+							Of your <strong>expenses</strong> <br />
 							are when you are
 						</p>
-					</Text>
-				</Stats>
+					</Typography>
+				</Box>
 
-				<Emotion>stressed</Emotion>
-			</ContentWrapper>
-		</CardContainer>
+				<Typography
+					sx={{
+						fontFamily: "'Manrope', sans-serif",
+						fontSize: '40px',
+						fontWeight: 500,
+						color: '#333',
+						lineHeight: '125%',
+					}}
+				>
+					stressed
+				</Typography>
+			</CardContent>
+		</Card>
 	);
 };
 
