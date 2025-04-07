@@ -19,14 +19,14 @@ import Modal from '@mui/material/Modal';
 import ButtonBase from '@mui/material/ButtonBase';
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
-	backgroundColor: '#dddae7',
+	backgroundColor: '#CBCBE7',
 	borderRadius: 20,
 	padding: theme.spacing(2),
-	height: '100%',
-	minHeight: '80vh',
-	width: '100%',
-	maxWidth: 500,
+	height: '80vh', // Altura exacta mínima como pediste
+	width: '664px', // Ancho exacto
+	overflowY: 'auto', // Por si hay scroll interno
 	margin: '0 auto',
+	boxSizing: 'border-box',
 }));
 
 const StyledListItem = styled(ListItem)(({ theme }) => ({

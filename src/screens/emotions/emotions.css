@@ -1,0 +1,59 @@
+/* Archivo: emotions.css */
+
+.emotions-container {
+	display: flex;
+	height: 100vh;
+	width: 100%;
+	background-color: #ffffff;
+	font-family: 'Manrope', sans-serif;
+}
+
+.emotions-content {
+	flex: 1;
+	padding: 2rem;
+	display: flex;
+	flex-direction: column;
+	overflow-y: auto;
+}
+
+.emotions-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 2rem;
+}
+
+.emotions-icons {
+	display: flex;
+	gap: 0.5rem;
+}
+
+.emotions-body {
+	display: flex;
+	gap: 2rem;
+	height: 100%;
+}
+
+.emotions-right {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
+/* Estilos responsive */
+@media (max-width: 1024px) {
+	.emotions-body {
+		flex-direction: column;
+	}
+
+	.emotions-right {
+		flex-direction: row;
+	}
+}
+
+@media (max-width: 768px) {
+	.emotions-right {
+		flex-direction: column;
+	}
+}
