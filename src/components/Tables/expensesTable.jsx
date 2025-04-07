@@ -1,126 +1,116 @@
 import React from 'react';
-import styled from '@emotion/styled';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { AttachMoney } from '@mui/icons-material';
 
-// 🟣 Contenedor principal tipo card
-const TableCard = styled.div`
-	background-color: #d6d1f8;
-	border-radius: 20px;
-	padding: 20px;
-	width: 500px;
-	font-family: 'Manrope', sans-serif;
-	color: #333;
-`;
+const ExpensesDay = () => {
+	const containerStyle = {
+		display: 'flex',
+		flexDirection: 'column',
+		width: '544px',
+		padding: '28px',
+		borderRadius: '24px',
+		backgroundColor: '#CECAE4',
+		boxSizing: 'border-box',
+		gap: '30px',
+		fontFamily: "'Manrope', sans-serif",
+	};
 
-// 🟣 Header de la card
-const Header = styled.div`
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin-bottom: 10px;
-`;
+	const headerStyle = {
+		display: 'flex',
+		width: '100%',
+		justifyContent: 'space-between',
+		alignItems: 'center',
+	};
 
-const TitleContainer = styled.div`
-	display: flex;
-	align-items: center;
-	gap: 10px;
-`;
+	const headerLeftStyle = {
+		display: 'flex',
+		alignItems: 'center',
+		gap: '16px',
+	};
 
-const IconWrapper = styled.div`
-	background-color: #b29cf5;
-	border-radius: 50%;
-	padding: 10px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-`;
+	const iconContainerStyle = {
+		width: '37px',
+		height: '37px',
+		borderRadius: '50%',
+		backgroundColor: '#AFA8D1',
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+	};
 
-const Title = styled.h3`
-	font-size: 1.2rem;
-	margin: 0;
-`;
+	const headerTitleStyle = {
+		fontSize: '18px',
+		fontWeight: 300,
+		color: '#333',
+	};
 
-// 🟣 Estilo para la tabla
-const Table = styled.table`
-	width: 100%;
-	border-collapse: separate;
-	border-spacing: 0 10px;
-	font-size: 0.95rem;
+	const allViewStyle = {
+		fontSize: '16px',
+		color: '#333',
+		fontWeight: 400,
+	};
 
-	th {
-		text-align: left;
-		font-weight: 600;
-		padding: 8px;
-	}
+	const tableStyle = {
+		width: '100%',
+		borderCollapse: 'separate',
+		borderSpacing: '12px 12px',
+		fontSize: '14.5px',
+	};
 
-	td {
-		background-color: white;
-		border-radius: 10px;
-		padding: 10px;
-	}
-`;
+	const thStyle = {
+		textAlign: 'left',
+		fontWeight: 600,
+		color: '#333',
+		padding: '0 8px',
+	};
 
-// 🟣 Contenedor scrollable
-const ScrollContainer = styled.div`
-	max-height: 180px;
-	overflow-y: auto;
+	const tdStyle = {
+		backgroundColor: 'white',
+		padding: '10px 14px',
+		borderRadius: '12px',
+		whiteSpace: 'nowrap',
+		overflow: 'hidden',
+		textOverflow: 'ellipsis',
+	};
 
-	scrollbar-width: thin;
-	scrollbar-color: #d4c4f7 transparent;
+	const data = [
+		{ spend: 'Coffee', price: '$2.000', category: '$2.000' },
+		{ spend: 'Coffee', price: '$2.000', category: 'Food' },
+		{ spend: 'Cinema', price: '$30.000', category: 'Experien...' },
+		{ spend: 'Coffee', price: '$2.000', category: 'Food' },
+	];
 
-	&::-webkit-scrollbar {
-		width: 6px;
-	}
-
-	&::-webkit-scrollbar-track {
-		background: transparent;
-	}
-
-	&::-webkit-scrollbar-thumb {
-		background-color: #d4c4f7;
-		border-radius: 10px;
-		border: 1px solid transparent;
-	}
-`;
-
-const ExpensesTable = ({ data }) => {
 	return (
-		<TableCard>
-			<Header>
-				<TitleContainer>
-					<IconWrapper>
-						<AttachMoneyIcon style={{ color: '#fff' }} />
-					</IconWrapper>
-					<Title>Expenses of the day</Title>
-				</TitleContainer>
-				<span style={{ fontSize: '0.9rem', color: '#333' }}>All view</span>
-			</Header>
+		<div style={containerStyle}>
+			<div style={headerStyle}>
+				<div style={headerLeftStyle}>
+					<div style={iconContainerStyle}>
+						<AttachMoney style={{ fontSize: '24px', color: '#333' }} />
+					</div>
+					<div style={headerTitleStyle}>Expenses of the day</div>
+				</div>
+				<div style={allViewStyle}>All view</div>
+			</div>
 
-			<Table>
+			<table style={tableStyle}>
 				<thead>
 					<tr>
-						<th>Spend</th>
-						<th>Price</th>
-						<th>Category</th>
+						<th style={thStyle}>Spend</th>
+						<th style={thStyle}>Price</th>
+						<th style={thStyle}>Category</th>
 					</tr>
 				</thead>
-			</Table>
-
-			<ScrollContainer>
-				<Table>
-					<tbody>
-						{data.map((item, index) => (
-							<tr key={index}>
-								<td>{item.spend}</td>
-								<td>{item.price}</td>
-								<td>{item.category}</td>
-							</tr>
-						))}
-					</tbody>
-				</Table>
-			</ScrollContainer>
-		</TableCard>
+				<tbody>
+					{data.map((item, index) => (
+						<tr key={index}>
+							<td style={tdStyle}>{item.spend}</td>
+							<td style={tdStyle}>{item.price}</td>
+							<td style={tdStyle}>{item.category}</td>
+						</tr>
+					))}
+				</tbody>
+			</table>
+		</div>
 	);
 };
 
-export default ExpensesTable;
+export default ExpensesDay;
