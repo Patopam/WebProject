@@ -42,10 +42,10 @@
 	margin-bottom: 1.5rem;
 }
 
-/* Second row with expenses table (2/3) and emotion week (1/3) */
+/* Second row with expenses table and emotion week side by side */
 .dashboard-bottom-row {
 	display: grid;
-	grid-template-columns: 2fr 1fr;
+	grid-template-columns: 1fr 1fr;
 	gap: 1.5rem;
 }
 
@@ -54,5 +54,20 @@
 	.dashboard-cards-row,
 	.dashboard-bottom-row {
 		grid-template-columns: 1fr;
+		gap: 1.5rem;
+	}
+}
+
+/* Add this for more specific control */
+@media (min-width: 1025px) and (max-width: 1440px) {
+	.dashboard-bottom-row {
+		grid-template-columns: 3fr 2fr;
+	}
+}
+
+/* For larger screens */
+@media (min-width: 1441px) {
+	.dashboard-bottom-row {
+		grid-template-columns: 3fr 2fr;
 	}
 }
