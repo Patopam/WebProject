@@ -30,6 +30,24 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 	boxShadow: 'none',
 }));
 
+const StyledTabs = styled(Tabs)(({ theme }) => ({
+	'& .MuiTabs-indicator': {
+		backgroundColor: '#9C9CD2', // color del indicador (la línea abajo del tab activo)
+	},
+}));
+
+const StyledTab = styled(Tab)(({ theme }) => ({
+	color: '#333', // color del texto cuando no está seleccionado
+	fontFamily: 'Manrope, sans-serif',
+	fontSize: '18px',
+	textTransform: 'none',
+	fontWeight: 500,
+	'&.Mui-selected': {
+		color: '#9C9CD2', // color del texto cuando está seleccionado
+		fontWeight: 700,
+	},
+}));
+
 const StyledListItem = styled(ListItem)(({ theme }) => ({
 	backgroundColor: 'white',
 	borderRadius: 15,
@@ -43,6 +61,7 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
 	height: 44,
 	cursor: 'pointer',
 	backgroundColor: '#FFFFFF',
+	fontSize: '44px',
 }));
 
 const StyledChip = styled(Chip)(({ theme }) => ({
@@ -288,18 +307,11 @@ export default function MoodTracker() {
 
 	return (
 		<StyledPaper elevation={3}>
-			<Tabs
-				value={timeRange}
-				onChange={handleTimeRangeChange}
-				variant='fullWidth'
-				indicatorColor='primary'
-				textColor='primary'
-				aria-label='time range tabs'
-			>
-				<Tab label='Today' />
-				<Tab label='Week' />
-				<Tab label='Month' />
-			</Tabs>
+			<StyledTabs value={timeRange} onChange={handleTimeRangeChange} variant='fullWidth'>
+				<StyledTab label='Today' />
+				<StyledTab label='Week' />
+				<StyledTab label='Month' />
+			</StyledTabs>
 
 			<StyledDivider />
 
