@@ -8,7 +8,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import reminderPhrases from '../../Data/reminderData'; // Import the phrases from separate file
 
-const ReminderCard = () => {
+const ReminderCard = ({ dashboard = false }) => {
 	// State to manage the current phrase
 	const [currentPhrase, setCurrentPhrase] = useState('');
 
@@ -36,86 +36,59 @@ const ReminderCard = () => {
 	return (
 		<Card
 			sx={{
-				display: 'flex',
-				width: '427px',
-				height: '238px',
-				justifyContent: 'center',
-				alignItems: 'center',
-				borderRadius: '24px',
-				background: '#B7D0EE',
+				width: dashboard ? '100%' : 350,
+				minHeight: dashboard ? 170 : 200,
+				borderRadius: 3,
 				boxShadow: 'none',
+				backgroundColor: '#D9EAFF'
 			}}
 		>
-			<CardContent
-				sx={{
-					display: 'flex',
-					width: '371px',
-					height: '190px',
-					flexDirection: 'column',
-					alignItems: 'flex-end',
-					gap: '20px',
-					flexShrink: 0,
-					padding: 0,
-					'&:last-child': { paddingBottom: 0 },
-				}}
-			>
+			<CardContent sx={{ padding: dashboard ? '16px' : '24px' }}>
 				<Box
 					sx={{
 						display: 'flex',
 						justifyContent: 'space-between',
 						alignItems: 'center',
-						alignSelf: 'stretch',
-						width: '100%',
+						mb: 2
 					}}
 				>
 					<Box sx={{ display: 'flex', alignItems: 'center' }}>
 						<Box
 							sx={{
-								backgroundColor: '#70A1DE',
+								width: 37,
+								height: 37,
 								borderRadius: '50%',
-								width: '37px',
-								height: '37px',
+								bgcolor: 'rgba(255,255,255,0.5)',
 								display: 'flex',
-								justifyContent: 'center',
 								alignItems: 'center',
-								marginRight: '10px',
+								justifyContent: 'center',
+								mr: 2
 							}}
 						>
-							<FavoriteBorderIcon sx={{ color: '#333' }} />
+							<FavoriteBorderIcon />
 						</Box>
-						<Typography
-							sx={{
-								fontFamily: "'Manrope', sans-serif",
-								fontSize: '18px',
-								fontWeight: 300,
-								color: '#333',
-								lineWeight: 'normal',
-								fontStyle: 'normal',
-							}}
-						>
+						<Typography variant="body1" sx={{ fontWeight: 300 }}>
 							Remainder
 						</Typography>
 					</Box>
-					<IconButton aria-label='refresh' sx={{ color: '#333' }} onClick={handleRefresh}>
+					<IconButton
+						size="small"
+						onClick={handleRefresh}
+						sx={{
+							color: 'text.primary',
+							padding: dashboard ? '4px' : '8px'
+						}}
+					>
 						<RefreshIcon />
 					</IconButton>
 				</Box>
 
 				<Typography
-					variant='p'
+					variant="h5"
 					sx={{
-						display: 'flex',
-						height: '90px',
-						flexDirection: 'column',
-						justifyContent: 'center',
-						flexShrink: '0',
-						color: '#333',
-						fontFamily: "'Manrope', sans-serif",
-						fontSize: '28px',
-						fontStyle: 'normal',
-						fontWeight: 700,
-						lineHeight: '125%',
-						alignSelf: 'stretch',
+						fontWeight: dashboard ? 500 : 600,
+						fontSize: dashboard ? '1.25rem' : '1.5rem',
+						lineHeight: 1.3
 					}}
 				>
 					{currentPhrase}
@@ -126,3 +99,7 @@ const ReminderCard = () => {
 };
 
 export default ReminderCard;
+
+// Uso:
+// <ReminderCard /> // Normal
+// <ReminderCard dashboard={true} /> // Versión para dashboard
