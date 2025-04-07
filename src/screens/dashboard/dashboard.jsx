@@ -43,7 +43,7 @@ function Dashboard() {
 				<div className='dashboard-cards-row'>
 					<ReminderCard />
 					<FeelingsCard compact={true} />
-					<GoalProgressCard spent={150000} total={200000} compact={true} />{' '}
+					<GoalProgressCard spent={150000} total={200000} compact={true} />
 				</div>
 
 				{/* Bottom row with expenses table on left and emotion week on right */}
