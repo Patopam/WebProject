@@ -5,6 +5,7 @@ import Emotions from './screens/emotions/emotions';
 import Finance from './screens/finance/finance';
 import Analytics from './screens/analytics/analytics';
 import Journal from './screens/journal/journal';
+import Calendar from './screens/calendar/calendar';
 
 // Importa otras pantallas si las tienes
 
@@ -17,6 +18,7 @@ function App() {
 				<Route path='/finance' element={<Finance />} />
 				<Route path='/analytics' element={<Analytics />} />
 				<Route path='/journal' element={<Journal />} />
+				<Route path='/calendar' element={<Calendar />} />
 			</Routes>
 		</Router>
 	);
