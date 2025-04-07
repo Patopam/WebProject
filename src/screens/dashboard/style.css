@@ -1,0 +1,56 @@
+/* Archivo: style.css */
+
+.dashboard-container {
+	display: flex;
+	height: 100vh;
+	width: 100%;
+	background-color: #ffffff;
+	font-family: 'Manrope', sans-serif;
+}
+
+.dashboard-content {
+	flex: 1;
+	padding: 2rem;
+	display: flex;
+	flex-direction: column;
+	overflow-y: auto;
+}
+
+.dashboard-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 1.5rem;
+}
+
+.dashboard-icons {
+	display: flex;
+	gap: 0.5rem;
+}
+
+.dashboard-buttons {
+	display: flex;
+	gap: 1rem;
+	margin-bottom: 2rem;
+}
+
+.dashboard-body {
+	display: flex;
+	gap: 2rem;
+	flex: 1;
+}
+
+.dashboard-left,
+.dashboard-right {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
+/* Estilos responsive */
+@media (max-width: 1024px) {
+	.dashboard-body {
+		flex-direction: column;
+	}
+}
