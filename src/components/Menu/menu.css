@@ -60,3 +60,12 @@
 .menu-section li.active {
 	background-color: #6b64c6;
 }
+
+.menu-item-link {
+	display: flex;
+	align-items: center;
+	gap: 0.8rem;
+	text-decoration: none;
+	color: white;
+	width: 100%;
+}

@@ -23,25 +23,25 @@ const Menu = () => {
 				<p className='section-title'>MAIN</p>
 				<ul>
 					<li>
-						<Link to='/' className='menu-link'>
+						<Link to='/' className='menu-item-link'>
 							<HomeOutlinedIcon />
 							<span>Dashboard</span>
 						</Link>
 					</li>
 					<li>
-						<Link to='/journal' className='menu-link'>
+						<Link to='/journal' className='menu-item-link'>
 							<PersonOutlineOutlinedIcon />
 							<span>Journal</span>
 						</Link>
 					</li>
 					<li>
-						<Link to='/calendar' className='menu-link'>
+						<Link to='/calendar' className='menu-item-link'>
 							<CalendarTodayOutlinedIcon />
 							<span>Calendar</span>
 						</Link>
 					</li>
 					<li>
-						<Link to='/analytics' className='menu-link'>
+						<Link to='/analytics' className='menu-item-link'>
 							<LeaderboardOutlinedIcon />
 							<span>Analytics</span>
 						</Link>
@@ -53,13 +53,13 @@ const Menu = () => {
 				<p className='section-title'>ACTIVITY</p>
 				<ul>
 					<li>
-						<Link to='/emotions' className='menu-link'>
+						<Link to='/emotions' className='menu-item-link'>
 							<TagFacesOutlinedIcon />
 							<span>My emotions</span>
 						</Link>
 					</li>
 					<li>
-						<Link to='/finance' className='menu-link'>
+						<Link to='/finance' className='menu-item-link'>
 							<AttachMoneyOutlinedIcon />
 							<span>Finance</span>
 						</Link>
@@ -71,13 +71,13 @@ const Menu = () => {
 				<p className='section-title'>SETTINGS</p>
 				<ul>
 					<li>
-						<Link to='/notifications' className='menu-link'>
+						<Link to='/notifications' className='menu-item-link'>
 							<NotificationsActiveOutlinedIcon />
 							<span>Notifications</span>
 						</Link>
 					</li>
 					<li>
-						<Link to='/settings' className='menu-link'>
+						<Link to='/settings' className='menu-item-link'>
 							<SettingsOutlinedIcon />
 							<span>Settings</span>
 						</Link>
