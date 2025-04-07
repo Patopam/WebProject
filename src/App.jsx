@@ -10,7 +10,6 @@ function App() {
 			<Routes>
 				<Route path='/' element={<Dashboard />} />
 				<Route path='/emotions' element={<Emotions />} />
-				{/* Añade las demás rutas según necesites */}
 			</Routes>
 		</Router>
 	);
