@@ -39,15 +39,21 @@ function Dashboard() {
 					<AddButton onClick={handleSpendClick} text={'Add spend'} />
 				</div>
 
+				{/* Top row with three equal cards */}
 				<div className='dashboard-cards-row'>
-					<ReminderCard title='Understanding yourself starts here!' />
+					<ReminderCard title='Know thyself, transform your life.' />
 					<FeelingsCard />
 					<GoalProgressCard spent={150000} total={200000} compact={true} />
 				</div>
 
+				{/* Bottom row with expenses table on left and emotion week on right */}
 				<div className='dashboard-bottom-row'>
-					<ExpensesTable data={expensesData} />
-					<EmotionWeek />
+					<div className='expenses-container'>
+						<ExpensesTable data={expensesData} />
+					</div>
+					<div className='emotion-container'>
+						<EmotionWeek />
+					</div>
 				</div>
 			</div>
 		</div>
