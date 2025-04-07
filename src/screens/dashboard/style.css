@@ -1,4 +1,4 @@
-/* Archivo: style.css */
+/* style.css */
 
 .dashboard-container {
 	display: flex;
@@ -34,23 +34,27 @@
 	margin-bottom: 2rem;
 }
 
-.dashboard-body {
-	display: flex;
+.dashboard-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
 	gap: 2rem;
-	flex: 1;
 }
 
-.dashboard-left,
-.dashboard-right {
-	flex: 1;
-	display: flex;
-	flex-direction: column;
-	gap: 1.5rem;
+/* Segunda fila ocupa dos columnas (gastos y emociones) */
+.dashboard-grid > *:nth-child(4) {
+	grid-column: span 2;
 }
 
-/* Estilos responsive */
+.dashboard-grid > *:nth-child(5) {
+	grid-column: span 1;
+}
+
+/* Responsive */
 @media (max-width: 1024px) {
-	.dashboard-body {
-		flex-direction: column;
+	.dashboard-grid {
+		grid-template-columns: 1fr;
+	}
+	.dashboard-grid > * {
+		grid-column: span 1 !important;
 	}
 }
