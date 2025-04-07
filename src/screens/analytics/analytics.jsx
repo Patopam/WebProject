@@ -12,7 +12,7 @@ function Analytics() {
 			<Menu />
 			<div className='analytics-content'>
 				<div className='analytics-header'>
-					<Header title='Finance' subtitle='Here you will find your stats.' />
+					<Header title='Analytics' subtitle='Set goals and look at your track record.' />
 					<div className='analytics-icons'>
 						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' />
 						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' />

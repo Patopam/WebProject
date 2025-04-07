@@ -12,7 +12,7 @@ function Journal() {
 			<Menu />
 			<div className='journal-content'>
 				<div className='journal-header'>
-					<Header title='Finance' subtitle='Here you will find your stats.' />
+					<Header title='My journal' subtitle='Write your thoughts of the day.' />
 					<div className='journal-icons'>
 						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' />
 						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' />
