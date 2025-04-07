@@ -9,12 +9,11 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import FeelingsCard from '../../components/Cards/FeelingsCard';
 import Menu from '../../components/Menu/menu';
-import '../dashboard/style.css';
 import ExpensesTable from '../../components/Tables/expensesTable';
 import expensesData from '../../Data/expensesData';
+import './style.css';
 
 function Dashboard() {
-	// Funciones para manejar los clics
 	const handleJournalClick = () => {
 		console.log('Daily journal clicked');
 	};
@@ -26,16 +25,37 @@ function Dashboard() {
 	return (
 		<div className='dashboard-container'>
 			<Menu />
-			<FeelingsCard />
-			<ExpensesTable data={expensesData} />
-			<Header title='Welcome Evan!' subtitle='How are you feeling today?' emoji='😊' />
-			<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' />
-			<CustomIconButton icon={<LogoutIcon />} ariaLabel='logut' />
-			<ReminderCard title='Understanding yourself starts here!' />
-			<GoalProgressCard spent={150000} total={200000} compact={true} />
-			<EmotionWeek />
-			<AddButton onClick={handleJournalClick} text={'DailyJournal'} />
-			<AddButton onClick={handleSpendClick} text={'Add spending'} />
+			<div className='dashboard-content'>
+				<div className='dashboard-header'>
+					<Header title='Welcome Evan!' subtitle='How are you feeling today?' emoji='😊' />
+					<div className='dashboard-icons'>
+						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' />
+						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' />
+					</div>
+				</div>
+
+				<div className='dashboard-buttons'>
+					<AddButton onClick={handleJournalClick} text={'Daily journal'} />
+					<AddButton onClick={handleSpendClick} text={'Add spend'} />
+				</div>
+
+				{/* Top row with three equal cards */}
+				<div className='dashboard-cards-row'>
+					<ReminderCard />
+					<FeelingsCard compact={true} />
+					<GoalProgressCard spent={150000} total={200000} compact={true} />
+				</div>
+
+				{/* Bottom row with expenses table on left and emotion week on right */}
+				<div className='dashboard-bottom-row'>
+					<div className='expenses-container'>
+						<ExpensesTable data={expensesData} dashboard={true} />
+					</div>
+					<div className='emotion-container'>
+						<EmotionWeek dashboard={true} />
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 }

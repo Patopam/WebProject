@@ -22,8 +22,8 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 	backgroundColor: '#CBCBE7',
 	borderRadius: 20,
 	padding: theme.spacing(2),
-	height: '880px', // Altura exacta mínima como pediste
-	width: '1160px', // Ancho exacto
+	height: '800px', // Altura exacta mínima como pediste
+	width: '800px', // Ancho exacto
 	overflowY: 'auto', // Por si hay scroll internos
 	margin: '0 auto',
 	boxSizing: 'border-box',

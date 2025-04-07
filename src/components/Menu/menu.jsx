@@ -41,7 +41,7 @@ const Menu = () => {
 						</Link>
 					</li>
 					<li>
-						<Link to='/analytics' className='menu-item-link'>
+						<Link to='/analytic/' className='menu-item-link'>
 							<LeaderboardOutlinedIcon />
 							<span>Analytics</span>
 						</Link>
