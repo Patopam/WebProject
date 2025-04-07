@@ -1,0 +1,68 @@
+/* src/styles/dashboard-layout.css */
+
+.dashboard-container {
+	display: flex;
+	height: 100vh;
+}
+
+.sidebar {
+	width: 220px;
+	flex-shrink: 0;
+}
+
+.main-content {
+	flex: 1;
+	padding: 20px;
+	overflow-y: auto;
+}
+
+.header-section {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 30px;
+}
+
+.buttons-section {
+	display: flex;
+	gap: 16px;
+	margin-bottom: 30px;
+}
+
+.icon-buttons {
+	display: flex;
+	gap: 8px;
+}
+
+.cards-row-1 {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 24px;
+	margin-bottom: 24px;
+}
+
+.cards-row-2 {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 24px;
+}
+
+.finances-placeholder,
+.expenses-placeholder {
+	border-radius: 8px;
+	min-height: 200px;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 1024px) {
+	.cards-row-1 {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 768px) {
+	.cards-row-1,
+	.cards-row-2 {
+		grid-template-columns: 1fr;
+	}
+}
