@@ -8,12 +8,12 @@ import './finance.css';
 
 function Emotions() {
 	return (
-		<div className='journal-container'>
+		<div className='analytics-container'>
 			<Menu />
-			<div className='journal-content'>
-				<div className='journal-header'>
+			<div className='analytics-content'>
+				<div className='analytics-header'>
 					<Header title='Finance' subtitle='Here you will find your stats.' />
-					<div className='journal-icons'>
+					<div className='analytics-icons'>
 						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' />
 						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' />
 					</div>
