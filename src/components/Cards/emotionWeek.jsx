@@ -1,15 +1,16 @@
 import React from 'react';
 import { SentimentSatisfiedAlt } from '@mui/icons-material';
 
-const EmotionWeek = ({ compact = false }) => {
+const EmotionWeek = ({ compact = false, dashboard = false }) => {
+	// Si dashboard es true, usamos medidas específicas para el dashboard
 	const containerStyle = {
 		display: 'flex',
-		width: compact ? '428px' : '544px',
-		height: compact ? '268.29px' : '341px',
-		padding: compact ? '28px 28px 52.71px 28px' : '28px 28px 67px 28px',
+		width: dashboard ? '100%' : compact ? '428px' : '544px',
+		height: dashboard ? 'auto' : compact ? '268.29px' : '341px',
+		padding: dashboard ? '20px' : compact ? '28px 28px 52.71px 28px' : '28px 28px 67px 28px',
 		flexDirection: 'column',
 		alignItems: 'flex-start',
-		gap: compact ? '39.42px' : '50.1px',
+		gap: dashboard ? '20px' : compact ? '39.42px' : '50.1px',
 		borderRadius: '24px',
 		background: '#E3E9CF',
 		boxSizing: 'border-box',
@@ -22,8 +23,8 @@ const EmotionWeek = ({ compact = false }) => {
 	};
 
 	const iconContainerStyle = {
-		width: compact ? '37px' : '37px',
-		height: compact ? '37px' : '37px',
+		width: '37px',
+		height: '37px',
 		borderRadius: '50%',
 		backgroundColor: '#C8D39F',
 		display: 'flex',
@@ -47,21 +48,21 @@ const EmotionWeek = ({ compact = false }) => {
 	};
 
 	const dayColumnStyle = {
-		width: compact ? '41.7px' : '53px',
-		height: compact ? '118.01px' : '150px',
+		width: dashboard ? '38px' : compact ? '41.7px' : '53px',
+		height: dashboard ? '110px' : compact ? '118.01px' : '150px',
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
 		justifyContent: 'space-between',
-		padding: compact ? '20px 10px' : '30px 20px ',
-		borderRadius: compact ? '30px' : '30px',
+		padding: dashboard ? '15px 5px' : compact ? '20px 10px' : '30px 20px ',
+		borderRadius: '30px',
 		backgroundColor: '#C8D39F',
 		boxSizing: 'border-box',
 	};
 
 	const dayTextStyle = {
 		fontFamily: "'Manrope', sans-serif",
-		fontSize: '16px',
+		fontSize: dashboard ? '14px' : '16px',
 		fontWeight: 500,
 		color: '#333',
 		lineWeight: '110%',
@@ -70,7 +71,7 @@ const EmotionWeek = ({ compact = false }) => {
 
 	const dayNumberStyle = {
 		fontFamily: "'Manrope', sans-serif",
-		fontSize: '20px',
+		fontSize: dashboard ? '18px' : '20px',
 		fontWeight: 500,
 		color: '#333',
 		lineWeight: '110%',
@@ -78,7 +79,7 @@ const EmotionWeek = ({ compact = false }) => {
 	};
 
 	const emojiStyle = {
-		fontSize: compact ? '24px' : '32px',
+		fontSize: dashboard ? '24px' : compact ? '24px' : '32px',
 	};
 
 	const weekData = [
@@ -95,17 +96,17 @@ const EmotionWeek = ({ compact = false }) => {
 		<div style={containerStyle}>
 			<div style={headerStyle}>
 				<div style={iconContainerStyle}>
-					<SentimentSatisfiedAlt style={{ fontSize: compact ? '24px' : '24px', color: '#333' }} />
+					<SentimentSatisfiedAlt style={{ color: '#333' }} />
 				</div>
-				<div style={titleStyle}>Emotion week</div>
+				<span style={titleStyle}>Emotion week</span>
 			</div>
 
 			<div style={dayRowStyle}>
 				{weekData.map((item, index) => (
 					<div key={index} style={dayColumnStyle}>
-						<div style={dayTextStyle}>{item.day}</div>
-						<div style={dayNumberStyle}>25</div>
-						<div style={emojiStyle}>{item.emoji}</div>
+						<span style={dayTextStyle}>{item.day}</span>
+						<span style={dayNumberStyle}>25</span>
+						<span style={emojiStyle}>{item.emoji}</span>
 					</div>
 				))}
 			</div>
@@ -120,9 +121,14 @@ export default EmotionWeek;
 {
 	/* Versión normal */
 }
-//<EmotionWeek />
+// <EmotionWeek />
 
 {
 	/* Versión compacta */
 }
-//<EmotionWeek compact={true} />
+// <EmotionWeek compact={true} />
+
+{
+	/* Versión dashboard */
+}
+// <EmotionWeek dashboard={true} />
