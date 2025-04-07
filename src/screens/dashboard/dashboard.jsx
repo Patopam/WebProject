@@ -10,6 +10,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import FeelingsCard from '../../components/Cards/FeelingsCard';
 import Menu from '../../components/Menu/menu';
 import '../dashboard/style.css';
+import ExpensesTable from '../../components/Tables/expensesTable';
+import expensesData from '../../Data/expensesData';
 
 function Dashboard() {
 	// Funciones para manejar los clics
@@ -25,6 +27,7 @@ function Dashboard() {
 		<div className='dashboard-container'>
 			<Menu />
 			<FeelingsCard />
+			<ExpensesTable data={expensesData} />
 			<Header title='Welcome Evan!' subtitle='How are you feeling today?' emoji='😊' />
 			<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' />
 			<CustomIconButton icon={<LogoutIcon />} ariaLabel='logut' />
