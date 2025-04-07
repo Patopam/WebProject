@@ -5,8 +5,9 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CustomIconButton from '../../components/Buttons/icon';
 import './finance.css';
+import { Analytics } from '@mui/icons-material';
 
-function Emotions() {
+function Analytics() {
 	return (
 		<div className='analytics-container'>
 			<Menu />
@@ -23,4 +24,4 @@ function Emotions() {
 	);
 }
 
-export default Emotions;
+export default Analytics;

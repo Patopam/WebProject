@@ -6,7 +6,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CustomIconButton from '../../components/Buttons/icon';
 import './finance.css';
 
-function Emotions() {
+function Journal() {
 	return (
 		<div className='journal-container'>
 			<Menu />
@@ -23,4 +23,4 @@ function Emotions() {
 	);
 }
 
-export default Emotions;
+export default Journal;
