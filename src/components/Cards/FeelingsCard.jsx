@@ -5,119 +5,79 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import FlashOnOutlinedIcon from '@mui/icons-material/FlashOnOutlined';
 
-const FeelingsCard = () => {
+const FeelingsCard = ({ dashboard = false }) => {
 	return (
 		<Card
 			sx={{
-				display: 'flex',
-				width: '427px',
-				height: '238px',
-				justifyContent: 'center',
-				alignItems: 'center',
-				borderRadius: '24px',
-				background: '#FCD8C2',
+				width: dashboard ? '100%' : 350,
+				minHeight: dashboard ? 170 : 200,
+				borderRadius: 3,
 				boxShadow: 'none',
+				backgroundColor: '#FFDDD6',
 			}}
 		>
-			<CardContent
-				sx={{
-					display: 'flex',
-					width: '371px',
-					height: '190px',
-					flexDirection: 'column',
-					alignItems: 'flex-start',
-					gap: '20px',
-					padding: 0,
-					'&:last-child': { paddingBottom: 0 },
-				}}
-			>
+			<CardContent sx={{ padding: dashboard ? '16px' : '24px' }}>
 				{/* Header */}
-				<Box
-					sx={{
-						display: 'flex',
-						alignItems: 'center',
-						width: '100%',
-					}}
-				>
+				<Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
 					<Box
 						sx={{
-							backgroundColor: '#F99F75',
+							width: 37,
+							height: 37,
 							borderRadius: '50%',
-							width: '37px',
-							height: '37px',
+							bgcolor: 'rgba(255,255,255,0.5)',
 							display: 'flex',
-							justifyContent: 'center',
 							alignItems: 'center',
-							marginRight: '10px',
+							justifyContent: 'center',
+							mr: 2,
 						}}
 					>
-						<FlashOnOutlinedIcon sx={{ color: '#000' }} />
+						<FlashOnOutlinedIcon />
 					</Box>
-					<Typography
-						sx={{
-							fontFamily: "'Manrope', sans-serif",
-							fontSize: '18px',
-							fontWeight: 300,
-							color: '#333',
-							lineHeight: 'normal',
-						}}
-					>
+					<Typography variant='body1' sx={{ fontWeight: 300 }}>
 						Feelings & Finances
 					</Typography>
 				</Box>
 
 				{/* Content */}
-				<Box
-					sx={{
-						display: 'flex',
-						flexDirection: 'row',
-						alignItems: 'flex-start',
-						gap: '10px',
-					}}
-				>
+				<Box sx={{ mt: dashboard ? 1 : 2 }}>
 					<Typography
+						variant='h3'
 						sx={{
-							fontFamily: "'Manrope', sans-serif",
-							fontSize: '48px',
-							fontWeight: 600,
-							color: '#000',
-							lineHeight: 1,
+							fontWeight: 'bold',
+							fontSize: dashboard ? '2.2rem' : '2.5rem',
 						}}
 					>
 						50%
 					</Typography>
 					<Typography
+						variant='body2'
 						sx={{
-							fontFamily: "'Manrope', sans-serif",
-							fontSize: '16px',
-							fontWeight: 400,
-							color: '#444',
-							lineHeight: '125%',
-							display: 'flex',
-							alignItems: 'center',
+							mt: dashboard ? 0.5 : 1,
+							fontSize: dashboard ? '0.9rem' : '1rem',
 						}}
 					>
-						<p style={{ margin: 0 }}>
-							Of your <strong>expenses</strong> <br />
-							are when you are
-						</p>
+						Of your <b>expenses</b> are when you are
 					</Typography>
 				</Box>
 
-				<Typography
-					sx={{
-						fontFamily: "'Manrope', sans-serif",
-						fontSize: '40px',
-						fontWeight: 500,
-						color: '#333',
-						lineHeight: '125%',
-					}}
-				>
-					stressed
-				</Typography>
+				<Box sx={{ mt: dashboard ? 0.5 : 1 }}>
+					<Typography
+						variant='h5'
+						sx={{
+							fontWeight: 'bold',
+							fontSize: dashboard ? '1.5rem' : '1.75rem',
+						}}
+					>
+						stressed
+					</Typography>
+				</Box>
 			</CardContent>
 		</Card>
 	);
 };
 
 export default FeelingsCard;
+
+// Uso:
+// <FeelingsCard /> // Normal
+// <FeelingsCard dashboard={true} /> // Versión para dashboard
