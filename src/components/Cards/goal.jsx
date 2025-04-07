@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Card, CardContent, Typography, LinearProgress } from '@mui/material';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 
-const GoalProgressCard = ({ spent = 150000, total = 200000, compact = false, dashboard = false }) => {
+const GoalProgressCard = ({ spent = 150000, total = 200000, compact = false }) => {
 	// Calculate progress percentage
 	const progressPercentage = (spent / total) * 100;
 
@@ -24,41 +24,52 @@ const GoalProgressCard = ({ spent = 150000, total = 200000, compact = false, das
 	return (
 		<Card
 			sx={{
-				width: dashboard ? '100%' : compact ? 330 : 350,
-				minHeight: dashboard ? 170 : 200,
-				borderRadius: 3,
+				borderRadius: '24px',
+				background: '#FCE2A9',
+				width: compact ? '310px' : '371px',
+				height: '182px',
 				boxShadow: 'none',
-				backgroundColor: '#FFF2CC',
+				padding: compact ? '28px' : '28px',
 			}}
 		>
-			<CardContent sx={{ padding: dashboard ? '16px' : '24px' }}>
-				<Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+			<CardContent sx={{ padding: '0px !important' }}>
+				<Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', mb: 3 }}>
 					<Box
 						sx={{
-							width: 37,
-							height: 37,
-							borderRadius: '50%',
-							bgcolor: 'rgba(255,255,255,0.5)',
 							display: 'flex',
-							alignItems: 'center',
 							justifyContent: 'center',
-							mr: 2,
+							alignItems: 'center',
+							backgroundColor: '#FACD69',
+							borderRadius: '50%',
+							width: compact ? '37px' : '37px',
+							height: compact ? '37px' : '37px',
 						}}
 					>
-						<TrendingUpIcon />
+						<TrendingUpIcon sx={{ color: '#333' }} />
 					</Box>
-					<Typography variant='body1' sx={{ fontWeight: 300 }}>
+					<Typography
+						variant={compact ? 'h6' : 'h5'}
+						component='div'
+						sx={{
+							fontFamily: "'Manrope', sans-serif",
+							fontSize: '18px',
+							fontWeight: 300,
+							color: '#333',
+							lineWeight: 'normal',
+							fontStyle: 'normal',
+						}}
+					>
 						Goal progress
 					</Typography>
 				</Box>
 
-				<Box sx={{ mt: dashboard ? 1 : 2 }}>
+				<Box sx={{ display: 'flex', flexDirection: 'column', gap: '0px' }}>
 					{' '}
-					<Box sx={{ mb: 1 }}>
-						<Typography variant='body2' sx={{ fontSize: dashboard ? '0.9rem' : '1rem' }}>
+					<Box sx={{ display: 'flex', flexDirection: 'column', gap: '0px' }}>
+						<Typography variant={compact ? 'h6' : 'h5'} component='div' sx={{ fontWeight: 500 }}>
 							You have spent {formattedSpent}
 						</Typography>
-						<Typography variant='body2' sx={{ fontSize: dashboard ? '0.9rem' : '1rem' }}>
+						<Typography variant='body1' color='text.secondary'>
 							of {formattedTotal}
 						</Typography>
 					</Box>
@@ -66,16 +77,18 @@ const GoalProgressCard = ({ spent = 150000, total = 200000, compact = false, das
 						variant='determinate'
 						value={progressPercentage}
 						sx={{
-							my: 1,
 							height: 8,
-							borderRadius: 1,
-							bgcolor: 'rgba(255,255,255,0.5)',
+							borderRadius: 4,
+							backgroundColor: '#C8D39F',
 							'& .MuiLinearProgress-bar': {
-								bgcolor: '#8BC34A',
+								backgroundColor: '#8C9F49',
+								borderRadius: 4,
 							},
+							mt: 1,
+							mb: 1,
 						}}
 					/>
-					<Typography variant='body2' sx={{ fontSize: dashboard ? '0.9rem' : '1rem' }}>
+					<Typography variant='body2' color='text.secondary'>
 						You are approaching the limit
 					</Typography>
 				</Box>
@@ -91,14 +104,9 @@ export default GoalProgressCard;
 {
 	/* Versión normal */
 }
-// <GoalProgressCard />
+//<GoalProgressCard spent={150000} total={200000} />
 
 {
 	/* Versión compacta */
 }
-// <GoalProgressCard compact={true} />
-
-{
-	/* Versión dashboard */
-}
-// <GoalProgressCard dashboard={true} />
+//<GoalProgressCard spent={150000} total={200000} compact={true} />
