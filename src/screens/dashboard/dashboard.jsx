@@ -9,9 +9,9 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import FeelingsCard from '../../components/Cards/FeelingsCard';
 import Menu from '../../components/Menu/menu';
-import '../dashboard/style.css';
 import ExpensesTable from '../../components/Tables/expensesTable';
 import expensesData from '../../Data/expensesData';
+import './style.css';
 
 function Dashboard() {
 	const handleJournalClick = () => {
@@ -39,13 +39,13 @@ function Dashboard() {
 					<AddButton onClick={handleSpendClick} text={'Add spend'} />
 				</div>
 
-				<div className='dashboard-grid'>
-					{/* Fila 1 */}
+				<div className='dashboard-cards-row'>
 					<ReminderCard title='Understanding yourself starts here!' />
 					<FeelingsCard />
 					<GoalProgressCard spent={150000} total={200000} compact={true} />
+				</div>
 
-					{/* Fila 2 */}
+				<div className='dashboard-bottom-row'>
 					<ExpensesTable data={expensesData} />
 					<EmotionWeek />
 				</div>
