@@ -12,7 +12,7 @@ function Emotions() {
 			<Menu />
 			<div className='finance-content'>
 				<div className='finance-header'>
-					<Header title='My emotions' subtitle='Look at your history of your emotions.' />
+					<Header title='Finance' subtitle='Here you will find your stats.' />
 					<div className='finance-icons'>
 						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' />
 						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' />
