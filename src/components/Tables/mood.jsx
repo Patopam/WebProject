@@ -22,9 +22,9 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 	backgroundColor: '#CBCBE7',
 	borderRadius: 20,
 	padding: theme.spacing(2),
-	height: '905px', // Altura exacta mínima como pediste
-	width: '664px', // Ancho exacto
-	overflowY: 'auto', // Por si hay scroll interno
+	height: '880px', // Altura exacta mínima como pediste
+	width: '1160px', // Ancho exacto
+	overflowY: 'auto', // Por si hay scroll internos
 	margin: '0 auto',
 	boxSizing: 'border-box',
 	boxShadow: 'none',
@@ -46,15 +46,6 @@ const StyledTab = styled(Tab)(({ theme }) => ({
 		color: '#49499D', // color del texto cuando está seleccionado
 		fontWeight: 700,
 	},
-}));
-
-const EntryText = styled('div')(() => ({
-	color: '#333', // o usa 'var(--Neutral-1000)' si ya lo tienes en tus variables
-	fontFamily: 'Manrope, sans-serif',
-	fontSize: '26px',
-	fontStyle: 'normal',
-	fontWeight: 600,
-	lineHeight: 'normal',
 }));
 
 const StyledListItem = styled(ListItem)(({ theme }) => ({
@@ -139,8 +130,6 @@ const initialMoodData = [
 	{ id: 6, title: 'Completed project', mood: 'happy', date: '2025-04-01', displayDate: 'Apr 1' },
 	{ id: 7, title: 'Great movie night', mood: 'happy', date: '2025-03-31', displayDate: 'Mar 31' },
 	{ id: 8, title: 'Weekend hike', mood: 'happy', date: '2025-03-28', displayDate: 'Mar 28' },
-	{ id: 9, title: 'Fight with partner', mood: 'angry', date: '2025-03-15', displayDate: 'Mar 15' },
-	{ id: 10, title: 'Birthday celebration', mood: 'happy', date: '2025-03-10', displayDate: 'Mar 10' },
 ];
 
 const moods = [
@@ -273,12 +262,15 @@ export default function MoodTracker() {
 					<ListItemText
 						primary={item.title}
 						primaryTypographyProps={{
-							fontSize: 18,
-							fontWeight: 'medium',
+							color: '#333', // color del texto cuando no está seleccionado
+							fontFamily: 'Manrope, sans-serif',
+							fontSize: '20px',
+							textTransform: 'none',
+							fontWeight: 400,
 						}}
 					/>
-					<IconButton size='small' onClick={() => startEditing(item.id, item.title)} sx={{ mr: 1 }}>
-						<EditIcon fontSize='small' />
+					<IconButton size='medium' onClick={() => startEditing(item.id, item.title)} sx={{ mr: 1 }}>
+						<EditIcon fontSize='medium' />
 					</IconButton>
 				</>
 			)}
