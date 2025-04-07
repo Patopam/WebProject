@@ -1,128 +1,117 @@
 import React from 'react';
-import styled from '@emotion/styled';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { AttachMoney } from '@mui/icons-material';
 
-const TableCard = styled.div`
-	width: 544px;
-	height: 341px;
-	padding: 28px;
-	background: #d3d0eb;
-	border-radius: 24px;
-	display: flex;
-	flex-direction: column;
-	font-family: 'Manrope', sans-serif;
-	color: #333;
-	box-sizing: border-box;
-`;
+const ExpensesDay = () => {
+	const containerStyle = {
+		display: 'flex',
+		flexDirection: 'column',
+		width: '544px',
+		height: '341px', // Altura fija como pediste
+		padding: '28px',
+		borderRadius: '24px',
+		backgroundColor: '#CECAE4',
+		boxSizing: 'border-box',
+		gap: '30px',
+		fontFamily: "'Manrope', sans-serif",
+		overflow: 'hidden',
+	};
 
-const Header = styled.div`
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin-bottom: 24px;
-`;
+	const headerStyle = {
+		display: 'flex',
+		width: '100%',
+		justifyContent: 'space-between',
+		alignItems: 'center',
+	};
 
-const TitleContainer = styled.div`
-	display: flex;
-	align-items: center;
-	gap: 12px;
-`;
+	const headerLeftStyle = {
+		display: 'flex',
+		alignItems: 'center',
+		gap: '16px',
+	};
 
-const IconWrapper = styled.div`
-	width: 37px;
-	height: 37px;
-	background-color: #b29cf5;
-	border-radius: 50%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-`;
+	const iconContainerStyle = {
+		width: '37px',
+		height: '37px',
+		borderRadius: '50%',
+		backgroundColor: '#AFA8D1',
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+	};
 
-const Title = styled.h3`
-	font-size: 18px;
-	font-weight: 400;
-	margin: 0;
-`;
+	const headerTitleStyle = {
+		fontSize: '18px',
+		fontWeight: 300,
+		color: '#333',
+	};
 
-const ViewAll = styled.span`
-	font-size: 14px;
-	color: #333;
-`;
+	const allViewStyle = {
+		fontSize: '16px',
+		color: '#333',
+		fontWeight: 400,
+	};
 
-const ScrollContainer = styled.div`
-	flex: 1;
-	overflow-y: auto;
-	scrollbar-width: thin;
-	scrollbar-color: #ccc transparent;
+	const tableStyle = {
+		width: '100%',
+		borderCollapse: 'separate',
+		borderSpacing: '12px 12px',
+		fontSize: '14.5px',
+	};
 
-	&::-webkit-scrollbar {
-		width: 6px;
-	}
-	&::-webkit-scrollbar-thumb {
-		background-color: #ccc;
-		border-radius: 10px;
-	}
-`;
+	const thStyle = {
+		textAlign: 'left',
+		fontWeight: 600,
+		color: '#333',
+		padding: '0 8px',
+	};
 
-const Table = styled.table`
-	width: 100%;
-	border-collapse: separate;
-	border-spacing: 0 12px;
-	font-size: 14.5px;
+	const tdStyle = {
+		backgroundColor: 'white',
+		padding: '10px 14px',
+		borderRadius: '12px',
+		whiteSpace: 'nowrap',
+		overflow: 'hidden',
+		textOverflow: 'ellipsis',
+	};
 
-	th {
-		text-align: left;
-		font-weight: 600;
-		padding: 4px 12px;
-		color: #333;
-	}
+	const data = [
+		{ spend: 'Coffee', price: '$2.000', category: 'Food' },
+		{ spend: 'Cinema', price: '$30.000', category: 'Experien...' },
+		{ spend: 'Burger', price: '$12.000', category: 'Food' },
+		{ spend: 'Subway', price: '$8.500', category: 'Transport' },
+	];
 
-	td {
-		background-color: white;
-		border-radius: 12px;
-		padding: 10px 14px;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		max-width: 150px;
-	}
-`;
-
-const ExpensesTable = ({ data }) => {
 	return (
-		<TableCard>
-			<Header>
-				<TitleContainer>
-					<IconWrapper>
-						<AttachMoneyIcon style={{ fontSize: 24, color: '#fff' }} />
-					</IconWrapper>
-					<Title>Expenses of the day</Title>
-				</TitleContainer>
-				<ViewAll>All view</ViewAll>
-			</Header>
+		<div style={containerStyle}>
+			<div style={headerStyle}>
+				<div style={headerLeftStyle}>
+					<div style={iconContainerStyle}>
+						<AttachMoney style={{ fontSize: '24px', color: '#333' }} />
+					</div>
+					<div style={headerTitleStyle}>Expenses of the day</div>
+				</div>
+			</div>
 
-			<ScrollContainer>
-				<Table>
-					<thead>
-						<tr>
-							<th>Spend</th>
-							<th>Price</th>
-							<th>Category</th>
+			<table style={tableStyle}>
+				<thead>
+					<tr>
+						<th style={thStyle}>Spend</th>
+						<th style={thStyle}>Price</th>
+						<th style={thStyle}>Category</th>
+					</tr>
+				</thead>
+				<tbody>
+					{data.map((item, index) => (
+						<tr key={index}>
+							<td style={tdStyle}>{item.spend}</td>
+							<td style={tdStyle}>{item.price}</td>
+							<td style={tdStyle}>{item.category}</td>
 						</tr>
-					</thead>
-					<tbody>
-						{data.map((item, index) => (
-							<tr key={index}>
-								<td>{item.spend}</td>
-								<td>{item.price}</td>
-								<td>{item.category}</td>
-							</tr>
-						))}
-					</tbody>
-				</Table>
-			</ScrollContainer>
-		</TableCard>
+					))}
+				</tbody>
+			</table>
+		</div>
 	);
 };
 
-export default ExpensesTable;
+export default ExpensesDay;
