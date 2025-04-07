@@ -5,7 +5,7 @@ const ExpensesDay = () => {
 	const containerStyle = {
 		display: 'flex',
 		flexDirection: 'column',
-		width: '680px',
+		width: '660px',
 		height: '341px', // Altura fija como pediste
 		padding: '28px',
 		borderRadius: '24px',
