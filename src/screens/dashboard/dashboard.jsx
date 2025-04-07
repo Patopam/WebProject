@@ -9,6 +9,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import FeelingsCard from '../../components/Cards/FeelingsCard';
 import Menu from '../../components/Menu/menu';
+import '../dashboard/style.css';
 
 function Dashboard() {
 	// Funciones para manejar los clics
@@ -32,8 +33,6 @@ function Dashboard() {
 			<EmotionWeek />
 			<AddButton onClick={handleJournalClick} text={'DailyJournal'} />
 			<AddButton onClick={handleSpendClick} text={'Add spending'} />
-
-			{/* Resto del contenido del dashboard */}
 		</div>
 	);
 }

@@ -19,14 +19,33 @@ import Modal from '@mui/material/Modal';
 import ButtonBase from '@mui/material/ButtonBase';
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
-	backgroundColor: '#dddae7',
+	backgroundColor: '#CBCBE7',
 	borderRadius: 20,
 	padding: theme.spacing(2),
-	height: '100%',
-	minHeight: '80vh',
-	width: '100%',
-	maxWidth: 500,
+	height: '880px', // Altura exacta mínima como pediste
+	width: '1160px', // Ancho exacto
+	overflowY: 'auto', // Por si hay scroll internos
 	margin: '0 auto',
+	boxSizing: 'border-box',
+	boxShadow: 'none',
+}));
+
+const StyledTabs = styled(Tabs)(({ theme }) => ({
+	'& .MuiTabs-indicator': {
+		backgroundColor: '#9C9CD2', // color del indicador (la línea abajo del tab activo)
+	},
+}));
+
+const StyledTab = styled(Tab)(({ theme }) => ({
+	color: '#333', // color del texto cuando no está seleccionado
+	fontFamily: 'Manrope, sans-serif',
+	fontSize: '22px',
+	textTransform: 'none',
+	fontWeight: 700,
+	'&.Mui-selected': {
+		color: '#49499D', // color del texto cuando está seleccionado
+		fontWeight: 700,
+	},
 }));
 
 const StyledListItem = styled(ListItem)(({ theme }) => ({
@@ -38,16 +57,22 @@ const StyledListItem = styled(ListItem)(({ theme }) => ({
 
 const StyledAvatar = styled(Avatar)(({ theme }) => ({
 	marginRight: theme.spacing(2),
-	width: 38,
-	height: 38,
+	width: 44,
+	height: 44,
 	cursor: 'pointer',
+	backgroundColor: '#FFFFFF',
+	fontSize: '44px',
 }));
 
 const StyledChip = styled(Chip)(({ theme }) => ({
-	backgroundColor: '#cacbdf',
-	color: '#444',
-	borderRadius: 12,
-	fontWeight: 'bold',
+	backgroundColor: '#9C9CD2',
+	borderRadius: 10,
+	color: 'var(--Neutral-1000, #333)',
+	fontFamily: 'Manrope, sans-serif',
+	fontSize: '20px',
+	fontStyle: 'normal',
+	fontWeight: 400,
+	lineHeight: 'normal',
 }));
 
 const StyledDivider = styled('div')({
@@ -57,7 +82,12 @@ const StyledDivider = styled('div')({
 });
 
 const MonthHeader = styled(Typography)(({ theme }) => ({
-	fontWeight: 'bold',
+	color: 'var(--Neutral-1000, #333)',
+	fontFamily: 'Manrope, sans-serif',
+	fontSize: '22px',
+	fontStyle: 'normal',
+	fontWeight: 700,
+	lineHeight: 'normal',
 	marginTop: theme.spacing(2),
 	marginBottom: theme.spacing(1),
 	paddingLeft: theme.spacing(1),
@@ -70,7 +100,7 @@ const MoodSelectorModal = styled(Modal)(({ theme }) => ({
 }));
 
 const MoodSelectorContainer = styled(Paper)(({ theme }) => ({
-	backgroundColor: '#f8d685',
+	backgroundColor: '#CBCBE7',
 	padding: theme.spacing(2),
 	borderRadius: 12,
 	display: 'flex',
@@ -86,7 +116,7 @@ const MoodOption = styled(ButtonBase)(({ theme }) => ({
 	fontSize: 30,
 	borderRadius: '50%',
 	'&:hover': {
-		backgroundColor: 'rgba(255, 255, 255, 0.3)',
+		backgroundColor: 'hsla(0, 0.00%, 100.00%, 0.30)',
 	},
 }));
 
@@ -100,8 +130,6 @@ const initialMoodData = [
 	{ id: 6, title: 'Completed project', mood: 'happy', date: '2025-04-01', displayDate: 'Apr 1' },
 	{ id: 7, title: 'Great movie night', mood: 'happy', date: '2025-03-31', displayDate: 'Mar 31' },
 	{ id: 8, title: 'Weekend hike', mood: 'happy', date: '2025-03-28', displayDate: 'Mar 28' },
-	{ id: 9, title: 'Fight with partner', mood: 'angry', date: '2025-03-15', displayDate: 'Mar 15' },
-	{ id: 10, title: 'Birthday celebration', mood: 'happy', date: '2025-03-10', displayDate: 'Mar 10' },
 ];
 
 const moods = [
@@ -234,12 +262,15 @@ export default function MoodTracker() {
 					<ListItemText
 						primary={item.title}
 						primaryTypographyProps={{
-							fontSize: 18,
-							fontWeight: 'medium',
+							color: '#333', // color del texto cuando no está seleccionado
+							fontFamily: 'Manrope, sans-serif',
+							fontSize: '20px',
+							textTransform: 'none',
+							fontWeight: 400,
 						}}
 					/>
-					<IconButton size='small' onClick={() => startEditing(item.id, item.title)} sx={{ mr: 1 }}>
-						<EditIcon fontSize='small' />
+					<IconButton size='medium' onClick={() => startEditing(item.id, item.title)} sx={{ mr: 1 }}>
+						<EditIcon fontSize='medium' />
 					</IconButton>
 				</>
 			)}
@@ -277,18 +308,11 @@ export default function MoodTracker() {
 
 	return (
 		<StyledPaper elevation={3}>
-			<Tabs
-				value={timeRange}
-				onChange={handleTimeRangeChange}
-				variant='fullWidth'
-				indicatorColor='primary'
-				textColor='primary'
-				aria-label='time range tabs'
-			>
-				<Tab label='Today' />
-				<Tab label='Week' />
-				<Tab label='Month' />
-			</Tabs>
+			<StyledTabs value={timeRange} onChange={handleTimeRangeChange} variant='fullWidth'>
+				<StyledTab label='Today' />
+				<StyledTab label='Week' />
+				<StyledTab label='Month' />
+			</StyledTabs>
 
 			<StyledDivider />
 
