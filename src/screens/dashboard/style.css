@@ -34,27 +34,25 @@
 	margin-bottom: 2rem;
 }
 
-.dashboard-grid {
+/* First row with three equal cards */
+.dashboard-cards-row {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	gap: 2rem;
+	gap: 1.5rem;
+	margin-bottom: 1.5rem;
 }
 
-/* Segunda fila ocupa dos columnas (gastos y emociones) */
-.dashboard-grid > *:nth-child(4) {
-	grid-column: span 2;
-}
-
-.dashboard-grid > *:nth-child(5) {
-	grid-column: span 1;
+/* Second row with expenses table (2/3) and emotion week (1/3) */
+.dashboard-bottom-row {
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	gap: 1.5rem;
 }
 
 /* Responsive */
 @media (max-width: 1024px) {
-	.dashboard-grid {
+	.dashboard-cards-row,
+	.dashboard-bottom-row {
 		grid-template-columns: 1fr;
-	}
-	.dashboard-grid > * {
-		grid-column: span 1 !important;
 	}
 }
