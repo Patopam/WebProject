@@ -6,12 +6,14 @@ const ExpensesDay = () => {
 		display: 'flex',
 		flexDirection: 'column',
 		width: '544px',
+		height: '341px', // Altura fija como pediste
 		padding: '28px',
 		borderRadius: '24px',
 		backgroundColor: '#CECAE4',
 		boxSizing: 'border-box',
 		gap: '30px',
 		fontFamily: "'Manrope', sans-serif",
+		overflow: 'hidden',
 	};
 
 	const headerStyle = {
@@ -73,10 +75,10 @@ const ExpensesDay = () => {
 	};
 
 	const data = [
-		{ spend: 'Coffee', price: '$2.000', category: '$2.000' },
 		{ spend: 'Coffee', price: '$2.000', category: 'Food' },
 		{ spend: 'Cinema', price: '$30.000', category: 'Experien...' },
-		{ spend: 'Coffee', price: '$2.000', category: 'Food' },
+		{ spend: 'Burger', price: '$12.000', category: 'Food' },
+		{ spend: 'Subway', price: '$8.500', category: 'Transport' },
 	];
 
 	return (
