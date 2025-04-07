@@ -14,7 +14,6 @@ import ExpensesTable from '../../components/Tables/expensesTable';
 import expensesData from '../../Data/expensesData';
 
 function Dashboard() {
-	// Funciones para manejar los clics
 	const handleJournalClick = () => {
 		console.log('Daily journal clicked');
 	};
@@ -26,16 +25,32 @@ function Dashboard() {
 	return (
 		<div className='dashboard-container'>
 			<Menu />
-			<FeelingsCard />
-			<ExpensesTable data={expensesData} />
-			<Header title='Welcome Evan!' subtitle='How are you feeling today?' emoji='😊' />
-			<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' />
-			<CustomIconButton icon={<LogoutIcon />} ariaLabel='logut' />
-			<ReminderCard title='Understanding yourself starts here!' />
-			<GoalProgressCard spent={150000} total={200000} compact={true} />
-			<EmotionWeek />
-			<AddButton onClick={handleJournalClick} text={'DailyJournal'} />
-			<AddButton onClick={handleSpendClick} text={'Add spending'} />
+			<div className='dashboard-content'>
+				<div className='dashboard-header'>
+					<Header title='Welcome Evan!' subtitle='How are you feeling today?' emoji='😊' />
+					<div className='dashboard-icons'>
+						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' />
+						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' />
+					</div>
+				</div>
+
+				<div className='dashboard-buttons'>
+					<AddButton onClick={handleJournalClick} text={'Daily journal'} />
+					<AddButton onClick={handleSpendClick} text={'Add spend'} />
+				</div>
+
+				<div className='dashboard-body'>
+					<div className='dashboard-left'>
+						<ReminderCard title='Understanding yourself starts here!' />
+						<FeelingsCard />
+						<GoalProgressCard spent={150000} total={200000} compact={true} />
+					</div>
+					<div className='dashboard-right'>
+						<ExpensesTable data={expensesData} />
+						<EmotionWeek />
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 }
