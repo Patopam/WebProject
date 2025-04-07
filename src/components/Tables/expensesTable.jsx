@@ -1,17 +1,17 @@
 import React from 'react';
 import { AttachMoney } from '@mui/icons-material';
 
-const ExpensesDay = () => {
+const ExpensesDay = ({ dashboard = false }) => {
 	const containerStyle = {
 		display: 'flex',
 		flexDirection: 'column',
-		width: '544px',
-		height: '341px', // Altura fija como pediste
-		padding: '28px',
+		width: dashboard ? '100%' : '544px',
+		height: dashboard ? 'auto' : '341px',
+		padding: dashboard ? '20px' : '28px',
 		borderRadius: '24px',
 		backgroundColor: '#CECAE4',
 		boxSizing: 'border-box',
-		gap: '30px',
+		gap: dashboard ? '20px' : '30px',
 		fontFamily: "'Manrope', sans-serif",
 		overflow: 'hidden',
 	};
@@ -54,8 +54,8 @@ const ExpensesDay = () => {
 	const tableStyle = {
 		width: '100%',
 		borderCollapse: 'separate',
-		borderSpacing: '12px 12px',
-		fontSize: '14.5px',
+		borderSpacing: dashboard ? '8px 8px' : '12px 12px',
+		fontSize: dashboard ? '13.5px' : '14.5px',
 	};
 
 	const thStyle = {
@@ -67,7 +67,7 @@ const ExpensesDay = () => {
 
 	const tdStyle = {
 		backgroundColor: 'white',
-		padding: '10px 14px',
+		padding: dashboard ? '8px 12px' : '10px 14px',
 		borderRadius: '12px',
 		whiteSpace: 'nowrap',
 		overflow: 'hidden',
@@ -86,10 +86,13 @@ const ExpensesDay = () => {
 			<div style={headerStyle}>
 				<div style={headerLeftStyle}>
 					<div style={iconContainerStyle}>
-						<AttachMoney style={{ fontSize: '24px', color: '#333' }} />
+						<AttachMoney style={{ color: '#333' }} />
 					</div>
-					<div style={headerTitleStyle}>Expenses of the day</div>
+
+					<span style={headerTitleStyle}>Expenses of the day</span>
 				</div>
+
+				<span style={allViewStyle}>All view</span>
 			</div>
 
 			<table style={tableStyle}>
@@ -115,3 +118,7 @@ const ExpensesDay = () => {
 };
 
 export default ExpensesDay;
+
+// Uso:
+// <ExpensesDay /> // Normal
+// <ExpensesDay dashboard={true} /> // Versión para dashboard

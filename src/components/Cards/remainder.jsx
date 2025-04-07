@@ -40,7 +40,7 @@ const ReminderCard = ({ dashboard = false }) => {
 				minHeight: dashboard ? 170 : 200,
 				borderRadius: 3,
 				boxShadow: 'none',
-				backgroundColor: '#D9EAFF'
+				backgroundColor: '#D9EAFF',
 			}}
 		>
 			<CardContent sx={{ padding: dashboard ? '16px' : '24px' }}>
@@ -49,7 +49,7 @@ const ReminderCard = ({ dashboard = false }) => {
 						display: 'flex',
 						justifyContent: 'space-between',
 						alignItems: 'center',
-						mb: 2
+						mb: 2,
 					}}
 				>
 					<Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -62,21 +62,21 @@ const ReminderCard = ({ dashboard = false }) => {
 								display: 'flex',
 								alignItems: 'center',
 								justifyContent: 'center',
-								mr: 2
+								mr: 2,
 							}}
 						>
 							<FavoriteBorderIcon />
 						</Box>
-						<Typography variant="body1" sx={{ fontWeight: 300 }}>
+						<Typography variant='body1' sx={{ fontWeight: 300 }}>
 							Remainder
 						</Typography>
 					</Box>
 					<IconButton
-						size="small"
+						size='small'
 						onClick={handleRefresh}
 						sx={{
 							color: 'text.primary',
-							padding: dashboard ? '4px' : '8px'
+							padding: dashboard ? '4px' : '8px',
 						}}
 					>
 						<RefreshIcon />
@@ -84,11 +84,11 @@ const ReminderCard = ({ dashboard = false }) => {
 				</Box>
 
 				<Typography
-					variant="h5"
+					variant='h5'
 					sx={{
 						fontWeight: dashboard ? 500 : 600,
 						fontSize: dashboard ? '1.25rem' : '1.5rem',
-						lineHeight: 1.3
+						lineHeight: 1.3,
 					}}
 				>
 					{currentPhrase}
