@@ -1,4 +1,4 @@
-.journal-container {
+.analytics-container {
 	display: flex;
 	height: 100vh;
 	width: 100%;
@@ -6,7 +6,7 @@
 	font-family: 'Manrope', sans-serif;
 }
 
-.journal-content {
+.analytics-content {
 	flex: 1;
 	padding: 2rem;
 	display: flex;
@@ -14,14 +14,14 @@
 	overflow-y: auto;
 }
 
-.journal-header {
+.analytics-header {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	margin-bottom: 2rem;
 }
 
-.journal-icons {
+.analytics-icons {
 	display: flex;
 	gap: 0.5rem;
 }
