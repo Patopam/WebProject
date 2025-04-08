@@ -1,11 +1,12 @@
 import { Button, Typography, Container, Stack, Box } from "@mui/material";
 import BotonStart from "../../components/Buttons/botonesStart";
-import Logo from "../../assets/logo.png";
+import Logo from "../../assets/Sense Logo start.png";
 import BotonStartGoogle from "../../components/Buttons/botonStartGoogle";
+import "./start.css";
 function Start() {
   return (
     <>
-      <Container sx={{ width: 500 }}>
+      <Container sx={{ width: 500 }} className="container-start">
         <div className="menu-logo">
           <img src={Logo} alt="Sense Logo" className="menu-logo-img" />
         </div>
