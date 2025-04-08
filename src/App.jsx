@@ -9,12 +9,13 @@ import Journal from "./screens/journal/journal";
 import Calendar from "./screens/calendar/calendar";
 import Start from "./screens/start/start";
 import Log from "./screens/log/log";
-
+import Sign from "./screens/sign/sign";
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Start />} />
+        <Route path="/sing" element={<Sign />} />
         <Route path="/log" element={<Log />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/emotions" element={<Emotions />} />
