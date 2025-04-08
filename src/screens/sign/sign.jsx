@@ -7,7 +7,7 @@ import { useNavigate, Link } from "react-router";
 import { useState } from "react";
 import Inputs from "../../components/Inputs/Inputs";
 import { FaRegEyeSlash } from "react-icons/fa";
-
+import "./sign.css";
 function Sign() {
   const [Usuario, setUsuario] = useState("");
   const [Correo, setCorreo] = useState("");
@@ -50,7 +50,7 @@ function Sign() {
   };
   return (
     <>
-      <Container className="Container-log" sx={{ width: 500 }}>
+      <Container className="Container-sign" sx={{ width: 500 }}>
         <Stack spacing={3}>
           <Box>
             <Typography variant="h2" sx={styleText.Titulo}>

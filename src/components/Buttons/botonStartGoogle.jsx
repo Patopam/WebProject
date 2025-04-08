@@ -14,7 +14,7 @@ const StyleBotton = styled(Button)(() => ({
   alignItems: "center",
   gap: 8, // Espacio constante entre ícono y texto
   "&:hover": {
-    backgroundColor: "#8A8AC0",
+    backgroundColor: "#A4A4A4",
     boxShadow: "none",
   },
   "& .MuiButton-startIcon": {
