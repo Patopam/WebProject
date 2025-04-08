@@ -1,36 +1,37 @@
 import { Button, Typography, Container, Stack, Box } from "@mui/material";
-import BotonStart from "../../components/Buttons/BotonesLogin";
-import GoogleIcon from "@mui/icons-material/Google";
+import BotonStart from "../../components/Buttons/botonesStart";
+import Logo from "../../assets/logo.png";
+import BotonStartGoogle from "../../components/Buttons/botonStartGoogle";
 function Start() {
   return (
     <>
       <Container sx={{ width: 500 }}>
+        <div className="menu-logo">
+          <img src={Logo} alt="Sense Logo" className="menu-logo-img" />
+        </div>
         <Box sx={{ width: 460 }}>
           <Stack spacing={2}>
-            <BotonStart text="Iniciar sesión" />
-            <BotonStart text="Crear cuenta" color={"#9C9CD2"} />
-            <BotonStart
-              text="   Inicurse con Google"
-              Icono={
-                <GoogleIcon sx={{ fontSize: "24px", color: "#fffffff" }} />
-              }
-            />
+            <BotonStart text="Log In" />
+            <BotonStart text="Create your account" />
+            <BotonStartGoogle text="Connect with Google" />
           </Stack>
         </Box>
-        <Typography
-          sx={{
-            color: "var(--Neutral-1000, #333)",
-            fontFamily: "Manrope, sans-serif",
-            fontSize: "20px",
-            fontStyle: "normal",
-            fontWeight: 400,
-            lineHeight: "normal",
-            color: "#000000",
-            textAlign: "center",
-          }}
-        >
-          <p>A space that supports what you feel and how you choose.</p>
-        </Typography>
+        <Box>
+          <Typography
+            sx={{
+              color: "var(--Neutral-1000, #333)",
+              fontFamily: "Manrope, sans-serif",
+              fontSize: "20px",
+              fontStyle: "normal",
+              fontWeight: 400,
+              lineHeight: "normal",
+              color: "#000000",
+              textAlign: "center",
+            }}
+          >
+            A space that supports what you feel and how you choose.
+          </Typography>
+        </Box>
       </Container>
     </>
   );

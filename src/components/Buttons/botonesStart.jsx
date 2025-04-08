@@ -4,7 +4,6 @@ const StyleBotton = styled(Button)(() => ({
   height: "56px",
   borderRadius: "16px",
   backgroundColor: "#49499D",
-  color: "#FFFFFF",
   textTransform: "none",
   paddingLeft: "16px", // Margen izquierdo constante
   paddingRight: "24px", // Margen derecho constante sin importar el texto
@@ -16,16 +15,6 @@ const StyleBotton = styled(Button)(() => ({
   "&:hover": {
     backgroundColor: "#8A8AC0",
     boxShadow: "none",
-  },
-  "& .Icono": {
-    margin: 0, // Eliminamos margen lateral del ícono
-    backgroundColor: "#9C9CD2",
-    width: "40px",
-    height: "40px",
-    borderRadius: "50%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
   },
 
   fontSize: "18px",
@@ -44,7 +33,7 @@ export default function BotonStart({ onClick, text, Icono }) {
           fontStyle: "normal",
           fontWeight: 400,
           lineHeight: "normal",
-          color: "#FFFFFF",
+          color: "#E8E8E8",
         }}
       >
         {Icono}
