@@ -1,0 +1,27 @@
+.journal-container {
+	display: flex;
+	height: 100vh;
+	width: 100%;
+	background-color: #ffffff;
+	font-family: 'Manrope', sans-serif;
+}
+
+.journal-content {
+	flex: 1;
+	padding: 2rem;
+	display: flex;
+	flex-direction: column;
+	overflow-y: auto;
+}
+
+.journal-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 2rem;
+}
+
+.journal-icons {
+	display: flex;
+	gap: 0.5rem;
+}
