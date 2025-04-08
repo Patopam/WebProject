@@ -7,16 +7,15 @@ import Finance from './screens/finance/finance';
 import Analytics from './screens/analytics/analytics';
 import Journal from './screens/journal/journal';
 import Calendar from './screens/calendar/calendar';
-
-// Importa otras pantallas si las tienes
+import Start from './screens/start/start';
 
 
 function App() {
 	return (
 		<Router>
 			<Routes>
-
-				<Route path='/' element={<Dashboard />} />
+				<Route path='/' element={<Start />} />
+				<Route path='/dashboard' element={<Dashboard />} />
 				<Route path='/emotions' element={<Emotions />} />
 				<Route path='/finance' element={<Finance />} />
 				<Route path='/analytics' element={<Analytics />} />
