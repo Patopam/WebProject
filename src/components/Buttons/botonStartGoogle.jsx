@@ -1,5 +1,4 @@
 import { Button, Typography } from "@mui/material";
-import GoogleIcon from "@mui/icons-material/Google";
 import { FcGoogle } from "react-icons/fc";
 import { styled } from "@mui/material/styles";
 const StyleBotton = styled(Button)(() => ({
