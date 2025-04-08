@@ -4,7 +4,6 @@ import { Typography, Container, Stack, Box } from "@mui/material";
 import BotonStart from "../../components/Buttons/botonesStart";
 import BotonStartGoogle from "../../components/Buttons/botonStartGoogle";
 import { useNavigate } from "react-router";
-import TextField from "@mui/material/TextField";
 import { useState } from "react";
 import Inputs from "../../components/Inputs/Inputs";
 import { FaRegEyeSlash } from "react-icons/fa";
@@ -27,17 +26,31 @@ function Log() {
                 value={Usuario}
                 onChange={(e) => setUsuario(e.target.value)}
                 label="Usuario"
-                placeholder="Usuario"
+                placeholder="Write your email *"
               />
               <Inputs
                 type="password"
                 icon={<FaRegEyeSlash />}
                 value={Constraseña}
                 onChange={(e) => setConstraseña(e.target.value)}
-                placeholder={"Constraseña"}
+                placeholder={"Write your password *"}
               />
             </Stack>
           </form>
+          <Typography
+            sx={{
+              color: "var(--Neutral-1000, #333)",
+              fontFamily: "Manrope, sans-serif",
+              fontSize: "20px",
+              fontStyle: "normal",
+              fontWeight: 400,
+              lineHeight: "normal",
+              color: "#000000",
+              marginTop: "20px",
+            }}
+          >
+            Forgot password?
+          </Typography>
         </Box>
         <Box sx={{ width: 460 }}>
           <Stack spacing={3}>

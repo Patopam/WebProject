@@ -1,24 +1,35 @@
+import { colors } from "@mui/material";
+
 function Inputs({ icon, type, placeholder, value, onChange }) {
   const styles = {
-    flex: 1,
-    padding: "8px",
-    display: "flex",
-    alignItems: "center",
-    border: "1px solid #000",
-    borderRadius: "16px",
-    padding: "8px",
-    width: "100%",
+    input: {
+      flex: 1,
+      padding: "15px",
+      display: "flex",
+      alignItems: "center",
+      border: "1px solid #777777",
+      borderRadius: "16px",
+      fontSize: "20px",
+      fontFamily: "Manrope, sans-serif",
+      width: "95%",
+      color: "#333333",
+    },
+    div: {
+      display: "flex",
+      alignItems: "center",
+      width: "100%",
+    },
   };
   return (
-    <div className="input-container">
+    <div className="input-container" style={styles.div}>
       <input
-        style={styles}
+        style={styles.input}
         type={type}
         placeholder={placeholder}
-        icon={icon}
         value={value}
         onChange={onChange}
       />
+      <i>{icon}</i>
     </div>
   );
 }
