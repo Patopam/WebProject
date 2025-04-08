@@ -11,13 +11,13 @@ function Start() {
           <img src={Logo} alt="Sense Logo" className="menu-logo-img" />
         </div>
         <Box sx={{ width: 460 }}>
-          <Stack spacing={2}>
+          <Stack spacing={3}>
             <BotonStart text="Log In" />
             <BotonStart text="Create your account" />
             <BotonStartGoogle text="Connect with Google" />
           </Stack>
         </Box>
-        <Box>
+        <Box className="text-start">
           <Typography
             sx={{
               color: "var(--Neutral-1000, #333)",
