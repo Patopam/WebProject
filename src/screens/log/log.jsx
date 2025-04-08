@@ -15,10 +15,35 @@ function Log() {
     guardarUsuario(Usuario);
     guardarContraseña(Constraseña);
   };
-
+  const styleText = {
+    Centrado: {
+      color: "var(--Neutral-1000, #333)",
+      fontFamily: "Manrope, sans-serif",
+      fontSize: "20px",
+      fontStyle: "normal",
+      fontWeight: 400,
+      lineHeight: "normal",
+      color: "#000000",
+      marginTop: "20px",
+      textAlign: "center",
+    },
+    NoCentrado: {
+      color: "var(--Neutral-1000, #333)",
+      fontFamily: "Manrope, sans-serif",
+      fontSize: "20px",
+      fontStyle: "normal",
+      fontWeight: 400,
+      lineHeight: "normal",
+      color: "#000000",
+      marginTop: "20px",
+    },
+  };
   return (
     <>
       <Container sx={{ width: 500 }}>
+        <Box>
+          <Typography></Typography>
+        </Box>
         <Box>
           <form>
             <Stack spacing={3}>
@@ -37,39 +62,14 @@ function Log() {
               />
             </Stack>
           </form>
-          <Typography
-            sx={{
-              color: "var(--Neutral-1000, #333)",
-              fontFamily: "Manrope, sans-serif",
-              fontSize: "20px",
-              fontStyle: "normal",
-              fontWeight: 400,
-              lineHeight: "normal",
-              color: "#000000",
-              marginTop: "20px",
-            }}
-          >
-            Forgot password?
-          </Typography>
+          <Typography sx={styleText.NoCentrado}>Forgot password?</Typography>
         </Box>
         <Box sx={{ width: 460 }}>
           <Stack spacing={3}>
             <BotonStart text="Log In" onClick={Summit} />
             <BotonStartGoogle text="Connect with Google" />
           </Stack>
-          <Typography
-            sx={{
-              color: "var(--Neutral-1000, #333)",
-              fontFamily: "Manrope, sans-serif",
-              fontSize: "20px",
-              fontStyle: "normal",
-              fontWeight: 400,
-              lineHeight: "normal",
-              color: "#000000",
-              textAlign: "center",
-              marginTop: "20px",
-            }}
-          >
+          <Typography sx={styleText.Centrado}>
             No account? Create an account
           </Typography>
         </Box>
