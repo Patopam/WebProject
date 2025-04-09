@@ -7,11 +7,9 @@ const GoalHistoryCard = ({ data }) => {
 	const [selectedStatus, setSelectedStatus] = useState('All');
 
 	const filteredByTime = filterByTime(data, selectedTime);
-
-	const filteredData = filteredByTime.filter((item) => {
-		if (selectedStatus === 'All') return true;
-		return item.status === selectedStatus;
-	});
+	const filteredData = filteredByTime.filter((item) =>
+		selectedStatus === 'All' ? true : item.status === selectedStatus
+	);
 
 	const timeOptions = ['Today', 'Week', 'Month'];
 	const statusOptions = ['All', 'Completed', 'Failed'];
@@ -25,19 +23,12 @@ const GoalHistoryCard = ({ data }) => {
 		borderRadius: '24px',
 		backgroundColor: '#FCE2A9',
 		boxSizing: 'border-box',
-		gap: '30px',
 		fontFamily: "'Manrope', sans-serif",
+		gap: '20px',
 		overflow: 'hidden',
 	};
 
 	const headerStyle = {
-		display: 'flex',
-		width: '100%',
-		justifyContent: 'space-between',
-		alignItems: 'center',
-	};
-
-	const iconTitleStyle = {
 		display: 'flex',
 		alignItems: 'center',
 		gap: '16px',
@@ -59,7 +50,15 @@ const GoalHistoryCard = ({ data }) => {
 		color: '#333',
 	};
 
-	const filtersStyle = {
+	const filterBoxStyle = {
+		display: 'flex',
+		justifyContent: 'space-between',
+		backgroundColor: '#F5D889',
+		borderRadius: '12px',
+		padding: '8px 16px',
+	};
+
+	const filterGroup = {
 		display: 'flex',
 		gap: '20px',
 		fontWeight: 600,
@@ -68,8 +67,10 @@ const GoalHistoryCard = ({ data }) => {
 	};
 
 	const tableWrapper = {
-		overflowY: 'auto',
-		height: '100%',
+		overflowY: 'auto', // Scroll cuando se necesita
+		height: '160px', // Altura fija para limitar el espacio
+		scrollbarWidth: 'none', // Oculta scroll en Firefox
+		msOverflowStyle: 'none', // Oculta scroll en IE/Edge
 	};
 
 	const tableStyle = {
@@ -97,27 +98,34 @@ const GoalHistoryCard = ({ data }) => {
 
 	return (
 		<div style={containerStyle}>
+			{/* Título + ícono */}
 			<div style={headerStyle}>
-				<div style={iconTitleStyle}>
-					<div style={iconContainer}>
-						<AttachMoney style={{ fontSize: '24px', color: '#333' }} />
-					</div>
-					<div style={titleStyle}>Goal History</div>
+				<div style={iconContainer}>
+					<AttachMoney style={{ fontSize: '24px', color: '#333' }} />
 				</div>
+				<div style={titleStyle}>Goal History</div>
+			</div>
 
-				<div style={filtersStyle}>
+			{/* Filtros */}
+			<div style={filterBoxStyle}>
+				<div style={filterGroup}>
 					{timeOptions.map((option) => (
 						<span
 							key={option}
 							onClick={() => setSelectedTime(option)}
 							style={{
 								textDecoration: selectedTime === option ? 'underline' : 'none',
+								display: 'flex',
+								alignItems: 'center',
+								gap: '2px',
 							}}
 						>
-							{option} <ArrowDropDown />
+							{option} <ArrowDropDown fontSize='small' />
 						</span>
 					))}
+				</div>
 
+				<div style={filterGroup}>
 					{statusOptions.map((option) => (
 						<span
 							key={option}
@@ -132,6 +140,7 @@ const GoalHistoryCard = ({ data }) => {
 				</div>
 			</div>
 
+			{/* Tabla */}
 			<div style={tableWrapper}>
 				<table style={tableStyle}>
 					<thead>

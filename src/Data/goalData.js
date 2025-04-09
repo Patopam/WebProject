@@ -20,7 +20,7 @@ export const goalHistoryData = [
 	{
 		date: '2025-04-05',
 		title: 'No fast food',
-		amount: 20.0,
+		amount: 20000,
 		status: 'completed',
 	},
 ];
