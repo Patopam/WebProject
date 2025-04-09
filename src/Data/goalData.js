@@ -4,9 +4,17 @@ export const goalHistory = [
 	{ date: '2025-04-05', amount: 70000, category: 'Travel' },
 ];
 
-export const goalsSummary = {
-	completed: 6,
-	failed: 2,
-	progress: 150000,
-	total: 200000,
-};
+export const goalsSummary = [
+	{
+		title: 'Goals completed',
+		description: 'You have successfully completed a total of',
+		quantity: 6,
+		label: 'goals',
+	},
+	{
+		title: 'Goals failed',
+		description: 'You have failed a total of',
+		quantity: 2,
+		label: 'goals',
+	},
+];
