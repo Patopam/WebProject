@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Menu from '../../components/Menu/menu';
 import AddButton from '../../components/Buttons/add';
 import Header from '../../components/Header/header';
@@ -15,12 +16,14 @@ import { goalHistoryData } from '../../Data/goalData';
 import './finance.css';
 
 function Finance() {
-	const handleGoalClick = () => {
-		console.log('Daily journal clicked');
-	};
+	const navigate = useNavigate();
 
 	const handleSpendClick = () => {
-		console.log('Add spend clicked');
+		navigate('/finance/add-spending');
+	};
+
+	const handleGoalClick = () => {
+		navigate('/finance/add-goal');
 	};
 	return (
 		<div className='finance-container'>
