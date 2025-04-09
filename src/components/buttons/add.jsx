@@ -4,6 +4,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { styled } from "@mui/material/styles";
 
 const ExactButton = styled(Button)(() => ({
+
   height: "56px",
   borderRadius: "16px",
   backgroundColor: "#CBCBE7",
@@ -33,6 +34,7 @@ const ExactButton = styled(Button)(() => ({
   fontSize: "18px",
   fontWeight: 500,
   fontFamily: "'Manrope', sans-serif",
+
 }));
 
 const CustomAddIcon = () => (

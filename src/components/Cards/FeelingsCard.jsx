@@ -125,7 +125,7 @@ const FeelingsCard = ({ compact = false }) => {
 
 export default FeelingsCard;
 
-// Ejemplos de uso:
+// Tamaños:
 
 // Versión normal
 // <FeelingsCard />

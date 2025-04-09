@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import reminderPhrases from '../../Data/reminderData'; // Import the phrases from separate file
+import reminderPhrases from '../../Data/reminderData';
 
 const ReminderCard = () => {
 	// State to manage the current phrase
