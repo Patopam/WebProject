@@ -10,11 +10,15 @@ export const goalsSummary = [
 		description: 'You have successfully completed a total of',
 		quantity: 6,
 		label: 'goals',
+		bgColor: '#C9DBF8',
+		iconBg: '#7FADED',
 	},
 	{
 		title: 'Goals failed',
 		description: 'You have failed a total of',
 		quantity: 2,
 		label: 'goals',
+		bgColor: '#F9C8B0',
+		iconBg: '#F2987C',
 	},
 ];
