@@ -8,7 +8,6 @@ const expensesData = [
 ];
 
 export default expensesData;
-// src/Data/expenditureData.js
 
 export const expenditureData = [
 	{
