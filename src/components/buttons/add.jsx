@@ -9,19 +9,19 @@ const ExactButton = styled(Button)(() => ({
 	backgroundColor: '#CBCBE7',
 	color: '#000000',
 	textTransform: 'none',
-	paddingLeft: '16px', // Margen izquierdo constante
-	paddingRight: '24px', // Margen derecho constante sin importar el texto
+	paddingLeft: '16px',
+	paddingRight: '24px',
 	boxShadow: 'none',
 	display: 'flex',
 	justifyContent: 'center',
 	alignItems: 'center',
-	gap: 8, // Espacio constante entre ícono y texto
+	gap: 8,
 	'&:hover': {
 		backgroundColor: '#8A8AC0',
 		boxShadow: 'none',
 	},
 	'& .MuiButton-startIcon': {
-		margin: 0, // Eliminamos margen lateral del ícono
+		margin: 0,
 		backgroundColor: '#9C9CD2',
 		width: '40px',
 		height: '40px',
