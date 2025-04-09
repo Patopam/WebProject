@@ -1,7 +1,22 @@
-export const goalHistory = [
-	{ date: '2025-04-01', amount: 50000, category: 'Savings' },
-	{ date: '2025-04-03', amount: 30000, category: 'Health' },
-	{ date: '2025-04-05', amount: 70000, category: 'Travel' },
+export const goalHistoryData = [
+	{
+		date: '2025-04-01',
+		title: 'Limit coffee shop spending',
+		amount: 25000,
+		status: 'completed', // 'completed' | 'failed'
+	},
+	{
+		date: '2025-04-02',
+		title: 'Groceries budget',
+		amount: 70000,
+		status: 'failed',
+	},
+	{
+		date: '2025-04-05',
+		title: 'No fast food',
+		amount: 0,
+		status: 'completed',
+	},
 ];
 
 export const goalsSummary = [
