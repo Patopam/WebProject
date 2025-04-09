@@ -7,6 +7,7 @@ import CustomIconButton from '../../components/Buttons/icon';
 import './journal.css';
 import JournalForm from '../../components/Journal/journalForms';
 import ReminderCard from '../../components/Cards/remainder';
+import ImageCarousel from '../../components/Cards/imageCarousel';
 
 function Journal() {
 	return (
@@ -25,7 +26,10 @@ function Journal() {
 					<JournalForm compact />
 				</div>
 				<div className='remainders-cards'>
-					<ReminderCard></ReminderCard>
+					<ReminderCard />
+				</div>
+				<div className='carousel-card'>
+					<ImageCarousel />
 				</div>
 			</div>
 		</div>
