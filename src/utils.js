@@ -16,3 +16,7 @@ export const obtenerCorreo = () => {
 export const obetenerContraseña = () => {
   return JSON.parse(localStorage.getItem("contraseña"));
 };
+
+export const obtenerUsuario = () => {
+  return JSON.parse(localStorage.getItem("usuario"));
+};
