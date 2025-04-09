@@ -8,7 +8,7 @@ const GoalHistoryCard = ({ data }) => {
 
 	const filteredByTime = filterByTime(data, selectedTime);
 	const filteredData = filteredByTime.filter((item) =>
-		selectedStatus === 'All' ? true : item.status === selectedStatus
+		selectedStatus === 'All' ? true : item.status.toLowerCase() === selectedStatus.toLowerCase()
 	);
 
 	const timeOptions = ['Today', 'Week', 'Month'];
