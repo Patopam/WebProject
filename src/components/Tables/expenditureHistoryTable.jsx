@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AttachMoney } from '@mui/icons-material';
+import { filterByTime } from '../../utils';
 
 const ExpenditureHistoryTable = ({ data }) => {
+	const [selectedTime, setSelectedTime] = useState('Today');
+	const timeOptions = ['Today', 'Week', 'Month'];
+
+	const filteredData = filterByTime(data, selectedTime);
+
 	return (
 		<div>
 			{/* Header */}
@@ -12,14 +18,14 @@ const ExpenditureHistoryTable = ({ data }) => {
 				<div>Expenditure History</div>
 			</div>
 
-			{/* Filtros (aún sin funcionalidad) */}
 			<div>
-				<span>Today</span>
-				<span>Week</span>
-				<span>Month</span>
+				{timeOptions.map((option) => (
+					<span key={option} onClick={() => setSelectedTime(option)}>
+						{option}
+					</span>
+				))}
 			</div>
 
-			{/* Tabla base */}
 			<table>
 				<thead>
 					<tr>
@@ -29,7 +35,7 @@ const ExpenditureHistoryTable = ({ data }) => {
 					</tr>
 				</thead>
 				<tbody>
-					{data.map((item, index) => (
+					{filteredData.map((item, index) => (
 						<tr key={index}>
 							<td>{item.date}</td>
 							<td>{item.amount}</td>
