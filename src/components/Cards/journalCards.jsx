@@ -1,52 +1,82 @@
 import React from 'react';
+import { Box, Typography } from '@mui/material';
 
-export default function JournalCards() {
-	const journalEntries = [
-		{
-			week: 1,
-			entries: [
-				{
-					day: 'Monday',
-					content:
-						"Today felt like a blur—so much to do, yet it feels like I barely moved forward. Maybe progress isn't always obvious in the moment. I just have to trust that each small step is adding up to something bigger.",
-					color: 'bg-lime-300',
-				},
-				{
-					day: 'Tuesday',
-					content:
-						"Some days feel heavier than others, but even the smallest wins count. I'll be kind to myself and try again tomorrow.",
-					color: 'bg-orange-300',
-				},
-			],
-		},
-		{
-			week: 2,
-			entries: [
-				{
-					day: 'Monday',
-					content:
-						"Today felt like a blur—so much to do, yet it feels like I barely moved forward. Maybe progress isn't always obvious in the moment. I just have to trust that each small step is adding up to something bigger.",
-					color: 'bg-blue-300',
-				},
-			],
-		},
-	];
+const JournalCards = ({ journalData }) => {
+	if (journalData.length === 0) {
+		return (
+			<Typography
+				sx={{
+					fontFamily: "'Manrope', sans-serif",
+					fontSize: '16px',
+					fontWeight: 400,
+					color: '#666',
+				}}
+			>
+				No hay entradas para este mes.
+			</Typography>
+		);
+	}
 
 	return (
-		<div className='flex flex-col space-y-8'>
-			{journalEntries.map((week) => (
-				<div key={week.week} className='mb-6'>
-					<h2 className='text-4xl font-bold mb-4 text-gray-800'>Week {week.week}</h2>
-					<div className='flex flex-wrap gap-4'>
+		<Box sx={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+			{journalData.map((week) => (
+				<Box key={week.week} sx={{ marginBottom: '24px' }}>
+					<Typography
+						sx={{
+							fontFamily: "'Manrope', sans-serif",
+							fontSize: '32px',
+							fontWeight: 700,
+							color: '#333',
+							marginBottom: '16px',
+						}}
+					>
+						Week {week.week}
+					</Typography>
+
+					<Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
 						{week.entries.map((entry, index) => (
-							<div key={index} className={`${entry.color} rounded-xl p-6 w-96 h-96 flex flex-col`}>
-								<h3 className='text-3xl font-bold text-indigo-800 mb-4'>{entry.day}</h3>
-								<p className='text-indigo-800 text-lg'>{entry.content}</p>
-							</div>
+							<Box
+								key={index}
+								sx={{
+									display: 'flex',
+									flexDirection: 'column',
+									width: '400px',
+									height: '400px',
+									padding: '24px',
+									borderRadius: '16px',
+									background: entry.color,
+								}}
+							>
+								<Typography
+									sx={{
+										fontFamily: "'Manrope', sans-serif",
+										fontSize: '28px',
+										fontWeight: 700,
+										color: '#33356B',
+										marginBottom: '16px',
+									}}
+								>
+									{entry.day}
+								</Typography>
+
+								<Typography
+									sx={{
+										fontFamily: "'Manrope', sans-serif",
+										fontSize: '16px',
+										fontWeight: 400,
+										color: '#33356B',
+										lineHeight: '150%',
+									}}
+								>
+									{entry.content}
+								</Typography>
+							</Box>
 						))}
-					</div>
-				</div>
+					</Box>
+				</Box>
 			))}
-		</div>
+		</Box>
 	);
-}
+};
+
+export default JournalCards;
