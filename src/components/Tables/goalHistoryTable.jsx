@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
-import { goalHistoryData } from '../../Data/goalData';
 import { filterByTime } from '../../utils';
 import { AttachMoney, ArrowDropDown } from '@mui/icons-material';
+
 const GoalHistoryCard = ({ data }) => {
 	const [selectedTime, setSelectedTime] = useState('Today');
 	const [selectedStatus, setSelectedStatus] = useState('All');
 
-	const filteredData = data.filter((item) => {
+	const filteredByTime = filterByTime(data, selectedTime);
+
+	const filteredData = filteredByTime.filter((item) => {
 		if (selectedStatus === 'All') return true;
 		return item.status === selectedStatus;
 	});
+
+	const timeOptions = ['Today', 'Week', 'Month'];
+	const statusOptions = ['All', 'Completed', 'Failed'];
 
 	const containerStyle = {
 		display: 'flex',
@@ -59,6 +64,7 @@ const GoalHistoryCard = ({ data }) => {
 		gap: '20px',
 		fontWeight: 600,
 		color: '#333',
+		cursor: 'pointer',
 	};
 
 	const tableWrapper = {
@@ -98,16 +104,31 @@ const GoalHistoryCard = ({ data }) => {
 					</div>
 					<div style={titleStyle}>Goal History</div>
 				</div>
+
 				<div style={filtersStyle}>
-					<span>
-						Today <ArrowDropDown />
-					</span>
-					<span>
-						Week <ArrowDropDown />
-					</span>
-					<span>
-						Month <ArrowDropDown />
-					</span>
+					{timeOptions.map((option) => (
+						<span
+							key={option}
+							onClick={() => setSelectedTime(option)}
+							style={{
+								textDecoration: selectedTime === option ? 'underline' : 'none',
+							}}
+						>
+							{option} <ArrowDropDown />
+						</span>
+					))}
+
+					{statusOptions.map((option) => (
+						<span
+							key={option}
+							onClick={() => setSelectedStatus(option)}
+							style={{
+								textDecoration: selectedStatus === option ? 'underline' : 'none',
+							}}
+						>
+							{option}
+						</span>
+					))}
 				</div>
 			</div>
 

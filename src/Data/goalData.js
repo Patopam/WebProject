@@ -6,6 +6,12 @@ export const goalHistoryData = [
 		status: 'completed',
 	},
 	{
+		date: '2025-04-05',
+		title: 'Limit bread shop ',
+		amount: 10000,
+		status: 'completed',
+	},
+	{
 		date: '2025-04-02',
 		title: 'Groceries budget',
 		amount: 70000,
