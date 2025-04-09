@@ -20,13 +20,13 @@ const AddSpending = () => {
 	const handleClose = () => navigate('/finance');
 
 	return (
-		<div>
-			<div>
-				<h2>Add spending</h2>
-				<CloseIcon onClick={handleClose} />
+		<div style={container}>
+			<div style={header}>
+				<h2 style={title}>Add spending</h2>
+				<CloseIcon onClick={handleClose} style={closeIcon} />
 			</div>
 
-			<div>
+			<div style={inputRow}>
 				<EditInput
 					label='Add date'
 					value={date}
@@ -59,12 +59,59 @@ const AddSpending = () => {
 				onEditClick={() => setEditDesc(!editDesc)}
 			/>
 
-			<button>
-				<SendIcon />
-				<span>Save</span>
+			<button style={saveButton}>
+				<SendIcon style={{ fontSize: '20px' }} />
+				<span style={{ marginLeft: '8px' }}>Save</span>
 			</button>
 		</div>
 	);
 };
 
 export default AddSpending;
+
+const container = {
+	backgroundColor: '#D8D4F2',
+	height: '100vh',
+	padding: '50px 80px',
+	display: 'flex',
+	flexDirection: 'column',
+	gap: '24px',
+	fontFamily: "'Manrope', sans-serif",
+	position: 'relative',
+};
+
+const header = {
+	display: 'flex',
+	justifyContent: 'space-between',
+	alignItems: 'center',
+};
+
+const title = {
+	fontSize: '24px',
+	fontWeight: 'bold',
+	color: '#333',
+};
+
+const closeIcon = {
+	cursor: 'pointer',
+	fontSize: '20px',
+};
+
+const inputRow = {
+	display: 'flex',
+	gap: '24px',
+};
+
+const saveButton = {
+	backgroundColor: '#AFA8D1',
+	color: '#333',
+	border: 'none',
+	borderRadius: '10px',
+	padding: '12px 24px',
+	fontWeight: 500,
+	fontSize: '16px',
+	alignSelf: 'center',
+	display: 'flex',
+	alignItems: 'center',
+	cursor: 'pointer',
+};
