@@ -89,6 +89,59 @@ export default function JournalForm({ compact = false }) {
 					<span>Save</span>
 				</button>
 			</div>
+
+			<style jsx>{`
+				.journal-form-container {
+					background-color: #fde3a7;
+					padding: 40px;
+					font-family: 'Manrope', sans-serif;
+					border-radius: 16px;
+				}
+
+				.journal-form-container.compact {
+					padding: 24px;
+					max-width: 500px;
+				}
+
+				.journal-form-container.expanded {
+					max-width: 1200px;
+					margin: 0 auto;
+				}
+
+				.header-section {
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					margin-bottom: 24px;
+				}
+
+				.title-group {
+					display: flex;
+					align-items: center;
+					gap: 12px;
+				}
+
+				.icon-circle {
+					background-color: #f99f75;
+					width: 37px;
+					height: 37px;
+					border-radius: 50%;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+				}
+
+				.main-icon {
+					color: #000;
+					font-size: 20px;
+				}
+
+				.section-title {
+					font-size: 18px;
+					font-weight: 600;
+					color: #000;
+				}
+			`}</style>
 		</div>
 	);
 }
