@@ -6,8 +6,12 @@ import { useNavigate } from "react-router";
 import "./start.css";
 function Start() {
   let navigate = useNavigate();
-  const handleClick = () => {
+  const goLogin = () => {
     navigate("/log");
+  };
+
+  const goSign = () => {
+    navigate("/sing");
   };
   return (
     <>
@@ -18,7 +22,7 @@ function Start() {
         <Box sx={{ width: 460 }}>
           <Stack spacing={3}>
             <BotonStart text="Log In" onClick={handleClick} />
-            <BotonStart text="Create your account" />
+            <BotonStart text="Create your account" onClick={handleClick} />
             <BotonStartGoogle text="Connect with Google" />
           </Stack>
         </Box>
