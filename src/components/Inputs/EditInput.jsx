@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const EditInput = ({ label, value, onChange, editable }) => {
+const EditInput = ({ label, value, onChange }) => {
+	const [isEditing, setIsEditing] = useState(false);
+
 	return (
 		<div>
-			<label>{label}</label>
-			{editable ? <input type='text' value={value} onChange={onChange} /> : <span>{value}</span>}
+			<div>
+				<label>{label}</label>
+				<span onClick={() => setIsEditing(!isEditing)}>Edit</span>
+			</div>
+
+			{isEditing ? <input type='text' value={value} onChange={onChange} /> : <div>{value}</div>}
 		</div>
 	);
 };
