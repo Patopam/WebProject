@@ -3,7 +3,7 @@ export const goalHistoryData = [
 		date: '2025-04-01',
 		title: 'Limit coffee shop ',
 		amount: 25000,
-		status: 'completed', // 'completed' | 'failed'
+		status: 'completed',
 	},
 	{
 		date: '2025-04-02',
@@ -14,7 +14,7 @@ export const goalHistoryData = [
 	{
 		date: '2025-04-05',
 		title: 'No fast food',
-		amount: 0,
+		amount: 20.0,
 		status: 'completed',
 	},
 ];

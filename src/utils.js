@@ -17,27 +17,18 @@ export const obetenerContraseña = () => {
 	return JSON.parse(localStorage.getItem('contraseña'));
 };
 
-export function filterByTime(dateStr, selectedFilter) {
+export const filterByTime = (data, filter) => {
 	const today = new Date();
-	const itemDate = new Date(dateStr);
+	const result = data.filter((item) => {
+		const itemDate = new Date(item.date);
+		const diffTime = today - itemDate;
+		const diffDays = diffTime / (1000 * 60 * 60 * 24);
 
-	if (selectedFilter === 'Today') {
-		return (
-			itemDate.getDate() === today.getDate() &&
-			itemDate.getMonth() === today.getMonth() &&
-			itemDate.getFullYear() === today.getFullYear()
-		);
-	}
+		if (filter === 'Today') return diffDays < 1;
+		if (filter === 'Week') return diffDays <= 7;
+		if (filter === 'Month') return itemDate.getMonth() === today.getMonth();
 
-	if (selectedFilter === 'Week') {
-		const diff = Math.abs(today - itemDate);
-		const daysDiff = diff / (1000 * 60 * 60 * 24);
-		return daysDiff <= 7;
-	}
-
-	if (selectedFilter === 'Month') {
-		return itemDate.getMonth() === today.getMonth() && itemDate.getFullYear() === today.getFullYear();
-	}
-
-	return true;
-}
+		return true;
+	});
+	return result;
+};
