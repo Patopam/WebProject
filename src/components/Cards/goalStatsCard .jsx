@@ -1,21 +1,37 @@
-// card para Goals completed y Goals failed.
 import React from 'react';
 import { Card, CardContent, Typography, Box } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
-const GoalStatsCard = ({ title, description, quantity, label }) => {
+const GoalStatsCard = ({ title, description, quantity, label, bgColor, iconBg }) => {
 	return (
-		<Card>
+		<Card sx={{ backgroundColor: bgColor, borderRadius: '24px', boxShadow: 'none' }}>
 			<CardContent>
-				<Box>
-					<Box>
-						<FavoriteBorderIcon />
+				{/* Header */}
+				<Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
+					<Box
+						sx={{
+							backgroundColor: iconBg,
+							borderRadius: '50%',
+							width: 37,
+							height: 37,
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
+						}}
+					>
+						<FavoriteBorderIcon sx={{ color: '#333' }} />
 					</Box>
-					<Typography>{title}</Typography>
+					<Typography variant='h6' sx={{ fontWeight: 400 }}>
+						{title}
+					</Typography>
 				</Box>
 
-				<Typography>{description}</Typography>
-				<Typography>
+				{/* Description */}
+				<Typography variant='body1' sx={{ marginBottom: '8px' }}>
+					{description}
+				</Typography>
+
+				<Typography variant='h4' sx={{ fontWeight: 'bold' }}>
 					{quantity} {label}
 				</Typography>
 			</CardContent>
