@@ -29,6 +29,53 @@ export default function ImageCarousel() {
 					<AddIcon sx={{ fontSize: '20px', color: '#000000' }} />
 				</div>
 			</div>
+
+			<style>{`
+        .carousel-container {
+          position: relative;
+          border-radius: 16px;
+          background: #eaeaea;
+          width: 100%;
+          max-width: 400px;
+          overflow: hidden;
+        }
+
+        .embla {
+          overflow: hidden;
+        }
+
+        .embla__container {
+          display: flex;
+        }
+
+        .embla__slide {
+          flex: 0 0 100%;
+          padding: 8px;
+        }
+
+        .embla__slide img {
+          width: 100%;
+          height: 240px;
+          object-fit: cover;
+          border-radius: 12px;
+        }
+
+        .add-button {
+          position: absolute;
+          top: 12px;
+          right: 12px;
+        }
+
+        .circle {
+          width: 36px;
+          height: 36px;
+          background-color: #cbcbe7;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      `}</style>
 		</div>
 	);
 }
