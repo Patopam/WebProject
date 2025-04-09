@@ -1,5 +1,6 @@
 import React from 'react';
 import Menu from '../../components/Menu/menu';
+import AddButton from '../../components/Buttons/add';
 import Header from '../../components/Header/header';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -14,17 +15,27 @@ import { goalHistoryData } from '../../Data/goalData';
 import './finance.css';
 
 function Finance() {
+	const handleGoalClick = () => {
+		console.log('Daily journal clicked');
+	};
+
+	const handleSpendClick = () => {
+		console.log('Add spend clicked');
+	};
 	return (
 		<div className='finance-container'>
 			<Menu />
 			<div className='finance-content'>
-				{/* Header con título y botones de perfil */}
 				<div className='finance-header'>
 					<Header title='Finance' subtitle='Here you will find your stats.' />
 					<div className='finance-icons'>
 						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' />
 						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' />
 					</div>
+				</div>
+				<div className='finance-buttons'>
+					<AddButton onClick={handleGoalClick} text={'Set new goal'} />
+					<AddButton onClick={handleSpendClick} text={'Add spend'} />
 				</div>
 
 				{/* esqueleto de la pagina */}
