@@ -139,7 +139,6 @@ export default function JournalForm({ compact = false }) {
 				.section-title {
 					font-size: 18px;
 					font-weight: 600;
-					color: #000;
 				}
 				.expand-icon {
 					color: #000;

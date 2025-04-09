@@ -6,6 +6,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CustomIconButton from '../../components/Buttons/icon';
 import './journal.css';
 import JournalForm from '../../components/Journal/journalForms';
+import ReminderCard from '../../components/Cards/remainder';
 
 function Journal() {
 	return (
@@ -22,6 +23,9 @@ function Journal() {
 
 				<div className='journal-view'>
 					<JournalForm compact />
+				</div>
+				<div className='remainders-cards'>
+					<ReminderCard></ReminderCard>
 				</div>
 			</div>
 		</div>
