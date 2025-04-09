@@ -4,8 +4,17 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 const GoalStatsCard = ({ title, description, quantity, label, bgColor, iconBg }) => {
 	return (
-		<Card sx={{ backgroundColor: bgColor, borderRadius: '24px', boxShadow: 'none' }}>
-			<CardContent>
+		<Card
+			sx={{
+				backgroundColor: bgColor,
+				borderRadius: '24px',
+				boxShadow: 'none',
+				width: '310px', //
+				height: 'auto', //
+				padding: '28px', //
+			}}
+		>
+			<CardContent sx={{ padding: '0px !important' }}>
 				{/* Header */}
 				<Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
 					<Box
@@ -27,11 +36,17 @@ const GoalStatsCard = ({ title, description, quantity, label, bgColor, iconBg })
 				</Box>
 
 				{/* Description */}
-				<Typography variant='body1' sx={{ marginBottom: '8px' }}>
+				<Typography
+					variant='body1'
+					sx={{
+						marginBottom: '8px',
+						fontSize: '18px',
+					}}
+				>
 					{description}
 				</Typography>
 
-				<Typography variant='h4' sx={{ fontWeight: 'bold' }}>
+				<Typography variant='h5' sx={{ fontWeight: 'bold' }}>
 					{quantity} {label}
 				</Typography>
 			</CardContent>
