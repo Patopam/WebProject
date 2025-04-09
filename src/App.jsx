@@ -13,6 +13,7 @@ import Start from './screens/start/start';
 import Log from './screens/log/log';
 import Sign from './screens/sign/sign';
 import AddGoal from './screens/finance/addGoal';
+import AddSpending from './screens/finance/addSpending';
 
 function App() {
 	return (
@@ -29,7 +30,7 @@ function App() {
 				<Route path='/Alljournal' element={<AllJournal />} />
 				<Route path='/journal/write' element={<ExpandedJournal />} />
 				<Route path='/calendar' element={<Calendar />} />
-				{/* <Route path='/finance/add-spending' element={<AddSpending />} /> */}
+				<Route path='/finance/add-spending' element={<AddSpending />} />
 				<Route path='/finance/add-goal' element={<AddGoal />} />
 			</Routes>
 		</Router>
