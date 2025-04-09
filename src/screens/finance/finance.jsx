@@ -5,9 +5,10 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CustomIconButton from '../../components/Buttons/icon';
 import GoalStatsCard from '../../components/Cards/goalStatsCard ';
-import './finance.css';
-import { goalsSummary } from '../../Data/goalData';
+import GoalHistoryCard from '../../components/Cards/goalHistoryCard';
 import GoalProgressCard from '../../components/Cards/goal';
+import { goalsSummary } from '../../Data/goalData';
+import './finance.css';
 
 function Finance() {
 	return (
@@ -31,7 +32,10 @@ function Finance() {
 					{/* Distribución de columnas */}
 					<div className='finance-main'>
 						{/* Columna izquierda */}
-						<div className='finance-left-column'>{/* Aquí luego se insertarán los componentes  */}</div>
+						<div className='finance-left-column'>
+							{/* Aquí luego se insertarán los componentes  */}
+							<GoalHistoryCard />
+						</div>
 
 						{/* Columna derecha */}
 						<div className='finance-right-column'>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { goalHistoryData } from '../../Data/goalHistoryData';
-import { filterByTime } from '../../utils/filters';
+import { goalHistoryData } from '../../Data/goalData';
+import { filterByTime } from '../../utils';
 
 const GoalHistoryCard = () => {
 	const [timeFilter, setTimeFilter] = useState('All');
