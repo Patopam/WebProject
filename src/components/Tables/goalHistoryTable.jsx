@@ -8,6 +8,7 @@ const GoalHistoryCard = ({ data }) => {
 
 	const filteredData = data.filter((item) => {
 		if (selectedStatus === 'All') return true;
+		return item.status === selectedStatus;
 	});
 
 	const containerStyle = {
