@@ -1,4 +1,3 @@
-// reminderPhrases.js
 const reminderPhrases = [
 	'Understanding yourself starts here!',
 	'Self-discovery begins with awareness.',
