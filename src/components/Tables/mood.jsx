@@ -22,9 +22,9 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 	backgroundColor: '#CBCBE7',
 	borderRadius: 20,
 	padding: theme.spacing(2),
-	height: '800px', // Altura exacta mínima como pediste
-	width: '800px', // Ancho exacto
-	overflowY: 'auto', // Por si hay scroll internos
+	height: '800px',
+	width: '800px',
+	overflowY: 'auto',
 	margin: '0 auto',
 	boxSizing: 'border-box',
 	boxShadow: 'none',
@@ -32,18 +32,19 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 
 const StyledTabs = styled(Tabs)(({ theme }) => ({
 	'& .MuiTabs-indicator': {
-		backgroundColor: '#9C9CD2', // color del indicador (la línea abajo del tab activo)
+		backgroundColor: '#9C9CD2',
 	},
 }));
 
+//seleccionado
 const StyledTab = styled(Tab)(({ theme }) => ({
-	color: '#333', // color del texto cuando no está seleccionado
+	color: '#333',
 	fontFamily: 'Manrope, sans-serif',
 	fontSize: '22px',
 	textTransform: 'none',
 	fontWeight: 700,
 	'&.Mui-selected': {
-		color: '#49499D', // color del texto cuando está seleccionado
+		color: '#49499D',
 		fontWeight: 700,
 	},
 }));
@@ -224,7 +225,7 @@ export default function MoodTracker() {
 			organized[monthYear].push(item);
 		});
 
-		// Sort entries within each month by date (descending)
+		// Sort entries within each month by date
 		Object.keys(organized).forEach((month) => {
 			organized[month].sort((a, b) => new Date(b.date) - new Date(a.date));
 		});
@@ -262,7 +263,7 @@ export default function MoodTracker() {
 					<ListItemText
 						primary={item.title}
 						primaryTypographyProps={{
-							color: '#333', // color del texto cuando no está seleccionado
+							color: '#333',
 							fontFamily: 'Manrope, sans-serif',
 							fontSize: '20px',
 							textTransform: 'none',

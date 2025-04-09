@@ -6,7 +6,7 @@ const ExpensesDay = () => {
 		display: 'flex',
 		flexDirection: 'column',
 		width: '660px',
-		height: '341px', // Altura fija como pediste
+		height: '341px',
 		padding: '28px',
 		borderRadius: '24px',
 		backgroundColor: '#CECAE4',
