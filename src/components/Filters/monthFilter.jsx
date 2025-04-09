@@ -1,21 +1,48 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Box } from '@mui/material';
 
-export default function MonthFilter() {
-	const [selectedMonth, setSelectedMonth] = useState('All');
-
+const MonthFilter = ({ selectedMonth, setSelectedMonth }) => {
 	const months = ['All', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Agu', 'Jul', 'Sep', 'Oct', 'Nov', 'Dic'];
 
 	return (
-		<div className='flex flex-wrap gap-2'>
+		<Box
+			sx={{
+				display: 'flex',
+				flexWrap: 'wrap',
+				gap: '8px',
+			}}
+		>
 			{months.map((month) => (
-				<button
+				<Box
 					key={month}
-					className={`rounded-full bg-indigo-600 text-white px-6 py-3 text-center w-14 h-11 flex items-center justify-center`}
+					component='button'
 					onClick={() => setSelectedMonth(month)}
+					sx={{
+						display: 'flex',
+						width: '57px',
+						height: '45px',
+						padding: '6px 24px',
+						justifyContent: 'center',
+						alignItems: 'center',
+						gap: '24px',
+						borderRadius: '999px',
+						background: selectedMonth === month ? '#4B4990' : '#5F5DA6',
+						color: '#fff',
+						border: 'none',
+						cursor: 'pointer',
+						fontFamily: "'Manrope', sans-serif",
+						fontSize: '14px',
+						fontWeight: 500,
+						'&:hover': {
+							background: '#4B4990',
+						},
+					}}
 				>
 					{month}
-				</button>
+				</Box>
 			))}
-		</div>
+		</Box>
 	);
-}
+};
+
+export default MonthFilter;
