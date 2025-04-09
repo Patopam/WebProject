@@ -5,6 +5,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CustomIconButton from '../../components/Buttons/icon';
 import './journal.css';
+import ExpandedJournal from '../journal/expandedJournal';
 
 function Journal() {
 	return (
@@ -17,6 +18,9 @@ function Journal() {
 						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' />
 						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' />
 					</div>
+				</div>
+				<div>
+					<ExpandedJournal></ExpandedJournal>
 				</div>
 			</div>
 		</div>
