@@ -4,9 +4,8 @@ import Header from '../../components/Header/header';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CustomIconButton from '../../components/Buttons/icon';
-import JournalView from '../../components/Journal/journalView';
 import './journal.css';
-import ExpandedJournal from '../journal/expandedJournal';
+import JournalForm from '../../components/Journal/journalForms';
 
 function Journal() {
 	return (
@@ -22,7 +21,7 @@ function Journal() {
 				</div>
 
 				<div className='journal-view'>
-					<ExpandedJournal />
+					<JournalForm compact />
 				</div>
 			</div>
 		</div>

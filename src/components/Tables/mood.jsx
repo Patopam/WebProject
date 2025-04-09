@@ -30,14 +30,14 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 	boxShadow: 'none',
 }));
 
-const StyledTabs = styled(Tabs)(({ theme }) => ({
+const StyledTabs = styled(Tabs)(() => ({
 	'& .MuiTabs-indicator': {
 		backgroundColor: '#9C9CD2',
 	},
 }));
 
 //seleccionado
-const StyledTab = styled(Tab)(({ theme }) => ({
+const StyledTab = styled(Tab)(() => ({
 	color: '#333',
 	fontFamily: 'Manrope, sans-serif',
 	fontSize: '22px',
@@ -65,7 +65,7 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
 	fontSize: '44px',
 }));
 
-const StyledChip = styled(Chip)(({ theme }) => ({
+const StyledChip = styled(Chip)(() => ({
 	backgroundColor: '#9C9CD2',
 	borderRadius: 10,
 	color: 'var(--Neutral-1000, #333)',
@@ -94,7 +94,7 @@ const MonthHeader = styled(Typography)(({ theme }) => ({
 	paddingLeft: theme.spacing(1),
 }));
 
-const MoodSelectorModal = styled(Modal)(({ theme }) => ({
+const MoodSelectorModal = styled(Modal)(() => ({
 	display: 'flex',
 	alignItems: 'center',
 	justifyContent: 'center',
@@ -111,7 +111,7 @@ const MoodSelectorContainer = styled(Paper)(({ theme }) => ({
 	maxWidth: 450,
 }));
 
-const MoodOption = styled(ButtonBase)(({ theme }) => ({
+const MoodOption = styled(ButtonBase)(() => ({
 	width: 50,
 	height: 50,
 	fontSize: 30,
