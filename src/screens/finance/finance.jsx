@@ -14,6 +14,7 @@ import { goalsSummary } from '../../Data/goalData';
 import { expenditureData } from '../../Data/expensesData';
 import { goalHistoryData } from '../../Data/goalData';
 import './finance.css';
+import EditInput from '../../components/Inputs/EditInput';
 
 function Finance() {
 	const navigate = useNavigate();
