@@ -4,6 +4,7 @@ import Header from '../../components/Header/header';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CustomIconButton from '../../components/Buttons/icon';
+import GoalStatsCard from '../../components/Cards/goalStatsCard ';
 import './finance.css';
 
 function Finance() {
@@ -16,6 +17,9 @@ function Finance() {
 					<div className='finance-icons'>
 						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' />
 						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' />
+					</div>
+					<div>
+						<GoalStatsCard />
 					</div>
 				</div>
 			</div>
