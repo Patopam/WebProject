@@ -6,6 +6,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CustomIconButton from '../../components/Buttons/icon';
 import GoalStatsCard from '../../components/Cards/goalStatsCard ';
 import './finance.css';
+import { goalsSummary } from '../../Data/goalData';
 
 function Finance() {
 	return (
@@ -19,7 +20,19 @@ function Finance() {
 						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' />
 					</div>
 					<div>
-						<GoalStatsCard />
+						<div className='stats-cards'>
+							{goalsSummary.map((goal, index) => (
+								<GoalStatsCard
+									key={index}
+									title={goal.title}
+									description={goal.description}
+									quantity={goal.quantity}
+									label={goal.label}
+									bgColor={goal.bgColor}
+									iconBg={goal.iconBg}
+								/>
+							))}
+						</div>
 					</div>
 				</div>
 			</div>
