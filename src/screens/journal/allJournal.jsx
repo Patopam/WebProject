@@ -6,15 +6,14 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CustomIconButton from '../../components/Buttons/icon';
 import JournalView from '../../components/Journal/journalView';
 import './journal.css';
-import ExpandedJournal from '../journal/expandedJournal';
 
-function Journal() {
+function AllJournal() {
 	return (
 		<div className='journal-container'>
 			<Menu />
 			<div className='journal-content'>
 				<div className='journal-header'>
-					<Header title='My journal' subtitle='Write your thoughts of the day.' />
+					<Header title='All my journals' subtitle='Look back at what you’ve felt, written and lived.' />
 					<div className='journal-icons'>
 						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' />
 						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' />
@@ -22,11 +21,11 @@ function Journal() {
 				</div>
 
 				<div className='journal-view'>
-					<ExpandedJournal />
+					<JournalView />
 				</div>
 			</div>
 		</div>
 	);
 }
 
-export default Journal;
+export default AllJournal;
