@@ -1,20 +1,35 @@
-import { guardarUsuario } from "../../utils";
-import { guardarContraseña } from "../../utils";
+import { obetenerContraseña, obtenerCorreo } from "../../utils";
 import { Typography, Container, Stack, Box } from "@mui/material";
 import BotonStart from "../../components/Buttons/botonesStart";
 import BotonStartGoogle from "../../components/Buttons/botonStartGoogle";
 import { useNavigate, Link } from "react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Inputs from "../../components/Inputs/Inputs";
 import { FaRegEyeSlash } from "react-icons/fa";
 import "./log.css";
 function Log() {
-  const [Usuario, setUsuario] = useState("");
+  useEffect(() => {
+    setCorreoVerificacion(obtenerCorreo());
+    setContraseñaVerificacion(obetenerContraseña());
+  }, []);
+  const [Correo, setCorreo] = useState("");
   const [Constraseña, setConstraseña] = useState("");
+  const [ContraseñaVerificacion, setContraseñaVerificacion] = useState("");
+  const [CorreoVerificacion, setCorreoVerificacion] = useState("");
+
+  const navigate = useNavigate();
 
   const Summit = () => {
-    guardarUsuario(Usuario);
-    guardarContraseña(Constraseña);
+    if (
+      Correo === ContraseñaVerificacion &&
+      Constraseña === CorreoVerificacion
+    ) {
+      navigate("/dashboard");
+      console.log("Usuario correcto");
+    } else {
+      alert("Usuario o contraseña incorrectos");
+      console.log(ContraseñaVerificacion, CorreoVerificacion);
+    }
   };
   const styleText = {
     Centrado: {
@@ -63,8 +78,8 @@ function Log() {
             <form>
               <Stack spacing={3}>
                 <Inputs
-                  value={Usuario}
-                  onChange={(e) => setUsuario(e.target.value)}
+                  value={Correo}
+                  onChange={(e) => setCorreo(e.target.value)}
                   label="Usuario"
                   placeholder="Write your email *"
                 />

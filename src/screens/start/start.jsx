@@ -21,8 +21,8 @@ function Start() {
         </div>
         <Box sx={{ width: 460 }}>
           <Stack spacing={3}>
-            <BotonStart text="Log In" onClick={handleClick} />
-            <BotonStart text="Create your account" onClick={handleClick} />
+            <BotonStart text="Log In" onClick={goLogin} />
+            <BotonStart text="Create your account" onClick={goSign} />
             <BotonStartGoogle text="Connect with Google" />
           </Stack>
         </Box>

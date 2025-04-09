@@ -1,4 +1,4 @@
-import { guardarUsuario } from "../../utils";
+import { guardarCorreo, guardarUsuario } from "../../utils";
 import { guardarContraseña } from "../../utils";
 import { Typography, Container, Stack, Box } from "@mui/material";
 import BotonStart from "../../components/Buttons/botonesStart";
@@ -13,9 +13,13 @@ function Sign() {
   const [Correo, setCorreo] = useState("");
   const [Constraseña, setConstraseña] = useState("");
 
+  const navigate = useNavigate();
+
   const Summit = () => {
     guardarUsuario(Usuario);
     guardarContraseña(Constraseña);
+    guardarCorreo(Correo);
+    navigate("/log");
   };
   const styleText = {
     Centrado: {
@@ -70,8 +74,8 @@ function Sign() {
                   placeholder="Write your name *"
                 />
                 <Inputs
-                  value={Usuario}
-                  onChange={(e) => setUsuario(e.target.value)}
+                  value={Correo}
+                  onChange={(e) => setCorreo(e.target.value)}
                   label="Usuario"
                   placeholder="Write your email *"
                 />
@@ -87,11 +91,11 @@ function Sign() {
           </Box>
           <Box sx={{ width: 460 }}>
             <Stack spacing={3}>
-              <BotonStart text="Log In" onClick={Summit} />
+              <BotonStart text="Create your account" onClick={Summit} />
               <BotonStartGoogle text="Connect with Google" />
             </Stack>
             <Typography sx={styleText.Centrado}>
-              <Link to="/login">Do you have an account? Log in</Link>
+              <Link to="/log">Do you have an account? Log in</Link>
             </Typography>
           </Box>
         </Stack>
