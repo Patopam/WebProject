@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Box } from '@mui/material';
-import MonthFilter from './MonthFilter';
-import JournalCards from './JournalCards';
-import { journalData } from './journalData';
+import MonthFilter from '../Filters/monthFilter';
+import JournalCards from '../Cards/journalCards';
+import { journalData } from '../../Data/journalData';
 
 const JournalView = () => {
 	const [selectedMonth, setSelectedMonth] = useState('All');
