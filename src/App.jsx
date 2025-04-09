@@ -6,7 +6,7 @@ import Emotions from './screens/emotions/emotions';
 import Finance from './screens/finance/finance';
 import Analytics from './screens/analytics/analytics';
 import Journal from './screens/journal/journal';
-import AllJournal from './screens/journal/alljournal';
+import AllJournal from './screens/allJournal/allJournal';
 import Calendar from './screens/calendar/calendar';
 import Start from './screens/start/start';
 import Log from './screens/log/log';

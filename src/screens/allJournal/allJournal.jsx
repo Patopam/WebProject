@@ -5,7 +5,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CustomIconButton from '../../components/Buttons/icon';
 import JournalView from '../../components/Journal/journalView';
-import './journal.css';
+import './allJournal.css';
 
 function AllJournal() {
 	return (
