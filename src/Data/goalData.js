@@ -1,7 +1,7 @@
 export const goalHistoryData = [
 	{
 		date: '2025-04-01',
-		title: 'Limit coffee shop spending',
+		title: 'Limit coffee shop ',
 		amount: 25000,
 		status: 'completed', // 'completed' | 'failed'
 	},
