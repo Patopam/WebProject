@@ -38,15 +38,17 @@
 .dashboard-cards-row {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	gap: 2.5rem;
+	gap: 1.5rem;
 	margin-bottom: 1.5rem;
+	align-items: start;
 }
 
 /* Second row with expenses table and emotion week side by side */
 .dashboard-bottom-row {
 	display: grid;
-	grid-template-columns: 1fr 1fr;
-	gap: 1.5rem;
+	grid-template-columns: 1.5fr 1fr;
+	gap: 1.2rem;
+	align-items: start;
 }
 
 /* Responsive */
@@ -58,16 +60,24 @@
 	}
 }
 
-/* Add this for more specific control */
 @media (min-width: 1025px) and (max-width: 1440px) {
+	.dashboard-cards-row {
+		gap: 2rem;
+	}
+
 	.dashboard-bottom-row {
-		grid-template-columns: 3fr 2fr;
+		grid-template-columns: 2.5fr 1.5fr;
+		gap: 1.5rem;
 	}
 }
 
-/* For larger screens */
 @media (min-width: 1441px) {
+	.dashboard-cards-row {
+		gap: 2.5rem;
+	}
+
 	.dashboard-bottom-row {
 		grid-template-columns: 3fr 2fr;
+		gap: 1.5rem;
 	}
 }

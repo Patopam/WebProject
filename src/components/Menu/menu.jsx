@@ -6,6 +6,7 @@ import Logo from '../../assets/logo.png';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
+import PhotoAlbumOutlinedIcon from '@mui/icons-material/PhotoAlbumOutlined';
 import LeaderboardOutlinedIcon from '@mui/icons-material/LeaderboardOutlined';
 import TagFacesOutlinedIcon from '@mui/icons-material/TagFacesOutlined';
 import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined';
@@ -36,7 +37,7 @@ const Menu = () => {
 					</li>
 					<li>
 						<Link to='/Alljournal' className='menu-item-link'>
-							<PersonOutlineOutlinedIcon />
+							<PhotoAlbumOutlinedIcon />
 							<span>All my Journals</span>
 						</Link>
 					</li>
