@@ -130,7 +130,7 @@ const SaveButton = styled(Button)(({ theme }) => ({
 	alignItems: 'center',
 	gap: '12px',
 	padding: '12px 20px',
-	backgroundColor: '#fcd48f',
+	backgroundColor: '#FACD69',
 	borderRadius: '12px',
 	cursor: 'pointer',
 	fontSize: '16px',
