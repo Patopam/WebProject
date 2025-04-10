@@ -26,20 +26,22 @@ function Analytics() {
             <CustomIconButton icon={<LogoutIcon />} ariaLabel="logout" />
           </div>
         </div>
-        <Stack className="Chart-container">
-          <div className="chart-Emocion">
-            <EmotionsLineChartCentered />
-          </div>
-          <div className="chart-Expenses">
-            <ExpensesLineChart />
-          </div>
-        </Stack>
-        <div className="Analytics-cards">
-          <Stack spacing={5}>
-            <FeelingsCard compact={true} />
-            <GoalProgressCard spent={150000} total={200000} compact={true} />
+        <Container className="analytics-container">
+          <Stack spacing={4.5} className="Chart-Stack">
+            <div className="chart-Emocion">
+              <EmotionsLineChartCentered />
+            </div>
+            <div className="chart-Expenses">
+              <ExpensesLineChart />
+            </div>
           </Stack>
-        </div>
+          <div className="Analytics-cards">
+            <Stack spacing={5}>
+              <FeelingsCard compact={true} />
+              <GoalProgressCard spent={150000} total={200000} compact={true} />
+            </Stack>
+          </div>
+        </Container>
       </div>
     </div>
   );

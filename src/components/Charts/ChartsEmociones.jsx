@@ -95,15 +95,15 @@ export default function EmotionsLineChartCentered() {
 
   return (
     <div className="">
-      <Typography variant="h4" sx={styleText.Titulo}>
+      <Typography variant="h5" sx={styleText.Titulo}>
         Mis Emociones de la Semana
       </Typography>
-      <ResponsiveContainer width="100%" height={350}>
+      <ResponsiveContainer width="100%" height={250}>
         <LineChart
-          width={600}
+          width={50}
           height={300}
           data={emotionsData}
-          margin={{ top: 20, right: 30, left: 30, bottom: 5 }}
+          margin={{ top: 20, right: 40, left: 30, bottom: 5 }}
           style={styleText.Linea}
         >
           <CartesianGrid strokeDasharray="3 3" />
