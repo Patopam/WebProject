@@ -32,7 +32,6 @@ const FeelingsCard = ({ compact = false }) => {
 					'&:last-child': { paddingBottom: 0 },
 				}}
 			>
-				{/* Header */}
 				<Box
 					sx={{
 						display: 'flex',
@@ -68,7 +67,6 @@ const FeelingsCard = ({ compact = false }) => {
 					</Typography>
 				</Box>
 
-				{/* Content */}
 				<Box
 					sx={{
 						display: 'flex',
@@ -124,11 +122,3 @@ const FeelingsCard = ({ compact = false }) => {
 };
 
 export default FeelingsCard;
-
-// Tamaños:
-
-// Versión normal
-// <FeelingsCard />
-
-// Versión compacta
-// <FeelingsCard compact={true} />

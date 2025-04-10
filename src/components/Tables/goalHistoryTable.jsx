@@ -67,10 +67,10 @@ const GoalHistoryCard = ({ data }) => {
 	};
 
 	const tableWrapper = {
-		overflowY: 'auto', // Scroll cuando se necesita
-		height: '160px', // Altura fija para limitar el espacio
-		scrollbarWidth: 'none', // Oculta scroll en Firefox
-		msOverflowStyle: 'none', // Oculta scroll en IE/Edge
+		overflowY: 'auto',
+		height: '160px',
+		scrollbarWidth: 'none',
+		msOverflowStyle: 'none',
 	};
 
 	const tableStyle = {
@@ -98,7 +98,6 @@ const GoalHistoryCard = ({ data }) => {
 
 	return (
 		<div style={containerStyle}>
-			{/* Título + ícono */}
 			<div style={headerStyle}>
 				<div style={iconContainer}>
 					<AttachMoney style={{ fontSize: '24px', color: '#333' }} />
@@ -106,7 +105,6 @@ const GoalHistoryCard = ({ data }) => {
 				<div style={titleStyle}>Goal History</div>
 			</div>
 
-			{/* Filtros */}
 			<div style={filterBoxStyle}>
 				<div style={filterGroup}>
 					{timeOptions.map((option) => (
@@ -140,7 +138,6 @@ const GoalHistoryCard = ({ data }) => {
 				</div>
 			</div>
 
-			{/* Tabla */}
 			<div style={tableWrapper}>
 				<table style={tableStyle}>
 					<thead>
