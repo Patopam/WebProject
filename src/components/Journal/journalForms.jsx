@@ -166,7 +166,7 @@ export default function JournalForm({ compact = false }) {
 	const [selectedFeeling, setSelectedFeeling] = useState('');
 	const [selectedTags, setSelectedTags] = useState([]);
 
-	// Emojis exactamente como en la imagen
+	// Emojis
 	const emojis = ['😄', '😭', '😢', '😡', '😑', '😩'];
 	const tags = ['Reflection', 'Gratitude', 'Daily Intention', 'Release'];
 
