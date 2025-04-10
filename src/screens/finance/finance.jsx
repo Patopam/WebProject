@@ -42,21 +42,13 @@ function Finance() {
 					<AddButton onClick={handleSpendClick} text={'Add spend'} />
 				</div>
 
-				{/* esqueleto de la pagina */}
 				<div className='finance-layout'>
-					{/* Botones superiores (Set new goal y Add spending) */}
-					<div className='finance-top'>{/* Aquí irán los botones luego */}</div>
-
-					{/* Distribución de columnas */}
 					<div className='finance-main'>
-						{/* Columna izquierda */}
 						<div className='finance-left-column'>
-							{/* Aquí luego se insertarán los componentes  */}
 							<GoalHistoryTable data={goalHistoryData} />
 							<ExpenditureHistoryTable data={expenditureData} />
 						</div>
 
-						{/* Columna derecha */}
 						<div className='finance-right-column'>
 							<div className='goal-progress-placeholder'>
 								<GoalProgressCard spent={150000} total={200000} compact={true} />
