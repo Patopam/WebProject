@@ -33,18 +33,26 @@ function Journal() {
           </div>
         </div>
 
-        <div className="journal-view">
-          <JournalForm compact />
-        </div>
-        <div className="remainders-cards">
-          <ReminderCard />
-        </div>
-        <div className="carousel-card">
-          <ImageCarousel />
-        </div>
-      </div>
-    </div>
-  );
+
+				{/* Grid principal */}
+				<div className='journal-main-grid'>
+					<div className='journal-left'>
+						<JournalForm compact />
+					</div>
+
+					<div className='journal-right'>
+						<div className='journal-reminder'>
+							<ReminderCard />
+						</div>
+						<div className='journal-carousel'>
+							<ImageCarousel />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+
 }
 
 export default Journal;

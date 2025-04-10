@@ -1,4 +1,5 @@
-import { colors } from "@mui/material";
+import { colors } from '@mui/material';
+
 
 function Inputs({ type, placeholder, value, onChange }) {
   const styles = {
@@ -31,5 +32,6 @@ function Inputs({ type, placeholder, value, onChange }) {
       />
     </div>
   );
+
 }
 export default Inputs;

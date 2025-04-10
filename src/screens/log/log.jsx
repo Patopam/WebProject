@@ -1,23 +1,22 @@
-import { obetenerContraseña, obtenerCorreo } from "../../utils";
-import { Typography, Container, Stack, Box } from "@mui/material";
-import BotonStart from "../../components/Buttons/botonesStart";
-import BotonStartGoogle from "../../components/Buttons/botonStartGoogle";
-import { useNavigate, Link } from "react-router";
-import { useEffect, useState } from "react";
-import Inputs from "../../components/Inputs/Inputs";
-import { FaRegEyeSlash } from "react-icons/fa";
-import "./log.css";
+import { obetenerContraseña, obtenerCorreo } from '../../utils';
+import { Typography, Container, Stack, Box } from '@mui/material';
+import BotonStart from '../../components/Buttons/botonesStart';
+import BotonStartGoogle from '../../components/Buttons/botonStartGoogle';
+import { useNavigate, Link } from 'react-router';
+import { useEffect, useState } from 'react';
+import Inputs from '../../components/Inputs/Inputs';
+import './log.css';
 function Log() {
-  useEffect(() => {
-    setCorreoVerificacion(obtenerCorreo());
-    setContraseñaVerificacion(obetenerContraseña());
-  }, []);
-  const [Correo, setCorreo] = useState("");
-  const [Constraseña, setConstraseña] = useState("");
-  const [ContraseñaVerificacion, setContraseñaVerificacion] = useState("");
-  const [CorreoVerificacion, setCorreoVerificacion] = useState("");
+	useEffect(() => {
+		setCorreoVerificacion(obtenerCorreo());
+		setContraseñaVerificacion(obetenerContraseña());
+	}, []);
+	const [Correo, setCorreo] = useState('');
+	const [Constraseña, setConstraseña] = useState('');
+	const [ContraseñaVerificacion, setContraseñaVerificacion] = useState('');
+	const [CorreoVerificacion, setCorreoVerificacion] = useState('');
 
-  const navigate = useNavigate();
+	const navigate = useNavigate();
 
   const Summit = () => {
     if (
@@ -108,5 +107,6 @@ function Log() {
       </Container>
     </>
   );
+
 }
 export default Log;
