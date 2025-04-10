@@ -66,7 +66,7 @@ const TagWrapper = styled(Box)(({ theme }) => ({
 }));
 
 const TagButton = styled(Button)(({ selected }) => ({
-	backgroundColor: selected ? '#e8c255' : '#FACD69',
+	backgroundColor: selected ? '#F69F77' : '#FACD69',
 	borderRadius: '16px',
 	padding: '8px 16px',
 	textTransform: 'none',
