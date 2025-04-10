@@ -1,15 +1,31 @@
 import React, { useState } from 'react';
+import { filterByTime } from '../../utils';
 import { ArrowDropDown } from '@mui/icons-material';
 
-// Datos de ejemplo (puedes reemplazar esto con tus datos reales)
-const sampleData = [
-	{ date: 'Date', amount: 'Amount', category: 'Category' },
-	{ date: 'Date', amount: 'Amount', category: 'Category' },
-	{ date: 'Date', amount: 'Amount', category: 'Category' },
-];
+// Datos de ejemplo por periodo (puedes reemplazar esto con tus datos reales)
+const sampleData = {
+	Today: [
+		{ date: 'Date', amount: 'Amount', category: 'Category' },
+		{ date: 'Date', amount: 'Amount', category: 'Category' },
+		{ date: 'Date', amount: 'Amount', category: 'Category' },
+	],
+	Week: [
+		{ date: 'Date', amount: 'Amount', category: 'Category' },
+		{ date: 'Date', amount: 'Amount', category: 'Category' },
+		{ date: 'Date', amount: 'Amount', category: 'Category' },
+	],
+	Month: [
+		{ date: 'Date', amount: 'Amount', category: 'Category' },
+		{ date: 'Date', amount: 'Amount', category: 'Category' },
+		{ date: 'Date', amount: 'Amount', category: 'Category' },
+	],
+};
 
-const GoalHistoryCard = () => {
+const GoalHistoryCard = ({ data }) => {
 	const [selectedTime, setSelectedTime] = useState('Today');
+
+	// Usa la función filterByTime si se proporciona data, o usa los datos de ejemplo
+	const displayData = data ? filterByTime(data, selectedTime) : sampleData[selectedTime];
 
 	const timeOptions = ['Today', 'Week', 'Month'];
 
@@ -50,19 +66,10 @@ const GoalHistoryCard = () => {
 
 	const filterBoxStyle = {
 		display: 'flex',
-		justifyContent: 'space-between',
 		backgroundColor: '#F5D889',
 		borderRadius: '12px',
 		padding: '12px 20px',
 		marginBottom: '20px',
-	};
-
-	const filterGroup = {
-		display: 'flex',
-		gap: '20px',
-		fontWeight: 500,
-		color: '#333',
-		cursor: 'pointer',
 	};
 
 	const filterItemStyle = (option) => ({
@@ -71,6 +78,10 @@ const GoalHistoryCard = () => {
 		gap: '2px',
 		color: '#333',
 		fontSize: '18px',
+		cursor: 'pointer',
+		flex: 1,
+		justifyContent: 'center',
+		fontWeight: selectedTime === option ? 600 : 400,
 	});
 
 	const tableStyle = {
@@ -85,14 +96,11 @@ const GoalHistoryCard = () => {
 		color: '#333',
 		fontWeight: 600,
 		fontSize: '18px',
-	};
-
-	const tableRowStyle = {
-		marginBottom: '12px',
+		width: '33.33%', // Distribuir equitativamente las columnas
 	};
 
 	const tableCellStyle = {
-		padding: '20px',
+		padding: '12px 20px',
 		fontSize: '18px',
 		color: '#333',
 	};
@@ -105,13 +113,11 @@ const GoalHistoryCard = () => {
 			</div>
 
 			<div style={filterBoxStyle}>
-				<div style={filterGroup}>
-					{timeOptions.map((option) => (
-						<span key={option} onClick={() => setSelectedTime(option)} style={filterItemStyle(option)}>
-							{option} <ArrowDropDown />
-						</span>
-					))}
-				</div>
+				{timeOptions.map((option) => (
+					<div key={option} onClick={() => setSelectedTime(option)} style={filterItemStyle(option)}>
+						{option} <ArrowDropDown />
+					</div>
+				))}
 			</div>
 
 			<table style={tableStyle}>
@@ -123,8 +129,8 @@ const GoalHistoryCard = () => {
 					</tr>
 				</thead>
 				<tbody>
-					{sampleData.map((item, index) => (
-						<tr key={index} style={tableRowStyle}>
+					{displayData.map((item, index) => (
+						<tr key={index}>
 							<td style={tableCellStyle}>{item.date}</td>
 							<td style={tableCellStyle}>{item.amount}</td>
 							<td style={tableCellStyle}>{item.category}</td>
