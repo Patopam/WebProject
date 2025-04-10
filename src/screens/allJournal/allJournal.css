@@ -25,35 +25,3 @@
 	display: flex;
 	gap: 0.5rem;
 }
-
-.journal-main-grid {
-	display: grid;
-	grid-template-columns: 2fr 1fr;
-	gap: 2rem;
-}
-
-.journal-left {
-	display: flex;
-	flex-direction: column;
-	gap: 1rem;
-}
-
-.journal-right {
-	display: flex;
-	flex-direction: column;
-	gap: 1.5rem;
-}
-
-.journal-reminder {
-	width: 100%;
-}
-
-.journal-carousel {
-	width: 100%;
-}
-
-@media (max-width: 1024px) {
-	.journal-main-grid {
-		grid-template-columns: 1fr;
-	}
-}

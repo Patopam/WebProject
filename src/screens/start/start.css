@@ -1,0 +1,19 @@
+body {
+  background-color: #f3f3f3;
+}
+.container-start {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 98vh;
+}
+.menu-logo-img {
+  width: 100%;
+}
+.menu-logo {
+  margin-bottom: 50px;
+}
+.text-start {
+  margin-top: 20px;
+}

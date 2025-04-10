@@ -1,0 +1,10 @@
+body {
+  background-color: #f3f3f3;
+}
+.Container-sign {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 98vh;
+}

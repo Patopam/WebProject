@@ -4,23 +4,25 @@ import Header from "../../components/Header/header";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import CustomIconButton from "../../components/Buttons/icon";
-import "./calendar.css";
+import JournalView from "../../components/Journal/journalView";
+import "./allJournal.css";
 import { useNavigate } from "react-router-dom";
-function Calendar() {
+
+function AllJournal() {
   let navigate = useNavigate();
   const goLogin = () => {
     navigate("/log");
   };
   return (
-    <div className="calendar-container">
+    <div className="journal-container">
       <Menu />
-      <div className="calendar-content">
-        <div className="calendar-header">
+      <div className="journal-content">
+        <div className="journal-header">
           <Header
-            title="My calendar"
-            subtitle="Calendar view of your emotions."
+            title="All my journals"
+            subtitle="Look back at what you’ve felt, written and lived."
           />
-          <div className="calendar-icons">
+          <div className="journal-icons">
             <CustomIconButton icon={<AccountCircleIcon />} ariaLabel="user" />
             <CustomIconButton
               icon={<LogoutIcon />}
@@ -29,9 +31,13 @@ function Calendar() {
             />
           </div>
         </div>
+
+        <div className="journal-view">
+          <JournalView />
+        </div>
       </div>
     </div>
   );
 }
 
-export default Calendar;
+export default AllJournal;
