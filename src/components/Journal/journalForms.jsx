@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Typography, TextField, Button, IconButton, styled } from '@mui/material';
 import SentimentSatisfiedOutlinedIcon from '@mui/icons-material/SentimentSatisfiedOutlined';
 import OpenInFullOutlinedIcon from '@mui/icons-material/OpenInFullOutlined';
@@ -152,14 +152,31 @@ export default function JournalForm() {
 	const [selectedFeeling, setSelectedFeeling] = useState('');
 	const [selectedTags, setSelectedTags] = useState([]);
 
-	const emojis = ['😊', '😭', '😢', '😡', '😑', '😩'];
+	// Emojis exactamente como en la imagen
+	const emojis = ['😄', '😭', '😢', '😡', '😑', '😩'];
 	const tags = ['Reflection', 'Gratitude', 'Daily Intention', 'Release'];
 
+	// Plantillas para cada tipo de entrada
+	const templates = {
+		Reflection: "Today I'm reflecting on...\n\nWhat went well:\n\nWhat could have gone better:\n\nWhat I learned:",
+		Gratitude: "Today I'm grateful for:\n\n1.\n2.\n3.\n\nWhy these matter to me:",
+		'Daily Intention': 'My intention for today is:\n\nHow I plan to achieve this:\n\nHow I will measure success:',
+		Release: "What I need to let go of:\n\nWhy I'm holding onto it:\n\nHow I will release it:",
+	};
+
 	const handleTagClick = (tag) => {
+		// Si ya está seleccionado, quítalo; si no, selecciona solo este tag
 		if (selectedTags.includes(tag)) {
 			setSelectedTags(selectedTags.filter((t) => t !== tag));
+			setEntryText(''); // Limpiar el texto si se deselecciona
 		} else {
-			setSelectedTags([...selectedTags, tag]);
+			setSelectedTags([tag]); // Solo permitir un tag a la vez
+			setEntryText(templates[tag]); // Establecer la plantilla correspondiente
+
+			// Establecer un título predeterminado basado en el tag
+			if (!entryTitle) {
+				setEntryTitle(`My ${tag} - ${new Date().toLocaleDateString()}`);
+			}
 		}
 	};
 
