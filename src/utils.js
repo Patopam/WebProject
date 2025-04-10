@@ -32,3 +32,7 @@ export const filterByTime = (data, filter) => {
 	});
 	return result;
 };
+
+export const obtenerUsuario = () => {
+  return JSON.parse(localStorage.getItem("usuario"));
+};

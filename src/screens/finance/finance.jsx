@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Menu from '../../components/Menu/menu';
@@ -73,6 +74,7 @@ function Finance() {
 			</div>
 		</div>
 	);
+
 }
 
 export default Finance;
