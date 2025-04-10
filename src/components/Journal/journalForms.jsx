@@ -159,12 +159,12 @@ const SaveButton = styled(Button)(({ theme }) => ({
 }));
 
 export default function JournalForm({ compact = false }) {
-  const navigate = useNavigate();
+	const navigate = useNavigate();
 
-  const [entryText, setEntryText] = useState("");
-  const [entryTitle, setEntryTitle] = useState("");
-  const [selectedFeeling, setSelectedFeeling] = useState("");
-  const [selectedTags, setSelectedTags] = useState([]);
+	const [entryText, setEntryText] = useState('');
+	const [entryTitle, setEntryTitle] = useState('');
+	const [selectedFeeling, setSelectedFeeling] = useState('');
+	const [selectedTags, setSelectedTags] = useState([]);
 
 	// Emojis exactamente como en la imagen
 	const emojis = ['😄', '😭', '😢', '😡', '😑', '😩'];
@@ -265,3 +265,4 @@ export default function JournalForm({ compact = false }) {
 			</SaveButtonWrapper>
 		</JournalContainer>
 	);
+}
