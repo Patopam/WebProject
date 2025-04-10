@@ -23,7 +23,9 @@ const AddGoal = () => {
 		<div style={container}>
 			<div style={header}>
 				<h2 style={title}>Set new goal</h2>
-				<CloseIcon onClick={handleClose} style={closeIcon} />
+				<div style={closeIconContainer}>
+					<CloseIcon onClick={handleClose} style={closeIcon} />
+				</div>
 			</div>
 
 			{/* Row with two inputs */}
@@ -98,6 +100,7 @@ const header = {
 	alignItems: 'center',
 	width: '100%',
 	marginBottom: '16px',
+	paddingRight: '10px', // Añadido para mejor alineación
 };
 
 const title = {
@@ -107,9 +110,19 @@ const title = {
 	margin: 0,
 };
 
+// Contenedor para mejor control sobre el icono
+const closeIconContainer = {
+	display: 'flex',
+	alignItems: 'center',
+	justifyContent: 'center',
+	width: '40px',
+	height: '40px',
+};
+
 const closeIcon = {
 	cursor: 'pointer',
 	fontSize: '24px',
+	color: '#333',
 };
 
 const dateRowContainer = {
