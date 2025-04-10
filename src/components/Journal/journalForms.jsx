@@ -1,11 +1,150 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Box, Typography, TextField, Button, IconButton, styled } from '@mui/material';
 import SentimentSatisfiedOutlinedIcon from '@mui/icons-material/SentimentSatisfiedOutlined';
 import OpenInFullOutlinedIcon from '@mui/icons-material/OpenInFullOutlined';
 import TurnedInNotOutlinedIcon from '@mui/icons-material/TurnedInNotOutlined';
-import Box from '@mui/material/Box';
+import { useNavigate } from 'react-router-dom';
 
-export default function JournalForm({ compact = true }) {
+// Styled components
+const JournalContainer = styled(Box)(({ theme }) => ({
+	backgroundColor: '#fde3a7',
+	padding: '40px',
+	fontFamily: '"Manrope", sans-serif',
+	borderRadius: '16px',
+	width: '800px',
+	margin: '0 auto',
+}));
+
+const HeaderSection = styled(Box)(({ theme }) => ({
+	display: 'flex',
+	justifyContent: 'space-between',
+	alignItems: 'center',
+	marginBottom: '24px',
+}));
+
+const TitleGroup = styled(Box)(({ theme }) => ({
+	display: 'flex',
+	alignItems: 'center',
+	gap: '12px',
+}));
+
+const IconCircle = styled(Box)(({ bgcolor = '#f99f75' }) => ({
+	backgroundColor: bgcolor,
+	width: '37px',
+	height: '37px',
+	borderRadius: '50%',
+	display: 'flex',
+	alignItems: 'center',
+	justifyContent: 'center',
+}));
+
+const FeelingsSection = styled(Box)(({ theme }) => ({
+	marginBottom: '20px',
+}));
+
+const EmojiWrapper = styled(Box)(({ theme }) => ({
+	display: 'inline-flex',
+	gap: '12px',
+	backgroundColor: '#fcd48f',
+	padding: '12px 16px',
+	borderRadius: '12px',
+	marginBottom: '20px',
+}));
+
+const EmojiButton = styled(Box)(({ selected }) => ({
+	fontSize: '24px',
+	cursor: 'pointer',
+	transition: 'transform 0.2s ease',
+	transform: selected ? 'scale(1.3)' : 'scale(1)',
+}));
+
+const TagWrapper = styled(Box)(({ theme }) => ({
+	display: 'flex',
+	gap: '12px',
+	marginBottom: '24px',
+	flexWrap: 'wrap',
+}));
+
+const TagButton = styled(Button)(({ selected }) => ({
+	backgroundColor: selected ? '#e8c255' : '#f6d776',
+	borderRadius: '16px',
+	padding: '8px 16px',
+	textTransform: 'none',
+	fontWeight: 500,
+	fontSize: '14px',
+	color: '#000',
+	'&:hover': {
+		backgroundColor: selected ? '#e8c255' : '#f6d776',
+		opacity: 0.9,
+	},
+}));
+
+const EntrySection = styled(Box)(({ theme }) => ({
+	display: 'flex',
+	flexDirection: 'column',
+	gap: '16px',
+	backgroundColor: '#fde3a7',
+	border: '2px solid #f6d776',
+	borderRadius: '16px',
+	padding: '20px',
+	marginBottom: '32px',
+}));
+
+const EntryTitle = styled(TextField)(({ theme }) => ({
+	'& .MuiInputBase-root': {
+		fontFamily: '"Manrope", sans-serif',
+		fontSize: '18px',
+		fontWeight: 600,
+		color: '#000',
+		borderBottom: '1px solid rgba(216, 164, 65, 0.4)',
+		'&:before, &:after': {
+			display: 'none',
+		},
+	},
+	'& .MuiInputBase-input': {
+		padding: '4px 0',
+	},
+}));
+
+const EntryTextArea = styled(TextField)(({ theme }) => ({
+	'& .MuiInputBase-root': {
+		fontFamily: '"Manrope", sans-serif',
+		fontSize: '16px',
+		color: '#333',
+		'&:before, &:after': {
+			display: 'none',
+		},
+	},
+	'& .MuiOutlinedInput-notchedOutline': {
+		border: 'none',
+	},
+}));
+
+const SaveButtonWrapper = styled(Box)(({ theme }) => ({
+	display: 'flex',
+	justifyContent: 'center',
+}));
+
+const SaveButton = styled(Button)(({ theme }) => ({
+	display: 'flex',
+	alignItems: 'center',
+	gap: '12px',
+	padding: '12px 20px',
+	backgroundColor: '#fcd48f',
+	borderRadius: '12px',
+	cursor: 'pointer',
+	fontSize: '16px',
+	fontWeight: 500,
+	textTransform: 'none',
+	color: '#000',
+	fontFamily: '"Manrope", sans-serif',
+	'&:hover': {
+		backgroundColor: '#fcd48f',
+		opacity: 0.9,
+	},
+}));
+
+export default function JournalForm() {
 	const navigate = useNavigate();
 
 	const [entryText, setEntryText] = useState('');
@@ -13,7 +152,7 @@ export default function JournalForm({ compact = true }) {
 	const [selectedFeeling, setSelectedFeeling] = useState('');
 	const [selectedTags, setSelectedTags] = useState([]);
 
-	const emojis = ['😄', '😭', '😨', '😡', '😐', '😩'];
+	const emojis = ['😊', '😭', '😢', '😡', '😑', '😩'];
 	const tags = ['Reflection', 'Gratitude', 'Daily Intention', 'Release'];
 
 	const handleTagClick = (tag) => {
@@ -25,228 +164,68 @@ export default function JournalForm({ compact = true }) {
 	};
 
 	return (
-		<div className='journal-form-container'>
-			<section className='header-section'>
-				<div className='title-group'>
-					<Box className='icon-circle'>
-						<SentimentSatisfiedOutlinedIcon className='main-icon' />
-					</Box>
-					<span className='section-title'>Write what you feel</span>
-				</div>
-				<OpenInFullOutlinedIcon
-					className='expand-icon'
-					onClick={() => navigate(compact ? '/journal/write' : '/journal')}
-				/>
-			</section>
+		<JournalContainer>
+			<HeaderSection>
+				<TitleGroup>
+					<IconCircle>
+						<SentimentSatisfiedOutlinedIcon sx={{ color: '#000', fontSize: 20 }} />
+					</IconCircle>
+					<Typography sx={{ fontSize: 18, fontWeight: 600 }}>Write what you feel</Typography>
+				</TitleGroup>
+				<IconButton onClick={() => navigate('/journal/write')}>
+					<OpenInFullOutlinedIcon sx={{ color: '#000' }} />
+				</IconButton>
+			</HeaderSection>
 
-			<section className='feelings-section'>
-				<h3>How do you feel today?</h3>
-				<div className='emoji-wrapper'>
+			<FeelingsSection>
+				<Typography variant='h3' sx={{ fontSize: 16, marginBottom: '12px', fontWeight: 600 }}>
+					How do you feel today?
+				</Typography>
+				<EmojiWrapper>
 					{emojis.map((emoji, index) => (
-						<span
-							key={index}
-							className={`emoji ${selectedFeeling === emoji ? 'selected' : ''}`}
-							onClick={() => setSelectedFeeling(emoji)}
-						>
+						<EmojiButton key={index} selected={selectedFeeling === emoji} onClick={() => setSelectedFeeling(emoji)}>
 							{emoji}
-						</span>
+						</EmojiButton>
 					))}
-				</div>
-			</section>
+				</EmojiWrapper>
+			</FeelingsSection>
 
-			<div className='tag-wrapper'>
+			<TagWrapper>
 				{tags.map((tag, index) => (
-					<button
-						key={index}
-						className={`tag ${selectedTags.includes(tag) ? 'selected' : ''}`}
-						onClick={() => handleTagClick(tag)}
-					>
+					<TagButton key={index} selected={selectedTags.includes(tag)} onClick={() => handleTagClick(tag)}>
 						{tag}
-					</button>
+					</TagButton>
 				))}
-			</div>
+			</TagWrapper>
 
-			<section className='entry-section'>
-				<input
-					type='text'
+			<EntrySection>
+				<EntryTitle
+					fullWidth
+					variant='standard'
 					placeholder='Title'
-					className='entry-title'
 					value={entryTitle}
 					onChange={(e) => setEntryTitle(e.target.value)}
+					InputProps={{ disableUnderline: true }}
 				/>
-				<textarea
+				<EntryTextArea
+					fullWidth
+					multiline
 					placeholder='Write here...'
+					minRows={5}
 					value={entryText}
 					onChange={(e) => setEntryText(e.target.value)}
-				></textarea>
-			</section>
+					variant='outlined'
+				/>
+			</EntrySection>
 
-			<div className='save-button-wrapper'>
-				<button className='save-button'>
-					<Box className='icon-circle'>
-						<TurnedInNotOutlinedIcon className='main-icon' />
-					</Box>
+			<SaveButtonWrapper>
+				<SaveButton>
+					<IconCircle bgcolor='#f6d776'>
+						<TurnedInNotOutlinedIcon sx={{ color: '#000', fontSize: 20 }} />
+					</IconCircle>
 					<span>Save</span>
-				</button>
-			</div>
-
-			<style jsx>{`
-				.journal-form-container {
-					background-color: #fde3a7;
-					padding: 24px;
-					font-family: 'Manrope', sans-serif;
-					border-radius: 16px;
-					width: 800px;
-					margin: 0 auto;
-				}
-
-				.header-section {
-					display: flex;
-					justify-content: space-between;
-					align-items: center;
-					margin-bottom: 24px;
-				}
-
-				.title-group {
-					display: flex;
-					align-items: center;
-					gap: 12px;
-				}
-
-				.icon-circle {
-					background-color: #f99f75;
-					width: 37px;
-					height: 37px;
-					border-radius: 50%;
-					display: flex;
-					align-items: center;
-					justify-content: center;
-				}
-
-				.main-icon {
-					color: #000;
-					font-size: 20px;
-				}
-
-				.section-title {
-					font-size: 18px;
-					font-weight: 600;
-				}
-
-				.expand-icon {
-					color: #000;
-					cursor: pointer;
-				}
-
-				.feelings-section h3 {
-					font-size: 16px;
-					margin-bottom: 12px;
-				}
-
-				.emoji-wrapper {
-					display: inline-flex;
-					gap: 12px;
-					background-color: #fcd48f;
-					padding: 12px 16px;
-					border-radius: 12px;
-					margin-bottom: 20px;
-				}
-
-				.emoji {
-					font-size: 24px;
-					cursor: pointer;
-					transition: transform 0.2s ease;
-				}
-
-				.emoji.selected {
-					transform: scale(1.3);
-				}
-
-				.tag-wrapper {
-					display: flex;
-					gap: 12px;
-					margin-bottom: 24px;
-					flex-wrap: wrap;
-				}
-
-				.tag {
-					background-color: #f6d776;
-					border: none;
-					padding: 8px 16px;
-					border-radius: 16px;
-					font-weight: 500;
-					cursor: pointer;
-					font-size: 14px;
-				}
-
-				.tag.selected {
-					background-color: #e8c255;
-				}
-
-				.entry-section {
-					display: flex;
-					flex-direction: column;
-					gap: 16px;
-					background-color: #fde3a7;
-					border: 2px solid #f6d776;
-					border-radius: 16px;
-					padding: 20px;
-					margin-bottom: 32px;
-				}
-
-				.entry-title {
-					font-size: 18px;
-					border: none;
-					border-bottom: 1px solid rgba(216, 164, 65, 0.4);
-					background: transparent;
-					padding: 4px 0;
-					font-weight: 600;
-					color: #000;
-					outline: none;
-					width: 100%;
-				}
-
-				.entry-section textarea {
-					background-color: transparent;
-					border: none;
-					outline: none;
-					resize: none;
-					font-size: 16px;
-					font-family: 'Manrope', sans-serif;
-					color: #333;
-					min-height: 120px;
-					width: 100%;
-				}
-
-				.save-button-wrapper {
-					display: flex;
-					justify-content: center;
-				}
-
-				.save-button {
-					display: flex;
-					align-items: center;
-					gap: 12px;
-					padding: 6px 16px;
-					background-color: #fcd48f;
-					border: none;
-					border-radius: 12px;
-					cursor: pointer;
-					font-size: 16px;
-					font-weight: 500;
-					font-family: 'Manrope', sans-serif;
-				}
-
-				.save-button .icon-circle {
-					background-color: #facd69;
-					width: 40px;
-					height: 40px;
-					border-radius: 50%;
-					display: flex;
-					align-items: center;
-					justify-content: center;
-				}
-			`}</style>
-		</div>
+				</SaveButton>
+			</SaveButtonWrapper>
+		</JournalContainer>
 	);
 }
