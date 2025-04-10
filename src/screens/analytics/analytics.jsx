@@ -10,8 +10,12 @@ import { Typography, Container, Stack, Box } from "@mui/material";
 import EmotionsLineChartCentered from "../../components/Charts/ChartsEmociones";
 import ExpensesLineChart from "../../components/Charts/ChartsGastos";
 import "./analytics.css";
-
+import { useNavigate } from "react-router-dom";
 function Analytics() {
+  let navigate = useNavigate();
+  const goLogin = () => {
+    navigate("/log");
+  };
   return (
     <div className="analytics-container">
       <Menu />
@@ -23,7 +27,11 @@ function Analytics() {
           />
           <div className="analytics-icons">
             <CustomIconButton icon={<AccountCircleIcon />} ariaLabel="user" />
-            <CustomIconButton icon={<LogoutIcon />} ariaLabel="logout" />
+            <CustomIconButton
+              icon={<LogoutIcon />}
+              ariaLabel="logout"
+              onClick={goLogin}
+            />
           </div>
         </div>
         <Container className="analytics-container">

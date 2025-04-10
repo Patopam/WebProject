@@ -14,7 +14,12 @@ import expensesData from "../../Data/expensesData";
 import "./style.css";
 import { useEffect, useState } from "react";
 import { obtenerUsuario } from "../../utils";
+import { useNavigate } from "react-router-dom";
 function Dashboard() {
+  let navigate = useNavigate();
+  const goLogin = () => {
+    navigate("/log");
+  };
   const [Nombre, setNombre] = useState("Evan");
   useEffect(() => {
     setNombre(obtenerUsuario());
@@ -40,7 +45,11 @@ function Dashboard() {
           />
           <div className="dashboard-icons">
             <CustomIconButton icon={<AccountCircleIcon />} ariaLabel="user" />
-            <CustomIconButton icon={<LogoutIcon />} ariaLabel="logout" />
+            <CustomIconButton
+              icon={<LogoutIcon />}
+              ariaLabel="logout"
+              onClick={goLogin}
+            />
           </div>
         </div>
 

@@ -85,7 +85,6 @@ function Log() {
                 />
                 <Inputs
                   type="password"
-                  icon={<FaRegEyeSlash />}
                   value={Constraseña}
                   onChange={(e) => setConstraseña(e.target.value)}
                   placeholder={"Write your password *"}

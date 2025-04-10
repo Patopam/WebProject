@@ -1,6 +1,6 @@
 import { colors } from "@mui/material";
 
-function Inputs({ icon, type, placeholder, value, onChange }) {
+function Inputs({ type, placeholder, value, onChange }) {
   const styles = {
     input: {
       flex: 1,
@@ -29,7 +29,6 @@ function Inputs({ icon, type, placeholder, value, onChange }) {
         value={value}
         onChange={onChange}
       />
-      <i>{icon}</i>
     </div>
   );
 }
