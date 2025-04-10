@@ -1,5 +1,3 @@
-// src/components/Tables/ExpenditureHistoryTable.jsx
-
 import React, { useState } from 'react';
 import { AttachMoney, ArrowDropDown } from '@mui/icons-material';
 import { filterByTime } from '../../utils';
@@ -116,7 +114,6 @@ const ExpenditureHistoryTable = ({ data }) => {
 				))}
 			</div>
 
-			{/* Tabla */}
 			<div style={tableWrapper}>
 				<table style={tableStyle}>
 					<thead>
