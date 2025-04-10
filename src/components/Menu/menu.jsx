@@ -6,6 +6,7 @@ import Logo from '../../assets/logo.png';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
+import PhotoAlbumOutlinedIcon from '@mui/icons-material/PhotoAlbumOutlined';
 import LeaderboardOutlinedIcon from '@mui/icons-material/LeaderboardOutlined';
 import TagFacesOutlinedIcon from '@mui/icons-material/TagFacesOutlined';
 import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined';
@@ -23,7 +24,7 @@ const Menu = () => {
 				<p className='section-title'>MAIN</p>
 				<ul>
 					<li>
-						<Link to='/' className='menu-item-link'>
+						<Link to='/dashboard' className='menu-item-link'>
 							<HomeOutlinedIcon />
 							<span>Dashboard</span>
 						</Link>
@@ -35,13 +36,19 @@ const Menu = () => {
 						</Link>
 					</li>
 					<li>
+						<Link to='/Alljournal' className='menu-item-link'>
+							<PhotoAlbumOutlinedIcon />
+							<span>All my Journals</span>
+						</Link>
+					</li>
+					<li>
 						<Link to='/calendar' className='menu-item-link'>
 							<CalendarTodayOutlinedIcon />
 							<span>Calendar</span>
 						</Link>
 					</li>
 					<li>
-						<Link to='/analytics' className='menu-item-link'>
+						<Link to='/analytics/' className='menu-item-link'>
 							<LeaderboardOutlinedIcon />
 							<span>Analytics</span>
 						</Link>
@@ -70,12 +77,6 @@ const Menu = () => {
 			<div className='menu-section'>
 				<p className='section-title'>SETTINGS</p>
 				<ul>
-					<li>
-						<Link to='/notifications' className='menu-item-link'>
-							<NotificationsActiveOutlinedIcon />
-							<span>Notifications</span>
-						</Link>
-					</li>
 					<li>
 						<Link to='/settings' className='menu-item-link'>
 							<SettingsOutlinedIcon />

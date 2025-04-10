@@ -1,68 +1,80 @@
-/* src/styles/dashboard-layout.css */
-
 .dashboard-container {
 	display: flex;
 	height: 100vh;
+	width: 100%;
+	background-color: #ffffff;
+	font-family: 'Manrope', sans-serif;
 }
 
-.sidebar {
-	width: 220px;
-	flex-shrink: 0;
-}
-
-.main-content {
+.dashboard-content {
 	flex: 1;
-	padding: 20px;
+	padding: 2rem;
+	display: flex;
+	flex-direction: column;
 	overflow-y: auto;
 }
 
-.header-section {
+.dashboard-header {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	margin-bottom: 30px;
+	margin-bottom: 1.5rem;
 }
 
-.buttons-section {
+.dashboard-icons {
 	display: flex;
-	gap: 16px;
-	margin-bottom: 30px;
+	gap: 0.5rem;
 }
 
-.icon-buttons {
+.dashboard-buttons {
 	display: flex;
-	gap: 8px;
+	gap: 1rem;
+	margin-bottom: 2rem;
 }
 
-.cards-row-1 {
+/* First row with three equal cards */
+.dashboard-cards-row {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	gap: 24px;
-	margin-bottom: 24px;
+	gap: 1.5rem;
+	margin-bottom: 1.5rem;
+	align-items: start;
 }
 
-.cards-row-2 {
+/* Second row with expenses table and emotion week side by side */
+.dashboard-bottom-row {
 	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	gap: 24px;
+	grid-template-columns: 1.5fr 1fr;
+	gap: 1.2rem;
+	align-items: start;
 }
 
-.finances-placeholder,
-.expenses-placeholder {
-	border-radius: 8px;
-	min-height: 200px;
-}
-
-/* Responsive adjustments for smaller screens */
 @media (max-width: 1024px) {
-	.cards-row-1 {
-		grid-template-columns: repeat(2, 1fr);
+	.dashboard-cards-row,
+	.dashboard-bottom-row {
+		grid-template-columns: 1fr;
+		gap: 1.5rem;
 	}
 }
 
-@media (max-width: 768px) {
-	.cards-row-1,
-	.cards-row-2 {
-		grid-template-columns: 1fr;
+@media (min-width: 1025px) and (max-width: 1440px) {
+	.dashboard-cards-row {
+		gap: 2rem;
+	}
+
+	.dashboard-bottom-row {
+		grid-template-columns: 2.5fr 1.5fr;
+		gap: 1.5rem;
+	}
+}
+
+@media (min-width: 1441px) {
+	.dashboard-cards-row {
+		gap: 2.5rem;
+	}
+
+	.dashboard-bottom-row {
+		grid-template-columns: 3fr 2fr;
+		gap: 1.5rem;
 	}
 }
