@@ -33,10 +33,9 @@ export default function EmotionsLineChartCentered() {
       textAlign: "center",
     },
   };
-  // Array de emociones disponibles
+
   const emotions = ["😢", "😰", "😠", "😩", "😐", "😄"];
 
-  // Datos fijos de emociones para la semana
   const emotionsData = [
     { day: "Lunes", emotion: "😐", emotionValue: 4 },
     { day: "Martes", emotion: "😠", emotionValue: 2 },
@@ -71,7 +70,7 @@ export default function EmotionsLineChartCentered() {
           cy={cy}
           r={12}
           fill="white"
-          stroke="#8884d8"
+          stroke="#49499D"
           strokeWidth={1}
         />
         <text x={cx} y={cy} dy={5} dx={0} textAnchor="middle" fontSize="16px">
@@ -95,7 +94,7 @@ export default function EmotionsLineChartCentered() {
 
   return (
     <div className="">
-      <Typography variant="h5" sx={styleText.Titulo}>
+      <Typography variant="h4" sx={styleText.Titulo}>
         Mis Emociones de la Semana
       </Typography>
       <ResponsiveContainer width="100%" height={250}>
@@ -119,8 +118,8 @@ export default function EmotionsLineChartCentered() {
             type="monotone"
             dataKey="emotionValue"
             name="Emoción"
-            stroke="#8884d8"
-            strokeWidth={5}
+            stroke="#49499D"
+            strokeWidth={4}
             dot={<CustomizedDot />}
           />
         </LineChart>

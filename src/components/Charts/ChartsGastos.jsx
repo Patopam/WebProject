@@ -64,7 +64,7 @@ export default function ExpensesLineChart() {
         cx={cx}
         cy={cy}
         r={7}
-        fill="#8884d8"
+        fill="#49499D"
         stroke="white"
         strokeWidth={2}
       />
@@ -74,7 +74,7 @@ export default function ExpensesLineChart() {
   return (
     <div>
       <Typography variant="h4" sx={styleText.Titulo}>
-        Control de Gastos Semanales
+        Gastos Semanales
       </Typography>
 
       <ResponsiveContainer width="100%" height={250}>
@@ -82,11 +82,11 @@ export default function ExpensesLineChart() {
           width={600}
           height={300}
           data={expensesData}
-          margin={{ top: 20, right: 30, left: 30, bottom: 5 }}
+          margin={{ top: 20, right: 40, left: 30, bottom: 5 }}
           style={styleText.Linea}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="day" />
+          <XAxis dataKey="day" height={30} />
           <YAxis
             domain={[0, 80]}
             ticks={[0, 10, 20, 30, 40, 50, 60, 70, 80]}
@@ -97,9 +97,9 @@ export default function ExpensesLineChart() {
           <Line
             type="monotone"
             dataKey="expense"
-            name="Gasto en USD"
-            stroke="#8884d8"
-            strokeWidth={3}
+            name="Gasto"
+            stroke="#49499D"
+            strokeWidth={4}
             dot={<CustomDot />}
             activeDot={{ r: 8 }}
           />
