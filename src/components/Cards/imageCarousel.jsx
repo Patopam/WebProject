@@ -4,14 +4,12 @@ import Autoplay from 'embla-carousel-autoplay';
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
-import Button from '@mui/material/Button';
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
 
 // Imágenes iniciales
 const initialImages = [
-	'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80',
-	'https://images.unsplash.com/photo-1507919981545-78e7ef4bba3c?auto=format&fit=crop&w=800&q=80',
-	'https://images.unsplash.com/photo-1601758123927-1961b24d7f98?auto=format&fit=crop&w=800&q=80',
+	'https://i.pinimg.com/736x/c8/52/9c/c8529c9071cc20f4a642dbbb189d3496.jpg',
+	'https://i.pinimg.com/736x/5d/24/d0/5d24d0e1423ee5b4073217e5f2c4465d.jpg',
+	'https://i.pinimg.com/736x/f5/f7/b4/f5f7b4bba64a48dac65f2ccfd8afe239.jpg',
 ];
 
 // Estilos con Material UI styled API
@@ -63,12 +61,6 @@ const UploadInput = styled('input')({
 	display: 'none',
 });
 
-const UploadButtonContainer = styled('div')({
-	display: 'flex',
-	justifyContent: 'center',
-	padding: '8px 0',
-});
-
 export default function ImageCarousel() {
 	const [images, setImages] = useState(initialImages);
 	const [emblaRef] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 3000 })]);
@@ -104,12 +96,7 @@ export default function ImageCarousel() {
 				</AddButtonCircle>
 			</AddButtonContainer>
 
-			<UploadButtonContainer>
-				<Button variant='contained' startIcon={<PhotoCamera />} onClick={handleAddButtonClick} size='small'>
-					Subir nueva imagen
-				</Button>
-				<UploadInput ref={fileInputRef} accept='image/*' type='file' onChange={handleFileUpload} />
-			</UploadButtonContainer>
+			<UploadInput ref={fileInputRef} accept='image/*' type='file' onChange={handleFileUpload} />
 		</CarouselContainer>
 	);
 }
