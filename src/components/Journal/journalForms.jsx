@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SentimentSatisfiedOutlinedIcon from '@mui/icons-material/SentimentSatisfiedOutlined';
 import OpenInFullOutlinedIcon from '@mui/icons-material/OpenInFullOutlined';
 import TurnedInNotOutlinedIcon from '@mui/icons-material/TurnedInNotOutlined';
 import Box from '@mui/material/Box';
-import { useNavigate } from 'react-router-dom';
 
-export default function JournalForm({ compact = false }) {
+export default function JournalForm({ compact = true }) {
 	const navigate = useNavigate();
 
 	const [entryText, setEntryText] = useState('');
@@ -13,7 +13,7 @@ export default function JournalForm({ compact = false }) {
 	const [selectedFeeling, setSelectedFeeling] = useState('');
 	const [selectedTags, setSelectedTags] = useState([]);
 
-	const emojis = ['😊', '😭', '😡', '😢', '😑', '😩'];
+	const emojis = ['😄', '😭', '😨', '😡', '😐', '😩'];
 	const tags = ['Reflection', 'Gratitude', 'Daily Intention', 'Release'];
 
 	const handleTagClick = (tag) => {
@@ -25,7 +25,7 @@ export default function JournalForm({ compact = false }) {
 	};
 
 	return (
-		<div className={`journal-form-container ${compact ? 'compact' : 'expanded'}`}>
+		<div className='journal-form-container'>
 			<section className='header-section'>
 				<div className='title-group'>
 					<Box className='icon-circle'>
@@ -93,18 +93,10 @@ export default function JournalForm({ compact = false }) {
 			<style jsx>{`
 				.journal-form-container {
 					background-color: #fde3a7;
-					padding: 40px;
+					padding: 24px;
 					font-family: 'Manrope', sans-serif;
 					border-radius: 16px;
-				}
-
-				.journal-form-container.compact {
-					padding: 24px;
-					max-width: 800px;
-				}
-
-				.journal-form-container.expanded {
-					max-width: 1200px;
+					width: 800px;
 					margin: 0 auto;
 				}
 
@@ -140,6 +132,7 @@ export default function JournalForm({ compact = false }) {
 					font-size: 18px;
 					font-weight: 600;
 				}
+
 				.expand-icon {
 					color: #000;
 					cursor: pointer;
@@ -210,6 +203,7 @@ export default function JournalForm({ compact = false }) {
 					font-weight: 600;
 					color: #000;
 					outline: none;
+					width: 100%;
 				}
 
 				.entry-section textarea {
@@ -221,6 +215,7 @@ export default function JournalForm({ compact = false }) {
 					font-family: 'Manrope', sans-serif;
 					color: #333;
 					min-height: 120px;
+					width: 100%;
 				}
 
 				.save-button-wrapper {
