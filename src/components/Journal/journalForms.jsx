@@ -28,7 +28,7 @@ const TitleGroup = styled(Box)(({ theme }) => ({
 	gap: '12px',
 }));
 
-const IconCircle = styled(Box)(({ bgcolor = '#f99f75' }) => ({
+const IconCircle = styled(Box)(({ bgcolor = '#FACD69' }) => ({
 	backgroundColor: bgcolor,
 	width: '37px',
 	height: '37px',
