@@ -7,25 +7,26 @@ import { useEffect, useState } from 'react';
 import Inputs from '../../components/Inputs/Inputs';
 import './log.css';
 function Log() {
-	useEffect(() => {}, []);
+	useEffect(() => {
+		setCorreoVerificacion(obtenerCorreo());
+		setContraseñaVerificacion(obetenerContraseña());
+		console.log('HOLA INICIO');
+	});
 	const [Correo, setCorreo] = useState('');
 	const [Constraseña, setConstraseña] = useState('');
-	const [ContraseñaVerificacion, setContraseñaVerificacion] = useState(null);
-	const [CorreoVerificacion, setCorreoVerificacion] = useState(null);
+	const [ContraseñaVerificacion, setContraseñaVerificacion] = useState();
+	const [CorreoVerificacion, setCorreoVerificacion] = useState();
 
 	const navigate = useNavigate();
 
 	const Summit = () => {
-		setCorreoVerificacion(obtenerCorreo());
-		setContraseñaVerificacion(obetenerContraseña());
 		if (Correo === ContraseñaVerificacion && Constraseña === CorreoVerificacion) {
 			navigate('/dashboard');
 			console.log('Usuario correcto');
 		} else {
 			alert('Usuario o contraseña incorrectos');
 			console.log(ContraseñaVerificacion, CorreoVerificacion);
-			setCorreoVerificacion(null);
-			setContraseñaVerificacion(null);
+			console.log('inputs' + Correo, Constraseña);
 		}
 	};
 	const styleText = {
