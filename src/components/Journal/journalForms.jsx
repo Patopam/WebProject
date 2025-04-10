@@ -227,7 +227,7 @@ export default function JournalForm({ compact = true }) {
 					display: flex;
 					align-items: center;
 					gap: 12px;
-					padding: 12px 20px;
+					padding: 6px 16px;
 					background-color: #fcd48f;
 					border: none;
 					border-radius: 12px;
@@ -238,7 +238,7 @@ export default function JournalForm({ compact = true }) {
 				}
 
 				.save-button .icon-circle {
-					background-color: #f6d776;
+					background-color: #facd69;
 					width: 40px;
 					height: 40px;
 					border-radius: 50%;
