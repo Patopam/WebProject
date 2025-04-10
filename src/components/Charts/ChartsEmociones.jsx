@@ -107,7 +107,7 @@ export default function EmotionsLineChartCentered() {
           style={styleText.Linea}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="day" color="red" />
+          <XAxis dataKey="day" />
           <YAxis
             domain={[0, emotions.length - 1]}
             ticks={emotions.map((_, i) => i)}
