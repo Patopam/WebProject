@@ -7,7 +7,7 @@ import { journalData } from '../../Data/journalData';
 const JournalView = () => {
 	const [selectedMonth, setSelectedMonth] = useState('All');
 
-	// Filtrar las entradas basado en el mes seleccionado
+	// Filter
 	const filteredData =
 		selectedMonth === 'All'
 			? journalData
