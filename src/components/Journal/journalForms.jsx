@@ -45,7 +45,7 @@ const FeelingsSection = styled(Box)(({ theme }) => ({
 const EmojiWrapper = styled(Box)(({ theme }) => ({
 	display: 'inline-flex',
 	gap: '12px',
-	backgroundColor: '#fcd48f',
+	backgroundColor: '#FACD69',
 	padding: '12px 16px',
 	borderRadius: '12px',
 	marginBottom: '20px',
@@ -66,7 +66,7 @@ const TagWrapper = styled(Box)(({ theme }) => ({
 }));
 
 const TagButton = styled(Button)(({ selected }) => ({
-	backgroundColor: selected ? '#e8c255' : '#f6d776',
+	backgroundColor: selected ? '#e8c255' : '#FACD69',
 	borderRadius: '16px',
 	padding: '8px 16px',
 	textTransform: 'none',
