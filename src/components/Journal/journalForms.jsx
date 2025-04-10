@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Box, Typography, TextField, Button, IconButton, styled } from '@mui/material';
 import SentimentSatisfiedOutlinedIcon from '@mui/icons-material/SentimentSatisfiedOutlined';
 import OpenInFullOutlinedIcon from '@mui/icons-material/OpenInFullOutlined';
 import TurnedInNotOutlinedIcon from '@mui/icons-material/TurnedInNotOutlined';
 import { useNavigate } from 'react-router-dom';
+
+// Color de hover unificado
+const HOVER_COLOR = '#fcd48f';
 
 // Styled components
 const JournalContainer = styled(Box)(({ theme }) => ({
@@ -74,7 +77,7 @@ const TagButton = styled(Button)(({ selected }) => ({
 	fontSize: '14px',
 	color: '#000',
 	'&:hover': {
-		backgroundColor: selected ? '#e8c255' : '#f6d776',
+		backgroundColor: HOVER_COLOR,
 		opacity: 0.9,
 	},
 }));
@@ -139,7 +142,7 @@ const SaveButton = styled(Button)(({ theme }) => ({
 	color: '#000',
 	fontFamily: '"Manrope", sans-serif',
 	'&:hover': {
-		backgroundColor: '#fcd48f',
+		backgroundColor: HOVER_COLOR,
 		opacity: 0.9,
 	},
 }));
@@ -165,15 +168,12 @@ export default function JournalForm() {
 	};
 
 	const handleTagClick = (tag) => {
-		// Si ya está seleccionado, quítalo; si no, selecciona solo este tag
 		if (selectedTags.includes(tag)) {
 			setSelectedTags(selectedTags.filter((t) => t !== tag));
-			setEntryText(''); // Limpiar el texto si se deselecciona
+			setEntryText('');
 		} else {
-			setSelectedTags([tag]); // Solo permitir un tag a la vez
-			setEntryText(templates[tag]); // Establecer la plantilla correspondiente
-
-			// Establecer un título predeterminado basado en el tag
+			setSelectedTags([tag]);
+			setEntryText(templates[tag]);
 			if (!entryTitle) {
 				setEntryTitle(`My ${tag} - ${new Date().toLocaleDateString()}`);
 			}
