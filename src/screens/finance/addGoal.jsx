@@ -98,10 +98,10 @@ const closeIcon = {
 	cursor: 'pointer',
 	fontSize: '20px',
 };
-
 const inputRow = {
 	display: 'flex',
 	gap: '24px',
+	justifyContent: 'space-between',
 };
 
 const saveButton = {
