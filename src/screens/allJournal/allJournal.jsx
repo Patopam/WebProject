@@ -1,6 +1,6 @@
 import React from "react";
 import Menu from "../../components/Menu/menu";
-import Header from "../../components/Header/header";
+import Header2 from "../../components/Header/header2";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import CustomIconButton from "../../components/Buttons/icon";
@@ -18,7 +18,7 @@ function AllJournal() {
       <Menu />
       <div className="journal-content">
         <div className="journal-header">
-          <Header
+          <Header2
             title="All my journals"
             subtitle="Look back at what you’ve felt, written and lived."
           />

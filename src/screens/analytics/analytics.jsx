@@ -1,6 +1,6 @@
 import React from "react";
 import Menu from "../../components/Menu/menu";
-import Header from "../../components/Header/header";
+import Header2 from "../../components/Header/header2";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import CustomIconButton from "../../components/Buttons/icon";
@@ -21,7 +21,7 @@ function Analytics() {
       <Menu />
       <div className="analytics-content">
         <div className="analytics-header">
-          <Header
+          <Header2
             title="Analytics"
             subtitle="Set goals and look at your track record."
           />
