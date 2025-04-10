@@ -100,7 +100,7 @@ export default function JournalForm({ compact = false }) {
 
 				.journal-form-container.compact {
 					padding: 24px;
-					max-width: 500px;
+					max-width: 800px;
 				}
 
 				.journal-form-container.expanded {
