@@ -2,20 +2,27 @@ import React, { useState } from 'react';
 import { Box, Typography, TextField, Button, IconButton, styled } from '@mui/material';
 import SentimentSatisfiedOutlinedIcon from '@mui/icons-material/SentimentSatisfiedOutlined';
 import OpenInFullOutlinedIcon from '@mui/icons-material/OpenInFullOutlined';
+import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
 import TurnedInNotOutlinedIcon from '@mui/icons-material/TurnedInNotOutlined';
+import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from 'react-router-dom';
 
 // Color de hover unificado
 const HOVER_COLOR = '#fcd48f';
 
 // Styled components
-const JournalContainer = styled(Box)(({ theme }) => ({
+const JournalContainer = styled(Box)(({ theme, compact }) => ({
 	backgroundColor: '#fde3a7',
-	padding: '40px',
+	padding: compact ? '40px' : '40px 60px',
 	fontFamily: '"Manrope", sans-serif',
 	borderRadius: '16px',
-	width: '800px',
+	width: compact ? '800px' : '100%',
+	maxWidth: compact ? '800px' : '1200px',
 	margin: '0 auto',
+	boxSizing: 'border-box',
+	height: compact ? 'auto' : '100%',
+	display: 'flex',
+	flexDirection: 'column',
 }));
 
 const HeaderSection = styled(Box)(({ theme }) => ({
@@ -82,7 +89,7 @@ const TagButton = styled(Button)(({ selected }) => ({
 	},
 }));
 
-const EntrySection = styled(Box)(({ theme }) => ({
+const EntrySection = styled(Box)(({ theme, compact }) => ({
 	display: 'flex',
 	flexDirection: 'column',
 	gap: '16px',
@@ -91,6 +98,7 @@ const EntrySection = styled(Box)(({ theme }) => ({
 	borderRadius: '16px',
 	padding: '20px',
 	marginBottom: '32px',
+	flex: compact ? 'none' : 1,
 }));
 
 const EntryTitle = styled(TextField)(({ theme }) => ({
@@ -109,7 +117,7 @@ const EntryTitle = styled(TextField)(({ theme }) => ({
 	},
 }));
 
-const EntryTextArea = styled(TextField)(({ theme }) => ({
+const EntryTextArea = styled(TextField)(({ theme, compact }) => ({
 	'& .MuiInputBase-root': {
 		fontFamily: '"Manrope", sans-serif',
 		fontSize: '16px',
@@ -117,10 +125,13 @@ const EntryTextArea = styled(TextField)(({ theme }) => ({
 		'&:before, &:after': {
 			display: 'none',
 		},
+		height: compact ? 'auto' : '100%',
 	},
 	'& .MuiOutlinedInput-notchedOutline': {
 		border: 'none',
 	},
+	flex: compact ? 'none' : 1,
+	display: 'flex',
 }));
 
 const SaveButtonWrapper = styled(Box)(({ theme }) => ({
@@ -147,7 +158,7 @@ const SaveButton = styled(Button)(({ theme }) => ({
 	},
 }));
 
-export default function JournalForm() {
+export default function JournalForm({ compact = false }) {
 	const navigate = useNavigate();
 
 	const [entryText, setEntryText] = useState('');
@@ -180,8 +191,12 @@ export default function JournalForm() {
 		}
 	};
 
+	const toggleExpand = () => {
+		navigate(compact ? '/journal/write' : '/journal');
+	};
+
 	return (
-		<JournalContainer>
+		<JournalContainer compact={compact}>
 			<HeaderSection>
 				<TitleGroup>
 					<IconCircle>
@@ -189,8 +204,8 @@ export default function JournalForm() {
 					</IconCircle>
 					<Typography sx={{ fontSize: 18, fontWeight: 600 }}>Write what you feel</Typography>
 				</TitleGroup>
-				<IconButton onClick={() => navigate('/journal/write')}>
-					<OpenInFullOutlinedIcon sx={{ color: '#000' }} />
+				<IconButton onClick={toggleExpand}>
+					{compact ? <OpenInFullOutlinedIcon sx={{ color: '#000' }} /> : <CloseFullscreenIcon sx={{ color: '#000' }} />}
 				</IconButton>
 			</HeaderSection>
 
@@ -215,7 +230,7 @@ export default function JournalForm() {
 				))}
 			</TagWrapper>
 
-			<EntrySection>
+			<EntrySection compact={compact}>
 				<EntryTitle
 					fullWidth
 					variant='standard'
@@ -228,17 +243,22 @@ export default function JournalForm() {
 					fullWidth
 					multiline
 					placeholder='Write here...'
-					minRows={5}
+					minRows={compact ? 5 : 10}
 					value={entryText}
 					onChange={(e) => setEntryText(e.target.value)}
 					variant='outlined'
+					compact={compact}
 				/>
 			</EntrySection>
 
 			<SaveButtonWrapper>
 				<SaveButton>
 					<IconCircle bgcolor='#f6d776'>
-						<TurnedInNotOutlinedIcon sx={{ color: '#000', fontSize: 20 }} />
+						{compact ? (
+							<TurnedInNotOutlinedIcon sx={{ color: '#000', fontSize: 20 }} />
+						) : (
+							<SendIcon sx={{ color: '#000', fontSize: 20 }} />
+						)}
 					</IconCircle>
 					<span>Save</span>
 				</SaveButton>
