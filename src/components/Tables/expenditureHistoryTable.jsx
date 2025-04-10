@@ -11,7 +11,7 @@ const ExpenditureHistoryTable = ({ data }) => {
 	const containerStyle = {
 		display: 'flex',
 		flexDirection: 'column',
-		width: '660px',
+		width: '800px',
 		height: '341px',
 		padding: '28px',
 		borderRadius: '24px',
