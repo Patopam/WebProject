@@ -1,22 +1,6 @@
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
-
 html,
 body {
-	height: 100%;
-	width: 100%;
 	font-family: 'Manrope', sans-serif;
-	background-color: #f9f9f9;
+	background-color: #ffffff;
 	color: #333;
-}
-
-#root {
-	min-height: 100vh;
-}
-
-html {
-	scroll-behavior: smooth;
 }
