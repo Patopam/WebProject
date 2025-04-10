@@ -9,9 +9,9 @@ const GoalStatsCard = ({ title, description, quantity, label, bgColor, iconBg })
 				backgroundColor: bgColor,
 				borderRadius: '24px',
 				boxShadow: 'none',
-				width: '310px', //
-				height: 'auto', //
-				padding: '28px', //
+				width: '310px',
+				height: 'auto',
+				padding: '28px',
 			}}
 		>
 			<CardContent sx={{ padding: '0px !important' }}>

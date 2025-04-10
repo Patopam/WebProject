@@ -99,8 +99,6 @@ const GoalProgressCard = ({ spent = 150000, total = 200000, compact = false }) =
 
 export default GoalProgressCard;
 
-//Tamaños
-
 {
 	/* Versión normal */
 }

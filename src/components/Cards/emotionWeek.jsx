@@ -114,15 +114,3 @@ const EmotionWeek = ({ compact = false }) => {
 };
 
 export default EmotionWeek;
-
-//Tamaños
-
-{
-	/* Versión normal */
-}
-//<EmotionWeek />
-
-{
-	/* Versión compacta */
-}
-//<EmotionWeek compact={true} />
