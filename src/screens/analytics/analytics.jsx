@@ -38,7 +38,6 @@ function Analytics() {
 					</Stack>
 					<div className='Analytics-cards'>
 						<Stack spacing={5}>
-							<FeelingsCard compact={true} />
 							<GoalProgressCard spent={150000} total={200000} />
 						</Stack>
 					</div>
