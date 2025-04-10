@@ -9,8 +9,10 @@ import GoalProgressCard from '../../components/Cards/goal';
 import { Typography, Container, Stack, Box } from '@mui/material';
 import EmotionsLineChartCentered from '../../components/Charts/ChartsEmociones';
 import ExpensesLineChart from '../../components/Charts/ChartsGastos';
+import ReminderCard from '../../components/Cards/remainder';
 import './analytics.css';
 import { useNavigate } from 'react-router-dom';
+
 function Analytics() {
 	let navigate = useNavigate();
 	const goLogin = () => {
@@ -38,6 +40,7 @@ function Analytics() {
 					</Stack>
 					<div className='Analytics-cards'>
 						<Stack spacing={5}>
+							<ReminderCard />
 							<GoalProgressCard spent={150000} total={200000} />
 						</Stack>
 					</div>
