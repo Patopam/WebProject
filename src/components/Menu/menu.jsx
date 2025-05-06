@@ -78,12 +78,6 @@ const Menu = () => {
 				<p className='section-title'>SETTINGS</p>
 				<ul>
 					<li>
-						<Link to='/notifications' className='menu-item-link'>
-							<NotificationsActiveOutlinedIcon />
-							<span>Notifications</span>
-						</Link>
-					</li>
-					<li>
 						<Link to='/settings' className='menu-item-link'>
 							<SettingsOutlinedIcon />
 							<span>Settings</span>

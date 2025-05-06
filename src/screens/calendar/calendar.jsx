@@ -1,6 +1,6 @@
 import React from "react";
 import Menu from "../../components/Menu/menu";
-import Header from "../../components/Header/header";
+import Header2 from "../../components/Header/header2";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import CustomIconButton from "../../components/Buttons/icon";
@@ -16,7 +16,7 @@ function Calendar() {
       <Menu />
       <div className="calendar-content">
         <div className="calendar-header">
-          <Header
+          <Header2
             title="My calendar"
             subtitle="Calendar view of your emotions."
           />

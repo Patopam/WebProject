@@ -122,3 +122,4 @@ const FeelingsCard = ({ compact = false }) => {
 };
 
 export default FeelingsCard;
+
