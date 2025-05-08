@@ -3,9 +3,13 @@ import BotonStart from "../../components/Buttons/botonesStart";
 import Logo from "../../assets/Sense Logo start.png";
 import BotonStartGoogle from "../../components/Buttons/botonStartGoogle";
 import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
 import "./start.css";
 function Start() {
+  const auth = useSelector((state) => state.auth);
+  console.log(auth);
   let navigate = useNavigate();
+
   const goLogin = () => {
     navigate("/log");
   };
@@ -17,7 +21,7 @@ function Start() {
     <>
       <Container sx={{ width: 500 }} className="container-start">
         <div className="menu-logo">
-          <img src={Logo} alt="Sense Logo" className="menu-logo-img" />
+          <img src={Logo} alt="Sense Logo" className="logo-img" />
         </div>
         <Box sx={{ width: 460 }}>
           <Stack spacing={3}>

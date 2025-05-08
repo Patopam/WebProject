@@ -26,38 +26,48 @@ const AddSpending = () => {
 				<CloseIcon onClick={handleClose} style={closeIcon} />
 			</div>
 
-			<div style={inputRow}>
+			{/* Row with two inputs */}
+			<div style={dateRowContainer}>
+				<div style={dateInputContainer}>
+					<EditInput
+						label='Add date'
+						value={date}
+						onChange={(e) => setDate(e.target.value)}
+						editable={editDate}
+						onEditClick={() => setEditDate(!editDate)}
+					/>
+				</div>
+				<div style={dateInputContainer}>
+					<EditInput
+						label='Add Category'
+						value={category}
+						onChange={(e) => setCategory(e.target.value)}
+						editable={editCategory}
+						onEditClick={() => setEditCategory(!editCategory)}
+					/>
+				</div>
+			</div>
+
+			{/* Single inputs */}
+			<div style={singleInputContainer}>
 				<EditInput
-					label='Add date'
-					value={date}
-					onChange={(e) => setDate(e.target.value)}
-					editable={editDate}
-					onEditClick={() => setEditDate(!editDate)}
-				/>
-				<EditInput
-					label='Add Category'
-					value={category}
-					onChange={(e) => setCategory(e.target.value)}
-					editable={editCategory}
-					onEditClick={() => setEditCategory(!editCategory)}
+					label='Add Price'
+					value={price}
+					onChange={(e) => setPrice(e.target.value)}
+					editable={editPrice}
+					onEditClick={() => setEditPrice(!editPrice)}
 				/>
 			</div>
 
-			<EditInput
-				label='Add Price'
-				value={price}
-				onChange={(e) => setPrice(e.target.value)}
-				editable={editPrice}
-				onEditClick={() => setEditPrice(!editPrice)}
-			/>
-
-			<EditInput
-				label='Description'
-				value={description}
-				onChange={(e) => setDescription(e.target.value)}
-				editable={editDesc}
-				onEditClick={() => setEditDesc(!editDesc)}
-			/>
+			<div style={singleInputContainer}>
+				<EditInput
+					label='Description'
+					value={description}
+					onChange={(e) => setDescription(e.target.value)}
+					editable={editDesc}
+					onEditClick={() => setEditDesc(!editDesc)}
+				/>
+			</div>
 
 			<button style={saveButton}>
 				<SendIcon style={{ fontSize: '20px' }} />
@@ -71,35 +81,53 @@ export default AddSpending;
 
 const container = {
 	backgroundColor: '#D8D4F2',
-	height: '100vh',
+	minHeight: '100vh',
 	padding: '50px 80px',
 	display: 'flex',
 	flexDirection: 'column',
 	gap: '24px',
+	width: '100%',
 	fontFamily: "'Manrope', sans-serif",
 	position: 'relative',
+	boxSizing: 'border-box',
 };
 
 const header = {
 	display: 'flex',
 	justifyContent: 'space-between',
 	alignItems: 'center',
+	width: '100%',
+	marginBottom: '16px',
 };
 
 const title = {
 	fontSize: '24px',
 	fontWeight: 'bold',
 	color: '#333',
+	margin: 0,
 };
 
 const closeIcon = {
 	cursor: 'pointer',
-	fontSize: '20px',
+	fontSize: '24px',
 };
 
-const inputRow = {
+const dateRowContainer = {
 	display: 'flex',
-	gap: '24px',
+	width: '100%',
+	justifyContent: 'space-between',
+	gap: '40px',
+	marginBottom: '8px',
+};
+
+const dateInputContainer = {
+	flex: 1,
+	maxWidth: 'calc(50% - 20px)',
+};
+
+const singleInputContainer = {
+	width: '100%',
+	marginBottom: '8px',
 };
 
 const saveButton = {
@@ -110,8 +138,10 @@ const saveButton = {
 	padding: '12px 24px',
 	fontWeight: 500,
 	fontSize: '16px',
+	marginTop: '24px',
 	alignSelf: 'center',
 	display: 'flex',
 	alignItems: 'center',
 	cursor: 'pointer',
+	boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
 };

@@ -1,5 +1,5 @@
-import { guardarCorreo, guardarUsuario } from "../../utils";
-import { guardarContraseña } from "../../utils";
+import { guardarCorreo, guardarUsuario } from "../../utils/utils";
+import { guardarContraseña } from "../../utils/utils";
 import { Typography, Container, Stack, Box } from "@mui/material";
 import BotonStart from "../../components/Buttons/botonesStart";
 import BotonStartGoogle from "../../components/Buttons/botonStartGoogle";

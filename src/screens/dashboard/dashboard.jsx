@@ -13,7 +13,7 @@ import ExpensesTable from "../../components/Tables/expensesTable";
 import expensesData from "../../Data/expensesData";
 import "./style.css";
 import { useEffect, useState } from "react";
-import { obtenerUsuario } from "../../utils";
+import { obtenerUsuario } from "../../utils/utils";
 import { useNavigate } from "react-router-dom";
 function Dashboard() {
   let navigate = useNavigate();
@@ -27,10 +27,12 @@ function Dashboard() {
 
   const handleJournalClick = () => {
     console.log("Daily journal clicked");
+    navigate("/journal/write");
   };
 
   const handleSpendClick = () => {
     console.log("Add spend clicked");
+    navigate("/finance/add-spending");
   };
 
   return (
