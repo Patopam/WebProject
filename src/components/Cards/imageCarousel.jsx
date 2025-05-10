@@ -18,7 +18,7 @@ const CarouselContainer = styled('div')(({ theme }) => ({
 	borderRadius: theme.spacing(2), // Material UI spacing ya es relativo
 	background: theme.palette.grey[200],
 	width: '100%', // Ancho responsivo
-	maxWidth: '26.75rem', // 427px como máximo
+	maxWidth: '40rem', // 427px como máximo
 	overflow: 'hidden',
 	boxSizing: 'border-box',
 }));
