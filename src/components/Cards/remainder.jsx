@@ -37,23 +37,29 @@ const ReminderCard = () => {
 		<Card
 			sx={{
 				display: 'flex',
-				width: '427px',
-				height: '238px',
+				width: '100%',
+				maxWidth: '40rem', // 640px
+				height: 'auto',
+				minHeight: '14.875rem', // 238px
 				justifyContent: 'center',
 				alignItems: 'center',
-				borderRadius: '24px',
+				borderRadius: '1.5rem', // 24px
 				background: '#B7D0EE',
 				boxShadow: 'none',
+				padding: '1.75rem', // Para asegurar un padding interno consistente
+				boxSizing: 'border-box',
 			}}
 		>
 			<CardContent
 				sx={{
 					display: 'flex',
-					width: '371px',
-					height: '190px',
+					width: '100%',
+					maxWidth: '28rem', // 371px
+					height: 'auto',
+					minHeight: '10.875rem', // 190px
 					flexDirection: 'column',
 					alignItems: 'flex-end',
-					gap: '20px',
+					gap: '1.25rem', // 20px
 					flexShrink: 0,
 					padding: 0,
 					'&:last-child': { paddingBottom: 0 },
@@ -73,31 +79,39 @@ const ReminderCard = () => {
 							sx={{
 								backgroundColor: '#70A1DE',
 								borderRadius: '50%',
-								width: '37px',
-								height: '37px',
+								width: '2.31rem', // 37px
+								height: '2.31rem', // 37px
 								display: 'flex',
 								justifyContent: 'center',
 								alignItems: 'center',
-								marginRight: '10px',
+								marginRight: '0.625rem', // 10px
+								flexShrink: 0,
 							}}
 						>
-							<FavoriteBorderIcon sx={{ color: '#333' }} />
+							<FavoriteBorderIcon sx={{ color: '#333', fontSize: '1.25rem' }} />
 						</Box>
 						<Typography
 							sx={{
 								fontFamily: "'Manrope', sans-serif",
-								fontSize: '18px',
+								fontSize: '1.125rem', // 18px
 								fontWeight: 300,
 								color: '#333',
-								lineWeight: 'normal',
+								lineHeight: 'normal',
 								fontStyle: 'normal',
 							}}
 						>
 							Remainder
 						</Typography>
 					</Box>
-					<IconButton aria-label='refresh' sx={{ color: '#333' }} onClick={handleRefresh}>
-						<RefreshIcon />
+					<IconButton
+						aria-label='refresh'
+						sx={{
+							color: '#333',
+							padding: '0.5rem', // Adaptado para responsive
+						}}
+						onClick={handleRefresh}
+					>
+						<RefreshIcon sx={{ fontSize: '1.25rem' }} />
 					</IconButton>
 				</Box>
 
@@ -105,17 +119,20 @@ const ReminderCard = () => {
 					variant='p'
 					sx={{
 						display: 'flex',
-						height: '90px',
+						height: 'auto',
+						minHeight: '5.625rem', // 90px
 						flexDirection: 'column',
 						justifyContent: 'center',
 						flexShrink: '0',
 						color: '#333',
 						fontFamily: "'Manrope', sans-serif",
-						fontSize: '28px',
+						fontSize: '1.75rem', // 28px
 						fontStyle: 'normal',
 						fontWeight: 700,
 						lineHeight: '125%',
 						alignSelf: 'stretch',
+						overflow: 'hidden', // Prevenir desbordamiento con frases largas
+						wordWrap: 'break-word', // Asegurar que el texto se ajuste
 					}}
 				>
 					{currentPhrase}
