@@ -23,7 +23,7 @@ function Log() {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user.uid);
-        //dispatch(setUserid(user.uid));
+        dispatch(setUserid(user.uid));
         Navigate("/dashboard");
       })
       .catch((error) => {
