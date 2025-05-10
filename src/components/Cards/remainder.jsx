@@ -38,7 +38,7 @@ const ReminderCard = () => {
 			sx={{
 				display: 'flex',
 				width: '100%',
-				maxWidth: '40rem', // 427px
+				maxWidth: '40rem', // 640px
 				height: 'auto',
 				minHeight: '14.875rem', // 238px
 				justifyContent: 'center',
@@ -56,7 +56,7 @@ const ReminderCard = () => {
 					width: '100%',
 					maxWidth: '28rem', // 371px
 					height: 'auto',
-					minHeight: '11.875rem', // 190px
+					minHeight: '10.875rem', // 190px
 					flexDirection: 'column',
 					alignItems: 'flex-end',
 					gap: '1.25rem', // 20px
