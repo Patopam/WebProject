@@ -15,7 +15,11 @@ import "./style.css";
 import { useEffect, useState } from "react";
 import { obtenerUsuario } from "../../utils/utils";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 function Dashboard() {
+  const id = useSelector((state) => state.userid.id);
+
+  console.log(id);
   let navigate = useNavigate();
   const goLogin = () => {
     navigate("/log");

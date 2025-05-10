@@ -7,8 +7,11 @@ import { useEffect, useState } from "react";
 import { auth } from "../../services/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import Inputs from "../../components/Inputs/Inputs";
+import { useDispatch } from "react-redux";
+import { setUserid } from "../../redux/UserSlice/UserSlice";
 import "./log.css";
 function Log() {
+  const dispatch = useDispatch();
   const [Correo, setCorreo] = useState("");
   const [Constraseña, setConstraseña] = useState("");
 
@@ -19,6 +22,8 @@ function Log() {
     signInWithEmailAndPassword(auth, Correo, Constraseña)
       .then((userCredential) => {
         const user = userCredential.user;
+        console.log(user.uid);
+        //dispatch(setUserid(user.uid));
         Navigate("/dashboard");
       })
       .catch((error) => {

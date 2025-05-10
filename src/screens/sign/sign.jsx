@@ -19,7 +19,7 @@ function Sign() {
 
   const Navigate = useNavigate();
 
-  const Google = () => {
+  /* const Google = () => {
     getRedirectResult(auth)
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access Google APIs.
@@ -40,7 +40,7 @@ function Sign() {
         const credential = GoogleAuthProvider.credentialFromError(error);
         // ...
       });
-  };
+  };*/
 
   const Summit = (e) => {
     e.preventDefault();
@@ -134,10 +134,7 @@ function Sign() {
               <Box sx={{ width: 460 }}>
                 <Stack spacing={3}>
                   <BotonStart text="Create your account" />
-                  <BotonStartGoogle
-                    text="Connect with Google"
-                    onClick={Google}
-                  />
+                  <BotonStartGoogle text="Connect with Google" />
                 </Stack>
                 <Typography sx={styleText.Centrado}>
                   <Link to="/log">Do you have an account? Log in</Link>
