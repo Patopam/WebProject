@@ -18,8 +18,8 @@ const GoalHistoryCard = ({ data }) => {
 		display: 'flex',
 		flexDirection: 'column',
 		width: '100%', // Cambiado de 800px a 100%
-		height: '341px', // Mantenido el valor fijo original
-		minHeight: '341px', // Asegura altura mínima
+		height: '23rem', // Mantenido el valor fijo original
+		minHeight: '23rem', // Asegura altura mínima
 		padding: '3.5%', // Cambiado de 28px a 3.5% del contenedor
 		borderRadius: '1.5rem', // Cambiado de 24px a 1.5rem
 		backgroundColor: '#FCE2A9',

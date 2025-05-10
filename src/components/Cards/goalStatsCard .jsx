@@ -10,7 +10,7 @@ const GoalStatsCard = ({ title, description, quantity, label, bgColor, iconBg })
 				borderRadius: '1.5rem', // 24px
 				boxShadow: 'none',
 				width: '100%', // Ancho responsivo
-				maxWidth: '19.375rem', // 310px como máximo
+				minHeight: '14.875rem', // 238px
 				height: 'auto',
 				padding: '1.75rem', // 28px
 				boxSizing: 'border-box',
