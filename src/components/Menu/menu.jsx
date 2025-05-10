@@ -42,12 +42,6 @@ const Menu = () => {
 						</Link>
 					</li>
 					<li>
-						<Link to='/calendar' className='menu-item-link'>
-							<CalendarTodayOutlinedIcon />
-							<span>Calendar</span>
-						</Link>
-					</li>
-					<li>
 						<Link to='/analytics/' className='menu-item-link'>
 							<LeaderboardOutlinedIcon />
 							<span>Analytics</span>

@@ -19,8 +19,8 @@ const MonthFilter = ({ selectedMonth, setSelectedMonth }) => {
 					onClick={() => setSelectedMonth(month)}
 					sx={{
 						display: 'flex',
-						width: '57px',
-						height: '45px',
+						width: '5rem', // 80px
+						height: '2.813rem', // 45px
 						padding: '6px 24px',
 						justifyContent: 'center',
 						alignItems: 'center',
