@@ -11,11 +11,13 @@ import EmotionsLineChartCentered from '../../components/Charts/ChartsEmociones';
 import ExpensesLineChart from '../../components/Charts/ChartsGastos';
 import './analytics.css';
 import { useNavigate } from 'react-router-dom';
+
 function Analytics() {
 	let navigate = useNavigate();
 	const goLogin = () => {
 		navigate('/log');
 	};
+
 	return (
 		<div className='analytics-container'>
 			<Menu />
@@ -27,22 +29,28 @@ function Analytics() {
 						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={goLogin} />
 					</div>
 				</div>
-				<Container className='analytics-container'>
-					<Stack spacing={4.5} className='Chart-Stack'>
-						<div className='chart-Emocion'>
-							<EmotionsLineChartCentered />
+
+				<div className='main-layout'>
+					<div className='charts-section'>
+						<div className='chart-container'>
+							<div className='chart-Emocion'>
+								<EmotionsLineChartCentered />
+							</div>
+							<div className='chart-Expenses'>
+								<ExpensesLineChart />
+							</div>
 						</div>
-						<div className='chart-Expenses'>
-							<ExpensesLineChart />
-						</div>
-					</Stack>
-					<div className='Analytics-cards'>
-						<Stack spacing={5}>
-							<FeelingsCard />
-							<GoalProgressCard />
-						</Stack>
 					</div>
-				</Container>
+
+					<div className='cards-section'>
+						<div className='card-item'>
+							<FeelingsCard />
+						</div>
+						<div className='card-item'>
+							<GoalProgressCard />
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	);
