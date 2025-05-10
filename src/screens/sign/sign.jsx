@@ -1,5 +1,3 @@
-import { guardarCorreo, guardarUsuario } from "../../utils/utils";
-import { guardarContraseña } from "../../utils/utils";
 import { Typography, Container, Stack, Box } from "@mui/material";
 import BotonStart from "../../components/Buttons/botonesStart";
 import BotonStartGoogle from "../../components/Buttons/botonStartGoogle";
@@ -10,6 +8,8 @@ import { FaRegEyeSlash } from "react-icons/fa";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { addUser } from "../../services/firebaseUtils";
 import { auth } from "../../services/firebase";
+
+import { getRedirectResult, GoogleAuthProvider } from "firebase/auth";
 import "./sign.css";
 
 function Sign() {
@@ -18,6 +18,29 @@ function Sign() {
   const [Constraseña, setConstraseña] = useState("");
 
   const Navigate = useNavigate();
+
+  const Google = () => {
+    getRedirectResult(auth)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access Google APIs.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+
+        // The signed-in user info.
+        const user = result.user;
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
+  };
 
   const Summit = (e) => {
     e.preventDefault();
@@ -111,7 +134,10 @@ function Sign() {
               <Box sx={{ width: 460 }}>
                 <Stack spacing={3}>
                   <BotonStart text="Create your account" />
-                  <BotonStartGoogle text="Connect with Google" />
+                  <BotonStartGoogle
+                    text="Connect with Google"
+                    onClick={Google}
+                  />
                 </Stack>
                 <Typography sx={styleText.Centrado}>
                   <Link to="/log">Do you have an account? Log in</Link>

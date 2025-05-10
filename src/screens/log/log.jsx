@@ -4,26 +4,22 @@ import BotonStart from "../../components/Buttons/botonesStart";
 import BotonStartGoogle from "../../components/Buttons/botonStartGoogle";
 import { useNavigate, Link } from "react-router";
 import { useEffect, useState } from "react";
+import { auth } from "../../services/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import Inputs from "../../components/Inputs/Inputs";
 import "./log.css";
 function Log() {
-  useEffect(() => {
-    setCorreoVerificacion(obtenerCorreo());
-    setContraseñaVerificacion(obetenerContraseña());
-    console.log("HOLA INICIO");
-  });
   const [Correo, setCorreo] = useState("");
   const [Constraseña, setConstraseña] = useState("");
-  const [ContraseñaVerificacion, setContraseñaVerificacion] = useState();
-  const [CorreoVerificacion, setCorreoVerificacion] = useState();
 
-  const navigate = useNavigate();
+  const Navigate = useNavigate();
 
-  const Summit = () => {
-    signInWithEmailAndPassword(auth, Email, Password)
+  const Summit = (e) => {
+    e.preventDefault();
+    signInWithEmailAndPassword(auth, Correo, Constraseña)
       .then((userCredential) => {
         const user = userCredential.user;
-        Navigate("/Dashboard");
+        Navigate("/dashboard");
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -75,7 +71,7 @@ function Log() {
             </Typography>
           </Box>
           <Box>
-            <form>
+            <form onSubmit={Summit}>
               <Stack spacing={3}>
                 <Inputs
                   value={Correo}
@@ -89,20 +85,23 @@ function Log() {
                   onChange={(e) => setConstraseña(e.target.value)}
                   placeholder={"Write your password *"}
                 />
+                <Typography sx={styleText.NoCentrado}>
+                  Forgot password?
+                </Typography>
+                <Box sx={{ width: 460 }}>
+                  <Stack spacing={3}>
+                    <BotonStart text="Log In" />
+                    <BotonStartGoogle text="Connect with Google" />
+                  </Stack>
+
+                  <Typography sx={styleText.Centrado}>
+                    <Link style={styleText.Centrado} to="/sing">
+                      No account? Create an account
+                    </Link>
+                  </Typography>
+                </Box>
               </Stack>
             </form>
-            <Typography sx={styleText.NoCentrado}>Forgot password?</Typography>
-          </Box>
-          <Box sx={{ width: 460 }}>
-            <Stack spacing={3}>
-              <BotonStart text="Log In" onClick={Summit} />
-              <BotonStartGoogle text="Connect with Google" />
-            </Stack>
-            <Typography sx={styleText.Centrado}>
-              <Link style={styleText.Centrado} to="/sing">
-                No account? Create an account
-              </Link>
-            </Typography>
           </Box>
         </Stack>
       </Container>
