@@ -121,7 +121,7 @@ export default function EmotionsLineChartCentered() {
 			sx={{
 				width: '100%',
 				padding: { xs: '0.5rem', sm: '1rem', md: '1.5rem' },
-				backgroundColor: '#f9e9c3', // Fondo similar al de la imagen
+				background: '#E3E9CF',
 				borderRadius: '1rem',
 			}}
 		>
@@ -146,7 +146,7 @@ export default function EmotionsLineChartCentered() {
 					<XAxis
 						dataKey='day'
 						fontSize={isMobile ? '0.75rem' : '0.875rem'}
-						tick={{ fill: '#666' }}
+						tick={{ fill: '#000' }}
 						// Aumentamos el margen de las etiquetas
 						tickMargin={15}
 						// Eliminamos el ángulo para que se muestre como en la imagen

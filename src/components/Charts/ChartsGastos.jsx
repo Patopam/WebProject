@@ -96,7 +96,7 @@ export default function ExpensesLineChart() {
 			sx={{
 				width: '100%',
 				padding: { xs: '0.5rem', sm: '1rem', md: '1.5rem' },
-				backgroundColor: '#f0f2f9', // Fondo suave para mejor visualización
+				backgroundColor: '#CECAE4',
 				borderRadius: '1rem',
 			}}
 		>
