@@ -38,7 +38,7 @@ const ReminderCard = () => {
 			sx={{
 				display: 'flex',
 				width: '100%',
-				maxWidth: '26.75rem', // 427px
+				maxWidth: '40rem', // 427px
 				height: 'auto',
 				minHeight: '14.875rem', // 238px
 				justifyContent: 'center',
@@ -46,7 +46,7 @@ const ReminderCard = () => {
 				borderRadius: '1.5rem', // 24px
 				background: '#B7D0EE',
 				boxShadow: 'none',
-				padding: '1.25rem', // Para asegurar un padding interno consistente
+				padding: '1.75rem', // Para asegurar un padding interno consistente
 				boxSizing: 'border-box',
 			}}
 		>
@@ -54,7 +54,7 @@ const ReminderCard = () => {
 				sx={{
 					display: 'flex',
 					width: '100%',
-					maxWidth: '23.2rem', // 371px
+					maxWidth: '28rem', // 371px
 					height: 'auto',
 					minHeight: '11.875rem', // 190px
 					flexDirection: 'column',

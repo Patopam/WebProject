@@ -6,8 +6,8 @@ const EmotionWeek = ({ compact = false }) => {
 	const containerStyle = {
 		display: 'flex',
 		width: compact ? '100%' : '100%', // Ancho relativo al contenedor padre
-		maxWidth: compact ? '26.75rem' : '34rem', // Equivalente a 428px y 544px
-		height: 'auto', // Altura automática basada en el contenido
+		maxWidth: compact ? '26.75rem' : '40rem', // Equivalente a 428px y 544px
+		height: '22.5rem', // Altura automática basada en el contenido
 		padding: compact ? '1.75rem 1.75rem 3.3rem 1.75rem' : '1.75rem 1.75rem 4.2rem 1.75rem',
 		flexDirection: 'column',
 		alignItems: 'flex-start',

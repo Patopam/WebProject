@@ -27,7 +27,7 @@ const GoalProgressCard = ({ spent = 150000, total = 200000, compact = false }) =
 				borderRadius: '1.5rem', // 24px
 				background: '#FCE2A9',
 				width: '100%',
-				maxWidth: compact ? '19.375rem' : '26.75rem', // 310px o 427px
+				maxWidth: compact ? '19.375rem' : '40rem', // 310px o 427px
 				height: 'auto',
 				minHeight: compact ? '11.375rem' : '14.875rem', // 182px o 238px
 				boxShadow: 'none',

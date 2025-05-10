@@ -8,7 +8,7 @@ const ExpensesDay = () => {
 		width: '100%', // Cambiado de 660px a 100%
 		height: '361px', // Mantenido el valor fijo original
 		minHeight: '341px', // Asegura altura mínima
-		padding: '4.2%', // Cambiado de 28px a 4.2% del contenedor
+		padding: '1.75rem', // Cambiado de 28px a 4.2% del contenedor
 		borderRadius: '1.5rem', // Cambiado de 24px a 1.5rem
 		backgroundColor: '#CECAE4',
 		boxSizing: 'border-box',
