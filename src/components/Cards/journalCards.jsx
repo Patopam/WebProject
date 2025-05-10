@@ -7,7 +7,7 @@ const JournalCards = ({ journalData }) => {
 			<Typography
 				sx={{
 					fontFamily: "'Manrope', sans-serif",
-					fontSize: '1rem', // 16px convertido a rem
+					fontSize: '1rem',
 					fontWeight: 400,
 					color: '#666',
 				}}
@@ -56,9 +56,9 @@ const JournalCards = ({ journalData }) => {
 										md: 'calc(33.33% - 0.67rem)', // En pantallas medianas, 3 tarjetas por fila
 										lg: 'calc(25% - 0.75rem)', // En pantallas grandes, 4 tarjetas por fila
 									},
-									height: '0', // Necesario para mantener la proporción
+									height: '0',
 									paddingBottom: {
-										xs: '100%', // Mantiene proporción cuadrada en xs
+										xs: '100%',
 										sm: 'calc(50% - 0.5rem)', // Proporción en pequeñas pantallas
 										md: 'calc(33.33% - 0.67rem)', // Proporción en medianas pantallas
 										lg: 'calc(25% - 0.75rem)', // Proporción en grandes pantallas
@@ -85,8 +85,8 @@ const JournalCards = ({ journalData }) => {
 										sx={{
 											fontFamily: "'Manrope', sans-serif",
 											fontSize: {
-												xs: '1.5rem', // Más pequeño en dispositivos pequeños
-												sm: '1.75rem', // 28px aproximadamente en dispositivos medianos/grandes
+												xs: '1.5rem',
+												sm: '1.75rem',
 											},
 											fontWeight: 700,
 											color: '#33356B',
@@ -99,11 +99,11 @@ const JournalCards = ({ journalData }) => {
 									<Typography
 										sx={{
 											fontFamily: "'Manrope', sans-serif",
-											fontSize: '1rem', // 16px a 1rem
+											fontSize: '1rem',
 											fontWeight: 400,
 											color: '#33356B',
-											lineHeight: 1.5, // 150% como número
-											overflow: 'auto', // Permitir scroll si el contenido es muy largo
+											lineHeight: 1.5,
+											overflow: 'auto', 
 										}}
 									>
 										{entry.content}

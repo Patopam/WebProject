@@ -9,7 +9,7 @@ const GoalStatsCard = ({ title, description, quantity, label, bgColor, iconBg })
 				backgroundColor: bgColor,
 				borderRadius: '1.5rem', // 24px
 				boxShadow: 'none',
-				width: '100%', // Ancho responsivo
+				width: '100%',
 				minHeight: '14.875rem', // 238px
 				height: 'auto',
 				padding: '1.75rem', // 28px
@@ -78,7 +78,7 @@ const GoalStatsCard = ({ title, description, quantity, label, bgColor, iconBg })
 					variant='h5'
 					sx={{
 						fontWeight: 'bold',
-						fontSize: '1.5rem', // 24px (ajustado para h5)
+						fontSize: '1.5rem', // 24px
 						fontFamily: "'Manrope', sans-serif",
 						lineHeight: '1.25',
 						color: '#000',
