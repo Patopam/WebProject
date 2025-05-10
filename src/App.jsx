@@ -8,7 +8,6 @@ import Analytics from './screens/analytics/analytics';
 import Journal from './screens/journal/journal';
 import AllJournal from './screens/allJournal/allJournal';
 import ExpandedJournal from './screens/journal/expandedJournal';
-import Calendar from './screens/calendar/calendar';
 import Start from './screens/start/start';
 import Log from './screens/log/log';
 import Sign from './screens/sign/sign';
@@ -29,7 +28,6 @@ function App() {
 				<Route path='/journal' element={<Journal />} />
 				<Route path='/Alljournal' element={<AllJournal />} />
 				<Route path='/journal/write' element={<ExpandedJournal />} />
-				<Route path='/calendar' element={<Calendar />} />
 				<Route path='/finance/add-spending' element={<AddSpending />} />
 				<Route path='/finance/add-goal' element={<AddGoal />} />
 			</Routes>

@@ -24,16 +24,26 @@ const GoalProgressCard = ({ spent = 150000, total = 200000, compact = false }) =
 	return (
 		<Card
 			sx={{
-				borderRadius: '24px',
+				borderRadius: '1.5rem', // 24px
 				background: '#FCE2A9',
-				width: compact ? '310px' : '371px',
-				height: '182px',
+				width: '100%',
+				maxWidth: compact ? '19.375rem' : '40rem', // 310px o 427px
+				height: 'auto',
+				minHeight: compact ? '11.375rem' : '14.875rem', // 182px o 238px
 				boxShadow: 'none',
-				padding: compact ? '28px' : '28px',
+				padding: '1.75rem', // 28px uniforme
+				boxSizing: 'border-box',
 			}}
 		>
-			<CardContent sx={{ padding: '0px !important' }}>
-				<Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', mb: 3 }}>
+			<CardContent
+				sx={{
+					padding: '0px !important',
+					height: '100%',
+					display: 'flex',
+					flexDirection: 'column',
+				}}
+			>
+				<Box sx={{ display: 'flex', alignItems: 'center', gap: '0.625rem', marginBottom: '1.5rem' }}>
 					<Box
 						sx={{
 							display: 'flex',
@@ -41,21 +51,22 @@ const GoalProgressCard = ({ spent = 150000, total = 200000, compact = false }) =
 							alignItems: 'center',
 							backgroundColor: '#FACD69',
 							borderRadius: '50%',
-							width: compact ? '37px' : '37px',
-							height: compact ? '37px' : '37px',
+							width: '2.31rem', // 37px
+							height: '2.31rem', // 37px
+							flexShrink: 0,
 						}}
 					>
-						<TrendingUpIcon sx={{ color: '#333' }} />
+						<TrendingUpIcon sx={{ color: '#333', fontSize: '1.25rem' }} />
 					</Box>
 					<Typography
 						variant={compact ? 'h6' : 'h5'}
 						component='div'
 						sx={{
 							fontFamily: "'Manrope', sans-serif",
-							fontSize: '18px',
+							fontSize: '1.125rem', // 18px
 							fontWeight: 300,
 							color: '#333',
-							lineWeight: 'normal',
+							lineHeight: 'normal',
 							fontStyle: 'normal',
 						}}
 					>
@@ -63,13 +74,36 @@ const GoalProgressCard = ({ spent = 150000, total = 200000, compact = false }) =
 					</Typography>
 				</Box>
 
-				<Box sx={{ display: 'flex', flexDirection: 'column', gap: '0px' }}>
-					{' '}
+				<Box
+					sx={{
+						display: 'flex',
+						flexDirection: 'column',
+						gap: '0px',
+						flexGrow: 1,
+						justifyContent: 'space-between',
+					}}
+				>
 					<Box sx={{ display: 'flex', flexDirection: 'column', gap: '0px' }}>
-						<Typography variant={compact ? 'h6' : 'h5'} component='div' sx={{ fontWeight: 500 }}>
+						<Typography
+							variant={compact ? 'h6' : 'h5'}
+							component='div'
+							sx={{
+								fontWeight: 500,
+								fontSize: compact ? '1rem' : '1.125rem', // 16px o 18px
+								whiteSpace: 'nowrap',
+								overflow: 'hidden',
+								textOverflow: 'ellipsis',
+							}}
+						>
 							You have spent {formattedSpent}
 						</Typography>
-						<Typography variant='body1' color='text.secondary'>
+						<Typography
+							variant='body1'
+							color='text.secondary'
+							sx={{
+								fontSize: compact ? '0.875rem' : '1rem', // 14px o 16px
+							}}
+						>
 							of {formattedTotal}
 						</Typography>
 					</Box>
@@ -77,18 +111,24 @@ const GoalProgressCard = ({ spent = 150000, total = 200000, compact = false }) =
 						variant='determinate'
 						value={progressPercentage}
 						sx={{
-							height: 8,
-							borderRadius: 4,
+							height: '0.5rem', // 8px
+							borderRadius: '0.25rem', // 4px
 							backgroundColor: '#C8D39F',
 							'& .MuiLinearProgress-bar': {
 								backgroundColor: '#8C9F49',
-								borderRadius: 4,
+								borderRadius: '0.25rem', // 4px
 							},
-							mt: 1,
-							mb: 1,
+							marginTop: '0.625rem', // 10px
+							marginBottom: '0.625rem', // 10px
 						}}
 					/>
-					<Typography variant='body2' color='text.secondary'>
+					<Typography
+						variant='body2'
+						color='text.secondary'
+						sx={{
+							fontSize: compact ? '0.75rem' : '0.875rem', // 12px o 14px
+						}}
+					>
 						You are approaching the limit
 					</Typography>
 				</Box>

@@ -13,7 +13,7 @@ import ExpensesTable from '../../components/Tables/expensesTable';
 import expensesData from '../../Data/expensesData';
 import './style.css';
 import { useEffect, useState } from 'react';
-import { obtenerUsuario } from '../../utils';
+import { obtenerUsuario } from '../../utils/utils';
 import { useNavigate } from 'react-router-dom';
 function Dashboard() {
 	let navigate = useNavigate();
@@ -55,8 +55,8 @@ function Dashboard() {
 				{/* Top row with three equal cards */}
 				<div className='dashboard-cards-row'>
 					<ReminderCard />
-					<FeelingsCard compact={true} />
-					<GoalProgressCard spent={150000} total={200000} compact={true} />
+					<FeelingsCard />
+					<GoalProgressCard />
 				</div>
 
 				{/* Bottom row with expenses table on left and emotion week on right */}

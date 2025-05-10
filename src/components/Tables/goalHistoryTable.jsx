@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { filterByTime } from '../../utils';
+import { filterByTime } from '../../utils/utils';
 import { AttachMoney, ArrowDropDown } from '@mui/icons-material';
 
 const GoalHistoryCard = ({ data }) => {
@@ -17,26 +17,28 @@ const GoalHistoryCard = ({ data }) => {
 	const containerStyle = {
 		display: 'flex',
 		flexDirection: 'column',
-		width: '800px',
-		height: '341px',
-		padding: '28px',
-		borderRadius: '24px',
+		width: '100%', // Cambiado de 800px a 100%
+		height: '23rem', // Mantenido el valor fijo original
+		minHeight: '23rem', // Asegura altura mínima
+		padding: '3.5%', // Cambiado de 28px a 3.5% del contenedor
+		borderRadius: '1.5rem', // Cambiado de 24px a 1.5rem
 		backgroundColor: '#FCE2A9',
 		boxSizing: 'border-box',
 		fontFamily: "'Manrope', sans-serif",
-		gap: '20px',
+		gap: '2.5%', // Cambiado de 20px a 2.5%
 		overflow: 'hidden',
 	};
 
 	const headerStyle = {
 		display: 'flex',
 		alignItems: 'center',
-		gap: '16px',
+		gap: '2%', // Cambiado de 16px a 2%
 	};
 
 	const iconContainer = {
-		width: '37px',
-		height: '37px',
+		width: '4.6%', // Cambiado de 37px a 4.6% del contenedor
+		minWidth: '30px', // Tamaño mínimo para que no se haga demasiado pequeño
+		aspectRatio: '1 / 1', // Mantiene la forma circular
 		borderRadius: '50%',
 		backgroundColor: '#FACD69',
 		display: 'flex',
@@ -45,7 +47,7 @@ const GoalHistoryCard = ({ data }) => {
 	};
 
 	const titleStyle = {
-		fontSize: '18px',
+		fontSize: 'clamp(1rem, 2vw, 1.125rem)', // Responsive entre 16px y 18px
 		fontWeight: 300,
 		color: '#333',
 	};
@@ -54,13 +56,13 @@ const GoalHistoryCard = ({ data }) => {
 		display: 'flex',
 		justifyContent: 'space-between',
 		backgroundColor: '#F5D889',
-		borderRadius: '12px',
-		padding: '8px 16px',
+		borderRadius: '0.75rem', // Cambiado de 12px a 0.75rem
+		padding: '1% 2%', // Cambiado de 8px 16px a porcentajes
 	};
 
 	const filterGroup = {
 		display: 'flex',
-		gap: '20px',
+		gap: '2.5%', // Cambiado de 20px a 2.5%
 		fontWeight: 600,
 		color: '#333',
 		cursor: 'pointer',
@@ -68,7 +70,7 @@ const GoalHistoryCard = ({ data }) => {
 
 	const tableWrapper = {
 		overflowY: 'auto',
-		height: '160px',
+		height: '160px', // Mantenida la altura fija original
 		scrollbarWidth: 'none',
 		msOverflowStyle: 'none',
 	};
@@ -76,21 +78,21 @@ const GoalHistoryCard = ({ data }) => {
 	const tableStyle = {
 		width: '100%',
 		borderCollapse: 'separate',
-		borderSpacing: '12px 12px',
-		fontSize: '14.5px',
+		borderSpacing: '1.5% 3%', // Cambiado de 12px a porcentajes
+		fontSize: 'clamp(0.75rem, 1.5vw, 0.9rem)', // Responsive entre 12px y 14.5px
 	};
 
 	const thStyle = {
 		textAlign: 'left',
 		fontWeight: 600,
 		color: '#333',
-		padding: '0 8px',
+		padding: '0 1%', // Cambiado de 8px a 1%
 	};
 
 	const tdStyle = {
 		backgroundColor: 'white',
-		padding: '10px 14px',
-		borderRadius: '12px',
+		padding: '1.25% 1.75%', // Cambiado de 10px 14px a porcentajes
+		borderRadius: '0.75rem', // Cambiado de 12px a 0.75rem
 		whiteSpace: 'nowrap',
 		overflow: 'hidden',
 		textOverflow: 'ellipsis',
@@ -100,7 +102,7 @@ const GoalHistoryCard = ({ data }) => {
 		<div style={containerStyle}>
 			<div style={headerStyle}>
 				<div style={iconContainer}>
-					<AttachMoney style={{ fontSize: '24px', color: '#333' }} />
+					<AttachMoney style={{ fontSize: 'clamp(1rem, 3vw, 1.5rem)', color: '#333' }} />
 				</div>
 				<div style={titleStyle}>Goal History</div>
 			</div>
