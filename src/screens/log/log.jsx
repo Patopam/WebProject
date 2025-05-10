@@ -20,17 +20,16 @@ function Log() {
   const navigate = useNavigate();
 
   const Summit = () => {
-    if (
-      Correo === ContraseñaVerificacion &&
-      Constraseña === CorreoVerificacion
-    ) {
-      navigate("/dashboard");
-      console.log("Usuario correcto");
-    } else {
-      alert("Usuario o contraseña incorrectos");
-      console.log(ContraseñaVerificacion, CorreoVerificacion);
-      console.log("inputs" + Correo, Constraseña);
-    }
+    signInWithEmailAndPassword(auth, Email, Password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        Navigate("/Dashboard");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(error.message);
+      });
   };
   const styleText = {
     Centrado: {

@@ -22,9 +22,9 @@ const StyleBotton = styled(Button)(() => ({
   fontFamily: "'Manrope', sans-serif",
 }));
 
-export default function BotonStart({ onClick, text, Icono }) {
+export default function BotonStart({ text, Icono }) {
   return (
-    <StyleBotton variant="contained" onClick={onClick}>
+    <StyleBotton variant="contained" type="summit">
       <Typography
         sx={{
           color: "#E8E8E8",

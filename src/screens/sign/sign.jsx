@@ -7,20 +7,42 @@ import { useNavigate, Link } from "react-router";
 import { useState } from "react";
 import Inputs from "../../components/Inputs/Inputs";
 import { FaRegEyeSlash } from "react-icons/fa";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { addUser } from "../../services/firebaseUtils";
+import { auth } from "../../services/firebase";
 import "./sign.css";
+
 function Sign() {
   const [Usuario, setUsuario] = useState("");
   const [Correo, setCorreo] = useState("");
   const [Constraseña, setConstraseña] = useState("");
 
-  const navigate = useNavigate();
+  const Navigate = useNavigate();
 
-  const Summit = () => {
-    guardarUsuario(Usuario);
-    guardarContraseña(Constraseña);
-    guardarCorreo(Correo);
-    navigate("/log");
+  const Summit = (e) => {
+    e.preventDefault();
+    createUserWithEmailAndPassword(auth, Correo, Constraseña)
+      .then((userCredential) => {
+        const user = userCredential.user;
+
+        console.log(user);
+        addUser({
+          uidUser: user.uid,
+          name: Usuario,
+          Email: Correo,
+        });
+
+        Navigate("/log");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode);
+        console.log(errorMessage);
+        alert(error.message);
+      });
   };
+
   const styleText = {
     Centrado: {
       color: "var(--Neutral-1000, #333)",
@@ -55,50 +77,49 @@ function Sign() {
   return (
     <>
       <Container className="Container-sign" sx={{ width: 500 }}>
-        <Stack spacing={3}>
-          <Box>
-            <Typography variant="h2" sx={styleText.Titulo}>
-              Register
-            </Typography>
-            <Typography sx={styleText.Centrado}>
-              Join Sense and take control of your emotional and financial habit.
-            </Typography>
-          </Box>
-          <Box>
-            <form>
-              <Stack spacing={3}>
-                <Inputs
-                  value={Usuario}
-                  onChange={(e) => setUsuario(e.target.value)}
-                  label="Usuario"
-                  placeholder="Write your name *"
-                />
-                <Inputs
-                  value={Correo}
-                  onChange={(e) => setCorreo(e.target.value)}
-                  label="Usuario"
-                  placeholder="Write your email *"
-                />
-                <Inputs
-                  type="password"
-                  icon={<FaRegEyeSlash />}
-                  value={Constraseña}
-                  onChange={(e) => setConstraseña(e.target.value)}
-                  placeholder={"Write your password *"}
-                />
-              </Stack>
-            </form>
-          </Box>
-          <Box sx={{ width: 460 }}>
+        <Box>
+          <Typography variant="h2" sx={styleText.Titulo}>
+            Register
+          </Typography>
+          <Typography sx={styleText.Centrado}>
+            Join Sense and take control of your emotional and financial habit.
+          </Typography>
+        </Box>
+        <Box>
+          <form onSubmit={Summit}>
             <Stack spacing={3}>
-              <BotonStart text="Create your account" onClick={Summit} />
-              <BotonStartGoogle text="Connect with Google" />
+              <Inputs
+                value={Usuario}
+                onChange={(e) => setUsuario(e.target.value)}
+                label="Usuario"
+                placeholder="Write your name *"
+              />
+              <Inputs
+                value={Correo}
+                onChange={(e) => setCorreo(e.target.value)}
+                label="Usuario"
+                placeholder="Write your email *"
+              />
+              <Inputs
+                type="password"
+                icon={<FaRegEyeSlash />}
+                value={Constraseña}
+                onChange={(e) => setConstraseña(e.target.value)}
+                placeholder={"Write your password *"}
+              />
+
+              <Box sx={{ width: 460 }}>
+                <Stack spacing={3}>
+                  <BotonStart text="Create your account" />
+                  <BotonStartGoogle text="Connect with Google" />
+                </Stack>
+                <Typography sx={styleText.Centrado}>
+                  <Link to="/log">Do you have an account? Log in</Link>
+                </Typography>
+              </Box>
             </Stack>
-            <Typography sx={styleText.Centrado}>
-              <Link to="/log">Do you have an account? Log in</Link>
-            </Typography>
-          </Box>
-        </Stack>
+          </form>
+        </Box>
       </Container>
     </>
   );
