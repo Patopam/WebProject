@@ -13,11 +13,11 @@ const HOVER_COLOR = '#fcd48f';
 // Styled components
 const JournalContainer = styled(Box)(({ theme, compact }) => ({
 	backgroundColor: '#fde3a7',
-	padding: compact ? '40px' : '40px 60px',
+	padding: compact ? '24px' : '2.5rem 3.75rem',
 	fontFamily: '"Manrope", sans-serif',
-	borderRadius: '16px',
-	width: compact ? '800px' : '100%',
-	maxWidth: compact ? '800px' : '1200px',
+	borderRadius: '1.5rem', // 24px
+	width: '100%',
+	maxWidth: compact ? '100%' : '75rem',
 	margin: '0 auto',
 	boxSizing: 'border-box',
 	height: compact ? 'auto' : '100%',
@@ -29,19 +29,19 @@ const HeaderSection = styled(Box)(({ theme }) => ({
 	display: 'flex',
 	justifyContent: 'space-between',
 	alignItems: 'center',
-	marginBottom: '24px',
+	marginBottom: '1rem',
 }));
 
 const TitleGroup = styled(Box)(({ theme }) => ({
 	display: 'flex',
 	alignItems: 'center',
-	gap: '12px',
+	gap: '0.75rem',
 }));
 
 const IconCircle = styled(Box)(({ bgcolor = '#FACD69' }) => ({
 	backgroundColor: bgcolor,
-	width: '37px',
-	height: '37px',
+	width: '2rem',
+	height: '2rem',
 	borderRadius: '50%',
 	display: 'flex',
 	alignItems: 'center',
@@ -49,20 +49,26 @@ const IconCircle = styled(Box)(({ bgcolor = '#FACD69' }) => ({
 }));
 
 const FeelingsSection = styled(Box)(({ theme }) => ({
-	marginBottom: '20px',
+	marginBottom: '16px',
+}));
+
+const FeelingsLabel = styled(Typography)(({ theme }) => ({
+	fontSize: '14px',
+	marginBottom: '12px',
+	fontWeight: 600,
 }));
 
 const EmojiWrapper = styled(Box)(({ theme }) => ({
-	display: 'inline-flex',
-	gap: '12px',
+	display: 'flex',
+	gap: '16px',
 	backgroundColor: '#FACD69',
-	padding: '12px 16px',
+	padding: '10px 16px',
 	borderRadius: '12px',
-	marginBottom: '20px',
+	marginBottom: '16px',
 }));
 
 const EmojiButton = styled(Box)(({ selected }) => ({
-	fontSize: '24px',
+	fontSize: '26px',
 	cursor: 'pointer',
 	transition: 'transform 0.2s ease',
 	transform: selected ? 'scale(1.3)' : 'scale(1)',
@@ -70,15 +76,15 @@ const EmojiButton = styled(Box)(({ selected }) => ({
 
 const TagWrapper = styled(Box)(({ theme }) => ({
 	display: 'flex',
-	gap: '12px',
-	marginBottom: '24px',
+	gap: '8px',
+	marginBottom: '16px',
 	flexWrap: 'wrap',
 }));
 
 const TagButton = styled(Button)(({ selected }) => ({
 	backgroundColor: selected ? '#F69F77' : '#FACD69',
 	borderRadius: '16px',
-	padding: '8px 16px',
+	padding: '6px 12px',
 	textTransform: 'none',
 	fontWeight: 500,
 	fontSize: '14px',
@@ -92,19 +98,19 @@ const TagButton = styled(Button)(({ selected }) => ({
 const EntrySection = styled(Box)(({ theme, compact }) => ({
 	display: 'flex',
 	flexDirection: 'column',
-	gap: '16px',
+	gap: '12px',
 	backgroundColor: '#fde3a7',
 	border: '2px solid #f6d776',
 	borderRadius: '16px',
-	padding: '20px',
-	marginBottom: '32px',
+	padding: '16px',
+	marginBottom: '20px',
 	flex: compact ? 'none' : 1,
 }));
 
 const EntryTitle = styled(TextField)(({ theme }) => ({
 	'& .MuiInputBase-root': {
 		fontFamily: '"Manrope", sans-serif',
-		fontSize: '18px',
+		fontSize: '16px',
 		fontWeight: 600,
 		color: '#000',
 		borderBottom: '1px solid rgba(216, 164, 65, 0.4)',
@@ -120,7 +126,7 @@ const EntryTitle = styled(TextField)(({ theme }) => ({
 const EntryTextArea = styled(TextField)(({ theme, compact }) => ({
 	'& .MuiInputBase-root': {
 		fontFamily: '"Manrope", sans-serif',
-		fontSize: '16px',
+		fontSize: '14px',
 		color: '#333',
 		'&:before, &:after': {
 			display: 'none',
@@ -142,12 +148,12 @@ const SaveButtonWrapper = styled(Box)(({ theme }) => ({
 const SaveButton = styled(Button)(({ theme }) => ({
 	display: 'flex',
 	alignItems: 'center',
-	gap: '12px',
-	padding: '12px 20px',
+	gap: '8px',
+	padding: '8px 16px',
 	backgroundColor: '#FACD69',
 	borderRadius: '12px',
 	cursor: 'pointer',
-	fontSize: '16px',
+	fontSize: '14px',
 	fontWeight: 500,
 	textTransform: 'none',
 	color: '#000',
@@ -163,11 +169,11 @@ export default function JournalForm({ compact = false }) {
 
 	const [entryText, setEntryText] = useState('');
 	const [entryTitle, setEntryTitle] = useState('');
-	const [selectedFeeling, setSelectedFeeling] = useState('');
+	const [selectedFeeling, setSelectedFeeling] = useState(null);
 	const [selectedTags, setSelectedTags] = useState([]);
 
 	// Emojis
-	const emojis = ['😄', '😭', '😢', '😡', '😑', '😩'];
+	const emojis = ['😊', '😂', '🙂', '😡', '😐', '😩'];
 	const tags = ['Reflection', 'Gratitude', 'Daily Intention', 'Release'];
 
 	// Plantillas para cada tipo de entrada
@@ -200,19 +206,21 @@ export default function JournalForm({ compact = false }) {
 			<HeaderSection>
 				<TitleGroup>
 					<IconCircle>
-						<SentimentSatisfiedOutlinedIcon sx={{ color: '#000', fontSize: 20 }} />
+						<SentimentSatisfiedOutlinedIcon sx={{ color: '#000', fontSize: 18 }} />
 					</IconCircle>
-					<Typography sx={{ fontSize: 18, fontWeight: 600 }}>Write what you feel</Typography>
+					<Typography sx={{ fontSize: 16, fontWeight: 600 }}>Write what you feel</Typography>
 				</TitleGroup>
-				<IconButton onClick={toggleExpand}>
-					{compact ? <OpenInFullOutlinedIcon sx={{ color: '#000' }} /> : <CloseFullscreenIcon sx={{ color: '#000' }} />}
+				<IconButton onClick={toggleExpand} size='small'>
+					{compact ? (
+						<OpenInFullOutlinedIcon sx={{ color: '#000', fontSize: 18 }} />
+					) : (
+						<CloseFullscreenIcon sx={{ color: '#000', fontSize: 18 }} />
+					)}
 				</IconButton>
 			</HeaderSection>
 
 			<FeelingsSection>
-				<Typography variant='h3' sx={{ fontSize: 16, marginBottom: '12px', fontWeight: 600 }}>
-					How do you feel today?
-				</Typography>
+				<FeelingsLabel>How do you feel today?</FeelingsLabel>
 				<EmojiWrapper>
 					{emojis.map((emoji, index) => (
 						<EmojiButton key={index} selected={selectedFeeling === emoji} onClick={() => setSelectedFeeling(emoji)}>
@@ -243,7 +251,7 @@ export default function JournalForm({ compact = false }) {
 					fullWidth
 					multiline
 					placeholder='Write here...'
-					minRows={compact ? 5 : 10}
+					minRows={compact ? 4 : 8}
 					value={entryText}
 					onChange={(e) => setEntryText(e.target.value)}
 					variant='outlined'
@@ -255,9 +263,9 @@ export default function JournalForm({ compact = false }) {
 				<SaveButton>
 					<IconCircle bgcolor='#f6d776'>
 						{compact ? (
-							<TurnedInNotOutlinedIcon sx={{ color: '#000', fontSize: 20 }} />
+							<TurnedInNotOutlinedIcon sx={{ color: '#000', fontSize: 16 }} />
 						) : (
-							<SendIcon sx={{ color: '#000', fontSize: 20 }} />
+							<SendIcon sx={{ color: '#000', fontSize: 16 }} />
 						)}
 					</IconCircle>
 					<span>Save</span>
