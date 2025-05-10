@@ -7,7 +7,7 @@ const JournalCards = ({ journalData }) => {
 			<Typography
 				sx={{
 					fontFamily: "'Manrope', sans-serif",
-					fontSize: '16px',
+					fontSize: '1rem', // 16px convertido a rem
 					fontWeight: 400,
 					color: '#666',
 				}}
@@ -18,58 +18,97 @@ const JournalCards = ({ journalData }) => {
 	}
 
 	return (
-		<Box sx={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+		<Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+			{' '}
+			{/* 32px a 2rem */}
 			{journalData.map((week) => (
-				<Box key={week.week} sx={{ marginBottom: '24px' }}>
+				<Box key={week.week} sx={{ marginBottom: '1.5rem' }}>
+					{' '}
+					{/* 24px a 1.5rem */}
 					<Typography
 						sx={{
 							fontFamily: "'Manrope', sans-serif",
-							fontSize: '32px',
+							fontSize: '2rem', // 32px a 2rem
 							fontWeight: 700,
 							color: '#333',
-							marginBottom: '16px',
+							marginBottom: '1rem', // 16px a 1rem
 						}}
 					>
 						Week {week.week}
 					</Typography>
-
-					<Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
+					<Box
+						sx={{
+							display: 'flex',
+							flexWrap: 'wrap',
+							gap: '1rem', // 16px a 1rem
+							justifyContent: 'flex-start',
+						}}
+					>
 						{week.entries.map((entry, index) => (
 							<Box
 								key={index}
 								sx={{
 									display: 'flex',
 									flexDirection: 'column',
-									width: '400px',
-									height: '400px',
-									padding: '24px',
-									borderRadius: '16px',
+									width: {
+										xs: '100%', // En pantallas muy pequeñas, ocupará el 100%
+										sm: 'calc(50% - 0.5rem)', // En pantallas pequeñas, 2 tarjetas por fila
+										md: 'calc(33.33% - 0.67rem)', // En pantallas medianas, 3 tarjetas por fila
+										lg: 'calc(25% - 0.75rem)', // En pantallas grandes, 4 tarjetas por fila
+									},
+									height: '0', // Necesario para mantener la proporción
+									paddingBottom: {
+										xs: '100%', // Mantiene proporción cuadrada en xs
+										sm: 'calc(50% - 0.5rem)', // Proporción en pequeñas pantallas
+										md: 'calc(33.33% - 0.67rem)', // Proporción en medianas pantallas
+										lg: 'calc(25% - 0.75rem)', // Proporción en grandes pantallas
+									},
+									position: 'relative',
+									borderRadius: '1rem', // 16px a 1rem
 									background: entry.color,
+									overflow: 'hidden', // Para mantener el contenido dentro de los bordes redondeados
 								}}
 							>
-								<Typography
+								<Box
 									sx={{
-										fontFamily: "'Manrope', sans-serif",
-										fontSize: '28px',
-										fontWeight: 700,
-										color: '#33356B',
-										marginBottom: '16px',
+										position: 'absolute',
+										top: 0,
+										left: 0,
+										right: 0,
+										bottom: 0,
+										padding: '1.5rem', // 24px a 1.5rem
+										display: 'flex',
+										flexDirection: 'column',
 									}}
 								>
-									{entry.day}
-								</Typography>
+									<Typography
+										sx={{
+											fontFamily: "'Manrope', sans-serif",
+											fontSize: {
+												xs: '1.5rem', // Más pequeño en dispositivos pequeños
+												sm: '1.75rem', // 28px aproximadamente en dispositivos medianos/grandes
+											},
+											fontWeight: 700,
+											color: '#33356B',
+											marginBottom: '1rem', // 16px a 1rem
+										}}
+									>
+										{entry.day}
+									</Typography>
 
-								<Typography
-									sx={{
-										fontFamily: "'Manrope', sans-serif",
-										fontSize: '16px',
-										fontWeight: 400,
-										color: '#33356B',
-										lineHeight: '150%',
-									}}
-								>
-									{entry.content}
-								</Typography>
+									<Typography
+										sx={{
+											fontFamily: "'Manrope', sans-serif",
+											fontSize: '1rem', // 16px a 1rem
+											fontWeight: 400,
+											color: '#33356B',
+											lineHeight: 1.5, // 150% como número
+											overflow: 'auto', // Permitir scroll si el contenido es muy largo
+										}}
+									>
+										{entry.content}
+									</Typography>
+								</Box>
 							</Box>
 						))}
 					</Box>

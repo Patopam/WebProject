@@ -1,3 +1,4 @@
+
 import React from "react";
 import AddButton from "../../components/Buttons/add";
 import Header from "../../components/Header/header";
@@ -29,60 +30,53 @@ function Dashboard() {
     setNombre(obtenerUsuario());
   }, []);
 
-  const handleJournalClick = () => {
-    console.log("Daily journal clicked");
-    navigate("/journal/write");
-  };
 
-  const handleSpendClick = () => {
-    console.log("Add spend clicked");
-    navigate("/finance/add-spending");
-  };
+	const handleJournalClick = () => {
+		console.log('Daily journal clicked');
+		navigate('/journal/write');
+	};
 
-  return (
-    <div className="dashboard-container">
-      <Menu />
-      <div className="dashboard-content">
-        <div className="dashboard-header">
-          <Header
-            Nombre={Nombre}
-            subtitle="How are you feeling today?"
-            emoji="😊"
-          />
-          <div className="dashboard-icons">
-            <CustomIconButton icon={<AccountCircleIcon />} ariaLabel="user" />
-            <CustomIconButton
-              icon={<LogoutIcon />}
-              ariaLabel="logout"
-              onClick={goLogin}
-            />
-          </div>
-        </div>
+	const handleSpendClick = () => {
+		console.log('Add spend clicked');
+		navigate('/finance/add-spending');
+	};
 
-        <div className="dashboard-buttons">
-          <AddButton onClick={handleJournalClick} text={"Daily journal"} />
-          <AddButton onClick={handleSpendClick} text={"Add spend"} />
-        </div>
+	return (
+		<div className='dashboard-container'>
+			<Menu />
+			<div className='dashboard-content'>
+				<div className='dashboard-header'>
+					<Header Nombre={Nombre} subtitle='How are you feeling today?' emoji='😊' />
+					<div className='dashboard-icons'>
+						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' />
+						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={goLogin} />
+					</div>
+				</div>
 
-        {/* Top row with three equal cards */}
-        <div className="dashboard-cards-row">
-          <ReminderCard />
-          <FeelingsCard compact={true} />
-          <GoalProgressCard spent={150000} total={200000} compact={true} />
-        </div>
+				<div className='dashboard-buttons'>
+					<AddButton onClick={handleJournalClick} text={'Daily journal'} />
+					<AddButton onClick={handleSpendClick} text={'Add spend'} />
+				</div>
 
-        {/* Bottom row with expenses table on left and emotion week on right */}
-        <div className="dashboard-bottom-row">
-          <div className="expenses-container">
-            <ExpensesTable data={expensesData} dashboard={true} />
-          </div>
-          <div className="emotion-container">
-            <EmotionWeek dashboard={true} />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+				{/* Top row with three equal cards */}
+				<div className='dashboard-cards-row'>
+					<ReminderCard />
+					<FeelingsCard />
+					<GoalProgressCard />
+				</div>
+
+				{/* Bottom row with expenses table on left and emotion week on right */}
+				<div className='dashboard-bottom-row'>
+					<div className='expenses-container'>
+						<ExpensesTable data={expensesData} dashboard={true} />
+					</div>
+					<div className='emotion-container'>
+						<EmotionWeek dashboard={true} />
+					</div>
+				</div>
+			</div>
+		</div>
+	);
 }
 
 export default Dashboard;
