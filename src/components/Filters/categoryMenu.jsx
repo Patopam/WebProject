@@ -18,19 +18,19 @@ const CategoryMenu = ({ categories, selectedCategory, onCategoryClick }) => {
 					onClick={() => onCategoryClick(category)}
 					sx={{
 						display: 'flex',
-						minWidth: '2.5rem', // Ancho mínimo
-						height: '2.813rem', // Igual que MonthFilter
-						padding: '6px 24px', // Igual que MonthFilter
+						minWidth: '2.5rem',
+						height: '2.813rem',
+						padding: '6px 24px',
 						justifyContent: 'center',
 						alignItems: 'center',
-						gap: '24px', // Agregado de MonthFilter
+						gap: '24px',
 						borderRadius: '999px',
 						background: selectedCategory === category ? '#4B4990' : '#5F5DA6',
 						color: '#fff',
 						border: 'none',
 						cursor: 'pointer',
 						fontFamily: "'Manrope', sans-serif",
-						fontSize: '14px', // Cambiado de 16px a 14px como MonthFilter
+						fontSize: '14px', 
 						fontWeight: 500,
 						whiteSpace: 'nowrap',
 						'&:hover': {
