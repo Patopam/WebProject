@@ -11,6 +11,7 @@ import ExpandedJournal from './screens/journal/expandedJournal';
 import Start from './screens/start/start';
 import Log from './screens/log/log';
 import Sign from './screens/sign/sign';
+import Settings from './screens/settings/settings';
 import AddGoal from './screens/finance/addGoal';
 import AddSpending from './screens/finance/addSpending';
 
@@ -30,6 +31,7 @@ function App() {
 				<Route path='/journal/write' element={<ExpandedJournal />} />
 				<Route path='/finance/add-spending' element={<AddSpending />} />
 				<Route path='/finance/add-goal' element={<AddGoal />} />
+				<Route path='/settings' element={<Settings />} />
 			</Routes>
 		</Router>
 	);

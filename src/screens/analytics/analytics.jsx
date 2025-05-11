@@ -6,7 +6,6 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CustomIconButton from '../../components/Buttons/icon';
 import FeelingsCard from '../../components/Cards/FeelingsCard';
 import GoalProgressCard from '../../components/Cards/goal';
-import { Typography, Container, Stack, Box } from '@mui/material';
 import EmotionsLineChartCentered from '../../components/Charts/ChartsEmociones';
 import ExpensesLineChart from '../../components/Charts/ChartsGastos';
 import './analytics.css';

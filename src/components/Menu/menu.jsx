@@ -5,13 +5,11 @@ import Logo from '../../assets/logo.png';
 
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
 import PhotoAlbumOutlinedIcon from '@mui/icons-material/PhotoAlbumOutlined';
 import LeaderboardOutlinedIcon from '@mui/icons-material/LeaderboardOutlined';
 import TagFacesOutlinedIcon from '@mui/icons-material/TagFacesOutlined';
 import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined';
-import NotificationsActiveOutlinedIcon from '@mui/icons-material/NotificationsActiveOutlined';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const Menu = () => {
 	return (
@@ -66,15 +64,11 @@ const Menu = () => {
 						</Link>
 					</li>
 				</ul>
-			</div>
-
-			<div className='menu-section'>
-				<p className='section-title'>SETTINGS</p>
 				<ul>
 					<li>
 						<Link to='/settings' className='menu-item-link'>
-							<SettingsOutlinedIcon />
-							<span>Settings</span>
+							<FavoriteIcon />
+							<span>Recommendations</span>
 						</Link>
 					</li>
 				</ul>
