@@ -24,8 +24,8 @@ function Emotions() {
 				<div className='emotions-header'>
 					<Header2 title='My emotions' subtitle='Look at your history of your emotions.' />
 					<div className='emotions-icons'>
-						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' />
-						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={goLogin} />
+					<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
+					<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={goLogin} />
 					</div>
 				</div>
 

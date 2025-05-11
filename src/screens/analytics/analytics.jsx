@@ -27,7 +27,7 @@ function Analytics() {
 				<div className='analytics-header'>
 					<Header2 title='Analytics' subtitle='Set goals and look at your track record.' />
 					<div className='analytics-icons'>
-						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' />
+						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
 						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={goLogin} />
 					</div>
 				</div>

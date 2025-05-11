@@ -24,8 +24,8 @@ function Journal() {
 				<div className='journal-header'>
 					<Header2 title='My journal' subtitle='Write your thoughts of the day.' />
 					<div className='journal-icons'>
-						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' />
-						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={goLogin} />
+					<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
+					<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={goLogin} />
 					</div>
 				</div>
 
