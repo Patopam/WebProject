@@ -46,7 +46,7 @@ const ReminderCard = () => {
 				borderRadius: '1.5rem', // 24px
 				background: '#B7D0EE',
 				boxShadow: 'none',
-				padding: '1.75rem', // Para asegurar un padding interno consistente
+				padding: '1.75rem',
 				boxSizing: 'border-box',
 			}}
 		>
@@ -107,7 +107,7 @@ const ReminderCard = () => {
 						aria-label='refresh'
 						sx={{
 							color: '#333',
-							padding: '0.5rem', // Adaptado para responsive
+							padding: '0.5rem', 
 						}}
 						onClick={handleRefresh}
 					>

@@ -22,7 +22,7 @@ export default function EmotionsLineChartCentered() {
 			color: 'var(--Neutral-1000, #333)',
 			fontFamily: 'Manrope, sans-serif',
 			fontSize: {
-				xs: '1.5rem', // Más pequeño en móviles
+				xs: '1.5rem', // Más pequeño
 				sm: '1.75rem', // Mediano en tablets
 				md: '2rem', // Normal en escritorio
 			},
@@ -63,7 +63,7 @@ export default function EmotionsLineChartCentered() {
 	// Puntos personalizados con emojis centrados en la línea
 	const CustomizedDot = (props) => {
 		const { cx, cy, payload } = props;
-		const circleRadius = isMobile ? 12 : 16; // Círculos más grandes como en la imagen
+		const circleRadius = isMobile ? 12 : 16;
 		const fontSize = isMobile ? '0.875rem' : '1rem'; // 14px en móvil, 16px en desktop
 
 		return (
@@ -75,7 +75,7 @@ export default function EmotionsLineChartCentered() {
 					r={circleRadius}
 					fill='white'
 					stroke='#49499D'
-					strokeWidth={2} // Borde más grueso como en la imagen
+					strokeWidth={2}
 				/>
 				<text x={cx} y={cy} dy={5} dx={0} textAnchor='middle' fontSize={fontSize}>
 					{payload.emotion}
@@ -113,8 +113,6 @@ export default function EmotionsLineChartCentered() {
 		md: 320, // Altura en desktop (aumentada)
 	};
 
-	// Ya no necesitamos la función getMargins porque definimos los márgenes directamente
-	// en el componente LineChart
 
 	return (
 		<Box
@@ -133,12 +131,10 @@ export default function EmotionsLineChartCentered() {
 				height={
 					theme.breakpoints.values.xs ? chartHeight.xs : theme.breakpoints.values.sm ? chartHeight.sm : chartHeight.md
 				}
-				// Añadimos margin bottom para dar espacio extra a las etiquetas del eje X
 				style={{ marginBottom: '2rem' }}
 			>
 				<LineChart
 					data={emotionsData}
-					// Aumentamos los márgenes, especialmente el inferior para las etiquetas
 					margin={{ top: 20, right: 40, left: 30, bottom: 30 }}
 					style={styleText.Linea}
 				>
@@ -147,12 +143,9 @@ export default function EmotionsLineChartCentered() {
 						dataKey='day'
 						fontSize={isMobile ? '0.75rem' : '0.875rem'}
 						tick={{ fill: '#000' }}
-						// Aumentamos el margen de las etiquetas
 						tickMargin={15}
-						// Eliminamos el ángulo para que se muestre como en la imagen
 						angle={0}
 						textAnchor='middle'
-						// Aumentamos la altura para dar más espacio
 						height={40}
 					/>
 					<YAxis

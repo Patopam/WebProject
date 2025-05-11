@@ -26,7 +26,6 @@
 	gap: 0.5rem;
 }
 
-/* NUEVO: reemplaza flex por grid como en journal */
 .emotions-main-grid {
 	display: grid;
 	grid-template-columns: 2fr 1fr;
