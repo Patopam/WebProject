@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -6,31 +6,24 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import reminderPhrases from '../../Data/reminderData';
+
+import { getMotivationalQuote } from '../../services/openaiService';
 
 const ReminderCard = () => {
-	// State to manage the current phrase
-	const [currentPhrase, setCurrentPhrase] = useState('');
+	const [currentPhrase, setCurrentPhrase] = useState('Take a breath. You’re doing great.');
+	const [loading, setLoading] = useState(false);
 
-	// Function to get a random phrase
-	const getRandomPhrase = () => {
-		const randomIndex = Math.floor(Math.random() * reminderPhrases.length);
-		return reminderPhrases[randomIndex];
+	const fetchPhrase = async () => {
+		setLoading(true);
+		const newQuote = await getMotivationalQuote();
+		setCurrentPhrase(newQuote);
+		setLoading(false);
 	};
 
-	// Initial phrase load and refresh functionality
-	useEffect(() => {
-		setCurrentPhrase(getRandomPhrase());
-	}, []);
-
-	// Handle refresh click
 	const handleRefresh = () => {
-		let newPhrase = getRandomPhrase();
-		// Avoid showing the same phrase twice in a row
-		while (newPhrase === currentPhrase) {
-			newPhrase = getRandomPhrase();
+		if (!loading) {
+			fetchPhrase();
 		}
-		setCurrentPhrase(newPhrase);
 	};
 
 	return (
@@ -38,15 +31,15 @@ const ReminderCard = () => {
 			sx={{
 				display: 'flex',
 				width: '100%',
-				maxWidth: '40rem', // 640px
+				maxWidth: '40rem',
 				height: 'auto',
-				minHeight: '14.875rem', // 238px
+				minHeight: '14.875rem',
 				justifyContent: 'center',
 				alignItems: 'center',
-				borderRadius: '1.5rem', // 24px
+				borderRadius: '1.5rem',
 				background: '#B7D0EE',
 				boxShadow: 'none',
-				padding: '1.75rem', // Para asegurar un padding interno consistente
+				padding: '1.75rem',
 				boxSizing: 'border-box',
 			}}
 		>
@@ -54,13 +47,11 @@ const ReminderCard = () => {
 				sx={{
 					display: 'flex',
 					width: '100%',
-					maxWidth: '28rem', // 371px
-					height: 'auto',
-					minHeight: '10.875rem', // 190px
+					maxWidth: '28rem',
+					minHeight: '10.875rem',
 					flexDirection: 'column',
 					alignItems: 'flex-end',
-					gap: '1.25rem', // 20px
-					flexShrink: 0,
+					gap: '1.25rem',
 					padding: 0,
 					'&:last-child': { paddingBottom: 0 },
 				}}
@@ -79,13 +70,12 @@ const ReminderCard = () => {
 							sx={{
 								backgroundColor: '#70A1DE',
 								borderRadius: '50%',
-								width: '2.31rem', // 37px
-								height: '2.31rem', // 37px
+								width: '2.31rem',
+								height: '2.31rem',
 								display: 'flex',
 								justifyContent: 'center',
 								alignItems: 'center',
-								marginRight: '0.625rem', // 10px
-								flexShrink: 0,
+								marginRight: '0.625rem',
 							}}
 						>
 							<FavoriteBorderIcon sx={{ color: '#333', fontSize: '1.25rem' }} />
@@ -93,49 +83,41 @@ const ReminderCard = () => {
 						<Typography
 							sx={{
 								fontFamily: "'Manrope', sans-serif",
-								fontSize: '1.125rem', // 18px
+								fontSize: '1.125rem',
 								fontWeight: 300,
 								color: '#333',
-								lineHeight: 'normal',
-								fontStyle: 'normal',
 							}}
 						>
-							Remainder
+							Reminder
 						</Typography>
 					</Box>
 					<IconButton
 						aria-label='refresh'
-						sx={{
-							color: '#333',
-							padding: '0.5rem', // Adaptado para responsive
-						}}
 						onClick={handleRefresh}
+						sx={{ color: '#333', padding: '0.5rem' }}
+						disabled={loading}
 					>
 						<RefreshIcon sx={{ fontSize: '1.25rem' }} />
 					</IconButton>
 				</Box>
 
 				<Typography
-					variant='p'
+					component='span'
 					sx={{
 						display: 'flex',
-						height: 'auto',
-						minHeight: '5.625rem', // 90px
-						flexDirection: 'column',
+						minHeight: '5.625rem',
 						justifyContent: 'center',
-						flexShrink: '0',
 						color: '#333',
 						fontFamily: "'Manrope', sans-serif",
-						fontSize: '1.75rem', // 28px
-						fontStyle: 'normal',
+						fontSize: '1.75rem',
 						fontWeight: 700,
 						lineHeight: '125%',
 						alignSelf: 'stretch',
-						overflow: 'hidden', // Prevenir desbordamiento con frases largas
-						wordWrap: 'break-word', // Asegurar que el texto se ajuste
+						overflow: 'hidden',
+						wordWrap: 'break-word',
 					}}
 				>
-					{currentPhrase}
+					{loading ? 'Loading inspiration...' : currentPhrase}
 				</Typography>
 			</CardContent>
 		</Card>
