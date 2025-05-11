@@ -66,7 +66,7 @@ const Menu = () => {
 				</ul>
 				<ul>
 					<li>
-						<Link to='/settings' className='menu-item-link'>
+						<Link to='/recommendations' className='menu-item-link'>
 							<FavoriteIcon />
 							<span>Recommendations</span>
 						</Link>

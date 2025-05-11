@@ -45,13 +45,9 @@ function Settings() {
 	};
 
 	const handleCancel = () => {
-		console.log('Cancel clicked');
-		// Reset form to values from localStorage
-		setFirstName(localStorage.getItem('firstName') || 'Name');
-		setLastName(localStorage.getItem('lastName') || 'LastName');
-		setUserName(localStorage.getItem('userName') || 'UserName');
-		setEmail(localStorage.getItem('email') || '');
-		setPhoneNumber(localStorage.getItem('phoneNumber') || '');
+		console.log('Cancel clicked - navigating back');
+		// Navigate to the previous page
+		navigate(-1);
 	};
 
 	const handleLogout = () => {
