@@ -1,125 +1,38 @@
 import React from 'react';
-import { Card, CardContent, Typography, Box, IconButton } from '@mui/material';
-import RefreshIcon from '@mui/icons-material/Refresh';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 const RecommendationCard = ({ showInfo, selectedCategory, recommendation, loading, onRefresh }) => {
-	return showInfo ? (
-		// Information card displayed when no category is selected
+	return (
 		<Card
 			sx={{
 				display: 'flex',
 				width: '100%',
 				maxWidth: '40rem',
-				height: 'auto',
 				minHeight: '14.875rem',
 				justifyContent: 'center',
 				alignItems: 'center',
 				borderRadius: '1.5rem',
-				background: '#C3CF90', // Green-ish color like in the image
+				background: showInfo ? '#E3E9CF' : selectedCategory ? getCardColor(selectedCategory) : '#B7D0EE',
 				boxShadow: 'none',
-				padding: '1.75rem',
+				padding: '1.75rem', // reducido de 1.75rem
 				boxSizing: 'border-box',
-				marginTop: '20px',
 			}}
 		>
 			<CardContent
 				sx={{
 					display: 'flex',
 					width: '100%',
-					maxWidth: '28rem',
+					maxWidth: '100%', // antes era 28rem, ahora usa todo el ancho disponible
 					minHeight: '10.875rem',
 					flexDirection: 'column',
-					gap: '1.25rem',
-					padding: 0,
-					'&:last-child': { paddingBottom: 0 },
-				}}
-			>
-				<Box
-					sx={{
-						display: 'flex',
-						justifyContent: 'flex-start',
-						alignItems: 'center',
-						alignSelf: 'stretch',
-						width: '100%',
-					}}
-				>
-					<Box sx={{ display: 'flex', alignItems: 'center' }}>
-						<Box
-							sx={{
-								backgroundColor: '#A9B576', // Darker green for the icon background
-								borderRadius: '50%',
-								width: '2.31rem',
-								height: '2.31rem',
-								display: 'flex',
-								justifyContent: 'center',
-								alignItems: 'center',
-								marginRight: '0.625rem',
-							}}
-						>
-							<InfoIcon sx={{ color: '#333', fontSize: '1.25rem' }} />
-						</Box>
-						<Typography
-							sx={{
-								fontFamily: "'Manrope', sans-serif",
-								fontSize: '1.125rem',
-								fontWeight: 300,
-								color: '#333',
-							}}
-						>
-							Information
-						</Typography>
-					</Box>
-				</Box>
-
-				<Typography
-					component='span'
-					sx={{
-						display: 'flex',
-						minHeight: '5.625rem',
-						justifyContent: 'flex-start',
-						color: '#333',
-						fontFamily: "'Manrope', sans-serif",
-						fontSize: '1.25rem',
-						fontWeight: 500,
-						lineHeight: '125%',
-						alignSelf: 'stretch',
-						overflow: 'hidden',
-						wordWrap: 'break-word',
-					}}
-				>
-					Here is information about it that the IA brought. Select a category above to get a personalized
-					recommendation.
-				</Typography>
-			</CardContent>
-		</Card>
-	) : (
-		// Recommendation card displayed when a category is selected
-		<Card
-			sx={{
-				display: 'flex',
-				width: '100%',
-				maxWidth: '40rem',
-				height: 'auto',
-				minHeight: '14.875rem',
-				justifyContent: 'center',
-				alignItems: 'center',
-				borderRadius: '1.5rem',
-				background: selectedCategory ? getCardColor(selectedCategory) : '#B7D0EE',
-				boxShadow: 'none',
-				padding: '1.75rem',
-				boxSizing: 'border-box',
-				marginTop: '20px',
-			}}
-		>
-			<CardContent
-				sx={{
-					display: 'flex',
-					width: '100%',
-					maxWidth: '28rem',
-					minHeight: '10.875rem',
-					flexDirection: 'column',
-					gap: '1.25rem',
+					alignItems: 'flex-end',
+					gap: '1rem', // ajustado un poco
 					padding: 0,
 					'&:last-child': { paddingBottom: 0 },
 				}}
@@ -129,14 +42,13 @@ const RecommendationCard = ({ showInfo, selectedCategory, recommendation, loadin
 						display: 'flex',
 						justifyContent: 'space-between',
 						alignItems: 'center',
-						alignSelf: 'stretch',
 						width: '100%',
 					}}
 				>
 					<Box sx={{ display: 'flex', alignItems: 'center' }}>
 						<Box
 							sx={{
-								backgroundColor: getDarkerColor(selectedCategory),
+								backgroundColor: showInfo ? '#C8D39F' : getDarkerColor(selectedCategory),
 								borderRadius: '50%',
 								width: '2.31rem',
 								height: '2.31rem',
@@ -146,7 +58,7 @@ const RecommendationCard = ({ showInfo, selectedCategory, recommendation, loadin
 								marginRight: '0.625rem',
 							}}
 						>
-							{getCategoryIcon(selectedCategory)}
+							{showInfo ? <InfoIcon sx={{ color: '#333', fontSize: '1.25rem' }} /> : getCategoryIcon(selectedCategory)}
 						</Box>
 						<Typography
 							sx={{
@@ -156,37 +68,45 @@ const RecommendationCard = ({ showInfo, selectedCategory, recommendation, loadin
 								color: '#333',
 							}}
 						>
-							{selectedCategory}
+							{showInfo ? 'Information' : selectedCategory}
 						</Typography>
 					</Box>
-					<IconButton
-						aria-label='refresh'
-						onClick={onRefresh}
-						sx={{ color: '#333', padding: '0.5rem' }}
-						disabled={loading}
-					>
-						<RefreshIcon sx={{ fontSize: '1.25rem' }} />
-					</IconButton>
+					{!showInfo && (
+						<IconButton
+							aria-label='refresh'
+							onClick={onRefresh}
+							sx={{ color: '#333', padding: '0.5rem' }}
+							disabled={loading}
+						>
+							<RefreshIcon sx={{ fontSize: '1.25rem' }} />
+						</IconButton>
+					)}
 				</Box>
 
 				<Typography
 					component='span'
 					sx={{
 						display: 'flex',
-						minHeight: '5.625rem',
-						justifyContent: 'center',
+						minHeight: '4rem',
+						justifyContent: showInfo ? 'flex-start' : 'center',
 						color: '#333',
 						fontFamily: "'Manrope', sans-serif",
-						fontSize: '1.5rem',
-						fontWeight: 600,
+						fontSize: showInfo ? '1.25rem' : '1.75rem',
+						fontWeight: showInfo ? 500 : 700,
 						lineHeight: '125%',
 						alignSelf: 'stretch',
 						alignItems: 'center',
 						overflow: 'hidden',
 						wordWrap: 'break-word',
+						textAlign: showInfo ? 'left' : 'center',
+						padding: '0 0.5rem',
 					}}
 				>
-					{loading ? 'Loading recommendation...' : recommendation}
+					{showInfo
+						? 'Here is information about it that the IA brought. Select a category above to get a personalized recommendation.'
+						: loading
+						? 'Loading recommendation...'
+						: recommendation}
 				</Typography>
 			</CardContent>
 		</Card>
@@ -196,33 +116,30 @@ const RecommendationCard = ({ showInfo, selectedCategory, recommendation, loadin
 // Helper functions for card styling
 function getCardColor(category) {
 	const colors = {
-		'Breathing exercise': '#B7D0EE', // Blue
-		'Yoga class': '#FFD6A5', // Orange
-		'Healthy habits': '#C3CF90', // Green
-		'Money mindset': '#A0D2EB', // Light blue
-		'Self-care tip': '#FFDDE1', // Pink
-		'Gratitude practice': '#D4A5FF', // Purple
+		'Breathing exercise': '#B7D0EE',
+		'Yoga class': '#FACFBB',
+		'Healthy habits': '#C8D39F',
+		'Money mindset': '#FCE2A9',
+		'Self-care tip': '#CBCBE7',
+		'Gratitude practice': '#FACFBB',
 	};
 	return colors[category] || '#B7D0EE';
 }
 
 function getDarkerColor(category) {
 	const colors = {
-		'Breathing exercise': '#70A1DE', // Darker blue
-		'Yoga class': '#FFB26B', // Darker orange
-		'Healthy habits': '#A9B576', // Darker green
-		'Money mindset': '#7BAFD0', // Darker light blue
-		'Self-care tip': '#FFBAC3', // Darker pink
-		'Gratitude practice': '#B87EFF', // Darker purple
+		'Breathing exercise': '#70A1DE',
+		'Yoga class': '#F69F77',
+		'Healthy habits': '#8C9F49',
+		'Money mindset': '#FACD69',
+		'Self-care tip': '#9C9CD2',
+		'Gratitude practice': '#F69F77',
 	};
 	return colors[category] || '#70A1DE';
 }
 
 function getCategoryIcon(category) {
-	// Placeholder icons using text characters
-	// In a real application, you would import and use proper icons
 	const iconStyle = { color: '#333', fontSize: '1.25rem' };
-
 	switch (category) {
 		case 'Breathing exercise':
 			return <span style={iconStyle}>🫁</span>;
