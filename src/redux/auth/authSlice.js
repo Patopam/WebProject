@@ -1,8 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+const initialState = {
+  id: "hola soy auth",
+};
 
 export const authSlice = createSlice({
   name: "auth",
-  initialState: null,
+  initialState,
   reducers: {},
 });
 

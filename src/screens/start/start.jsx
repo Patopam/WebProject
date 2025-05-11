@@ -6,8 +6,6 @@ import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import "./start.css";
 function Start() {
-  const auth = useSelector((state) => state.auth);
-  console.log(auth);
   let navigate = useNavigate();
 
   const goLogin = () => {
