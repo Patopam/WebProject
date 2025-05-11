@@ -2,10 +2,9 @@ import React from 'react';
 import { SentimentSatisfiedAlt } from '@mui/icons-material';
 
 const EmotionWeek = ({ compact = false }) => {
-	// Usamos rem para la mayoría de las medidas para mejor escalabilidad
 	const containerStyle = {
 		display: 'flex',
-		width: compact ? '100%' : '100%', // Ancho relativo al contenedor padre
+		width: compact ? '100%' : '100%',
 		maxWidth: compact ? '26.75rem' : '40rem', // Equivalente a 428px y 544px
 		height: '22.5rem', // Altura automática basada en el contenido
 		padding: compact ? '1.75rem 1.75rem 3.3rem 1.75rem' : '1.75rem 1.75rem 4.2rem 1.75rem',
@@ -62,7 +61,7 @@ const EmotionWeek = ({ compact = false }) => {
 		borderRadius: '1.875rem',
 		backgroundColor: '#C8D39F',
 		boxSizing: 'border-box',
-		aspectRatio: compact ? '41.7/118.01' : '53/150', // Mantiene la proporción del diseño original
+		aspectRatio: compact ? '41.7/118.01' : '53/150', 
 	};
 
 	const dayTextStyle = {

@@ -11,12 +11,12 @@ export default function ExpensesLineChart() {
 		Linea: {
 			color: 'var(--Neutral-1000, #333)',
 			fontFamily: 'Manrope, sans-serif',
-			fontSize: '1rem', // 16px convertido a rem
+			fontSize: '1rem',
 			fontStyle: 'normal',
 			fontWeight: 400,
 			lineHeight: 'normal',
 			color: '#000000',
-			marginTop: '1.25rem', // 20px convertido a rem
+			marginTop: '1.25rem',
 			textAlign: 'center',
 		},
 		Titulo: {
@@ -29,7 +29,7 @@ export default function ExpensesLineChart() {
 			},
 			fontWeight: 400,
 			color: '#000000',
-			marginTop: '1.25rem', // 20px convertido a rem
+			marginTop: '1.25rem',
 			marginBottom: '1rem',
 			textAlign: 'center',
 		},
@@ -83,7 +83,6 @@ export default function ExpensesLineChart() {
 		md: 320, // Altura en desktop
 	};
 
-	// Determinamos los ticks para el eje Y basados en el tamaño de la pantalla
 	const getYAxisTicks = () => {
 		if (isMobile) {
 			return [0, 20, 40, 60, 80]; // Menos ticks en móvil
@@ -117,7 +116,7 @@ export default function ExpensesLineChart() {
 						top: 20,
 						right: isMobile ? 20 : 40,
 						left: isMobile ? 20 : 40,
-						bottom: 30, // Más espacio abajo para las etiquetas
+						bottom: 30,
 					}}
 					style={styleText.Linea}
 				>
@@ -128,7 +127,6 @@ export default function ExpensesLineChart() {
 						fontSize={isMobile ? '0.75rem' : '0.875rem'}
 						tick={{ fill: '#666' }}
 						tickMargin={15}
-						// Ajustamos las etiquetas en móvil si es necesario
 						angle={isMobile && expensesData.some((d) => d.day.length > 6) ? -30 : 0}
 						textAnchor={isMobile && expensesData.some((d) => d.day.length > 6) ? 'end' : 'middle'}
 					/>
@@ -138,7 +136,7 @@ export default function ExpensesLineChart() {
 						tickFormatter={(value) => `$${value}`}
 						fontSize={isMobile ? '0.75rem' : '0.875rem'}
 						tick={{ fill: '#666' }}
-						width={isMobile ? 35 : 45} // Ancho ajustado para el formato de moneda
+						width={isMobile ? 35 : 45} 
 					/>
 					<Tooltip content={<CustomTooltip />} />
 					<Legend

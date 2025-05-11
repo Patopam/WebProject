@@ -12,13 +12,12 @@ const initialImages = [
 	'https://i.pinimg.com/736x/f5/f7/b4/f5f7b4bba64a48dac65f2ccfd8afe239.jpg',
 ];
 
-// Estilos con Material UI styled API convertidos a unidades relativas
 const CarouselContainer = styled('div')(({ theme }) => ({
 	position: 'relative',
-	borderRadius: theme.spacing(2), // Material UI spacing ya es relativo
+	borderRadius: theme.spacing(2),
 	background: theme.palette.grey[200],
-	width: '100%', // Ancho responsivo
-	maxWidth: '40rem', // 427px como máximo
+	width: '100%',
+	maxWidth: '40rem', //
 	overflow: 'hidden',
 	boxSizing: 'border-box',
 }));
@@ -41,7 +40,7 @@ const EmblaSlide = styled('div')({
 const SlideImage = styled('img')({
 	width: '100%',
 	height: 'auto',
-	aspectRatio: '16/9', // Mantiene proporción consistente
+	aspectRatio: '16/9',
 	maxHeight: '15rem', // 240px
 	objectFit: 'cover',
 	borderRadius: '0.75rem', // 12px
@@ -107,7 +106,6 @@ export default function ImageCarousel() {
 	);
 }
 
-// Componente con prop para tamaño compacto
 export function ImageCarouselWithProps({ compact = false }) {
 	const [images, setImages] = useState(initialImages);
 	const [emblaRef] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 3000 })]);
@@ -125,7 +123,6 @@ export function ImageCarouselWithProps({ compact = false }) {
 		}
 	};
 
-	// Estilos específicos basados en la prop compact
 	const containerStyle = {
 		position: 'relative',
 		borderRadius: '1rem',

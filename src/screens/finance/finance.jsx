@@ -22,6 +22,9 @@ function Finance() {
 	const goLogin = () => {
 		navigate('/log');
 	};
+	const goSettings = () => {
+		navigate('/settings');
+	};
 	const handleSpendClick = () => {
 		navigate('/finance/add-spending');
 	};
@@ -36,8 +39,8 @@ function Finance() {
 				<div className='finance-header'>
 					<Header2 title='Finance' subtitle='Here you will find your stats.' />
 					<div className='finance-icons'>
-						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' />
-						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={goLogin} />
+					<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
+					<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={goLogin} />
 					</div>
 				</div>
 				<div className='finance-buttons'>

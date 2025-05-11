@@ -20,6 +20,7 @@ const FeelingsCard = ({ compact = false }) => {
 				background: '#FCD8C2',
 				boxShadow: 'none',
 				padding: compact ? '1.75rem' : '1.75rem',
+
 				boxSizing: 'border-box',
 			}}
 		>

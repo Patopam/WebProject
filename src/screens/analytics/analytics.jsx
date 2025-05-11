@@ -6,7 +6,6 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CustomIconButton from '../../components/Buttons/icon';
 import FeelingsCard from '../../components/Cards/FeelingsCard';
 import GoalProgressCard from '../../components/Cards/goal';
-import { Typography, Container, Stack, Box } from '@mui/material';
 import EmotionsLineChartCentered from '../../components/Charts/ChartsEmociones';
 import ExpensesLineChart from '../../components/Charts/ChartsGastos';
 import './analytics.css';
@@ -17,6 +16,9 @@ function Analytics() {
 	const goLogin = () => {
 		navigate('/log');
 	};
+	const goSettings = () => {
+		navigate('/settings');
+	};
 
 	return (
 		<div className='analytics-container'>
@@ -25,7 +27,7 @@ function Analytics() {
 				<div className='analytics-header'>
 					<Header2 title='Analytics' subtitle='Set goals and look at your track record.' />
 					<div className='analytics-icons'>
-						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' />
+						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
 						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={goLogin} />
 					</div>
 				</div>
