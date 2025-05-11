@@ -31,7 +31,7 @@ function Recommendations() {
 			<Menu />
 			<div className='recommendations-content'>
 				<div className='recommendations-header'>
-					<Header2 title='Recommendatios' subtitle='Get recommendations with IA' />
+					<Header2 title='Recommendations' subtitle='Get recommendations with IA' />
 					<div className='recommendations-icons'>
 						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
 						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={goLogin} />
