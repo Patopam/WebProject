@@ -15,9 +15,18 @@ const RecommendationDay = () => {
 		<CardContainer>
 			<SectionTitle>
 				<IconCircle>
-					<LightbulbOutlinedIcon sx={{ fontSize: 20, color: '#000' }} />
+					<LightbulbOutlinedIcon sx={{ color: '#333', fontSize: '1.25rem' }} />
 				</IconCircle>
-				<Typography sx={{ fontWeight: 600, fontSize: 18 }}>Recommendation of the day</Typography>
+				<Typography
+					sx={{
+						fontFamily: "'Manrope', sans-serif",
+						fontSize: '1.125rem', // = 18px
+						fontWeight: 300,
+						color: '#333',
+					}}
+				>
+					Recommendation of the day
+				</Typography>
 			</SectionTitle>
 
 			<SectionEmotion>
@@ -44,7 +53,7 @@ export default RecommendationDay;
 
 const CardContainer = styled(Box)(() => ({
 	backgroundColor: '#fdd1bc',
-	padding: '2rem',
+	padding: '1.9rem',
 	borderRadius: '1.5rem',
 	fontFamily: '"Manrope", sans-serif',
 	width: '100%',
@@ -59,17 +68,17 @@ const CardContainer = styled(Box)(() => ({
 const SectionTitle = styled(Box)(() => ({
 	display: 'flex',
 	alignItems: 'center',
-	gap: '0.6rem',
+	gap: '0.625rem',
 }));
 
 const IconCircle = styled(Box)(() => ({
-	width: '2rem',
-	height: '2rem',
-	borderRadius: '50%',
 	backgroundColor: '#F69F77',
+	borderRadius: '50%',
+	width: '2.31rem',
+	height: '2.31rem',
 	display: 'flex',
-	alignItems: 'center',
 	justifyContent: 'center',
+	alignItems: 'center',
 }));
 
 const SectionEmotion = styled(Box)(() => ({}));
