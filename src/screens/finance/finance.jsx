@@ -22,6 +22,9 @@ function Finance() {
 	const goLogin = () => {
 		navigate('/log');
 	};
+	const goSettings = () => {
+		navigate('/settings');
+	};
 	const handleSpendClick = () => {
 		navigate('/finance/add-spending');
 	};

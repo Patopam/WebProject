@@ -16,6 +16,9 @@ function Analytics() {
 	const goLogin = () => {
 		navigate('/log');
 	};
+	const goSettings = () => {
+		navigate('/settings');
+	};
 
 	return (
 		<div className='analytics-container'>

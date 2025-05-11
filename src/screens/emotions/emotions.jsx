@@ -14,6 +14,9 @@ function Emotions() {
 	const goLogin = () => {
 		navigate('/log');
 	};
+	const goSettings = () => {
+		navigate('/settings');
+	};
 	return (
 		<div className='emotions-container'>
 			<Menu />

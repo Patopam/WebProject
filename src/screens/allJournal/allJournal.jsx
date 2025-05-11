@@ -13,6 +13,9 @@ function AllJournal() {
   const goLogin = () => {
     navigate("/log");
   };
+  const goSettings = () => {
+		navigate('/settings');
+	};
   return (
     <div className="journal-container">
       <Menu />
