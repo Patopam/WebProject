@@ -15,12 +15,12 @@ const RecommendationDay = () => {
 		<CardContainer>
 			<SectionTitle>
 				<IconCircle>
-					<LightbulbOutlinedIcon sx={{ color: '#333', fontSize: '1.25rem' }} />
+					<LightbulbOutlinedIcon sx={{ color: '#333', fontSize: '1.23rem' }} />
 				</IconCircle>
 				<Typography
 					sx={{
 						fontFamily: "'Manrope', sans-serif",
-						fontSize: '1.125rem', // = 18px
+						fontSize: '1.125rem',
 						fontWeight: 300,
 						color: '#333',
 					}}
@@ -30,15 +30,17 @@ const RecommendationDay = () => {
 			</SectionTitle>
 
 			<SectionEmotion>
-				<Typography sx={{ fontSize: 16 }}>
-					Hoy <strong>te sientes {mockData.emotion}</strong>, por eso te recomendamos…
+				<Typography sx={{ fontSize: '1.35rem', color: '#333', lineHeight: 1.4 }}>
+					Hoy te sientes <strong> {mockData.emotion}</strong>, por eso te recomendamos…
 				</Typography>
 			</SectionEmotion>
 
 			<SectionRecommendation>
 				<LeftText>
-					<Typography sx={{ fontWeight: 600, fontSize: 16 }}>{mockData.title}</Typography>
-					<Typography sx={{ fontSize: 15 }}>{mockData.description}</Typography>
+					<Typography sx={{ fontWeight: 600, fontSize: '1.25rem', marginBottom: '0.4rem', lineHeight: 1.2 }}>
+						{mockData.title}
+					</Typography>
+					<Typography sx={{ fontSize: '1.25rem', color: '#333', lineHeight: 1.2 }}>{mockData.description}</Typography>
 				</LeftText>
 
 				<ImageBox>
@@ -53,7 +55,7 @@ export default RecommendationDay;
 
 const CardContainer = styled(Box)(() => ({
 	backgroundColor: '#fdd1bc',
-	padding: '1.9rem',
+	padding: '1.8rem',
 	borderRadius: '1.5rem',
 	fontFamily: '"Manrope", sans-serif',
 	width: '100%',
@@ -62,7 +64,10 @@ const CardContainer = styled(Box)(() => ({
 	boxSizing: 'border-box',
 	display: 'flex',
 	flexDirection: 'column',
-	gap: '1.25rem',
+	gap: '1.5rem',
+	minHeight: '24.9rem',
+	maxHeight: '14.875rem',
+	overflow: 'hidden',
 }));
 
 const SectionTitle = styled(Box)(() => ({
@@ -86,19 +91,22 @@ const SectionEmotion = styled(Box)(() => ({}));
 const SectionRecommendation = styled(Box)(() => ({
 	display: 'flex',
 	justifyContent: 'space-between',
-	alignItems: 'flex-start',
-	gap: '1.5rem',
-	flexWrap: 'wrap',
+	alignItems: 'alignItems: flex-start',
+	gap: '2rem',
+	flexWrap: 'nowrap',
 }));
 
 const LeftText = styled(Box)(() => ({
 	flex: 1,
-	minWidth: '200px',
+	display: 'flex',
+	flexDirection: 'column',
+	maxHeight: '8rem', // altura fija
+	overflow: 'hidden', // oculta texto que se pase
 }));
 
 const ImageBox = styled(Box)(() => ({
-	width: '140px',
-	height: '140px',
+	width: '145px',
+	height: '180px',
 	borderRadius: '12px',
 	overflow: 'hidden',
 	img: {
