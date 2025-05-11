@@ -20,7 +20,7 @@ const RecommendationCard = ({ showInfo, selectedCategory, recommendation, loadin
 				borderRadius: '1.5rem',
 				background: showInfo ? '#E3E9CF' : selectedCategory ? getCardColor(selectedCategory) : '#B7D0EE',
 				boxShadow: 'none',
-				padding: '1.75rem', // reducido de 1.75rem
+				padding: '1.75rem',
 				boxSizing: 'border-box',
 			}}
 		>
@@ -28,11 +28,11 @@ const RecommendationCard = ({ showInfo, selectedCategory, recommendation, loadin
 				sx={{
 					display: 'flex',
 					width: '100%',
-					maxWidth: '100%', // antes era 28rem, ahora usa todo el ancho disponible
+					maxWidth: '100%',
 					minHeight: '10.875rem',
 					flexDirection: 'column',
 					alignItems: 'flex-end',
-					gap: '1rem', // ajustado un poco
+					gap: '1rem',
 					padding: 0,
 					'&:last-child': { paddingBottom: 0 },
 				}}
@@ -98,7 +98,7 @@ const RecommendationCard = ({ showInfo, selectedCategory, recommendation, loadin
 						alignItems: 'center',
 						overflow: 'hidden',
 						wordWrap: 'break-word',
-						textAlign: showInfo ? 'left' : 'center',
+						textAlign: showInfo ? 'left' : 'left',
 						padding: '0 0.5rem',
 					}}
 				>
