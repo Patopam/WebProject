@@ -65,10 +65,6 @@ function Settings() {
 			<div className='settings-content'>
 				<div className='settings-header'>
 					<Header2 title='Settings' subtitle='User profile' showEmoji={false} />
-					<div className='settings-icons'>
-						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' />
-						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={handleLogout} />
-					</div>
 				</div>
 
 				<div className='profile-section'>
