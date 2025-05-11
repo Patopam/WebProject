@@ -10,7 +10,7 @@ const mockData = {
 		'https://images.pexels.com/photos/631986/pexels-photo-631986.jpeg?auto=compress&cs=tinysrgb&w=600https://images.pexels.com/photos/631986/pexels-photo-631986.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
 };
 
-export default function RecommendationDay() {
+const RecommendationDay = () => {
 	return (
 		<CardContainer>
 			<SectionTitle>
@@ -38,4 +38,5 @@ export default function RecommendationDay() {
 			</SectionRecommendation>
 		</CardContainer>
 	);
-}
+};
+export default RecommendationDay;
