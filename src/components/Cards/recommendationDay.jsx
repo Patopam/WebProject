@@ -1,12 +1,13 @@
 import React from 'react';
 import { Box, Typography, styled } from '@mui/material';
-import ChangeCircleOutlinedIcon from '@mui/icons-material/ChangeCircleOutlined';
+import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
+
 const mockData = {
 	emotion: 'confundido',
 	title: 'Caminata sin destino',
 	description: 'Da un paseo corto, sin rumbo, solo para oxigenarte.',
 	imageUrl:
-		'https://images.pexels.com/photos/631986/pexels-photo-631986.jpeg?auto=compress&cs=tinysrgb&w=600https://images.pexels.com/photos/631986/pexels-photo-631986.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+		'https://images.pexels.com/photos/631986/pexels-photo-631986.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
 };
 
 const RecommendationDay = () => {
@@ -14,21 +15,21 @@ const RecommendationDay = () => {
 		<CardContainer>
 			<SectionTitle>
 				<IconCircle>
-					<ChangeCircleOutlinedIcon sx={{ fontSize: 18, color: '#000' }} />
+					<LightbulbOutlinedIcon sx={{ fontSize: 20, color: '#000' }} />
 				</IconCircle>
-				<Typography sx={{ fontWeight: 500, fontSize: 16 }}>Recommendation of the day</Typography>
+				<Typography sx={{ fontWeight: 600, fontSize: 18 }}>Recommendation of the day</Typography>
 			</SectionTitle>
 
 			<SectionEmotion>
-				<Typography>
+				<Typography sx={{ fontSize: 16 }}>
 					Hoy <strong>te sientes {mockData.emotion}</strong>, por eso te recomendamos…
 				</Typography>
 			</SectionEmotion>
 
 			<SectionRecommendation>
 				<LeftText>
-					<Typography sx={{ fontWeight: 600 }}>{mockData.title}</Typography>
-					<Typography sx={{ fontSize: 14 }}>{mockData.description}</Typography>
+					<Typography sx={{ fontWeight: 600, fontSize: 16 }}>{mockData.title}</Typography>
+					<Typography sx={{ fontSize: 15 }}>{mockData.description}</Typography>
 				</LeftText>
 
 				<ImageBox>
@@ -38,11 +39,12 @@ const RecommendationDay = () => {
 		</CardContainer>
 	);
 };
+
 export default RecommendationDay;
 
 const CardContainer = styled(Box)(() => ({
 	backgroundColor: '#fdd1bc',
-	padding: '1.5rem',
+	padding: '2rem',
 	borderRadius: '1.5rem',
 	fontFamily: '"Manrope", sans-serif',
 	width: '100%',
@@ -51,28 +53,26 @@ const CardContainer = styled(Box)(() => ({
 	boxSizing: 'border-box',
 	display: 'flex',
 	flexDirection: 'column',
-	gap: '1rem',
+	gap: '1.25rem',
 }));
 
 const SectionTitle = styled(Box)(() => ({
 	display: 'flex',
 	alignItems: 'center',
-	gap: '0.5rem',
+	gap: '0.6rem',
 }));
 
 const IconCircle = styled(Box)(() => ({
-	width: '1.8rem',
-	height: '1.8rem',
+	width: '2rem',
+	height: '2rem',
 	borderRadius: '50%',
-	backgroundColor: '#facd69',
+	backgroundColor: '#F69F77',
 	display: 'flex',
 	alignItems: 'center',
 	justifyContent: 'center',
 }));
 
-const SectionEmotion = styled(Box)(() => ({
-	fontSize: '14px',
-}));
+const SectionEmotion = styled(Box)(() => ({}));
 
 const SectionRecommendation = styled(Box)(() => ({
 	display: 'flex',
@@ -88,8 +88,8 @@ const LeftText = styled(Box)(() => ({
 }));
 
 const ImageBox = styled(Box)(() => ({
-	width: '120px',
-	height: '120px',
+	width: '140px',
+	height: '140px',
 	borderRadius: '12px',
 	overflow: 'hidden',
 	img: {
