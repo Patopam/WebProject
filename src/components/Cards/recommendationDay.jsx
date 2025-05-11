@@ -1,7 +1,6 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, styled } from '@mui/material';
 import ChangeCircleOutlinedIcon from '@mui/icons-material/ChangeCircleOutlined';
-
 const mockData = {
 	emotion: 'confundido',
 	title: 'Caminata sin destino',
@@ -40,3 +39,63 @@ const RecommendationDay = () => {
 	);
 };
 export default RecommendationDay;
+
+const CardContainer = styled(Box)(() => ({
+	backgroundColor: '#fdd1bc',
+	padding: '1.5rem',
+	borderRadius: '1.5rem',
+	fontFamily: '"Manrope", sans-serif',
+	width: '100%',
+	maxWidth: '75rem',
+	margin: '0 auto',
+	boxSizing: 'border-box',
+	display: 'flex',
+	flexDirection: 'column',
+	gap: '1rem',
+}));
+
+const SectionTitle = styled(Box)(() => ({
+	display: 'flex',
+	alignItems: 'center',
+	gap: '0.5rem',
+}));
+
+const IconCircle = styled(Box)(() => ({
+	width: '1.8rem',
+	height: '1.8rem',
+	borderRadius: '50%',
+	backgroundColor: '#facd69',
+	display: 'flex',
+	alignItems: 'center',
+	justifyContent: 'center',
+}));
+
+const SectionEmotion = styled(Box)(() => ({
+	fontSize: '14px',
+}));
+
+const SectionRecommendation = styled(Box)(() => ({
+	display: 'flex',
+	justifyContent: 'space-between',
+	alignItems: 'flex-start',
+	gap: '1.5rem',
+	flexWrap: 'wrap',
+}));
+
+const LeftText = styled(Box)(() => ({
+	flex: 1,
+	minWidth: '200px',
+}));
+
+const ImageBox = styled(Box)(() => ({
+	width: '120px',
+	height: '120px',
+	borderRadius: '12px',
+	overflow: 'hidden',
+	img: {
+		width: '100%',
+		height: '100%',
+		objectFit: 'cover',
+		borderRadius: '12px',
+	},
+}));
