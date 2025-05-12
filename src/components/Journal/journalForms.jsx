@@ -79,7 +79,7 @@ export default function JournalForm({ compact = false }) {
 	};
 
 	return (
-		<JournalContainer compact={compact.toString()}>
+		<JournalContainer compact={compact}>
 			<HeaderSection>
 				<TitleGroup>
 					<IconCircle>
