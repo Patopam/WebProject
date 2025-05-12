@@ -2,7 +2,7 @@ import React from 'react';
 import MoodTracker from '../../components/Tables/mood';
 import Menu from '../../components/Menu/menu';
 import ReminderCard from '../../components/Cards/remainder';
-import GoalProgressCard from '../../components/Cards/goal';
+import RecommendationDay from '../../components/Cards/recommendationDay';
 import Header2 from '../../components/Header/header2';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -24,8 +24,8 @@ function Emotions() {
 				<div className='emotions-header'>
 					<Header2 title='My emotions' subtitle='Look at your history of your emotions.' />
 					<div className='emotions-icons'>
-					<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
-					<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={goLogin} />
+						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
+						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={goLogin} />
 					</div>
 				</div>
 
@@ -35,7 +35,7 @@ function Emotions() {
 					</div>
 					<div className='emotions-right'>
 						<ReminderCard />
-						<GoalProgressCard />
+						<RecommendationDay />
 					</div>
 				</div>
 			</div>

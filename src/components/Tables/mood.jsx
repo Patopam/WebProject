@@ -56,7 +56,7 @@ const StyledListItem = styled(ListItem)(({ theme }) => ({
 	padding: theme.spacing(1.5, 2),
 }));
 
-const StyledAvatar = styled(Avatar)(({ theme }) => ({
+const StyledAvatar = styled(Avatar)(() => ({
 	marginRight: '2%',
 	width: '10%',
 	maxWidth: '44px',
@@ -84,7 +84,7 @@ const StyledDivider = styled('div')({
 	marginBottom: '2%',
 });
 
-const MonthHeader = styled(Typography)(({ theme }) => ({
+const MonthHeader = styled(Typography)(() => ({
 	color: 'var(--Neutral-1000, #333)',
 	fontFamily: 'Manrope, sans-serif',
 	fontSize: 'clamp(1rem, 1.8vw, 1.2rem)',
