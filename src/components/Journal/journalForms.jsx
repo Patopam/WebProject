@@ -6,7 +6,7 @@ import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
 import TurnedInNotOutlinedIcon from '@mui/icons-material/TurnedInNotOutlined';
 import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from 'react-router-dom';
-import { addEmotion } from '../../services/firebaseUtils';
+import { addJournal } from '../../services/firebaseUtils';
 import { useSelector } from 'react-redux';
 
 export default function JournalForm({ compact = false }) {
@@ -52,15 +52,26 @@ export default function JournalForm({ compact = false }) {
 		navigate(compact ? '/journal/write' : -1);
 	};
 
-	const send = () => {
-		if (!selectedFeeling) return;
+	const send = async () => {
+		if (!selectedFeeling || !entryTitle || !entryText) {
+			alert('Please complete the journal before saving.');
+			return;
+		}
 
-		addEmotion({
-			uidUser: id,
-			Emotion: selectedFeeling.value,
-			Titel: entryTitle,
-			Descripsion: entryText,
+		await addJournal({
+			uid: id,
+			emotion: selectedFeeling.value,
+			title: entryTitle,
+			description: entryText,
 		});
+
+		// Limpiar el formulario
+		setSelectedFeeling(null);
+		setEntryTitle('');
+		setEntryText('');
+		setSelectedTags([]);
+
+		alert('Journal saved successfully.');
 	};
 
 	return (
