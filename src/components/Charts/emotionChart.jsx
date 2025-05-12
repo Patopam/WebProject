@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Typography, Box, useMediaQuery, useTheme } from '@mui/material';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { collection, getDocs } from 'firebase/firestore';
 import { useSelector } from 'react-redux';
 import { db } from '../../services/firebase';
+import PeriodFilter from '../Filters/PeriodFilter';
+import { LabelList } from 'recharts';
 
-const emotions = ['😄', '😭', '😢', '😡', '😑', '😩'];
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 
 const emotionMap = {
 	happy: { emoji: '😄', value: 5 },
@@ -16,101 +17,101 @@ const emotionMap = {
 	stressed: { emoji: '😩', value: 4 },
 };
 
-export default function ChartsEmociones() {
+export default function EmotionChart() {
 	const theme = useTheme();
 	const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 	const uid = useSelector((state) => state.userId.id);
-	const [emotionsData, setEmotionsData] = useState([]);
+
+	const [allJournals, setAllJournals] = useState([]);
+	const [filteredData, setFilteredData] = useState([]);
+	const [period, setPeriod] = useState('week');
+	const [selectedDate, setSelectedDate] = useState(new Date());
 
 	useEffect(() => {
-		const fetchEmotions = async () => {
-			if (!uid) {
-				console.warn('❗ UID is not defined — skipping fetch');
-				return;
-			}
+		const fetchData = async () => {
+			if (!uid) return;
 
-			try {
-				console.log('🔍 Fetching emotions for UID:', uid);
+			const journalsRef = collection(db, 'users', uid, 'journals');
+			const querySnapshot = await getDocs(journalsRef);
 
-				// ✅ Acceder directamente a la subcolección del usuario
-				const journalsRef = collection(db, 'users', uid, 'journals');
-				const querySnapshot = await getDocs(journalsRef);
-
-				const rawData = [];
-
-				querySnapshot.forEach((doc) => {
-					const data = doc.data();
-					if (data.date && data.emotion) {
-						const date = data.date.toDate();
-						const day = date.toLocaleDateString('en-US', {
-							weekday: 'long',
-							timeZone: 'America/Bogota',
-						});
-						const mapped = emotionMap[data.emotion];
-						if (mapped) {
-							rawData.push({
-								day,
-								emotion: mapped.emoji,
-								emotionValue: mapped.value,
-							});
-						}
-					}
-				});
-
-				console.log('✅ Emotions data:', rawData);
-				setEmotionsData(rawData);
-			} catch (error) {
-				console.error('🔥 Error fetching emotions data:', error);
-			}
+			const data = [];
+			querySnapshot.forEach((doc) => {
+				const d = doc.data();
+				if (d.date && d.emotion) {
+					const date = d.date.toDate();
+					data.push({ date, emotion: d.emotion });
+				}
+			});
+			setAllJournals(data);
 		};
-
-		fetchEmotions();
+		fetchData();
 	}, [uid]);
 
-	const CustomYAxisTick = ({ x, y, payload }) => {
-		const fontSize = isMobile ? '0.875rem' : '1rem';
-		return (
-			<g transform={`translate(${x},${y})`}>
-				<text x={-10} y={0} dy={4} textAnchor='end' fill='#666' fontSize={fontSize}>
-					{emotions[payload.value]}
-				</text>
-			</g>
-		);
-	};
+	useEffect(() => {
+		let filtered = [];
 
-	const CustomizedDot = ({ cx, cy, payload }) => {
-		const circleRadius = isMobile ? 12 : 16;
-		const fontSize = isMobile ? '0.875rem' : '1rem';
-		return (
-			<g>
-				<circle cx={cx} cy={cy} r={circleRadius} fill='white' stroke='#49499D' strokeWidth={2} />
-				<text x={cx} y={cy} dy={5} textAnchor='middle' fontSize={fontSize}>
-					{payload.emotion}
-				</text>
-			</g>
-		);
-	};
+		if (period === 'week') {
+			const referenceDate = new Date(selectedDate);
+			const day = referenceDate.getDay();
+			const monday = new Date(referenceDate);
+			monday.setDate(referenceDate.getDate() - ((day + 6) % 7));
+			const sunday = new Date(monday);
+			sunday.setDate(monday.getDate() + 6);
 
-	const CustomTooltip = ({ active, payload }) => {
-		if (active && payload && payload.length) {
-			return (
-				<Box
-					sx={{
-						backgroundColor: 'white',
-						padding: '0.5rem',
-						border: '1px solid #ccc',
-						borderRadius: '0.25rem',
-						boxShadow: '0 2px 5px rgba(0,0,0,0.15)',
-					}}
-				>
-					<Typography sx={{ fontSize: '0.875rem' }}>
-						{`${payload[0].payload.day}: ${payload[0].payload.emotion}`}
-					</Typography>
-				</Box>
-			);
+			filtered = allJournals
+				.filter((j) => {
+					const journalDate = new Date(j.date);
+					journalDate.setHours(0, 0, 0, 0);
+					return journalDate >= monday && journalDate <= sunday;
+				})
+				.map((j) => ({
+					day: j.date.toLocaleDateString('en-US', { weekday: 'long' }),
+					emotion: emotionMap[j.emotion]?.emoji,
+					emotionValue: emotionMap[j.emotion]?.value,
+				}));
+		} else if (period === 'month') {
+			const month = selectedDate.getMonth();
+			const year = selectedDate.getFullYear();
+			const grouped = {};
+
+			allJournals.forEach((j) => {
+				const d = j.date;
+				if (d.getMonth() === month && d.getFullYear() === year) {
+					const emo = j.emotion;
+					grouped[emo] = (grouped[emo] || 0) + 1;
+				}
+			});
+
+			filtered = Object.entries(grouped).map(([emotion, count]) => ({
+				emotion: emotionMap[emotion]?.emoji,
+				count,
+			}));
+		} else if (period === 'year') {
+			const year = selectedDate.getFullYear();
+			const grouped = {};
+
+			allJournals.forEach((j) => {
+				const d = j.date;
+				if (d.getFullYear() === year) {
+					const month = d.getMonth();
+					const emo = j.emotion;
+					if (!grouped[month]) grouped[month] = {};
+					grouped[month][emo] = (grouped[month][emo] || 0) + 1;
+				}
+			});
+
+			filtered = Object.entries(grouped).map(([monthIndex, emotionCounts]) => {
+				const topEmotion = Object.entries(emotionCounts).sort((a, b) => b[1] - a[1])[0][0];
+				return {
+					month: new Date(2025, parseInt(monthIndex)).toLocaleString('default', { month: 'short' }),
+					emotion: emotionMap[topEmotion]?.emoji,
+					emotionValue: emotionMap[topEmotion]?.value,
+				};
+			});
 		}
-		return null;
-	};
+
+		setFilteredData(filtered);
+	}, [period, selectedDate, allJournals]);
 
 	const styleText = {
 		Titulo: {
@@ -127,42 +128,84 @@ export default function ChartsEmociones() {
 		<Box
 			sx={{
 				width: '100%',
-				padding: { xs: '0.5rem', sm: '1rem', md: '1.5rem' },
+				minHeight: '420px',
 				background: '#E3E9CF',
 				borderRadius: '1rem',
+				p: { xs: 2, sm: 3 },
+				boxSizing: 'border-box',
+				display: 'flex',
+				flexDirection: 'column',
+				gap: 2,
+				overflow: 'visible',
 			}}
 		>
 			<Typography variant='h4' sx={styleText.Titulo}>
-				My Emotions of the Week
+				My emotions
 			</Typography>
-			<ResponsiveContainer width='100%' height={isMobile ? 220 : 320} style={{ marginBottom: '2rem' }}>
-				<LineChart data={emotionsData} margin={{ top: 20, right: 40, left: 30, bottom: 30 }}>
-					<CartesianGrid strokeDasharray='3 3' />
-					<XAxis
-						dataKey='day'
-						fontSize={isMobile ? '0.75rem' : '0.875rem'}
-						tick={{ fill: '#000' }}
-						tickMargin={15}
-						height={40}
-					/>
-					<YAxis
-						domain={[0, emotions.length - 1]}
-						ticks={emotions.map((_, i) => i)}
-						tick={<CustomYAxisTick />}
-						width={isMobile ? 25 : 40}
-					/>
-					<Tooltip content={<CustomTooltip />} />
-					<Legend />
-					<Line
-						type='monotone'
-						dataKey='emotionValue'
-						name='Emotion'
-						stroke='#49499D'
-						strokeWidth={isMobile ? 3 : 4}
-						dot={<CustomizedDot />}
-					/>
-				</LineChart>
-			</ResponsiveContainer>
+
+			<PeriodFilter
+				period={period}
+				onPeriodChange={setPeriod}
+				selectedDate={selectedDate}
+				onDateChange={setSelectedDate}
+				availableMonths={[
+					'Enero',
+					'Febrero',
+					'Marzo',
+					'Abril',
+					'Mayo',
+					'Junio',
+					'Julio',
+					'Agosto',
+					'Septiembre',
+					'Octubre',
+					'Noviembre',
+					'Diciembre',
+				]}
+				availableYears={[2023, 2024, 2025]}
+			/>
+
+			<Box sx={{ width: '100%', minHeight: '600px', height: 'auto' }}>
+				<ResponsiveContainer width='100%' height={isMobile ? 600 : 700}>
+					{period === 'week' && (
+						<LineChart data={filteredData}>
+							<CartesianGrid strokeDasharray='3 3' />
+							<XAxis dataKey='day' />
+							<YAxis domain={[0, 5]} />
+							<Tooltip />
+							<Line dataKey='emotionValue' stroke='#49499D' />
+						</LineChart>
+					)}
+
+					{period === 'month' && (
+						<BarChart data={filteredData} barCategoryGap='30%'>
+							<XAxis dataKey='emotion' />
+							<YAxis />
+							<Tooltip formatter={(value) => [`${value}`, 'Conteo']} labelFormatter={(label) => `Emoción: ${label}`} />
+							<Bar dataKey='count' fill='#7C77B9'>
+								<LabelList dataKey='emotion' position='top' />
+							</Bar>
+						</BarChart>
+					)}
+
+					{period === 'year' && (
+						<BarChart data={filteredData} barCategoryGap='30%'>
+							<XAxis dataKey='month' />
+							<YAxis />
+							<Tooltip
+								formatter={(value) => [`${value}`, 'Intensidad']}
+								labelFormatter={(label, payload) => {
+									const emotion = payload?.[0]?.payload?.emotion || '';
+									return `Mes: ${label} | Emoción: ${emotion}`;
+								}}
+							/>
+							<Bar dataKey='emotionValue' fill='#49499D'>
+								<LabelList dataKey='emotion' position='top' />
+							</Bar>
+						</BarChart>
+					)}
+				</ResponsiveContainer>
+			</Box>
 		</Box>
 	);
 }
