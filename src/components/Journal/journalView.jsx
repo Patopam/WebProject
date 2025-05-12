@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box } from '@mui/material';
-import { collection, getDocs } from 'firebase/firestore/lite';
+import { collection, doc, getDocs } from 'firebase/firestore';
 import { useSelector } from 'react-redux';
 import { db } from '../../services/firebase';
 import MonthFilter from '../Filters/monthFilter';
@@ -13,11 +13,13 @@ const JournalView = () => {
 
 	useEffect(() => {
 		const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Agu', 'Sep', 'Oct', 'Nov', 'Dic'];
+
 		const fetchJournals = async () => {
 			if (!uid) return;
 
 			try {
-				const journalRef = collection(db, 'users', uid, 'journals');
+				// ✅ Corregido: accedemos a la subcolección de un documento
+				const journalRef = collection(doc(db, 'users', uid), 'journals');
 				const snapshot = await getDocs(journalRef);
 
 				const data = snapshot.docs.map((doc) => {
