@@ -11,7 +11,6 @@ import { useSelector } from 'react-redux';
 import CategoryMenu from '../../components/Filters/categoryMenu';
 import RecommendationCard from '../../components/Cards/recommendationCard';
 
-// Import the AI service
 import { getRecommendation } from '../../services/aiService';
 
 function Recommendations() {
@@ -82,20 +81,18 @@ function Recommendations() {
 			<div className='recommendations-content'>
 				<div className='recommendations-header'>
 					<Header2 title='Recommendations' subtitle='Recommendation for you' />
+
 					<div className='recommendations-icons'>
 						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
 						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={goLogin} />
 					</div>
 				</div>
 
-				{/* Category menu component */}
 				<CategoryMenu
 					categories={categories}
 					selectedCategory={selectedCategory}
 					onCategoryClick={handleCategoryClick}
 				/>
-
-				{/* Recommendation card component */}
 				<RecommendationCard
 					showInfo={showInfo}
 					selectedCategory={selectedCategory}
