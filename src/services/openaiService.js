@@ -46,19 +46,14 @@ export async function getRecommendationFromEmotion(emotion) {
 				messages: [
 					{
 						role: 'user',
-						content: `Based on the emotion "${emotion}", give me a JSON object with:
-- an English intro text starting with: "You are feeling [emotion]..."
-- a short activity title
-- a short activity description (max 20 words)
-- an image keyword (e.g., 'sunset walk', 'journaling', etc.)
-
-Respond ONLY with a JSON object like this:
+						content: `Given the emotion "${emotion}", respond ONLY with a JSON object with the following keys:
 {
-  "intro": "...",
-  "title": "...",
-  "description": "...",
-  "imageKeyword": "..."
-}`,
+  "intro": "Today you feel ${emotion}, that's why we recommend... [brief reflection or context]",
+  "title": "[short activity title]",
+  "description": "[very brief activity suggestion, max 11 words]",
+  "imageKeyword": "[related image keyword like 'yoga', 'sunset walk', etc.]"
+}
+Do NOT include any explanation. Do NOT add text outside the JSON. Respond ONLY with valid JSON.`,
 					},
 				],
 				temperature: 0.7,
@@ -67,13 +62,11 @@ Respond ONLY with a JSON object like this:
 		});
 
 		const data = await response.json();
-		const rawText = data?.choices?.[0]?.message?.content;
+		const rawText = data?.choices?.[0]?.message?.content?.trim();
+		const jsonMatch = rawText?.match(/\{[\s\S]*\}/);
+		if (!jsonMatch) throw new Error('No valid JSON in OpenAI response');
 
-		if (!rawText || rawText === 'undefined') {
-			throw new Error('Empty or invalid response from OpenAI');
-		}
-
-		const recommendation = JSON.parse(rawText);
+		const recommendation = JSON.parse(jsonMatch[0]);
 		return recommendation;
 	} catch (error) {
 		console.error('Error fetching recommendation from OpenAI:', error);
