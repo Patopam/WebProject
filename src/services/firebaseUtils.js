@@ -15,6 +15,11 @@ export const saveUserData = async ({ uid, name, email }) => {
 };
 
 export const addJournal = async ({ uid, emotion, title, description }) => {
+	if (!uid) {
+		console.error('UID inválido al intentar guardar journal.');
+		return;
+	}
+
 	try {
 		const docRef = await addDoc(collection(db, 'users', uid, 'journals'), {
 			emotion,

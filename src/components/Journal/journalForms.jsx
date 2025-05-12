@@ -58,6 +58,11 @@ export default function JournalForm({ compact = false }) {
 			return;
 		}
 
+		if (!id) {
+			alert('User ID missing. Please log in again.');
+			return;
+		}
+
 		await addJournal({
 			uid: id,
 			emotion: selectedFeeling.value,
@@ -65,7 +70,6 @@ export default function JournalForm({ compact = false }) {
 			description: entryText,
 		});
 
-		// Limpiar el formulario
 		setSelectedFeeling(null);
 		setEntryTitle('');
 		setEntryText('');
@@ -75,7 +79,7 @@ export default function JournalForm({ compact = false }) {
 	};
 
 	return (
-		<JournalContainer compact={compact}>
+		<JournalContainer compact={compact.toString()}>
 			<HeaderSection>
 				<TitleGroup>
 					<IconCircle>
