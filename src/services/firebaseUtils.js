@@ -1,21 +1,29 @@
 import { db } from './firebase';
-import { addDoc, collection } from 'firebase/firestore/lite';
+import { addDoc, collection, doc, setDoc } from 'firebase/firestore/lite';
 
-export const addUser = async ({ uidUser, name, Email }) => {
-	const docRef = await addDoc(collection(db, 'usuarios'), {
-		uidUser,
-		name,
-		Email,
-	});
-	console.log('Document written with ID: ', docRef.id);
+export const saveUserData = async ({ uid, name, email }) => {
+	try {
+		await setDoc(doc(db, 'users', uid), {
+			name,
+			email,
+			createdAt: new Date(),
+		});
+		console.log('Datos del usuario guardados correctamente en users/{uid}');
+	} catch (error) {
+		console.error('Error al guardar los datos del usuario:', error);
+	}
 };
 
-export const addEmotion = async ({ uidUser, Emotion, Titel, Descripsion }) => {
-	const docRef = await addDoc(collection(db, 'Emotion'), {
-		uidUser,
-		Emotion,
-		Titel,
-		Descripsion,
-	});
-	console.log('Document written with ID: ', docRef.id);
+export const addJournal = async ({ uid, emotion, title, description }) => {
+	try {
+		const docRef = await addDoc(collection(db, 'users', uid, 'journals'), {
+			emotion,
+			title,
+			description,
+			date: new Date(),
+		});
+		console.log('Journal guardado con ID:', docRef.id);
+	} catch (error) {
+		console.error('Error guardando journal:', error);
+	}
 };

@@ -6,7 +6,7 @@ import { useState } from 'react';
 import Inputs from '../../components/Inputs/Inputs';
 import { FaRegEyeSlash } from 'react-icons/fa';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { addUser } from '../../services/firebaseUtils';
+import { saveUserData } from '../../services/firebaseUtils';
 import { auth } from '../../services/firebase';
 import { useDispatch } from 'react-redux';
 import { setUserid } from '../../redux/UserSlice/UserSlice';
@@ -24,13 +24,13 @@ function Sign() {
 		e.preventDefault();
 
 		createUserWithEmailAndPassword(auth, Correo, Constraseña)
-			.then((userCredential) => {
+			.then(async (userCredential) => {
 				const user = userCredential.user;
 
-				addUser({
-					uidUser: user.uid,
+				await saveUserData({
+					uid: user.uid,
 					name: Usuario,
-					Email: Correo,
+					email: Correo,
 				});
 
 				dispatch(setUserid(user.uid));
