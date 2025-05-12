@@ -69,7 +69,10 @@ Respond ONLY with a JSON object like this:
 		const data = await response.json();
 		const rawText = data?.choices?.[0]?.message?.content;
 
-		// Aseguramos que sea un JSON válido
+		if (!rawText || rawText === 'undefined') {
+			throw new Error('Empty or invalid response from OpenAI');
+		}
+
 		const recommendation = JSON.parse(rawText);
 		return recommendation;
 	} catch (error) {

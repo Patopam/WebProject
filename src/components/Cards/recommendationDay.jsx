@@ -14,16 +14,11 @@ const RecommendationDay = ({ emotion }) => {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			if (!emotion) return;
+			if (!emotion || emotion.trim() === '') return;
 
 			try {
-				// 1. Llamamos a OpenAI con la emoción
 				const aiData = await getRecommendationFromEmotion(emotion);
-
-				// 2. Llamamos a Pexels con el keyword que devuelve la IA
 				const image = await getImageFromKeyword(aiData.imageKeyword);
-
-				// 3. Guardamos todo en estado
 				setRecommendation({
 					intro: aiData.intro,
 					title: aiData.title,
@@ -80,7 +75,7 @@ const RecommendationDay = ({ emotion }) => {
 				</LeftText>
 
 				<ImageBox>
-					<img src={recommendation.imageUrl} alt={recommendation.title} />
+					{recommendation.imageUrl && <img src={recommendation.imageUrl} alt={recommendation.title} />}
 				</ImageBox>
 			</SectionRecommendation>
 		</CardContainer>

@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { db } from '../../services/firebase';
+import { collection, getDocs, query, orderBy, limit } from 'firebase/firestore';
 import MoodTracker from '../../components/Tables/mood';
 import Menu from '../../components/Menu/menu';
 import ReminderCard from '../../components/Cards/remainder';
@@ -9,14 +12,51 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CustomIconButton from '../../components/Buttons/icon';
 import './emotions.css';
 import { useNavigate } from 'react-router-dom';
+
 function Emotions() {
+	const [ultimaEmocion, setUltimaEmocion] = useState('');
+	const uid = useSelector((state) => state.userId.id);
 	let navigate = useNavigate();
+
+	useEffect(() => {
+		if (!uid) return;
+
+		const fetchLastEmotion = async () => {
+			try {
+				const journalsRef = collection(db, `users/${uid}/journals`);
+				const q = query(journalsRef, orderBy('date', 'desc'), limit(1));
+				const querySnapshot = await getDocs(q);
+
+				if (!querySnapshot.empty) {
+					const data = querySnapshot.docs[0].data();
+					const traducciones = {
+						feliz: 'happy',
+						triste: 'sad',
+						enojado: 'angry',
+						estresado: 'stressed',
+						confundido: 'confused',
+						ansioso: 'anxious',
+					};
+					const emocionOriginal = data.emotion?.toLowerCase?.() || '';
+					const emocionTraducida = traducciones[emocionOriginal] || emocionOriginal || 'neutral';
+					setUltimaEmocion(emocionTraducida);
+				}
+			} catch (error) {
+				console.error('Error fetching last emotion:', error);
+			}
+		};
+
+		fetchLastEmotion();
+	}, [uid]);
+
 	const goLogin = () => {
 		navigate('/log');
 	};
+
 	const goSettings = () => {
 		navigate('/settings');
 	};
+
 	return (
 		<div className='emotions-container'>
 			<Menu />
@@ -35,7 +75,7 @@ function Emotions() {
 					</div>
 					<div className='emotions-right'>
 						<ReminderCard />
-						<RecommendationDay />
+						{ultimaEmocion && <RecommendationDay emotion={ultimaEmocion} />}
 					</div>
 				</div>
 			</div>
