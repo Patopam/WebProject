@@ -1,5 +1,3 @@
-// src/components/Filters/PeriodFilter.jsx
-
 import React from 'react';
 import { Box, Button, ButtonGroup, IconButton, MenuItem, Select, Typography } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
@@ -49,11 +47,7 @@ const PeriodFilter = ({
 					<ArrowBackIosNewIcon fontSize='small' />
 				</IconButton>
 
-				{period === 'week' && (
-					<Typography variant='body2'>
-						Semana de {selectedDate.toLocaleDateString()} {/* Esto luego se formatea bonito */}
-					</Typography>
-				)}
+				{period === 'week' && <Typography variant='body2'>Semana de {selectedDate.toLocaleDateString()}</Typography>}
 
 				{period === 'month' && (
 					<Select
