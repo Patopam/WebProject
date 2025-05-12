@@ -1,16 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Typography, styled } from '@mui/material';
 import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
+import { getRecommendationFromEmotion } from '../../services/openaiService';
+import { getImageFromKeyword } from '../../services/pexelsService';
 
-const mockData = {
-	emotion: 'confundido',
-	title: 'Caminata sin destino',
-	description: 'Da un paseo corto, sin rumbo, solo para oxigenarte.',
-	imageUrl:
-		'https://images.pexels.com/photos/631986/pexels-photo-631986.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-};
+const RecommendationDay = ({ emotion }) => {
+	const [recommendation, setRecommendation] = useState({
+		intro: '',
+		title: '',
+		description: '',
+		imageUrl: '',
+	});
 
-const RecommendationDay = () => {
+	useEffect(() => {
+		const fetchData = async () => {
+			if (!emotion) return;
+
+			try {
+				// 1. Llamamos a OpenAI con la emoción
+				const aiData = await getRecommendationFromEmotion(emotion);
+
+				// 2. Llamamos a Pexels con el keyword que devuelve la IA
+				const image = await getImageFromKeyword(aiData.imageKeyword);
+
+				// 3. Guardamos todo en estado
+				setRecommendation({
+					intro: aiData.intro,
+					title: aiData.title,
+					description: aiData.description,
+					imageUrl: image,
+				});
+			} catch (error) {
+				console.error('Error loading recommendation:', error);
+			}
+		};
+
+		fetchData();
+	}, [emotion]);
+
 	return (
 		<CardContainer>
 			<SectionTitle>
@@ -31,20 +58,29 @@ const RecommendationDay = () => {
 
 			<SectionEmotion>
 				<Typography sx={{ fontSize: '1.35rem', color: '#333', lineHeight: 1.4 }}>
-					Hoy te sientes <strong> {mockData.emotion}</strong>, por eso te recomendamos…
+					{recommendation.intro || `You are feeling ${emotion}...`}
 				</Typography>
 			</SectionEmotion>
 
 			<SectionRecommendation>
 				<LeftText>
-					<Typography sx={{ fontWeight: 600, fontSize: '1.25rem', marginBottom: '0.4rem', lineHeight: 1.2 }}>
-						{mockData.title}
+					<Typography
+						sx={{
+							fontWeight: 600,
+							fontSize: '1.25rem',
+							marginBottom: '0.4rem',
+							lineHeight: 1.2,
+						}}
+					>
+						{recommendation.title}
 					</Typography>
-					<Typography sx={{ fontSize: '1.25rem', color: '#333', lineHeight: 1.2 }}>{mockData.description}</Typography>
+					<Typography sx={{ fontSize: '1.25rem', color: '#333', lineHeight: 1.2 }}>
+						{recommendation.description}
+					</Typography>
 				</LeftText>
 
 				<ImageBox>
-					<img src={mockData.imageUrl} alt={mockData.title} />
+					<img src={recommendation.imageUrl} alt={recommendation.title} />
 				</ImageBox>
 			</SectionRecommendation>
 		</CardContainer>
@@ -52,6 +88,8 @@ const RecommendationDay = () => {
 };
 
 export default RecommendationDay;
+
+// ESTILOS
 
 const CardContainer = styled(Box)(() => ({
 	backgroundColor: '#fdd1bc',
@@ -91,7 +129,7 @@ const SectionEmotion = styled(Box)(() => ({}));
 const SectionRecommendation = styled(Box)(() => ({
 	display: 'flex',
 	justifyContent: 'space-between',
-	alignItems: 'alignItems: flex-start',
+	alignItems: 'flex-start',
 	gap: '2rem',
 	flexWrap: 'nowrap',
 }));
@@ -100,8 +138,8 @@ const LeftText = styled(Box)(() => ({
 	flex: 1,
 	display: 'flex',
 	flexDirection: 'column',
-	maxHeight: '8rem', // altura fija
-	overflow: 'hidden', // oculta texto que se pase
+	maxHeight: '8rem',
+	overflow: 'hidden',
 }));
 
 const ImageBox = styled(Box)(() => ({
