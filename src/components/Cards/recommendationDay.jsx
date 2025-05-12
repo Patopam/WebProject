@@ -3,6 +3,8 @@ import { Box, Typography, styled } from '@mui/material';
 import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
 import { getRecommendationFromEmotion } from '../../services/openaiService';
 import { getImageFromKeyword } from '../../services/pexelsService';
+import { useDispatch, useSelector } from 'react-redux';
+import { setAiLoading } from '../../redux/aiStatusSlice';
 
 const RecommendationDay = ({ emotion }) => {
 	const [recommendation, setRecommendation] = useState({
@@ -12,11 +14,15 @@ const RecommendationDay = ({ emotion }) => {
 		imageUrl: '',
 	});
 
-	useEffect(() => {
-		const fetchData = async () => {
-			if (!emotion || emotion.trim() === '') return;
+	const dispatch = useDispatch();
+	const loadingAI = useSelector((state) => state.aiStatus.loading);
 
+	useEffect(() => {
+		if (!emotion || emotion.trim() === '' || loadingAI) return;
+
+		const fetchData = async () => {
 			try {
+				dispatch(setAiLoading(true));
 				const aiData = await getRecommendationFromEmotion(emotion);
 				const image = await getImageFromKeyword(aiData.imageKeyword);
 				setRecommendation({
@@ -27,6 +33,8 @@ const RecommendationDay = ({ emotion }) => {
 				});
 			} catch (error) {
 				console.error('Error loading recommendation:', error);
+			} finally {
+				dispatch(setAiLoading(false));
 			}
 		};
 
