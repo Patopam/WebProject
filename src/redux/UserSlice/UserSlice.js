@@ -1,18 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  id: "hola sot id",
+	id: localStorage.getItem('uid') || null,
 };
 
 export const UserIdSlice = createSlice({
-  name: "userid",
-  initialState,
-  reducers: {
-    setUserid: (state, action) => {
-      state.id = action.payload;
-      console.log(state.id);
-    },
-  },
+	name: 'userid',
+	initialState,
+	reducers: {
+		setUserid: (state, action) => {
+			state.id = action.payload;
+			console.log(state.id);
+		},
+	},
 });
 
 export const { setUserid } = UserIdSlice.actions;

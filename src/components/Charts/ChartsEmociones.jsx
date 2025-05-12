@@ -1,90 +1,96 @@
-import React from 'react';
-import { Typography, Container, Stack, Box, useMediaQuery, useTheme } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Typography, Box, useMediaQuery, useTheme } from '@mui/material';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { collection, getDocs } from 'firebase/firestore';
+import { useSelector } from 'react-redux';
+import { db } from '../../services/firebase';
 
-export default function EmotionsLineChartCentered() {
+const emotions = ['😄', '😭', '😢', '😡', '😑', '😩'];
+
+const emotionMap = {
+	happy: { emoji: '😄', value: 5 },
+	sad: { emoji: '😭', value: 1 },
+	nostalgic: { emoji: '😢', value: 2 },
+	angry: { emoji: '😡', value: 0 },
+	neutral: { emoji: '😑', value: 3 },
+	stressed: { emoji: '😩', value: 4 },
+};
+
+export default function ChartsEmociones() {
 	const theme = useTheme();
 	const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+	const uid = useSelector((state) => state.userId.id);
+	const [emotionsData, setEmotionsData] = useState([]);
 
-	const styleText = {
-		Linea: {
-			color: 'var(--Neutral-1000, #333)',
-			fontFamily: 'Manrope, sans-serif',
-			fontSize: '1rem', // 16px convertido a rem
-			fontStyle: 'normal',
-			fontWeight: 400,
-			lineHeight: 'normal',
-			color: '#000000',
-			marginTop: '1.25rem', // 20px a rem
-			textAlign: 'center',
-		},
-		Titulo: {
-			color: 'var(--Neutral-1000, #333)',
-			fontFamily: 'Manrope, sans-serif',
-			fontSize: {
-				xs: '1.5rem', // Más pequeño
-				sm: '1.75rem', // Mediano en tablets
-				md: '2rem', // Normal en escritorio
-			},
-			fontWeight: 400,
-			color: '#000000',
-			marginTop: '1.25rem', // 20px a rem
-			marginBottom: '1rem',
-			textAlign: 'center',
-		},
-	};
+	useEffect(() => {
+		const fetchEmotions = async () => {
+			if (!uid) {
+				console.warn('❗ UID is not defined — skipping fetch');
+				return;
+			}
 
-	const emotions = ['😢', '😰', '😠', '😩', '😐', '😄'];
+			try {
+				console.log('🔍 Fetching emotions for UID:', uid);
 
-	const emotionsData = [
-		{ day: 'Lunes', emotion: '😐', emotionValue: 4 },
-		{ day: 'Martes', emotion: '😠', emotionValue: 2 },
-		{ day: 'Miércoles', emotion: '😄', emotionValue: 5 },
-		{ day: 'Jueves', emotion: '😩', emotionValue: 3 },
-		{ day: 'Viernes', emotion: '😄', emotionValue: 5 },
-		{ day: 'Sábado', emotion: '😄', emotionValue: 5 },
-		{ day: 'Domingo', emotion: '😐', emotionValue: 4 },
-	];
+				// ✅ Acceder directamente a la subcolección del usuario
+				const journalsRef = collection(db, 'users', uid, 'journals');
+				const querySnapshot = await getDocs(journalsRef);
 
-	// Renderizado personalizado para el eje Y
-	const CustomYAxisTick = (props) => {
-		const { x, y, payload } = props;
-		const fontSize = isMobile ? '0.875rem' : '1rem'; // 14px en móvil, 16px en desktop
+				const rawData = [];
 
+				querySnapshot.forEach((doc) => {
+					const data = doc.data();
+					if (data.date && data.emotion) {
+						const date = data.date.toDate();
+						const day = date.toLocaleDateString('en-US', {
+							weekday: 'long',
+							timeZone: 'America/Bogota',
+						});
+						const mapped = emotionMap[data.emotion];
+						if (mapped) {
+							rawData.push({
+								day,
+								emotion: mapped.emoji,
+								emotionValue: mapped.value,
+							});
+						}
+					}
+				});
+
+				console.log('✅ Emotions data:', rawData);
+				setEmotionsData(rawData);
+			} catch (error) {
+				console.error('🔥 Error fetching emotions data:', error);
+			}
+		};
+
+		fetchEmotions();
+	}, [uid]);
+
+	const CustomYAxisTick = ({ x, y, payload }) => {
+		const fontSize = isMobile ? '0.875rem' : '1rem';
 		return (
 			<g transform={`translate(${x},${y})`}>
-				<text x={isMobile ? -5 : -10} y={0} dy={4} textAnchor='end' fill='#666' fontSize={fontSize}>
+				<text x={-10} y={0} dy={4} textAnchor='end' fill='#666' fontSize={fontSize}>
 					{emotions[payload.value]}
 				</text>
 			</g>
 		);
 	};
 
-	// Puntos personalizados con emojis centrados en la línea
-	const CustomizedDot = (props) => {
-		const { cx, cy, payload } = props;
+	const CustomizedDot = ({ cx, cy, payload }) => {
 		const circleRadius = isMobile ? 12 : 16;
-		const fontSize = isMobile ? '0.875rem' : '1rem'; // 14px en móvil, 16px en desktop
-
+		const fontSize = isMobile ? '0.875rem' : '1rem';
 		return (
 			<g>
-				{/* Círculo blanco detrás del emoji para que se vea mejor */}
-				<circle
-					cx={cx}
-					cy={cy}
-					r={circleRadius}
-					fill='white'
-					stroke='#49499D'
-					strokeWidth={2}
-				/>
-				<text x={cx} y={cy} dy={5} dx={0} textAnchor='middle' fontSize={fontSize}>
+				<circle cx={cx} cy={cy} r={circleRadius} fill='white' stroke='#49499D' strokeWidth={2} />
+				<text x={cx} y={cy} dy={5} textAnchor='middle' fontSize={fontSize}>
 					{payload.emotion}
 				</text>
 			</g>
 		);
 	};
 
-	// Personalización del tooltip
 	const CustomTooltip = ({ active, payload }) => {
 		if (active && payload && payload.length) {
 			return (
@@ -106,13 +112,16 @@ export default function EmotionsLineChartCentered() {
 		return null;
 	};
 
-	// Determinar altura del gráfico basada en el tamaño de la pantalla
-	const chartHeight = {
-		xs: 220, // Altura en móviles (aumentada)
-		sm: 280, // Altura en tablets (aumentada)
-		md: 320, // Altura en desktop (aumentada)
+	const styleText = {
+		Titulo: {
+			fontFamily: 'Manrope, sans-serif',
+			fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' },
+			fontWeight: 400,
+			color: '#000',
+			textAlign: 'center',
+			margin: '1.25rem 0',
+		},
 	};
-
 
 	return (
 		<Box
@@ -126,26 +135,14 @@ export default function EmotionsLineChartCentered() {
 			<Typography variant='h4' sx={styleText.Titulo}>
 				My Emotions of the Week
 			</Typography>
-			<ResponsiveContainer
-				width='100%'
-				height={
-					theme.breakpoints.values.xs ? chartHeight.xs : theme.breakpoints.values.sm ? chartHeight.sm : chartHeight.md
-				}
-				style={{ marginBottom: '2rem' }}
-			>
-				<LineChart
-					data={emotionsData}
-					margin={{ top: 20, right: 40, left: 30, bottom: 30 }}
-					style={styleText.Linea}
-				>
+			<ResponsiveContainer width='100%' height={isMobile ? 220 : 320} style={{ marginBottom: '2rem' }}>
+				<LineChart data={emotionsData} margin={{ top: 20, right: 40, left: 30, bottom: 30 }}>
 					<CartesianGrid strokeDasharray='3 3' />
 					<XAxis
 						dataKey='day'
 						fontSize={isMobile ? '0.75rem' : '0.875rem'}
 						tick={{ fill: '#000' }}
 						tickMargin={15}
-						angle={0}
-						textAnchor='middle'
 						height={40}
 					/>
 					<YAxis
@@ -155,17 +152,11 @@ export default function EmotionsLineChartCentered() {
 						width={isMobile ? 25 : 40}
 					/>
 					<Tooltip content={<CustomTooltip />} />
-					<Legend
-						wrapperStyle={{
-							fontSize: isMobile ? '0.75rem' : '0.875rem',
-							marginTop: '1rem',
-							paddingTop: '0.5rem',
-						}}
-					/>
+					<Legend />
 					<Line
 						type='monotone'
 						dataKey='emotionValue'
-						name='Emoción'
+						name='Emotion'
 						stroke='#49499D'
 						strokeWidth={isMobile ? 3 : 4}
 						dot={<CustomizedDot />}

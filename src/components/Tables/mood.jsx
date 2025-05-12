@@ -143,12 +143,12 @@ const initialMoodData = [
 ];
 
 const moods = [
-	{ id: 'laughing', emoji: '😄' },
-	{ id: 'crying', emoji: '😢' },
-	{ id: 'anxious', emoji: '😰' },
-	{ id: 'angry', emoji: '😠' },
-	{ id: 'neutral', emoji: '😐' },
-	{ id: 'sad', emoji: '😩' },
+	{ id: 'happy', emoji: '😄' },
+	{ id: 'sad', emoji: '😭' },
+	{ id: 'nostalgic', emoji: '😢' },
+	{ id: 'angry', emoji: '😡' },
+	{ id: 'neutral', emoji: '😑' },
+	{ id: 'stressed', emoji: '😩' },
 ];
 
 const getMoodEmoji = (moodId) => {
