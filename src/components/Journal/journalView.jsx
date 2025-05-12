@@ -11,9 +11,8 @@ const JournalView = () => {
 	const [journals, setJournals] = useState([]);
 	const [selectedMonth, setSelectedMonth] = useState('All');
 
-	const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Agu', 'Sep', 'Oct', 'Nov', 'Dic'];
-
 	useEffect(() => {
+		const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Agu', 'Sep', 'Oct', 'Nov', 'Dic'];
 		const fetchJournals = async () => {
 			if (!uid) return;
 
