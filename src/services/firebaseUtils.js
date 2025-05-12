@@ -1,5 +1,5 @@
 import { db } from './firebase';
-import { addDoc, collection, doc, setDoc } from 'firebase/firestore/lite';
+import { addDoc, collection, doc, setDoc, serverTimestamp } from 'firebase/firestore';
 
 export const saveUserData = async ({ uid, name, email }) => {
 	try {
@@ -21,13 +21,14 @@ export const addJournal = async ({ uid, emotion, title, description }) => {
 	}
 
 	try {
-		const docRef = await addDoc(collection(db, 'users', uid, 'journals'), {
+		const journalRef = collection(doc(db, 'users', uid), 'journals');
+		await addDoc(journalRef, {
 			emotion,
 			title,
 			description,
-			date: new Date(),
+			date: serverTimestamp(),
 		});
-		console.log('Journal guardado con ID:', docRef.id);
+		console.log('Journal guardado correctamente');
 	} catch (error) {
 		console.error('Error guardando journal:', error);
 	}
