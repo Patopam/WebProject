@@ -52,11 +52,11 @@ const RecommendationDay = ({ emotion }) => {
 				</Typography>
 			</SectionTitle>
 
-			<SectionEmotion>
-				<Typography sx={{ fontSize: '1.35rem', color: '#333', lineHeight: 1.4 }}>
-					{recommendation?.intro || `You are feeling ${emotion}...`}
-				</Typography>
-			</SectionEmotion>
+			{recommendation && (
+				<SectionEmotion>
+					<Typography sx={{ fontSize: '1.35rem', color: '#333', lineHeight: 1.4 }}>{recommendation.intro}</Typography>
+				</SectionEmotion>
+			)}
 
 			{!recommendation ? (
 				<Button
@@ -72,7 +72,7 @@ const RecommendationDay = ({ emotion }) => {
 						alignSelf: 'start',
 					}}
 				>
-					{localLoading ? 'Loading...' : 'Ver recomendación del día'}
+					{localLoading ? 'Loading...' : 'Find out what we have for you'}
 				</Button>
 			) : (
 				<SectionRecommendation>
