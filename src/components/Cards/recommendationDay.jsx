@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setAiLoading } from '../../redux/aiStatusSlice';
 
 const RecommendationDay = ({ emotion }) => {
+	console.log('Emotion recibida:', emotion);
 	const [recommendation, setRecommendation] = useState(null);
 	const [localLoading, setLocalLoading] = useState(false);
 	const dispatch = useDispatch();

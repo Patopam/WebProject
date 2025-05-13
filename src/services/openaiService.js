@@ -61,8 +61,16 @@ Do NOT include any explanation. Do NOT add text outside the JSON. Respond ONLY w
 			}),
 		});
 
+		if (response.status === 429) {
+			console.warn(' OpenAI Rate limit hit (429)');
+			throw new Error('Rate limit exceeded (429)');
+		}
+
 		const data = await response.json();
 		const rawText = data?.choices?.[0]?.message?.content?.trim();
+
+		console.log(' Texto recibido de OpenAI:', rawText); // para debug
+
 		const jsonMatch = rawText?.match(/\{[\s\S]*\}/);
 		if (!jsonMatch) throw new Error('No valid JSON in OpenAI response');
 
@@ -71,9 +79,9 @@ Do NOT include any explanation. Do NOT add text outside the JSON. Respond ONLY w
 	} catch (error) {
 		console.error('Error fetching recommendation from OpenAI:', error);
 		return {
-			intro: 'You are feeling something...',
-			title: 'Take a deep breath',
-			description: 'Pause for a moment to reconnect with yourself.',
+			intro: 'La IA está descansando en este momento...',
+			title: 'Respira profundo',
+			description: 'Intenta más tarde cuando esté lista',
 			imageKeyword: 'calm nature',
 		};
 	}
