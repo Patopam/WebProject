@@ -7,69 +7,106 @@ const JournalCards = ({ journalData }) => {
 			<Typography
 				sx={{
 					fontFamily: "'Manrope', sans-serif",
-					fontSize: '16px',
+					fontSize: '1rem',
 					fontWeight: 400,
 					color: '#666',
+					textAlign: 'center',
+					marginTop: '2rem',
 				}}
 			>
-				No hay entradas para este mes.
+				No journal entries available yet.
 			</Typography>
 		);
 	}
 
 	return (
-		<Box sx={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+		<Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
 			{journalData.map((week) => (
-				<Box key={week.week} sx={{ marginBottom: '24px' }}>
+				<Box key={week.week} sx={{ marginBottom: '1.5rem' }}>
 					<Typography
 						sx={{
 							fontFamily: "'Manrope', sans-serif",
-							fontSize: '32px',
+							fontSize: '2rem',
 							fontWeight: 700,
 							color: '#333',
-							marginBottom: '16px',
+							marginBottom: '1rem',
 						}}
 					>
 						Week {week.week}
 					</Typography>
-
-					<Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
+					<Box
+						sx={{
+							display: 'flex',
+							flexWrap: 'wrap',
+							gap: '1rem',
+							justifyContent: 'flex-start',
+						}}
+					>
 						{week.entries.map((entry, index) => (
 							<Box
 								key={index}
 								sx={{
 									display: 'flex',
 									flexDirection: 'column',
-									width: '400px',
-									height: '400px',
-									padding: '24px',
-									borderRadius: '16px',
-									background: entry.color,
+									width: {
+										xs: '100%',
+										sm: 'calc(50% - 0.5rem)',
+										md: 'calc(33.33% - 0.67rem)',
+										lg: 'calc(25% - 0.75rem)',
+									},
+									height: '0',
+									paddingBottom: {
+										xs: '100%',
+										sm: 'calc(50% - 0.5rem)',
+										md: 'calc(33.33% - 0.67rem)',
+										lg: 'calc(25% - 0.75rem)',
+									},
+									position: 'relative',
+									borderRadius: '1rem',
+									background: entry.color || '#FDE3A7', // color por defecto si no existe
+									overflow: 'hidden',
 								}}
 							>
-								<Typography
+								<Box
 									sx={{
-										fontFamily: "'Manrope', sans-serif",
-										fontSize: '28px',
-										fontWeight: 700,
-										color: '#33356B',
-										marginBottom: '16px',
+										position: 'absolute',
+										top: 0,
+										left: 0,
+										right: 0,
+										bottom: 0,
+										padding: '1.5rem',
+										display: 'flex',
+										flexDirection: 'column',
 									}}
 								>
-									{entry.day}
-								</Typography>
+									<Typography
+										sx={{
+											fontFamily: "'Manrope', sans-serif",
+											fontSize: {
+												xs: '1.5rem',
+												sm: '1.75rem',
+											},
+											fontWeight: 700,
+											color: '#33356B',
+											marginBottom: '1rem',
+										}}
+									>
+										{entry.day || 'Unknown Day'}
+									</Typography>
 
-								<Typography
-									sx={{
-										fontFamily: "'Manrope', sans-serif",
-										fontSize: '16px',
-										fontWeight: 400,
-										color: '#33356B',
-										lineHeight: '150%',
-									}}
-								>
-									{entry.content}
-								</Typography>
+									<Typography
+										sx={{
+											fontFamily: "'Manrope', sans-serif",
+											fontSize: '1rem',
+											fontWeight: 400,
+											color: '#33356B',
+											lineHeight: 1.5,
+											overflow: 'auto',
+										}}
+									>
+										{entry.description || 'No content available.'}
+									</Typography>
+								</Box>
 							</Box>
 						))}
 					</Box>

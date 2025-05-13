@@ -18,7 +18,6 @@ const EditInput = ({ label, value, onChange, editable, onEditClick }) => {
 	);
 };
 
-// 🎨 Estilos en línea (los puedes mover a CSS después si deseas)
 const inputContainerStyle = {
 	backgroundColor: '#AFA8D1',
 	borderRadius: '12px',

@@ -20,10 +20,11 @@ import ButtonBase from '@mui/material/ButtonBase';
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
 	backgroundColor: '#CBCBE7',
-	borderRadius: 20,
+	borderRadius: '20px',
 	padding: theme.spacing(2),
-	height: '800px',
-	width: '800px',
+	height: '90vh',
+	width: '100%',
+	minWidth: '100%',
 	overflowY: 'auto',
 	margin: '0 auto',
 	boxSizing: 'border-box',
@@ -36,11 +37,10 @@ const StyledTabs = styled(Tabs)(() => ({
 	},
 }));
 
-//seleccionado
 const StyledTab = styled(Tab)(() => ({
 	color: '#333',
 	fontFamily: 'Manrope, sans-serif',
-	fontSize: '22px',
+	fontSize: '1.2rem',
 	textTransform: 'none',
 	fontWeight: 700,
 	'&.Mui-selected': {
@@ -51,26 +51,28 @@ const StyledTab = styled(Tab)(() => ({
 
 const StyledListItem = styled(ListItem)(({ theme }) => ({
 	backgroundColor: 'white',
-	borderRadius: 15,
+	borderRadius: '15px',
 	marginBottom: theme.spacing(2),
 	padding: theme.spacing(1.5, 2),
 }));
 
-const StyledAvatar = styled(Avatar)(({ theme }) => ({
-	marginRight: theme.spacing(2),
-	width: 44,
-	height: 44,
+const StyledAvatar = styled(Avatar)(() => ({
+	marginRight: '2%',
+	width: '10%',
+	maxWidth: '44px',
+	height: 'auto',
+	aspectRatio: '1/1',
 	cursor: 'pointer',
 	backgroundColor: '#FFFFFF',
-	fontSize: '44px',
+	fontSize: 'clamp(2rem, 2vw, 1.5rem)',
 }));
 
 const StyledChip = styled(Chip)(() => ({
 	backgroundColor: '#9C9CD2',
-	borderRadius: 10,
+	borderRadius: '10px',
 	color: 'var(--Neutral-1000, #333)',
 	fontFamily: 'Manrope, sans-serif',
-	fontSize: '20px',
+	fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
 	fontStyle: 'normal',
 	fontWeight: 400,
 	lineHeight: 'normal',
@@ -79,19 +81,19 @@ const StyledChip = styled(Chip)(() => ({
 const StyledDivider = styled('div')({
 	borderBottom: '1px solid #999',
 	width: '100%',
-	marginBottom: '16px',
+	marginBottom: '2%',
 });
 
-const MonthHeader = styled(Typography)(({ theme }) => ({
+const MonthHeader = styled(Typography)(() => ({
 	color: 'var(--Neutral-1000, #333)',
 	fontFamily: 'Manrope, sans-serif',
-	fontSize: '22px',
+	fontSize: 'clamp(1rem, 1.8vw, 1.2rem)',
 	fontStyle: 'normal',
 	fontWeight: 700,
 	lineHeight: 'normal',
-	marginTop: theme.spacing(2),
-	marginBottom: theme.spacing(1),
-	paddingLeft: theme.spacing(1),
+	marginTop: '2%',
+	marginBottom: '1%',
+	paddingLeft: '1%',
 }));
 
 const MoodSelectorModal = styled(Modal)(() => ({
@@ -103,21 +105,28 @@ const MoodSelectorModal = styled(Modal)(() => ({
 const MoodSelectorContainer = styled(Paper)(({ theme }) => ({
 	backgroundColor: '#CBCBE7',
 	padding: theme.spacing(2),
-	borderRadius: 12,
+	borderRadius: '20px',
 	display: 'flex',
 	justifyContent: 'space-between',
 	alignItems: 'center',
 	width: '90%',
-	maxWidth: 450,
+	maxWidth: '450px',
 }));
 
 const MoodOption = styled(ButtonBase)(() => ({
-	width: 50,
-	height: 50,
-	fontSize: 30,
+	width: '12%',
+	minWidth: '50px',
+	maxWidth: '60px',
+	height: 'auto',
+	aspectRatio: '1/1',
+	fontSize: 'clamp(2rem, 4vw, 3rem)',
 	borderRadius: '50%',
+	display: 'flex',
+	alignItems: 'center',
+	justifyContent: 'center',
+	transition: 'background-color 0.3s',
 	'&:hover': {
-		backgroundColor: 'hsla(0, 0.00%, 100.00%, 0.30)',
+		backgroundColor: 'rgba(255, 255, 255, 0.3)',
 	},
 }));
 
@@ -134,12 +143,12 @@ const initialMoodData = [
 ];
 
 const moods = [
-	{ id: 'laughing', emoji: '😄' },
-	{ id: 'crying', emoji: '😢' },
-	{ id: 'anxious', emoji: '😰' },
-	{ id: 'angry', emoji: '😠' },
-	{ id: 'neutral', emoji: '😐' },
-	{ id: 'sad', emoji: '😩' },
+	{ id: 'happy', emoji: '😄' },
+	{ id: 'sad', emoji: '😭' },
+	{ id: 'nostalgic', emoji: '😢' },
+	{ id: 'angry', emoji: '😡' },
+	{ id: 'neutral', emoji: '😑' },
+	{ id: 'stressed', emoji: '😩' },
 ];
 
 const getMoodEmoji = (moodId) => {
@@ -265,12 +274,13 @@ export default function MoodTracker() {
 						primaryTypographyProps={{
 							color: '#333',
 							fontFamily: 'Manrope, sans-serif',
-							fontSize: '20px',
+							fontSize: 'clamp(0.9rem, 1.5vw, 1.1rem)',
 							textTransform: 'none',
 							fontWeight: 400,
 						}}
+						sx={{ flexGrow: 1, marginRight: '2%' }}
 					/>
-					<IconButton size='medium' onClick={() => startEditing(item.id, item.title)} sx={{ mr: 1 }}>
+					<IconButton size='medium' onClick={() => startEditing(item.id, item.title)} sx={{ mr: '2%' }}>
 						<EditIcon fontSize='medium' />
 					</IconButton>
 				</>
@@ -283,7 +293,9 @@ export default function MoodTracker() {
 	const renderContent = () => {
 		if (filteredData.length === 0) {
 			return (
-				<Box textAlign='center' py={4}>
+				<Box textAlign='center' py='4%'>
+					{' '}
+					{/* Cambiado de py={4} */}
 					No entries for this time period
 				</Box>
 			);

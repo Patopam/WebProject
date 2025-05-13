@@ -10,14 +10,18 @@ const FeelingsCard = ({ compact = false }) => {
 		<Card
 			sx={{
 				display: 'flex',
-				width: compact ? '310px' : '427px',
-				height: compact ? '182px' : '238px',
+				width: '100%',
+				maxWidth: compact ? '19.375rem' : '40rem',
+				height: 'auto',
+				minHeight: compact ? '11.375rem' : '14.875rem',
 				justifyContent: 'center',
 				alignItems: 'center',
-				borderRadius: '24px',
+				borderRadius: '1.5rem',
 				background: '#FCD8C2',
 				boxShadow: 'none',
-				padding: compact ? '28px' : 0,
+				padding: compact ? '1.75rem' : '1.75rem',
+
+				boxSizing: 'border-box',
 			}}
 		>
 			<CardContent
@@ -27,7 +31,7 @@ const FeelingsCard = ({ compact = false }) => {
 					height: '100%',
 					flexDirection: 'column',
 					alignItems: 'flex-start',
-					gap: compact ? '10px' : '20px',
+					gap: compact ? '0.625rem' : '1.25rem',
 					padding: '0px !important',
 					'&:last-child': { paddingBottom: 0 },
 				}}
@@ -37,27 +41,28 @@ const FeelingsCard = ({ compact = false }) => {
 						display: 'flex',
 						alignItems: 'center',
 						width: '100%',
-						mb: compact ? 1 : 0,
+						marginBottom: compact ? '0.5rem' : 0,
 					}}
 				>
 					<Box
 						sx={{
 							backgroundColor: '#F99F75',
 							borderRadius: '50%',
-							width: '37px',
-							height: '37px',
+							width: '2.31rem',
+							height: '2.31rem',
 							display: 'flex',
 							justifyContent: 'center',
 							alignItems: 'center',
-							marginRight: '10px',
+							marginRight: '0.625rem',
+							flexShrink: 0,
 						}}
 					>
-						<FlashOnOutlinedIcon sx={{ color: '#000' }} />
+						<FlashOnOutlinedIcon sx={{ color: '#000', fontSize: '1.25rem' }} />
 					</Box>
 					<Typography
 						sx={{
 							fontFamily: "'Manrope', sans-serif",
-							fontSize: '18px',
+							fontSize: '1.125rem',
 							fontWeight: 300,
 							color: '#333',
 							lineHeight: 'normal',
@@ -72,46 +77,50 @@ const FeelingsCard = ({ compact = false }) => {
 						display: 'flex',
 						flexDirection: 'row',
 						alignItems: 'flex-start',
-						gap: '10px',
+						gap: '0.625rem',
 					}}
 				>
 					<Typography
 						sx={{
 							fontFamily: "'Manrope', sans-serif",
-							fontSize: compact ? '36px' : '48px',
+							fontSize: compact ? '2.25rem' : '3rem',
 							fontWeight: 600,
 							color: '#000',
 							lineHeight: 1,
+							flexShrink: 0,
 						}}
 					>
 						50%
 					</Typography>
+
 					<Typography
 						sx={{
 							fontFamily: "'Manrope', sans-serif",
-							fontSize: compact ? '14px' : '16px',
+							fontSize: compact ? '0.875rem' : '1rem',
 							fontWeight: 400,
 							color: '#444',
 							lineHeight: '125%',
 							display: 'flex',
-							alignItems: 'center',
+							flexDirection: 'column',
+							textAlign: 'left',
 						}}
+						component='div'
 					>
-						<p style={{ margin: 0 }}>
-							Of your <strong>expenses</strong> <br />
-							are when you are
-						</p>
+						<span>
+							Of your <strong>expenses</strong>
+						</span>
+						<span>are when you are</span>
 					</Typography>
 				</Box>
 
 				<Typography
 					sx={{
 						fontFamily: "'Manrope', sans-serif",
-						fontSize: compact ? '32px' : '40px',
+						fontSize: compact ? '2rem' : '2.5rem',
 						fontWeight: 500,
 						color: '#333',
 						lineHeight: '125%',
-						mt: compact ? '-5px' : 0,
+						marginTop: compact ? '-0.31rem' : 0,
 					}}
 				>
 					stressed
@@ -122,4 +131,3 @@ const FeelingsCard = ({ compact = false }) => {
 };
 
 export default FeelingsCard;
-

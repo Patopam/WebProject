@@ -5,13 +5,14 @@ const ExpensesDay = () => {
 	const containerStyle = {
 		display: 'flex',
 		flexDirection: 'column',
-		width: '660px',
-		height: '341px',
-		padding: '28px',
-		borderRadius: '24px',
+		width: '100%',
+		height: '361px',
+		minHeight: '341px',
+		padding: '1.75rem',
+		borderRadius: '1.5rem',
 		backgroundColor: '#CECAE4',
 		boxSizing: 'border-box',
-		gap: '30px',
+		gap: '8.8%',
 		fontFamily: "'Manrope', sans-serif",
 		overflow: 'hidden',
 	};
@@ -27,6 +28,7 @@ const ExpensesDay = () => {
 		display: 'flex',
 		alignItems: 'center',
 		gap: '16px',
+		maxWidth: 'calc(100% - 20px)',
 	};
 
 	const iconContainerStyle = {
@@ -43,10 +45,13 @@ const ExpensesDay = () => {
 		fontSize: '18px',
 		fontWeight: 300,
 		color: '#333',
+		whiteSpace: 'nowrap',
+		overflow: 'hidden',
+		textOverflow: 'ellipsis',
 	};
 
 	const allViewStyle = {
-		fontSize: '16px',
+		fontSize: 'clamp(0.875rem, 1.8vw, 1rem)',
 		color: '#333',
 		fontWeight: 400,
 	};
@@ -54,21 +59,21 @@ const ExpensesDay = () => {
 	const tableStyle = {
 		width: '100%',
 		borderCollapse: 'separate',
-		borderSpacing: '12px 12px',
-		fontSize: '14.5px',
+		borderSpacing: '1.8% 3.5%',
+		fontSize: 'clamp(0.75rem, 1.5vw, 0.9rem)', // Responsive entre 12px y 14.5px
 	};
 
 	const thStyle = {
 		textAlign: 'left',
 		fontWeight: 600,
 		color: '#333',
-		padding: '0 8px',
+		padding: '0 1.2%',
 	};
 
 	const tdStyle = {
 		backgroundColor: 'white',
-		padding: '10px 14px',
-		borderRadius: '12px',
+		padding: '1.5% 2.1%',
+		borderRadius: '0.75rem', 
 		whiteSpace: 'nowrap',
 		overflow: 'hidden',
 		textOverflow: 'ellipsis',

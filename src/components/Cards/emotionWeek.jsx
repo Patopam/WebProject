@@ -4,13 +4,14 @@ import { SentimentSatisfiedAlt } from '@mui/icons-material';
 const EmotionWeek = ({ compact = false }) => {
 	const containerStyle = {
 		display: 'flex',
-		width: compact ? '428px' : '544px',
-		height: compact ? '268.29px' : '341px',
-		padding: compact ? '28px 28px 52.71px 28px' : '28px 28px 67px 28px',
+		width: compact ? '100%' : '100%',
+		maxWidth: compact ? '26.75rem' : '40rem', // Equivalente a 428px y 544px
+		height: '22.5rem', // Altura automática basada en el contenido
+		padding: compact ? '1.75rem 1.75rem 3.3rem 1.75rem' : '1.75rem 1.75rem 4.2rem 1.75rem',
 		flexDirection: 'column',
 		alignItems: 'flex-start',
-		gap: compact ? '39.42px' : '50.1px',
-		borderRadius: '24px',
+		gap: compact ? '2.46rem' : '3.13rem',
+		borderRadius: '1.5rem',
 		background: '#E3E9CF',
 		boxSizing: 'border-box',
 	};
@@ -18,25 +19,27 @@ const EmotionWeek = ({ compact = false }) => {
 	const headerStyle = {
 		display: 'flex',
 		alignItems: 'center',
-		gap: '16px',
+		gap: '1rem',
+		width: '100%',
 	};
 
 	const iconContainerStyle = {
-		width: compact ? '37px' : '37px',
-		height: compact ? '37px' : '37px',
+		width: '2.31rem', // 37px
+		height: '2.31rem', // 37px
 		borderRadius: '50%',
 		backgroundColor: '#C8D39F',
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'center',
+		flexShrink: 0,
 	};
 
 	const titleStyle = {
 		fontFamily: "'Manrope', sans-serif",
-		fontSize: '18px',
+		fontSize: '1.125rem', // 18px
 		fontWeight: 300,
 		color: '#333',
-		lineWeight: 'normal',
+		lineHeight: 'normal',
 		fontStyle: 'normal',
 	};
 
@@ -47,38 +50,43 @@ const EmotionWeek = ({ compact = false }) => {
 	};
 
 	const dayColumnStyle = {
-		width: compact ? '41.7px' : '53px',
-		height: compact ? '118.01px' : '150px',
+		width: compact ? '13%' : '13%', // Porcentaje del contenedor padre
+		minWidth: compact ? '2.6rem' : '3.3rem', // Mínimo equivalente a 41.7px y 53px
+		height: 'auto', // Altura automática
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
 		justifyContent: 'space-between',
-		padding: compact ? '20px 10px' : '30px 20px ',
-		borderRadius: compact ? '30px' : '30px',
+		padding: compact ? '1.25rem 0.625rem' : '1.875rem 1.25rem',
+		borderRadius: '1.875rem',
 		backgroundColor: '#C8D39F',
 		boxSizing: 'border-box',
+		aspectRatio: compact ? '41.7/118.01' : '53/150', 
 	};
 
 	const dayTextStyle = {
 		fontFamily: "'Manrope', sans-serif",
-		fontSize: '16px',
+		fontSize: '1rem', // 16px
 		fontWeight: 500,
 		color: '#333',
-		lineWeight: '110%',
+		lineHeight: '110%',
 		fontStyle: 'normal',
+		marginBottom: '0.5rem',
 	};
 
 	const dayNumberStyle = {
 		fontFamily: "'Manrope', sans-serif",
-		fontSize: '20px',
+		fontSize: '1.25rem', // 20px
 		fontWeight: 500,
 		color: '#333',
-		lineWeight: '110%',
+		lineHeight: '110%',
 		fontStyle: 'normal',
+		margin: '0.5rem 0',
 	};
 
 	const emojiStyle = {
-		fontSize: compact ? '24px' : '32px',
+		fontSize: compact ? '1.5rem' : '2rem', // 24px o 32px
+		marginTop: '0.5rem',
 	};
 
 	const weekData = [
@@ -95,7 +103,7 @@ const EmotionWeek = ({ compact = false }) => {
 		<div style={containerStyle}>
 			<div style={headerStyle}>
 				<div style={iconContainerStyle}>
-					<SentimentSatisfiedAlt style={{ fontSize: compact ? '24px' : '24px', color: '#333' }} />
+					<SentimentSatisfiedAlt style={{ fontSize: '1.5rem', color: '#333' }} />
 				</div>
 				<div style={titleStyle}>Emotion week</div>
 			</div>

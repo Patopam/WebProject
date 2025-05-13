@@ -12,13 +12,15 @@
 	display: flex;
 	flex-direction: column;
 	overflow-y: auto;
+	max-width: 100%;
+	margin: 0 auto; /* Centrado en la pantalla */
 }
 
 .dashboard-header {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	margin-bottom: 1.5rem;
+	margin-bottom: 2rem;
 }
 
 .dashboard-icons {
@@ -32,49 +34,19 @@
 	margin-bottom: 2rem;
 }
 
-/* First row with three equal cards */
+/* Primera fila con tres tarjetas iguales */
 .dashboard-cards-row {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	gap: 1.5rem;
-	margin-bottom: 1.5rem;
+	gap: 2rem;
+	margin-bottom: 2rem;
 	align-items: start;
 }
 
-/* Second row with expenses table and emotion week side by side */
+/* Segunda fila: gastos y emociones */
 .dashboard-bottom-row {
 	display: grid;
-	grid-template-columns: 1.5fr 1fr;
-	gap: 1.2rem;
+	grid-template-columns: 2fr 1.2fr;
+	gap: 2rem;
 	align-items: start;
-}
-
-@media (max-width: 1024px) {
-	.dashboard-cards-row,
-	.dashboard-bottom-row {
-		grid-template-columns: 1fr;
-		gap: 1.5rem;
-	}
-}
-
-@media (min-width: 1025px) and (max-width: 1440px) {
-	.dashboard-cards-row {
-		gap: 2rem;
-	}
-
-	.dashboard-bottom-row {
-		grid-template-columns: 2.5fr 1.5fr;
-		gap: 1.5rem;
-	}
-}
-
-@media (min-width: 1441px) {
-	.dashboard-cards-row {
-		gap: 2.5rem;
-	}
-
-	.dashboard-bottom-row {
-		grid-template-columns: 3fr 2fr;
-		gap: 1.5rem;
-	}
 }

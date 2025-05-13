@@ -1,48 +1,48 @@
 import React from 'react';
 import { Box } from '@mui/material';
 
-const MonthFilter = ({ selectedMonth, setSelectedMonth }) => {
-	const months = ['All', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Agu', 'Jul', 'Sep', 'Oct', 'Nov', 'Dic'];
-
+const CategoryMenu = ({ categories, selectedCategory, onCategoryClick }) => {
 	return (
 		<Box
 			sx={{
 				display: 'flex',
 				flexWrap: 'wrap',
 				gap: '8px',
+				marginBottom: '24px',
 			}}
 		>
-			{months.map((month) => (
+			{categories.map((category) => (
 				<Box
-					key={month}
+					key={category}
 					component='button'
-					onClick={() => setSelectedMonth(month)}
+					onClick={() => onCategoryClick(category)}
 					sx={{
 						display: 'flex',
-						width: '5rem', // 80px
-						height: '2.813rem', // 45px
+						minWidth: '2.5rem',
+						height: '2.813rem',
 						padding: '6px 24px',
 						justifyContent: 'center',
 						alignItems: 'center',
 						gap: '24px',
 						borderRadius: '999px',
-						background: selectedMonth === month ? '#4B4990' : '#5F5DA6',
+						background: selectedCategory === category ? '#4B4990' : '#5F5DA6',
 						color: '#fff',
 						border: 'none',
 						cursor: 'pointer',
 						fontFamily: "'Manrope', sans-serif",
-						fontSize: '14px',
+						fontSize: '14px', 
 						fontWeight: 500,
+						whiteSpace: 'nowrap',
 						'&:hover': {
 							background: '#4B4990',
 						},
 					}}
 				>
-					{month}
+					{category}
 				</Box>
 			))}
 		</Box>
 	);
 };
 
-export default MonthFilter;
+export default CategoryMenu;

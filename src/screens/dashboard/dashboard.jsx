@@ -19,7 +19,7 @@ import { useSelector } from "react-redux";
 function Dashboard() {
   const id = useSelector((state) => state.userId.id);
   console.log(id);
-  
+
   let navigate = useNavigate();
   const goLogin = () => {
     navigate("/log");
@@ -50,7 +50,11 @@ function Dashboard() {
             emoji="😊"
           />
           <div className="dashboard-icons">
-            <CustomIconButton icon={<AccountCircleIcon />} ariaLabel="user" />
+            <CustomIconButton
+              icon={<AccountCircleIcon />}
+              ariaLabel="user"
+              onClick={goSettings}
+            />
             <CustomIconButton
               icon={<LogoutIcon />}
               ariaLabel="logout"
@@ -67,8 +71,8 @@ function Dashboard() {
         {/* Top row with three equal cards */}
         <div className="dashboard-cards-row">
           <ReminderCard />
-          <FeelingsCard compact={true} />
-          <GoalProgressCard spent={150000} total={200000} compact={true} />
+          <FeelingsCard />
+          <GoalProgressCard />
         </div>
 
         {/* Bottom row with expenses table on left and emotion week on right */}
