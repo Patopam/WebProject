@@ -1,5 +1,3 @@
-console.log('🔑 API KEY usada:', import.meta.env.VITE_OPENAI_API_KEY);
-
 export async function getMotivationalQuote() {
 	try {
 		const response = await fetch('https://api.openai.com/v1/chat/completions', {

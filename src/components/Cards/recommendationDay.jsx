@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Typography, styled, Button } from '@mui/material';
 import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
 import { getRecommendationFromEmotion } from '../../services/openaiService';
@@ -7,25 +7,52 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setAiLoading } from '../../redux/aiStatusSlice';
 
 const RecommendationDay = ({ emotion }) => {
-	console.log('Emotion recibida:', emotion);
+	console.log('Emotion received:', emotion);
 	const [recommendation, setRecommendation] = useState(null);
 	const [localLoading, setLocalLoading] = useState(false);
 	const dispatch = useDispatch();
 	const loadingAI = useSelector((state) => state.aiStatus.loading);
 
+	const today = new Date().toISOString().split('T')[0];
+
+	useEffect(() => {
+		const saved = localStorage.getItem('dailyRecommendation');
+		if (saved) {
+			const parsed = JSON.parse(saved);
+			if (parsed.date === today && parsed.emotion === emotion) {
+				setRecommendation(parsed.data);
+			}
+		}
+	}, [emotion, today]);
+
 	const handleGetRecommendation = async () => {
 		if (!emotion || loadingAI || localLoading) return;
+
 		setLocalLoading(true);
 		dispatch(setAiLoading(true));
+
 		try {
 			const aiData = await getRecommendationFromEmotion(emotion);
 			const image = await getImageFromKeyword(aiData.imageKeyword);
-			setRecommendation({
+
+			const finalData = {
 				intro: aiData.intro,
 				title: aiData.title,
 				description: aiData.description,
 				imageUrl: image,
-			});
+			};
+
+			// Save to localStorage
+			localStorage.setItem(
+				'dailyRecommendation',
+				JSON.stringify({
+					date: today,
+					emotion,
+					data: finalData,
+				})
+			);
+
+			setRecommendation(finalData);
 		} catch (error) {
 			console.error('Error loading recommendation:', error);
 		} finally {
@@ -103,7 +130,7 @@ const RecommendationDay = ({ emotion }) => {
 
 export default RecommendationDay;
 
-// ESTILOS (igual que antes)
+//
 const CardContainer = styled(Box)(() => ({
 	backgroundColor: '#fdd1bc',
 	padding: '1.8rem',
