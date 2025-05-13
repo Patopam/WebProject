@@ -17,7 +17,7 @@ const ReminderCard = () => {
 
 	const fetchPhrase = async () => {
 		setLoading(true);
-		dispatch(setAiLoading(true));
+		dispatch(setAiLoading(true)); //si ocupa la IA
 		try {
 			const newQuote = await getMotivationalQuote();
 			setCurrentPhrase(newQuote);

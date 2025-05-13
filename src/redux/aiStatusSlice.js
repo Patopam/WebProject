@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-
+//limite de espera entre peticion
 const initialState = {
 	loading: false,
 };
