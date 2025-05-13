@@ -18,8 +18,8 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 function Dashboard() {
   const id = useSelector((state) => state.userId.id);
-
   console.log(id);
+  
   let navigate = useNavigate();
   const goLogin = () => {
     navigate("/log");
