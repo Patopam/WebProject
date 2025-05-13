@@ -1,22 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AttachMoney, ArrowDropDown } from "@mui/icons-material";
 import { filterByTime } from "../../utils/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSpends } from "../../services/firebaseUtils";
 
-const ExpenditureHistoryTable = ({ data }) => {
+const ExpenditureHistoryTable = () => {
   const Dispatch = useDispatch();
   const [selectedTime, setSelectedTime] = useState("Today");
-  const [Data, setData] = useState([]);
+  const [Data, setData] = useState();
+  const [loadign, setLoading] = useState(true);
   const timeOptions = ["Today", "Week", "Month"];
-
-  const filteredData = filterByTime(data, selectedTime);
 
   const id = useSelector((state) => state.userId.id);
 
-  const data = fetchSpends({ uid: id });
-  setData(data);
-  console.log(data);
+  useEffect(() => {
+    fetchSpends({ uid: id })
+      .then((Spends) => setData([...Spends]))
+      .finally(() => setLoading(false));
+  }, []);
+
+  console.log(Data);
 
   const containerStyle = {
     display: "flex",
@@ -99,55 +102,64 @@ const ExpenditureHistoryTable = ({ data }) => {
   };
 
   return (
-    <div style={containerStyle}>
-      {/* Header */}
-      <div style={headerStyle}>
-        <div style={iconContainer}>
-          <AttachMoney
-            style={{ fontSize: "clamp(1rem, 3vw, 1.5rem)", color: "#333" }}
-          />
-        </div>
-        <div style={titleStyle}>Expenditure History</div>
-      </div>
+    <div>
+      {loadign ? (
+        <p>loading ... </p>
+      ) : (
+        <div style={containerStyle}>
+          {/* Header */}
+          <div style={headerStyle}>
+            <div style={iconContainer}>
+              <AttachMoney
+                style={{ fontSize: "clamp(1rem, 3vw, 1.5rem)", color: "#333" }}
+              />
+            </div>
+            <div style={titleStyle}>Expenditure History</div>
+          </div>
 
-      {/* Filtros */}
-      <div style={filterBoxStyle}>
-        {timeOptions.map((option) => (
-          <span
-            key={option}
-            onClick={() => setSelectedTime(option)}
-            style={{
-              textDecoration: selectedTime === option ? "underline" : "none",
-              display: "flex",
-              alignItems: "center",
-              gap: "2px",
-            }}
-          >
-            {option} <ArrowDropDown fontSize="small" />
-          </span>
-        ))}
-      </div>
-
-      <div style={tableWrapper}>
-        <table style={tableStyle}>
-          <thead>
-            <tr>
-              <th style={thStyle}>Date</th>
-              <th style={thStyle}>Amount</th>
-              <th style={thStyle}>Category</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredData.map((item, index) => (
-              <tr key={index}>
-                <td style={tdStyle}>{item.date}</td>
-                <td style={tdStyle}>{item.amount}</td>
-                <td style={tdStyle}>{item.category}</td>
-              </tr>
+          {/* Filtros */}
+          <div style={filterBoxStyle}>
+            {timeOptions.map((option) => (
+              <span
+                key={option}
+                onClick={() => setSelectedTime(option)}
+                style={{
+                  textDecoration:
+                    selectedTime === option ? "underline" : "none",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "2px",
+                }}
+              >
+                {option} <ArrowDropDown fontSize="small" />
+              </span>
             ))}
-          </tbody>
-        </table>
-      </div>
+          </div>
+
+          <div style={tableWrapper}>
+            <table style={tableStyle}>
+              <thead>
+                <tr>
+                  <th style={thStyle}>Date</th>
+                  <th style={thStyle}>Amount</th>
+                  <th style={thStyle}>Category</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Data.map((item) => (
+                  <tr key={item.id}>
+                    <td style={tdStyle}>
+                      {item.date?.toDate().toLocaleDateString()}
+                    </td>
+                    <td style={tdStyle}>{item.price}</td>
+                    <td style={tdStyle}>{item.category}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

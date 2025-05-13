@@ -96,14 +96,32 @@ export const addJournal = async ({ uid, emotion, title, description }) => {
 };
 
 export const fetchSpends = async ({ uid }) => {
-  if (!uid) return;
+  if (!uid) return console.log("hola");
 
   try {
-    // ✅ Corregido: accedemos a la subcolección de un documento
-    const journalRef = collection(doc(db, "users", uid), "Spends");
-    const snapshot = await getDocs(journalRef);
+    const SpendsRef = collection(doc(db, "users", uid), "Spends");
+    const snapshot = await getDocs(SpendsRef);
+    const Spends = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    return Spends;
+  } catch (error) {
+    console.error("Error cargando journals:", error);
+  }
+};
 
-    return snapshot;
+export const fetchGoal = async ({ uid }) => {
+  if (!uid) return console.log("hola");
+
+  try {
+    const GoalRef = collection(doc(db, "users", uid), "Goals");
+    const snapshot = await getDocs(GoalRef);
+    const Goal = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    return Goal;
   } catch (error) {
     console.error("Error cargando journals:", error);
   }
