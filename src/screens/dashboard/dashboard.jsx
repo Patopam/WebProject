@@ -38,6 +38,9 @@ function Dashboard() {
     console.log("Add spend clicked");
     navigate("/finance/add-spending");
   };
+  const goSettings = () => {
+    navigate("/settings");
+  };
 
   return (
     <div className="dashboard-container">
