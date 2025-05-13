@@ -17,28 +17,28 @@ const GoalHistoryCard = ({ data }) => {
 	const containerStyle = {
 		display: 'flex',
 		flexDirection: 'column',
-		width: '100%', // Cambiado de 800px a 100%
-		height: '23rem', // Mantenido el valor fijo original
-		minHeight: '23rem', // Asegura altura mínima
-		padding: '3.5%', // Cambiado de 28px a 3.5% del contenedor
-		borderRadius: '1.5rem', // Cambiado de 24px a 1.5rem
+		width: '100%',
+		height: '23rem',
+		minHeight: '23rem',
+		padding: '3.5%',
+		borderRadius: '1.5rem',
 		backgroundColor: '#FCE2A9',
 		boxSizing: 'border-box',
 		fontFamily: "'Manrope', sans-serif",
-		gap: '2.5%', // Cambiado de 20px a 2.5%
+		gap: '2.5%',
 		overflow: 'hidden',
 	};
 
 	const headerStyle = {
 		display: 'flex',
 		alignItems: 'center',
-		gap: '2%', // Cambiado de 16px a 2%
+		gap: '2%',
 	};
 
 	const iconContainer = {
-		width: '4.6%', // Cambiado de 37px a 4.6% del contenedor
-		minWidth: '30px', // Tamaño mínimo para que no se haga demasiado pequeño
-		aspectRatio: '1 / 1', // Mantiene la forma circular
+		width: '4.6%',
+		minWidth: '30px',
+		aspectRatio: '1 / 1',
 		borderRadius: '50%',
 		backgroundColor: '#FACD69',
 		display: 'flex',
@@ -56,13 +56,13 @@ const GoalHistoryCard = ({ data }) => {
 		display: 'flex',
 		justifyContent: 'space-between',
 		backgroundColor: '#F5D889',
-		borderRadius: '0.75rem', // Cambiado de 12px a 0.75rem
-		padding: '1% 2%', // Cambiado de 8px 16px a porcentajes
+		borderRadius: '0.75rem',
+		padding: '1% 2%',
 	};
 
 	const filterGroup = {
 		display: 'flex',
-		gap: '2.5%', // Cambiado de 20px a 2.5%
+		gap: '2.5%',
 		fontWeight: 600,
 		color: '#333',
 		cursor: 'pointer',
@@ -70,7 +70,7 @@ const GoalHistoryCard = ({ data }) => {
 
 	const tableWrapper = {
 		overflowY: 'auto',
-		height: '160px', // Mantenida la altura fija original
+		height: '160px',
 		scrollbarWidth: 'none',
 		msOverflowStyle: 'none',
 	};
@@ -78,7 +78,7 @@ const GoalHistoryCard = ({ data }) => {
 	const tableStyle = {
 		width: '100%',
 		borderCollapse: 'separate',
-		borderSpacing: '1.5% 3%', // Cambiado de 12px a porcentajes
+		borderSpacing: '1.5% 3%',
 		fontSize: 'clamp(0.75rem, 1.5vw, 0.9rem)', // Responsive entre 12px y 14.5px
 	};
 
@@ -86,13 +86,13 @@ const GoalHistoryCard = ({ data }) => {
 		textAlign: 'left',
 		fontWeight: 600,
 		color: '#333',
-		padding: '0 1%', // Cambiado de 8px a 1%
+		padding: '0 1%',
 	};
 
 	const tdStyle = {
 		backgroundColor: 'white',
-		padding: '1.25% 1.75%', // Cambiado de 10px 14px a porcentajes
-		borderRadius: '0.75rem', // Cambiado de 12px a 0.75rem
+		padding: '1.25% 1.75%',
+		borderRadius: '0.75rem', 
 		whiteSpace: 'nowrap',
 		overflow: 'hidden',
 		textOverflow: 'ellipsis',

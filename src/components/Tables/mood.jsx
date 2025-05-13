@@ -40,7 +40,7 @@ const StyledTabs = styled(Tabs)(() => ({
 const StyledTab = styled(Tab)(() => ({
 	color: '#333',
 	fontFamily: 'Manrope, sans-serif',
-	fontSize: '1.2rem', // Cambiado de 22px a rem para mejor escalabilidad
+	fontSize: '1.2rem',
 	textTransform: 'none',
 	fontWeight: 700,
 	'&.Mui-selected': {
@@ -56,15 +56,15 @@ const StyledListItem = styled(ListItem)(({ theme }) => ({
 	padding: theme.spacing(1.5, 2),
 }));
 
-const StyledAvatar = styled(Avatar)(({ theme }) => ({
-	marginRight: '2%', // Cambiado de theme.spacing(2)
-	width: '10%', // Cambiado de 44px a porcentaje
-	maxWidth: '44px', // Añadido tamaño máximo
-	height: 'auto', // Mantener proporción
-	aspectRatio: '1/1', // Mantener forma cuadrada
+const StyledAvatar = styled(Avatar)(() => ({
+	marginRight: '2%',
+	width: '10%',
+	maxWidth: '44px',
+	height: 'auto',
+	aspectRatio: '1/1',
 	cursor: 'pointer',
 	backgroundColor: '#FFFFFF',
-	fontSize: 'clamp(2rem, 2vw, 1.5rem)', // Tamaño de fuente responsive
+	fontSize: 'clamp(2rem, 2vw, 1.5rem)',
 }));
 
 const StyledChip = styled(Chip)(() => ({
@@ -72,7 +72,7 @@ const StyledChip = styled(Chip)(() => ({
 	borderRadius: '10px',
 	color: 'var(--Neutral-1000, #333)',
 	fontFamily: 'Manrope, sans-serif',
-	fontSize: 'clamp(0.8rem, 1.5vw, 1rem)', // Tamaño de fuente responsive
+	fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
 	fontStyle: 'normal',
 	fontWeight: 400,
 	lineHeight: 'normal',
@@ -81,19 +81,19 @@ const StyledChip = styled(Chip)(() => ({
 const StyledDivider = styled('div')({
 	borderBottom: '1px solid #999',
 	width: '100%',
-	marginBottom: '2%', // Cambiado de 16px a porcentaje
+	marginBottom: '2%',
 });
 
-const MonthHeader = styled(Typography)(({ theme }) => ({
+const MonthHeader = styled(Typography)(() => ({
 	color: 'var(--Neutral-1000, #333)',
 	fontFamily: 'Manrope, sans-serif',
-	fontSize: 'clamp(1rem, 1.8vw, 1.2rem)', // Tamaño de fuente responsive
+	fontSize: 'clamp(1rem, 1.8vw, 1.2rem)',
 	fontStyle: 'normal',
 	fontWeight: 700,
 	lineHeight: 'normal',
-	marginTop: '2%', // Cambiado de theme.spacing(2)
-	marginBottom: '1%', // Cambiado de theme.spacing(1)
-	paddingLeft: '1%', // Cambiado de theme.spacing(1)
+	marginTop: '2%',
+	marginBottom: '1%',
+	paddingLeft: '1%',
 }));
 
 const MoodSelectorModal = styled(Modal)(() => ({
@@ -114,14 +114,14 @@ const MoodSelectorContainer = styled(Paper)(({ theme }) => ({
 }));
 
 const MoodOption = styled(ButtonBase)(() => ({
-	width: '12%', // Ligeramente más ancho
+	width: '12%',
 	minWidth: '50px',
 	maxWidth: '60px',
 	height: 'auto',
 	aspectRatio: '1/1',
-	fontSize: 'clamp(2rem, 4vw, 3rem)', // Emojis más grandes
+	fontSize: 'clamp(2rem, 4vw, 3rem)',
 	borderRadius: '50%',
-	display: 'flex', // Centrar el emoji
+	display: 'flex',
 	alignItems: 'center',
 	justifyContent: 'center',
 	transition: 'background-color 0.3s',
@@ -143,12 +143,12 @@ const initialMoodData = [
 ];
 
 const moods = [
-	{ id: 'laughing', emoji: '😄' },
-	{ id: 'crying', emoji: '😢' },
-	{ id: 'anxious', emoji: '😰' },
-	{ id: 'angry', emoji: '😠' },
-	{ id: 'neutral', emoji: '😐' },
-	{ id: 'sad', emoji: '😩' },
+	{ id: 'happy', emoji: '😄' },
+	{ id: 'sad', emoji: '😭' },
+	{ id: 'nostalgic', emoji: '😢' },
+	{ id: 'angry', emoji: '😡' },
+	{ id: 'neutral', emoji: '😑' },
+	{ id: 'stressed', emoji: '😩' },
 ];
 
 const getMoodEmoji = (moodId) => {
@@ -274,17 +274,13 @@ export default function MoodTracker() {
 						primaryTypographyProps={{
 							color: '#333',
 							fontFamily: 'Manrope, sans-serif',
-							fontSize: 'clamp(0.9rem, 1.5vw, 1.1rem)', // Tamaño de fuente responsive
+							fontSize: 'clamp(0.9rem, 1.5vw, 1.1rem)',
 							textTransform: 'none',
 							fontWeight: 400,
 						}}
-						sx={{ flexGrow: 1, marginRight: '2%' }} // Añadido flexGrow y margen
+						sx={{ flexGrow: 1, marginRight: '2%' }}
 					/>
-					<IconButton
-						size='medium'
-						onClick={() => startEditing(item.id, item.title)}
-						sx={{ mr: '2%' }} // Cambiado a porcentaje
-					>
+					<IconButton size='medium' onClick={() => startEditing(item.id, item.title)} sx={{ mr: '2%' }}>
 						<EditIcon fontSize='medium' />
 					</IconButton>
 				</>

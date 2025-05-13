@@ -17,7 +17,7 @@ const AddSpending = () => {
 	const [editPrice, setEditPrice] = useState(false);
 	const [editDesc, setEditDesc] = useState(false);
 
-	const handleClose = () => navigate('/finance');
+	const handleClose = () => navigate(-1);
 
 	return (
 		<div style={container}>

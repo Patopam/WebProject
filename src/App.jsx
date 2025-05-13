@@ -11,8 +11,10 @@ import ExpandedJournal from './screens/journal/expandedJournal';
 import Start from './screens/start/start';
 import Log from './screens/log/log';
 import Sign from './screens/sign/sign';
+import Settings from './screens/settings/settings';
 import AddGoal from './screens/finance/addGoal';
 import AddSpending from './screens/finance/addSpending';
+import Recommendations from './screens/recommendations/recommendation';
 
 function App() {
 	return (
@@ -30,6 +32,8 @@ function App() {
 				<Route path='/journal/write' element={<ExpandedJournal />} />
 				<Route path='/finance/add-spending' element={<AddSpending />} />
 				<Route path='/finance/add-goal' element={<AddGoal />} />
+				<Route path='/settings' element={<Settings />} />
+				<Route path='/recommendations' element={<Recommendations />} />
 			</Routes>
 		</Router>
 	);
