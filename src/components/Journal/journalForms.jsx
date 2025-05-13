@@ -156,7 +156,9 @@ export default function JournalForm({ compact = false }) {
 
 const HOVER_COLOR = '#fcd48f';
 
-const JournalContainer = styled(Box)(({ compact }) => ({
+const JournalContainer = styled(Box, {
+	shouldForwardProp: (prop) => prop !== 'compact',
+})(({ compact }) => ({
 	backgroundColor: '#fde3a7',
 	padding: compact ? '24px' : '2.5rem 3.75rem',
 	fontFamily: '"Manrope", sans-serif',
@@ -234,7 +236,9 @@ const TagButton = styled(Button)(({ selected }) => ({
 	},
 }));
 
-const EntrySection = styled(Box)(({ compact }) => ({
+const EntrySection = styled(Box, {
+	shouldForwardProp: (prop) => prop !== 'compact',
+})(({ compact }) => ({
 	display: 'flex',
 	flexDirection: 'column',
 	gap: '12px',
@@ -262,7 +266,9 @@ const EntryTitle = styled(TextField)(() => ({
 	},
 }));
 
-const EntryTextArea = styled(TextField)(({ compact }) => ({
+const EntryTextArea = styled(TextField, {
+	shouldForwardProp: (prop) => prop !== 'compact',
+})(({ compact }) => ({
 	'& .MuiInputBase-root': {
 		fontFamily: '"Manrope", sans-serif',
 		fontSize: '14px',

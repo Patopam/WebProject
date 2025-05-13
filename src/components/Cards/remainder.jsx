@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setAiLoading } from '../../redux/aiStatusSlice';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -6,18 +8,25 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import RefreshIcon from '@mui/icons-material/Refresh';
-
 import { getMotivationalQuote } from '../../services/openaiService';
 
 const ReminderCard = () => {
 	const [currentPhrase, setCurrentPhrase] = useState('Take a breath. You’re doing great.');
 	const [loading, setLoading] = useState(false);
+	const dispatch = useDispatch();
 
 	const fetchPhrase = async () => {
 		setLoading(true);
-		const newQuote = await getMotivationalQuote();
-		setCurrentPhrase(newQuote);
-		setLoading(false);
+		dispatch(setAiLoading(true)); //si ocupa la IA
+		try {
+			const newQuote = await getMotivationalQuote();
+			setCurrentPhrase(newQuote);
+		} catch (error) {
+			console.error('Error fetching motivational quote:', error);
+		} finally {
+			setLoading(false);
+			dispatch(setAiLoading(false));
+		}
 	};
 
 	const handleRefresh = () => {
