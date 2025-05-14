@@ -1,9 +1,22 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
+import CircularProgress from '@mui/material/CircularProgress';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+
+// Importamos las acciones y selectores de Redux
+import {
+	uploadImageToCloudinary,
+	selectIsUploading,
+	selectCloudinaryError,
+	selectCloudinaryImages,
+	clearError,
+} from '../../redux/cloudinarySlice/cloudinarySlice';
 
 // Imágenes iniciales
 const initialImages = [
@@ -17,7 +30,7 @@ const CarouselContainer = styled('div')(({ theme }) => ({
 	borderRadius: theme.spacing(2),
 	background: theme.palette.grey[200],
 	width: '100%',
-	maxWidth: '40rem', //
+	maxWidth: '40rem',
 	overflow: 'hidden',
 	boxSizing: 'border-box',
 }));
@@ -33,7 +46,7 @@ const EmblaSlideContainer = styled('div')({
 
 const EmblaSlide = styled('div')({
 	flex: '0 0 100%',
-	padding: '0.5rem', // 8px
+	padding: '0.5rem',
 	boxSizing: 'border-box',
 });
 
@@ -41,21 +54,21 @@ const SlideImage = styled('img')({
 	width: '100%',
 	height: 'auto',
 	aspectRatio: '16/9',
-	maxHeight: '15rem', // 240px
+	maxHeight: '15rem',
 	objectFit: 'cover',
-	borderRadius: '0.75rem', // 12px
+	borderRadius: '0.75rem',
 });
 
 const AddButtonContainer = styled('div')({
 	position: 'absolute',
-	top: '0.75rem', // 12px
-	right: '0.75rem', // 12px
+	top: '0.75rem',
+	right: '0.75rem',
 	zIndex: 2,
 });
 
 const AddButtonCircle = styled(IconButton)(({ theme }) => ({
-	width: '2.25rem', // 36px
-	height: '2.25rem', // 36px
+	width: '2.25rem',
+	height: '2.25rem',
 	backgroundColor: theme.palette.grey[300],
 	'&:hover': {
 		backgroundColor: theme.palette.grey[400],
@@ -67,123 +80,120 @@ const UploadInput = styled('input')({
 });
 
 export default function ImageCarousel() {
-	const [images, setImages] = useState(initialImages);
-	const [emblaRef] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 3000 })]);
+	// Estado local para imágenes iniciales + imágenes de Cloudinary
+	const [allImages, setAllImages] = useState(initialImages);
+	const [openSnackbar, setOpenSnackbar] = useState(false);
+	const [snackbarMessage, setSnackbarMessage] = useState('');
+	const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+
+	// Redux
+	const dispatch = useDispatch();
+	const isUploading = useSelector(selectIsUploading);
+	const error = useSelector(selectCloudinaryError);
+	const cloudinaryImages = useSelector(selectCloudinaryImages);
+
+	// Embla Carousel
+	const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 3000 })]);
 	const fileInputRef = useRef(null);
 
+	// Efecto para actualizar las imágenes cuando cambian las imágenes de Cloudinary
+	useEffect(() => {
+		// Actualizar las imágenes cuando cambian las imágenes de Cloudinary
+		const cloudinaryUrls = cloudinaryImages.map((img) => img.secure_url);
+		setAllImages([...initialImages, ...cloudinaryUrls]);
+	}, [cloudinaryImages]);
+
+	// Efecto para mostrar errores
+	useEffect(() => {
+		if (error) {
+			setSnackbarMessage(error);
+			setSnackbarSeverity('error');
+			setOpenSnackbar(true);
+			// Limpiamos el error después de mostrarlo
+			dispatch(clearError());
+		}
+	}, [error, dispatch]);
+
+	// Manejadores
 	const handleAddButtonClick = () => {
 		fileInputRef.current.click();
 	};
 
-	const handleFileUpload = (event) => {
+	const handleFileUpload = async (event) => {
 		const file = event.target.files[0];
-		if (file && file.type.match('image.*')) {
-			const imageUrl = URL.createObjectURL(file);
-			setImages([...images, imageUrl]);
+		if (!file || !file.type.match('image.*')) return;
+
+		try {
+			// Subir imagen a Cloudinary usando Redux
+			await dispatch(uploadImageToCloudinary(file)).unwrap();
+
+			// Mostrar mensaje de éxito
+			setSnackbarMessage('Imagen subida correctamente');
+			setSnackbarSeverity('success');
+			setOpenSnackbar(true);
+
+			// Limpiar input para permitir seleccionar el mismo archivo otra vez
+			event.target.value = '';
+		} catch (err) {
+			console.error('Error al subir la imagen:', err);
+			// El error ya se maneja en el useEffect de arriba
+
+			// Limpiar input para permitir seleccionar el mismo archivo otra vez
+			event.target.value = '';
 		}
 	};
 
-	return (
-		<CarouselContainer>
-			<EmblaContainer ref={emblaRef}>
-				<EmblaSlideContainer>
-					{images.map((src, index) => (
-						<EmblaSlide key={index}>
-							<SlideImage src={src} alt={`slide-${index}`} />
-						</EmblaSlide>
-					))}
-				</EmblaSlideContainer>
-			</EmblaContainer>
-
-			<AddButtonContainer>
-				<AddButtonCircle onClick={handleAddButtonClick}>
-					<AddIcon style={{ fontSize: '1.25rem', color: '#000000' }} />
-				</AddButtonCircle>
-			</AddButtonContainer>
-
-			<UploadInput ref={fileInputRef} accept='image/*' type='file' onChange={handleFileUpload} />
-		</CarouselContainer>
-	);
-}
-
-export function ImageCarouselWithProps({ compact = false }) {
-	const [images, setImages] = useState(initialImages);
-	const [emblaRef] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 3000 })]);
-	const fileInputRef = useRef(null);
-
-	const handleAddButtonClick = () => {
-		fileInputRef.current.click();
-	};
-
-	const handleFileUpload = (event) => {
-		const file = event.target.files[0];
-		if (file && file.type.match('image.*')) {
-			const imageUrl = URL.createObjectURL(file);
-			setImages([...images, imageUrl]);
+	const handleSnackbarClose = (event, reason) => {
+		if (reason === 'clickaway') {
+			return;
 		}
+		setOpenSnackbar(false);
 	};
-
-	const containerStyle = {
-		position: 'relative',
-		borderRadius: '1rem',
-		background: '#f5f5f5',
-		width: '100%',
-		maxWidth: compact ? '20rem' : '26.75rem', // 320px o 427px
-		overflow: 'hidden',
-		boxSizing: 'border-box',
-	};
-
-	const slideImageStyle = {
-		width: '100%',
-		height: 'auto',
-		aspectRatio: '16/9',
-		maxHeight: compact ? '12rem' : '15rem', // 192px o 240px
-		objectFit: 'cover',
-		borderRadius: '0.75rem',
-	};
-
-	const addButtonStyle = {
-		width: compact ? '2rem' : '2.25rem', // 32px o 36px
-		height: compact ? '2rem' : '2.25rem', // 32px o 36px
-		backgroundColor: '#e0e0e0',
-		color: '#000000',
-	};
-
-	const iconSize = compact ? '1.125rem' : '1.25rem'; // 18px o 20px
 
 	return (
-		<div style={containerStyle}>
-			<div ref={emblaRef} style={{ overflow: 'hidden', width: '100%' }}>
-				<div style={{ display: 'flex' }}>
-					{images.map((src, index) => (
-						<div
-							key={index}
-							style={{
-								flex: '0 0 100%',
-								padding: '0.5rem',
-								boxSizing: 'border-box',
-							}}
-						>
-							<img src={src} alt={`slide-${index}`} style={slideImageStyle} />
-						</div>
-					))}
-				</div>
-			</div>
+		<>
+			<CarouselContainer>
+				<EmblaContainer ref={emblaRef}>
+					<EmblaSlideContainer>
+						{allImages.map((src, index) => (
+							<EmblaSlide key={`slide-${index}-${src}`}>
+								<SlideImage
+									src={src}
+									alt={`slide-${index}`}
+									onError={(e) => {
+										console.error(`Error loading image: ${src}`);
+										e.target.src = 'https://via.placeholder.com/400x225?text=Error+de+carga';
+									}}
+								/>
+							</EmblaSlide>
+						))}
+					</EmblaSlideContainer>
+				</EmblaContainer>
 
-			<div
-				style={{
-					position: 'absolute',
-					top: '0.75rem',
-					right: '0.75rem',
-					zIndex: 2,
-				}}
+				<AddButtonContainer>
+					<AddButtonCircle onClick={handleAddButtonClick} disabled={isUploading}>
+						{isUploading ? (
+							<CircularProgress size={20} color='inherit' />
+						) : (
+							<AddIcon style={{ fontSize: '1.25rem', color: '#000000' }} />
+						)}
+					</AddButtonCircle>
+				</AddButtonContainer>
+
+				<UploadInput ref={fileInputRef} accept='image/*' type='file' onChange={handleFileUpload} />
+			</CarouselContainer>
+
+			{/* Notificaciones */}
+			<Snackbar
+				open={openSnackbar}
+				autoHideDuration={6000}
+				onClose={handleSnackbarClose}
+				anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
 			>
-				<IconButton onClick={handleAddButtonClick} style={addButtonStyle}>
-					<AddIcon style={{ fontSize: iconSize, color: '#000000' }} />
-				</IconButton>
-			</div>
-
-			<input ref={fileInputRef} accept='image/*' type='file' onChange={handleFileUpload} style={{ display: 'none' }} />
-		</div>
+				<Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
+					{snackbarMessage}
+				</Alert>
+			</Snackbar>
+		</>
 	);
 }
