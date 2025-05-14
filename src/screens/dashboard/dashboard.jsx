@@ -81,10 +81,10 @@ function Dashboard() {
 		};
 	}, [isMobile]);
 
-	const handleJournalClick = () => {
-		console.log('Daily journal clicked');
-		navigate('/journal/write');
-	};
+  const handleJournalClick = () => {
+    console.log("Daily journal clicked");
+    navigate("/journal/write");
+  };
 
 	const handleSpendClick = () => {
 		console.log('Add spend clicked');
@@ -116,17 +116,17 @@ function Dashboard() {
 					)}
 				</div>
 
-				<div className='dashboard-buttons'>
-					<AddButton onClick={handleJournalClick} text={'Daily journal'} />
-					<AddButton onClick={handleSpendClick} text={'Add spend'} />
-				</div>
+        <div className="dashboard-buttons">
+          <AddButton onClick={handleJournalClick} text={"Daily journal"} />
+          <AddButton onClick={handleSpendClick} text={"Add spend"} />
+        </div>
 
-				{/* Top row with three equal cards */}
-				<div className='dashboard-cards-row'>
-					<ReminderCard />
-					<FeelingsCard />
-					<GoalProgressCard />
-				</div>
+        {/* Top row with three equal cards */}
+        <div className="dashboard-cards-row">
+          <ReminderCard />
+          <FeelingsCard />
+          <GoalProgressCard />
+        </div>
 
 				{/* Bottom row with expenses table on left and emotion week on right */}
 				<div className='dashboard-bottom-row'>
