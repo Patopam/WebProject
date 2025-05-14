@@ -21,7 +21,6 @@ const AddGoal = () => {
   const [editPrice, setEditPrice] = useState(false);
   const [editDesc, setEditDesc] = useState(false);
 
-  const handleClose = () => navigate(-1);
   const setGoal = () => {
     addGoals({
       uid: id,
