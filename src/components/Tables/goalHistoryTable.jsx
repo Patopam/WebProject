@@ -13,14 +13,8 @@ const GoalHistoryCard = () => {
     fetchGoal({ uid: id })
       .then((Goals) => setData([...Goals]))
       .finally(() => setLoading(false));
+    console.log(Data);
   }, []);
-
-  const filteredByTime = filterByTime(Data, selectedTime);
-  const filteredData = filteredByTime.filter((item) =>
-    selectedStatus === "All"
-      ? true
-      : item.status.toLowerCase() === selectedStatus.toLowerCase()
-  );
 
   const timeOptions = ["Today", "Week", "Month"];
   const statusOptions = ["All", "Completed", "Failed"];
@@ -144,7 +138,7 @@ const GoalHistoryCard = () => {
             </div>
 
             <div style={filterGroup}>
-              {filteredData.map((option) => (
+              {statusOptions.map((option) => (
                 <span
                   key={option}
                   onClick={() => setSelectedStatus(option)}

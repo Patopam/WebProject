@@ -61,7 +61,7 @@ function Finance() {
         <div className="finance-layout">
           <div className="finance-main">
             <div className="finance-left-column">
-              <GoalHistoryTable data={goalHistoryData} />
+              <GoalHistoryTable />
               <ExpenditureHistoryTable />
             </div>
 
