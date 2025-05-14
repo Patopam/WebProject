@@ -4,7 +4,9 @@ import { db } from '../../services/firebase';
 import { collection, getDocs, query, orderBy, limit } from 'firebase/firestore';
 import MoodTracker from '../../components/Tables/mood';
 import Menu from '../../components/Menu/menu';
-import ReminderCard from '../../components/Cards/remainder';
+import Skeleton from '@mui/material/Skeleton';
+// import ReminderCard from '../../components/Cards/remainder';
+import ImageCarousel from '../../components/Cards/imageCarousel';
 import RecommendationDay from '../../components/Cards/recommendationDay';
 import Header2 from '../../components/Header/header2';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -74,8 +76,21 @@ function Emotions() {
 						<MoodTracker />
 					</div>
 					<div className='emotions-right'>
-						<ReminderCard />
-						{ultimaEmocion && <RecommendationDay emotion={ultimaEmocion} />}
+						{ultimaEmocion ? (
+							<RecommendationDay emotion={ultimaEmocion} />
+						) : (
+							<Skeleton
+								variant='rectangular'
+								animation='wave'
+								width='100%'
+								height='14.875rem'
+								sx={{ borderRadius: '1.5rem', backgroundColor: '#fdd1bc' }}
+							/>
+						)}
+						{/* <ReminderCard /> */}
+						<div className='journal-carousel'>
+							<ImageCarousel />
+						</div>
 					</div>
 				</div>
 			</div>

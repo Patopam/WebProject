@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Typography, styled } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Box, Typography, styled, Button } from '@mui/material';
 import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
 import { getRecommendationFromEmotion } from '../../services/openaiService';
 import { getImageFromKeyword } from '../../services/pexelsService';
@@ -7,39 +7,59 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setAiLoading } from '../../redux/aiStatusSlice';
 
 const RecommendationDay = ({ emotion }) => {
-	const [recommendation, setRecommendation] = useState({
-		intro: '',
-		title: '',
-		description: '',
-		imageUrl: '',
-	});
-
+	console.log('Emotion received:', emotion);
+	const [recommendation, setRecommendation] = useState(null);
+	const [localLoading, setLocalLoading] = useState(false);
 	const dispatch = useDispatch();
 	const loadingAI = useSelector((state) => state.aiStatus.loading);
 
+	const today = new Date().toISOString().split('T')[0];
+
 	useEffect(() => {
-		if (!emotion || emotion.trim() === '' || loadingAI) return;
-
-		const fetchData = async () => {
-			try {
-				dispatch(setAiLoading(true));
-				const aiData = await getRecommendationFromEmotion(emotion);
-				const image = await getImageFromKeyword(aiData.imageKeyword);
-				setRecommendation({
-					intro: aiData.intro,
-					title: aiData.title,
-					description: aiData.description,
-					imageUrl: image,
-				});
-			} catch (error) {
-				console.error('Error loading recommendation:', error);
-			} finally {
-				dispatch(setAiLoading(false));
+		const saved = localStorage.getItem('dailyRecommendation');
+		if (saved) {
+			const parsed = JSON.parse(saved);
+			if (parsed.date === today && parsed.emotion === emotion) {
+				setRecommendation(parsed.data);
 			}
-		};
+		}
+	}, [emotion, today]);
 
-		fetchData();
-	}, [emotion]);
+	const handleGetRecommendation = async () => {
+		if (!emotion || loadingAI || localLoading) return;
+
+		setLocalLoading(true);
+		dispatch(setAiLoading(true));
+
+		try {
+			const aiData = await getRecommendationFromEmotion(emotion);
+			const image = await getImageFromKeyword(aiData.imageKeyword);
+
+			const finalData = {
+				intro: aiData.intro,
+				title: aiData.title,
+				description: aiData.description,
+				imageUrl: image,
+			};
+
+			// Save to localStorage
+			localStorage.setItem(
+				'dailyRecommendation',
+				JSON.stringify({
+					date: today,
+					emotion,
+					data: finalData,
+				})
+			);
+
+			setRecommendation(finalData);
+		} catch (error) {
+			console.error('Error loading recommendation:', error);
+		} finally {
+			setLocalLoading(false);
+			dispatch(setAiLoading(false));
+		}
+	};
 
 	return (
 		<CardContainer>
@@ -59,41 +79,58 @@ const RecommendationDay = ({ emotion }) => {
 				</Typography>
 			</SectionTitle>
 
-			<SectionEmotion>
-				<Typography sx={{ fontSize: '1.35rem', color: '#333', lineHeight: 1.4 }}>
-					{recommendation.intro || `You are feeling ${emotion}...`}
-				</Typography>
-			</SectionEmotion>
+			{recommendation && (
+				<SectionEmotion>
+					<Typography sx={{ fontSize: '1.35rem', color: '#333', lineHeight: 1.4 }}>{recommendation.intro}</Typography>
+				</SectionEmotion>
+			)}
 
-			<SectionRecommendation>
-				<LeftText>
-					<Typography
-						sx={{
-							fontWeight: 600,
-							fontSize: '1.25rem',
-							marginBottom: '0.4rem',
-							lineHeight: 1.2,
-						}}
-					>
-						{recommendation.title}
-					</Typography>
-					<Typography sx={{ fontSize: '1.25rem', color: '#333', lineHeight: 1.2 }}>
-						{recommendation.description}
-					</Typography>
-				</LeftText>
+			{!recommendation ? (
+				<Button
+					variant='contained'
+					onClick={handleGetRecommendation}
+					disabled={loadingAI || localLoading}
+					sx={{
+						backgroundColor: '#F69F77',
+						color: '#333',
+						textTransform: 'none',
+						fontWeight: 'bold',
+						fontFamily: "'Manrope', sans-serif",
+						alignSelf: 'start',
+					}}
+				>
+					{localLoading ? 'Loading...' : 'Find out what we have for you'}
+				</Button>
+			) : (
+				<SectionRecommendation>
+					<LeftText>
+						<Typography
+							sx={{
+								fontWeight: 600,
+								fontSize: '1.25rem',
+								marginBottom: '0.4rem',
+								lineHeight: 1.2,
+							}}
+						>
+							{recommendation.title}
+						</Typography>
+						<Typography sx={{ fontSize: '1.25rem', color: '#333', lineHeight: 1.2 }}>
+							{recommendation.description}
+						</Typography>
+					</LeftText>
 
-				<ImageBox>
-					{recommendation.imageUrl && <img src={recommendation.imageUrl} alt={recommendation.title} />}
-				</ImageBox>
-			</SectionRecommendation>
+					<ImageBox>
+						{recommendation.imageUrl && <img src={recommendation.imageUrl} alt={recommendation.title} />}
+					</ImageBox>
+				</SectionRecommendation>
+			)}
 		</CardContainer>
 	);
 };
 
 export default RecommendationDay;
 
-// ESTILOS
-
+//
 const CardContainer = styled(Box)(() => ({
 	backgroundColor: '#fdd1bc',
 	padding: '1.8rem',

@@ -1,71 +1,121 @@
-import React from "react";
-import AddButton from "../../components/Buttons/add";
-import Header from "../../components/Header/header";
-import ReminderCard from "../../components/Cards/remainder";
-import GoalProgressCard from "../../components/Cards/goal";
-import EmotionWeek from "../../components/Cards/emotionWeek";
-import CustomIconButton from "../../components/Buttons/icon";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import LogoutIcon from "@mui/icons-material/Logout";
-import FeelingsCard from "../../components/Cards/FeelingsCard";
-import Menu from "../../components/Menu/menu";
-import ExpensesTable from "../../components/Tables/expensesTable";
-import expensesData from "../../Data/expensesData";
-import "./style.css";
-import { useEffect, useState } from "react";
-import { obtenerUsuario } from "../../utils/utils";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { setDataSpends } from "../../redux/DataSlice/DataSpends";
-import { fetchSpends } from "../../services/firebaseUtils";
-function Dashboard() {
-  const id = useSelector((state) => state.userId.id);
 
-  let navigate = useNavigate();
-  const goLogin = () => {
-    navigate("/log");
-  };
-  const [Nombre, setNombre] = useState("Evan");
-  useEffect(() => {
-    setNombre(obtenerUsuario());
-  }, []);
+import React, { useEffect, useState } from 'react';
+import AddButton from '../../components/Buttons/add';
+import Header from '../../components/Header/header';
+import ReminderCard from '../../components/Cards/remainder';
+import GoalProgressCard from '../../components/Cards/goal';
+import EmotionWeek from '../../components/Cards/emotionWeek';
+import CustomIconButton from '../../components/Buttons/icon';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LogoutIcon from '@mui/icons-material/Logout';
+import FeelingsCard from '../../components/Cards/FeelingsCard';
+import Menu from '../../components/Menu/menu';
+import MobileNavBar from '../../components/Menu/mobileNavBar'; // Importamos la barra de navegación móvil
+import ExpensesTable from '../../components/Tables/expensesTable';
+import expensesData from '../../Data/expensesData';
+import './style.css';
+import { obtenerUsuario } from '../../utils/utils';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
+function Dashboard() {
+	const id = useSelector((state) => state.userId.id);
+	const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
+	const [showButtons, setShowButtons] = useState(true);
+
+	console.log(id);
+	let navigate = useNavigate();
+	const goLogin = () => {
+		navigate('/log');
+	};
+	const goSettings = () => {
+		navigate('/settings');
+	};
+
+	const [Nombre, setNombre] = useState('Evan');
+	useEffect(() => {
+		setNombre(obtenerUsuario());
+
+		// Función para actualizar el estado de isMobile cuando cambia el tamaño de la ventana
+		const handleResize = () => {
+			const mobile = window.innerWidth <= 1024;
+			setIsMobile(mobile);
+			setShowButtons(!mobile); // Siempre mostrar botones en desktop
+		};
+
+		// Llamar handleResize una vez para inicializar correctamente
+		handleResize();
+
+		// Agregar event listener para el cambio de tamaño
+		window.addEventListener('resize', handleResize);
+
+		// Definir un punto de entrada para el observador de intersección
+		const handleIntersection = (entries) => {
+			// Si la navbar está visible (intersecting), ocultar los botones
+			if (entries[0].isIntersecting) {
+				setShowButtons(false);
+			} else {
+				// Si estamos en móvil pero la navbar no es visible, mostrar los botones
+				setShowButtons(isMobile);
+			}
+		};
+
+		// Crear un observador para la barra de navegación móvil
+		if (isMobile) {
+			const navbarElement = document.querySelector('.mobile-navbar');
+			if (navbarElement) {
+				const observer = new IntersectionObserver(handleIntersection, {
+					threshold: 0.1, // Disparar cuando al menos el 10% de la navbar es visible
+				});
+				observer.observe(navbarElement);
+
+				// Limpiar observador
+				return () => {
+					observer.disconnect();
+				};
+			}
+		}
+
+		// Limpiar event listener cuando el componente se desmonta
+		return () => {
+			window.removeEventListener('resize', handleResize);
+		};
+	}, [isMobile]);
 
   const handleJournalClick = () => {
     console.log("Daily journal clicked");
     navigate("/journal/write");
   };
 
-  const handleSpendClick = () => {
-    console.log("Add spend clicked");
-    navigate("/finance/add-spending");
-  };
-  const goSettings = () => {
-    navigate("/settings");
-  };
+	const handleSpendClick = () => {
+		console.log('Add spend clicked');
+		navigate('/finance/add-spending');
+	};
 
-  return (
-    <div className="dashboard-container">
-      <Menu />
-      <div className="dashboard-content">
-        <div className="dashboard-header">
-          <Header
-            Nombre={Nombre}
-            subtitle="How are you feeling today?"
-            emoji="😊"
-          />
-          <div className="dashboard-icons">
-            <CustomIconButton
-              icon={<AccountCircleIcon />}
-              ariaLabel="user"
-              onClick={goSettings}
-            />
-            <CustomIconButton
-              icon={<LogoutIcon />}
-              ariaLabel="logout"
-              onClick={goLogin}
-            />
-          </div>
-        </div>
+	return (
+		<div className='dashboard-container'>
+			{/* Mostrar el menú lateral solo en pantallas grandes */}
+			{!isMobile && <Menu />}
+
+			<div className='dashboard-content'>
+				{/* Mobile/iPad icons above header - solo mostrar si showButtons es true */}
+				{isMobile && showButtons && (
+					<div className='dashboard-mobile-icons'>
+						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
+						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={goLogin} />
+					</div>
+				)}
+
+				<div className='dashboard-header'>
+					<Header Nombre={Nombre} subtitle='How are you feeling today?' />
+					{/* Desktop icons - only show on non-mobile */}
+					{!isMobile && (
+						<div className='dashboard-icons'>
+							<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
+							<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={goLogin} />
+						</div>
+					)}
+				</div>
 
         <div className="dashboard-buttons">
           <AddButton onClick={handleJournalClick} text={"Daily journal"} />
@@ -91,6 +141,10 @@ function Dashboard() {
       </div>
     </div>
   );
+			{/* Mostrar la barra de navegación móvil solo en pantallas pequeñas y medianas */}
+			{isMobile && <MobileNavBar />}
+		</div>
+	);
 }
 
 export default Dashboard;
