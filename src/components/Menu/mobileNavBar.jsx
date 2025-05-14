@@ -24,14 +24,14 @@ const MobileNavBar = () => {
 				<span>Dashboard</span>
 			</Link>
 
-			<Link to='/journal' className={`mobile-nav-item ${isActive('/journal') ? 'active' : ''}`}>
+			<Link to='/settings' className={`mobile-nav-item ${isActive('/settings') ? 'active' : ''}`}>
 				<PersonOutlineOutlinedIcon />
-				<span>Journal</span>
+				<span>User</span>
 			</Link>
 
 			<Link to='/Alljournal' className={`mobile-nav-item add-item ${isActive('/Alljournal') ? 'active' : ''}`}>
 				<PhotoAlbumOutlinedIcon />
-				<span>All my Journals</span>
+				<span>Journals</span>
 			</Link>
 
 			<Link to='/analytics' className={`mobile-nav-item ${isActive('/analytics') ? 'active' : ''}`}>
