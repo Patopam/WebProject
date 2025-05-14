@@ -128,15 +128,13 @@ export default function EmotionChart() {
 		<Box
 			sx={{
 				width: '100%',
-				minHeight: '420px',
 				background: '#E3E9CF',
 				borderRadius: '1rem',
 				p: { xs: 2, sm: 3 },
 				boxSizing: 'border-box',
 				display: 'flex',
 				flexDirection: 'column',
-				gap: 2,
-				overflow: 'visible',
+				gap: 3,
 			}}
 		>
 			<Typography variant='h4' sx={styleText.Titulo}>
@@ -165,8 +163,24 @@ export default function EmotionChart() {
 				availableYears={[2023, 2024, 2025]}
 			/>
 
-			<Box sx={{ width: '100%', minHeight: '600px', height: 'auto' }}>
-				<ResponsiveContainer width='100%' height={isMobile ? 600 : 700}>
+			<Box
+				sx={{
+					width: '100%',
+					height:
+						period === 'week'
+							? isMobile
+								? 400
+								: 500
+							: period === 'month'
+							? isMobile
+								? 500
+								: 600
+							: isMobile
+							? 550
+							: 650,
+				}}
+			>
+				<ResponsiveContainer width='100%' height='100%'>
 					{period === 'week' && (
 						<LineChart data={filteredData}>
 							<CartesianGrid strokeDasharray='3 3' />
