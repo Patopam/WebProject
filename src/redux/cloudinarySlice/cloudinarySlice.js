@@ -6,7 +6,7 @@ export const uploadImageToCloudinary = createAsyncThunk('cloudinary/uploadImage'
 	const cloudName = 'dwkycobbx'; // Tu cloud_name de Cloudinary
 
 	// Usar el preset correcto que está configurado como unsigned en Cloudinary
-	const uploadPreset = 'my_unsigned_preset'; // Tu upload_preset creado en Cloudinary
+	const uploadPreset = 'hq5g0i7u'; // Tu upload_preset creado en Cloudinary
 
 	// Creamos un FormData nuevo
 	const formData = new FormData();
