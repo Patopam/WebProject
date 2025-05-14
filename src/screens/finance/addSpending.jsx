@@ -30,6 +30,7 @@ const AddSpending = () => {
       category: category,
       description: description,
     });
+    navigate(-1);
   };
   return (
     <div style={container}>
