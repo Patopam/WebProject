@@ -1,7 +1,19 @@
-import React from "react";
+import React, { use } from "react";
 import { AttachMoney } from "@mui/icons-material";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { fetchSpends } from "../../services/firebaseUtils";
+const ExpensesDay = ({ data }) => {
+  const [Data, setData] = useState();
+  const [Loading, setLoading] = useState(true);
+  const id = useSelector((state) => state.userId.id);
 
-const ExpensesDay = () => {
+  useEffect(() => {
+    fetchSpends({ uid: id })
+      .then((Spends) => setData([...Spends]))
+      .finally(() => setLoading(false));
+  }, []);
+
   const containerStyle = {
     display: "flex",
     flexDirection: "column",
@@ -79,42 +91,43 @@ const ExpensesDay = () => {
     textOverflow: "ellipsis",
   };
 
-  const data = [
-    { spend: "Coffee", price: "$2.000", category: "Food" },
-    { spend: "Cinema", price: "$30.000", category: "Experien..." },
-    { spend: "Burger", price: "$12.000", category: "Food" },
-    { spend: "Subway", price: "$8.500", category: "Transport" },
-  ];
-
   return (
-    <div style={containerStyle}>
-      <div style={headerStyle}>
-        <div style={headerLeftStyle}>
-          <div style={iconContainerStyle}>
-            <AttachMoney style={{ fontSize: "24px", color: "#333" }} />
+    <div>
+      {Loading ? (
+        <p>Loading...</p>
+      ) : (
+        <div style={containerStyle}>
+          <div style={headerStyle}>
+            <div style={headerLeftStyle}>
+              <div style={iconContainerStyle}>
+                <AttachMoney style={{ fontSize: "24px", color: "#333" }} />
+              </div>
+              <div style={headerTitleStyle}>Expenses of the day</div>
+            </div>
           </div>
-          <div style={headerTitleStyle}>Expenses of the day</div>
-        </div>
-      </div>
 
-      <table style={tableStyle}>
-        <thead>
-          <tr>
-            <th style={thStyle}>Spend</th>
-            <th style={thStyle}>Price</th>
-            <th style={thStyle}>Category</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((item, index) => (
-            <tr key={index}>
-              <td style={tdStyle}>{item.spend}</td>
-              <td style={tdStyle}>{item.price}</td>
-              <td style={tdStyle}>{item.category}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+          <table style={tableStyle}>
+            <thead>
+              <tr>
+                <th style={thStyle}>Spend</th>
+                <th style={thStyle}>Price</th>
+                <th style={thStyle}>Category</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Data.map((item) => (
+                <tr key={item.id}>
+                  <td style={tdStyle}>
+                    {item.date?.toDate().toLocaleDateString()}
+                  </td>
+                  <td style={tdStyle}>{item.price}</td>
+                  <td style={tdStyle}>{item.category}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 };

@@ -15,10 +15,11 @@ import "./style.css";
 import { useEffect, useState } from "react";
 import { obtenerUsuario } from "../../utils/utils";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setDataSpends } from "../../redux/DataSlice/DataSpends";
+import { fetchSpends } from "../../services/firebaseUtils";
 function Dashboard() {
   const id = useSelector((state) => state.userId.id);
-  console.log(id);
 
   let navigate = useNavigate();
   const goLogin = () => {
@@ -81,7 +82,7 @@ function Dashboard() {
         {/* Bottom row with expenses table on left and emotion week on right */}
         <div className="dashboard-bottom-row">
           <div className="expenses-container">
-            <ExpensesTable data={expensesData} dashboard={true} />
+            <ExpensesTable dashboard={true} />
           </div>
           <div className="emotion-container">
             <EmotionWeek dashboard={true} />
