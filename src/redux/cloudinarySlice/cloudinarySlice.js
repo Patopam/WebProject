@@ -1,19 +1,15 @@
-// cloudinarySlice.js - Corregido para upload_preset
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-// Thunk para subir imágenes a Cloudinary (corregido)
+// Thunk para subir imágenes a Cloudinary
 export const uploadImageToCloudinary = createAsyncThunk('cloudinary/uploadImage', async (file, { rejectWithValue }) => {
-	const cloudName = 'dwkycobbx'; // Tu cloud_name de Cloudinary
+	const cloudName = 'dwkycobbx';
 
-	// Usar el preset correcto que está configurado como unsigned en Cloudinary
-	const uploadPreset = 'my_unsigned_preset'; // Tu upload_preset creado en Cloudinary
+	const uploadPreset = 'my_unsigned_preset';
 
-	// Creamos un FormData nuevo
 	const formData = new FormData();
 	formData.append('file', file);
 	formData.append('upload_preset', uploadPreset);
 
-	// También es buena práctica agregar un timestamp para evitar problemas de caché
 	formData.append('timestamp', Math.floor(Date.now() / 1000).toString());
 
 	try {
@@ -26,7 +22,6 @@ export const uploadImageToCloudinary = createAsyncThunk('cloudinary/uploadImage'
 		if (!response.ok) {
 			const errorData = await response.json();
 			console.error('Error de Cloudinary:', errorData);
-			// Extraemos el mensaje de error de forma más robusta
 			const errorMessage =
 				errorData.error?.message ||
 				(typeof errorData.error === 'string' ? errorData.error : 'Error al subir la imagen');
@@ -90,21 +85,17 @@ const cloudinarySlice = createSlice({
 			})
 			.addCase(uploadImageToCloudinary.rejected, (state, action) => {
 				state.isLoading = false;
-				// Aseguramos que error sea siempre una cadena
 				state.error = typeof action.payload === 'string' ? action.payload : 'Error desconocido al subir la imagen';
 			});
 	},
 });
 
-// Exportar acciones
 export const { addImage, removeImage, clearImages, clearError } = cloudinarySlice.actions;
 
-// Exportar selectores
 export const selectCloudinaryImages = (state) => state.cloudinary.images;
 export const selectIsUploading = (state) => state.cloudinary.isLoading;
 export const selectCloudinaryError = (state) => state.cloudinary.error;
 export const selectLastUploadedUrl = (state) => state.cloudinary.lastUploadedUrl;
 export const selectCurrentUpload = (state) => state.cloudinary.currentUpload;
 
-// Exportar reducer
 export default cloudinarySlice.reducer;

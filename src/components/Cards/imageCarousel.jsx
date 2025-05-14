@@ -16,7 +16,6 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 
-// Importamos las acciones y selectores de Redux
 import {
 	uploadImageToCloudinary,
 	removeImage,
