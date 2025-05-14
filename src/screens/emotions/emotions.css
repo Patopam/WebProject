@@ -1,3 +1,4 @@
+/* Estilos base (que ya existen) */
 .emotions-container {
 	display: flex;
 	height: 100vh;
@@ -26,6 +27,15 @@
 	gap: 0.5rem;
 }
 
+/* Nuevo estilo para iconos móviles encima del header */
+.emotions-mobile-icons {
+	display: flex;
+	gap: 0.5rem;
+	justify-content: flex-end;
+	margin-bottom: 1rem;
+	transition: opacity 0.3s ease; /* Añadido para suavizar la transición */
+}
+
 .emotions-main-grid {
 	display: grid;
 	grid-template-columns: 2fr 1fr;
@@ -44,8 +54,96 @@
 	gap: 1.5rem;
 }
 
-@media (max-width: 1024px) {
+/* ===== RESPONSIVE STYLES ===== */
+
+/* Tablet (iPad) - 768px a 1024px */
+@media screen and (max-width: 1024px) {
+	.emotions-container {
+		flex-direction: column;
+	}
+
+	.emotions-content {
+		padding: 1.5rem;
+		padding-bottom: 90px; /* Espacio para la barra de navegación móvil */
+	}
+
 	.emotions-main-grid {
 		grid-template-columns: 1fr;
+		gap: 1.5rem;
+	}
+
+	/* Estilos específicos para los iconos móviles */
+	.emotions-mobile-icons {
+		padding: 0.5rem 0;
+	}
+}
+
+/* Móvil Grande - 426px a 767px */
+@media screen and (max-width: 767px) {
+	.emotions-content {
+		padding: 1rem;
+		padding-bottom: 80px;
+	}
+
+	.emotions-header {
+		flex-direction: column;
+		align-items: flex-start;
+		margin-bottom: 1.5rem;
+	}
+
+	.emotions-main-grid {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.emotions-left,
+	.emotions-right {
+		width: 100%;
+	}
+}
+
+@media screen and (max-width: 425px) {
+	.emotions-content {
+		padding: 0.75rem;
+		padding-bottom: 80px;
+	}
+
+	.emotions-header {
+		margin-bottom: 1rem;
+	}
+
+	.emotions-main-grid {
+		flex-direction: column;
+		gap: 1rem;
+	}
+}
+
+/* Móvil Pequeño - < 426px */
+@media screen and (max-width: 425px) {
+	.emotions-content {
+		padding: 0.75rem;
+		padding-bottom: 80px; /* Espacio para la barra de navegación móvil */
+	}
+
+	.emotions-header {
+		margin-bottom: 1rem;
+	}
+
+	/* Ajuste de los iconos móviles para pantallas muy pequeñas */
+	.emotions-mobile-icons {
+		margin-bottom: 0.5rem;
+	}
+
+	/* Ajustes para el carrusel en pantallas pequeñas */
+	.journal-carousel {
+		margin-top: 0.5rem;
+	}
+}
+
+/* Ajuste para asegurar que el menú lateral no se muestre en móvil/tablet */
+@media screen and (max-width: 1024px) {
+	.menu-container {
+		display: none;
 	}
 }

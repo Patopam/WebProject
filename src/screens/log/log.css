@@ -1,7 +1,61 @@
+/* Base styles */
 .Container-log {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 98vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 98vh;
+	width: 100%;
+	max-width: 500px;
+	margin: 0 auto;
+	padding: 2rem;
+	box-sizing: border-box;
+	font-family: 'Manrope', sans-serif;
+}
+
+/* Form styles */
+.Container-log form {
+	width: 100%;
+}
+
+/* Responsive styles */
+
+/* Tablet (iPad) - 768px to 1024px */
+@media screen and (max-width: 1024px) {
+	.Container-log {
+		padding: 1.5rem;
+		height: 100vh;
+	}
+}
+
+/* Mobile Large - 426px to 767px */
+@media screen and (max-width: 767px) {
+	.Container-log {
+		padding: 1rem;
+		justify-content: flex-start;
+		padding-top: 3rem;
+	}
+
+	/* Stack button container for mobile */
+	.Container-log .MuiStack-root {
+		width: 100%;
+	}
+
+	/* Adjust button widths for mobile */
+	.Container-log button {
+		width: 100%;
+	}
+}
+
+/* Mobile Small - < 426px */
+@media screen and (max-width: 425px) {
+	.Container-log {
+		padding: 0.75rem;
+		padding-top: 2rem;
+	}
+
+	/* Additional spacing adjustments */
+	.Container-log .MuiStack-root {
+		gap: 1rem !important;
+	}
 }

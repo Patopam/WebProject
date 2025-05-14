@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Typography, TextField, Button, IconButton, styled } from '@mui/material';
 import SentimentSatisfiedOutlinedIcon from '@mui/icons-material/SentimentSatisfiedOutlined';
 import OpenInFullOutlinedIcon from '@mui/icons-material/OpenInFullOutlined';
@@ -8,7 +8,7 @@ import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from 'react-router-dom';
 import { addJournal } from '../../services/firebaseUtils';
 import { useSelector } from 'react-redux';
-
+import './journalForms.css';
 export default function JournalForm({ compact = false }) {
 	const navigate = useNavigate();
 	const id = useSelector((state) => state.userId.id);
@@ -16,6 +16,24 @@ export default function JournalForm({ compact = false }) {
 	const [entryTitle, setEntryTitle] = useState('');
 	const [selectedFeeling, setSelectedFeeling] = useState(null);
 	const [selectedTags, setSelectedTags] = useState([]);
+	const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
+
+	// Detectar cambios de tamaño de pantalla
+	useEffect(() => {
+		const handleResize = () => {
+			setIsMobile(window.innerWidth <= 767);
+		};
+
+		// Inicializar
+		handleResize();
+
+		// Añadir listener para cambios de tamaño
+		window.addEventListener('resize', handleResize);
+
+		return () => {
+			window.removeEventListener('resize', handleResize);
+		};
+	}, []);
 
 	const emojis = [
 		{ emoji: '😄', value: 'happy' },
@@ -79,29 +97,33 @@ export default function JournalForm({ compact = false }) {
 	};
 
 	return (
-		<JournalContainer compact={compact}>
-			<HeaderSection>
-				<TitleGroup>
-					<IconCircle>
-						<SentimentSatisfiedOutlinedIcon sx={{ color: '#000', fontSize: 20 }} />
+		<JournalContainer compact={compact} className='journal-container'>
+			<HeaderSection className='header-section'>
+				<TitleGroup className='title-group'>
+					<IconCircle className='icon-circle'>
+						<SentimentSatisfiedOutlinedIcon sx={{ color: '#000', fontSize: isMobile ? 18 : 20 }} />
 					</IconCircle>
-					<Typography sx={{ fontSize: 18, fontWeight: 600 }}>Write what you feel</Typography>
+					<Typography sx={{ fontSize: isMobile ? 16 : 18, fontWeight: 600 }}>Write what you feel</Typography>
 				</TitleGroup>
 				<IconButton onClick={toggleExpand}>
 					{compact ? <OpenInFullOutlinedIcon sx={{ color: '#000' }} /> : <CloseFullscreenIcon sx={{ color: '#000' }} />}
 				</IconButton>
 			</HeaderSection>
 
-			<FeelingsSection>
-				<Typography variant='h3' sx={{ fontSize: 16, marginBottom: '12px', fontWeight: 600 }}>
+			<FeelingsSection className='feelings-section'>
+				<Typography
+					variant='h3'
+					sx={{ fontSize: isMobile ? 14 : 16, marginBottom: isMobile ? '8px' : '12px', fontWeight: 600 }}
+				>
 					How do you feel today?
 				</Typography>
-				<EmojiWrapper>
+				<EmojiWrapper className='emoji-wrapper'>
 					{emojis.map((item, index) => (
 						<EmojiButton
 							key={index}
 							selected={selectedFeeling?.emoji === item.emoji}
 							onClick={() => setSelectedFeeling(item)}
+							className='emoji-button'
 						>
 							{item.emoji}
 						</EmojiButton>
@@ -109,15 +131,20 @@ export default function JournalForm({ compact = false }) {
 				</EmojiWrapper>
 			</FeelingsSection>
 
-			<TagWrapper>
+			<TagWrapper className='tag-wrapper'>
 				{tags.map((tag, index) => (
-					<TagButton key={index} selected={selectedTags.includes(tag)} onClick={() => handleTagClick(tag)}>
+					<TagButton
+						key={index}
+						selected={selectedTags.includes(tag)}
+						onClick={() => handleTagClick(tag)}
+						className='tag-button'
+					>
 						{tag}
 					</TagButton>
 				))}
 			</TagWrapper>
 
-			<EntrySection compact={compact}>
+			<EntrySection compact={compact} className='entry-section'>
 				<EntryTitle
 					fullWidth
 					variant='standard'
@@ -125,26 +152,28 @@ export default function JournalForm({ compact = false }) {
 					value={entryTitle}
 					onChange={(e) => setEntryTitle(e.target.value)}
 					InputProps={{ disableUnderline: true }}
+					className='entry-title'
 				/>
 				<EntryTextArea
 					fullWidth
 					multiline
 					placeholder='Write here...'
-					minRows={compact ? 5 : 10}
+					minRows={compact ? 5 : isMobile ? 8 : 10}
 					value={entryText}
 					onChange={(e) => setEntryText(e.target.value)}
 					variant='outlined'
 					compact={compact}
+					className='entry-textarea'
 				/>
 			</EntrySection>
 
 			<SaveButtonWrapper>
-				<SaveButton onClick={send}>
-					<IconCircle bgcolor='#f6d776'>
+				<SaveButton onClick={send} className='save-button'>
+					<IconCircle bgcolor='#f6d776' className='icon-circle'>
 						{compact ? (
-							<TurnedInNotOutlinedIcon sx={{ color: '#000', fontSize: 20 }} />
+							<TurnedInNotOutlinedIcon sx={{ color: '#000', fontSize: isMobile ? 18 : 20 }} />
 						) : (
-							<SendIcon sx={{ color: '#000', fontSize: 20 }} />
+							<SendIcon sx={{ color: '#000', fontSize: isMobile ? 18 : 20 }} />
 						)}
 					</IconCircle>
 					<span>Save</span>
