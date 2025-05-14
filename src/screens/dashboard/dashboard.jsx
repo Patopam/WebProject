@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import AddButton from '../../components/Buttons/add';
 import Header from '../../components/Header/header';
@@ -128,17 +129,18 @@ function Dashboard() {
           <GoalProgressCard />
         </div>
 
-				{/* Bottom row with expenses table on left and emotion week on right */}
-				<div className='dashboard-bottom-row'>
-					<div className='expenses-container'>
-						<ExpensesTable data={expensesData} dashboard={true} />
-					</div>
-					<div className='emotion-container'>
-						<EmotionWeek dashboard={true} />
-					</div>
-				</div>
-			</div>
-
+        {/* Bottom row with expenses table on left and emotion week on right */}
+        <div className="dashboard-bottom-row">
+          <div className="expenses-container">
+            <ExpensesTable dashboard={true} />
+          </div>
+          <div className="emotion-container">
+            <EmotionWeek dashboard={true} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 			{/* Mostrar la barra de navegación móvil solo en pantallas pequeñas y medianas */}
 			{isMobile && <MobileNavBar />}
 		</div>
