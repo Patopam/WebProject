@@ -64,12 +64,23 @@ function Dashboard() {
 			{!isMobile && <Menu />}
 
 			<div className='dashboard-content'>
-				<div className='dashboard-header'>
-					<Header Nombre={Nombre} subtitle='How are you feeling today?' emoji='😊' />
-					<div className='dashboard-icons'>
+				{/* Mobile/iPad icons above header */}
+				{isMobile && (
+					<div className='dashboard-mobile-icons'>
 						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
 						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={goLogin} />
 					</div>
+				)}
+
+				<div className='dashboard-header'>
+					<Header Nombre={Nombre} subtitle='How are you feeling today?' emoji='😊' />
+					{/* Desktop icons - only show on non-mobile */}
+					{!isMobile && (
+						<div className='dashboard-icons'>
+							<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
+							<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={goLogin} />
+						</div>
+					)}
 				</div>
 
 				<div className='dashboard-buttons'>
