@@ -143,7 +143,6 @@
 	}
 }
 
-/* Ocultar los botones si el navbar está visible (por ejemplo, cuando está en la parte inferior) */
 @media screen and (max-width: 1024px) {
 	.mobile-navbar + .journal-mobile-icons {
 		display: none;
