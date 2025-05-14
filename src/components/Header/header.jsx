@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 
-const Header = ({ Nombre, subtitle = '', emoji = '😊', showEmoji = true }) => {
+const Header = ({ Nombre, subtitle = '', emoji = '', showEmoji = true }) => {
 	return (
 		<Box sx={{ display: 'flex', flexDirection: 'column' }}>
 			<Typography
