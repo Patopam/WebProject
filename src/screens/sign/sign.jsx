@@ -14,6 +14,7 @@ import { saveUserData } from "../../services/firebaseUtils";
 import { auth } from "../../services/firebase";
 import { useDispatch } from "react-redux";
 import { setUserid } from "../../redux/UserSlice/UserSlice";
+import { setUserNombre } from "../../redux/UserSlice/NombreSlice";
 import "./sign.css";
 
 function Sign() {
@@ -36,9 +37,8 @@ function Sign() {
           name: user.displayName,
           email: user.email,
         });
-
+        dispatch(setUserid(user.uid), setUserNombre(user.displayName));
         Navigate("/dashboard");
-        console.log(user);
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -62,7 +62,7 @@ function Sign() {
           email: Correo,
         });
 
-        dispatch(setUserid(user.uid));
+        dispatch(setUserid(user.uid), setUserNombre(Usuario));
         console.log("UID guardado en Redux desde registro:", user.uid);
 
         Navigate("/log");

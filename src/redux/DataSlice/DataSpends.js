@@ -12,7 +12,7 @@ export const DataSpendsSlice = createSlice({
       state.data = action.payload;
     },
     clearUser: (state) => {
-      state.user = null;
+      state.data = null;
     },
   },
 });

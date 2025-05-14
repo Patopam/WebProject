@@ -17,18 +17,22 @@ import { obtenerUsuario } from "../../utils/utils";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setDataSpends } from "../../redux/DataSlice/DataSpends";
-import { fetchSpends } from "../../services/firebaseUtils";
+import { fetchJournal } from "../../services/firebaseUtils";
 function Dashboard() {
+  const [Data, setData] = useState();
+  const [Loading, setLoading] = useState(true);
   const id = useSelector((state) => state.userId.id);
+  const NombreU = useSelector((state) => state.NombreU.Nombre);
+  useEffect(() => {
+    fetchJournal({ uid: id })
+      .then((Emotion) => setData([...Emotion]))
+      .finally(() => setLoading(false));
+  }, []);
 
   let navigate = useNavigate();
   const goLogin = () => {
     navigate("/log");
   };
-  const [Nombre, setNombre] = useState("Evan");
-  useEffect(() => {
-    setNombre(obtenerUsuario());
-  }, []);
 
   const handleJournalClick = () => {
     console.log("Daily journal clicked");
@@ -49,7 +53,7 @@ function Dashboard() {
       <div className="dashboard-content">
         <div className="dashboard-header">
           <Header
-            Nombre={Nombre}
+            Nombre={NombreU}
             subtitle="How are you feeling today?"
             emoji="😊"
           />
@@ -84,9 +88,13 @@ function Dashboard() {
           <div className="expenses-container">
             <ExpensesTable dashboard={true} />
           </div>
-          <div className="emotion-container">
-            <EmotionWeek dashboard={true} />
-          </div>
+          {Loading ? (
+            <p> Loading</p>
+          ) : (
+            <div className="emotion-container">
+              <EmotionWeek dashboard={true} Data={Data} />
+            </div>
+          )}
         </div>
       </div>
     </div>

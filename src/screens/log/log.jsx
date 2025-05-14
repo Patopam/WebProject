@@ -9,9 +9,11 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from "firebase/auth";
+import { saveUserData } from "../../services/firebaseUtils";
 import Inputs from "../../components/Inputs/Inputs";
 import { useDispatch } from "react-redux";
 import { setUserid } from "../../redux/UserSlice/UserSlice";
+import { setUserNombre } from "../../redux/UserSlice/NombreSlice";
 import "./log.css";
 function Log() {
   const dispatch = useDispatch();
@@ -27,7 +29,14 @@ function Log() {
         const token = credential.accessToken;
 
         const user = result.user;
+        await saveUserData({
+          uid: user.uid,
+          name: user.displayName,
+          email: user.email,
+        });
+
         dispatch(setUserid(user.uid));
+        dispatch(setUserNombre(user.displayName));
         console.log(user);
 
         Navigate("/dashboard");
@@ -35,6 +44,7 @@ function Log() {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        console.log(errorMessage);
       });
   };
   const Summit = (e) => {
@@ -43,15 +53,13 @@ function Log() {
       .then((userCredential) => {
         const user = userCredential.user;
 
-        // ✅ Guardar en Redux
         dispatch(setUserid(user.uid));
-
-        // ✅ Guardar también en localStorage
+        dispatch(setUserNombre(user.displayName));
+        console.log(user);
         localStorage.setItem("uid", user.uid);
 
         console.log("UID guardado en localStorage:", user.uid);
 
-        // ✅ Redirigir
         Navigate("/dashboard");
       })
       .catch((error) => {

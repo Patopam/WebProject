@@ -31,6 +31,9 @@ const AddGoal = () => {
     });
     navigate(-1);
   };
+  const handleClose = () => {
+    navigate(-1);
+  };
   return (
     <div style={container}>
       <div style={header}>
