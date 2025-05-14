@@ -1,3 +1,4 @@
+/* Estilos base (que ya existen) */
 .dashboard-container {
 	display: flex;
 	height: 100vh;
@@ -13,7 +14,7 @@
 	flex-direction: column;
 	overflow-y: auto;
 	max-width: 100%;
-	margin: 0 auto; /* Centrado en la pantalla */
+	margin: 0 auto;
 }
 
 .dashboard-header {
@@ -49,4 +50,101 @@
 	grid-template-columns: 2fr 1.2fr;
 	gap: 2rem;
 	align-items: start;
+}
+
+/* ===== RESPONSIVE STYLES ===== */
+
+/* Tablet (iPad) - 768px a 1024px */
+@media screen and (max-width: 1024px) {
+	.dashboard-container {
+		flex-direction: column;
+	}
+
+	.dashboard-content {
+		padding: 1.5rem;
+		padding-bottom: 90px; /* Espacio para la barra de navegación móvil */
+	}
+
+	.dashboard-cards-row {
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1rem;
+	}
+
+	.dashboard-bottom-row {
+		grid-template-columns: 1fr;
+		gap: 1.5rem;
+	}
+
+	.dashboard-buttons {
+		flex-wrap: wrap;
+	}
+}
+
+/* Móvil Grande - 426px a 767px */
+@media screen and (max-width: 767px) {
+	.dashboard-content {
+		padding: 1rem;
+		padding-bottom: 80px; /* Espacio para la barra de navegación móvil */
+	}
+
+	.dashboard-header {
+		flex-direction: column;
+		align-items: flex-start;
+		margin-bottom: 1.5rem;
+	}
+
+	.dashboard-icons {
+		margin-top: 1rem;
+		align-self: flex-end;
+	}
+
+	.dashboard-cards-row {
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem;
+	}
+
+	.dashboard-buttons {
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+}
+
+/* Móvil Pequeño - < 426px */
+@media screen and (max-width: 425px) {
+	.dashboard-content {
+		padding: 0.75rem;
+		padding-bottom: 80px; /* Espacio para la barra de navegación móvil */
+	}
+
+	.dashboard-cards-row {
+		grid-template-columns: 1fr;
+		gap: 1rem;
+	}
+
+	.dashboard-bottom-row {
+		gap: 1rem;
+	}
+
+	.dashboard-header {
+		margin-bottom: 1rem;
+	}
+}
+
+/* Estilos para ajustar las tablas en responsive */
+@media screen and (max-width: 767px) {
+	.expenses-container table {
+		font-size: 0.9rem;
+	}
+
+	.expenses-container th,
+	.expenses-container td {
+		padding: 0.5rem;
+	}
+}
+
+/* Ajuste para asegurar que el menú lateral no se muestre en móvil/tablet */
+@media screen and (max-width: 1024px) {
+	.menu-container {
+		display: none;
+	}
 }

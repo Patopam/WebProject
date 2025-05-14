@@ -77,8 +77,8 @@
 	}
 }
 
-/* Esconde la barra de navegación móvil en pantallas más grandes */
-@media (min-width: 768px) {
+/* Solo mostrar la barra de navegación móvil en dispositivos móviles y tablets */
+@media (min-width: 1025px) {
 	.mobile-navbar {
 		display: none;
 	}
