@@ -5,10 +5,15 @@ import Header2 from '../../components/Header/header2';
 import CustomIconButton from '../../components/Buttons/icon';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
+import MobileNavBar from '../../components/Menu/mobileNavBar'; // Importamos la barra de navegación móvil
 import { useNavigate } from 'react-router-dom';
 import './settings.css';
 
 function Settings() {
+	// Detectar si estamos en móvil
+	const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
+	const [showLogoutButton, setShowLogoutButton] = useState(true);
+
 	// Initialize state from localStorage or with default values
 	const [firstName, setFirstName] = useState(() => {
 		return localStorage.getItem('firstName') || 'Name';
@@ -31,6 +36,51 @@ function Settings() {
 	});
 
 	const navigate = useNavigate();
+
+	// Use effect para manejar el responsive y la visualización del botón de logout
+	useEffect(() => {
+		// Función para actualizar el estado de isMobile
+		const handleResize = () => {
+			setIsMobile(window.innerWidth <= 1024);
+		};
+
+		// Agregar event listener para el cambio de tamaño
+		window.addEventListener('resize', handleResize);
+
+		// Configurar el observer para la barra de navegación móvil
+		const handleIntersection = (entries) => {
+			// Si la navbar está visible (intersecting), ocultar el botón de logout
+			if (entries[0].isIntersecting) {
+				setShowLogoutButton(false);
+			} else {
+				// Si la navbar no es visible, mostrar el botón
+				setShowLogoutButton(true);
+			}
+		};
+
+		// Crear un observador para la barra de navegación móvil si estamos en móvil
+		if (isMobile) {
+			setTimeout(() => {
+				const navbarElement = document.querySelector('.mobile-navbar');
+				if (navbarElement) {
+					const observer = new IntersectionObserver(handleIntersection, {
+						threshold: 0.1, // Disparar cuando al menos el 10% de la navbar es visible
+					});
+					observer.observe(navbarElement);
+
+					// Este timeout es necesario para asegurarnos de que el componente esté montado
+					return () => {
+						observer.disconnect();
+					};
+				}
+			}, 100);
+		}
+
+		// Limpiar event listener cuando el componente se desmonta
+		return () => {
+			window.removeEventListener('resize', handleResize);
+		};
+	}, [isMobile]);
 
 	// Save current field values to state and localStorage
 	const handleSave = () => {
@@ -57,16 +107,29 @@ function Settings() {
 
 	return (
 		<div className='settings-container'>
-			<Menu />
+			{/* Mostrar el menú lateral solo en pantallas grandes */}
+			{!isMobile && <Menu />}
+
 			<div className='settings-content'>
+				{/* Añadir el botón de logout en pantallas móviles */}
+				{isMobile && showLogoutButton && (
+					<div className='settings-mobile-logout'>
+						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={handleLogout} />
+					</div>
+				)}
+
 				<div className='settings-header'>
 					<Header2 title='Settings' subtitle='User profile' showEmoji={false} />
+
+					{/* Mostrar el botón de logout en dispositivos de escritorio */}
+					{isMobile && (
+						<div className='settings-icons'>
+							<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={handleLogout} />
+						</div>
+					)}
 				</div>
 
 				<div className='profile-section'>
-					<div className='profile-avatar'>
-						<img src='/api/placeholder/80/80' alt='User Profile' className='avatar-image' />
-					</div>
 					<div className='profile-info'>
 						<h2 className='profile-name'>
 							{firstName} {lastName}
@@ -134,6 +197,9 @@ function Settings() {
 					</button>
 				</div>
 			</div>
+
+			{/* Mostrar la barra de navegación móvil solo en pantallas pequeñas y medianas */}
+			{isMobile && <MobileNavBar />}
 		</div>
 	);
 }
