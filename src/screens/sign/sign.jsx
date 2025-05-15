@@ -1,3 +1,4 @@
+
 import { Typography, Container, Stack, Box } from "@mui/material";
 import BotonStart from "../../components/Buttons/botonesStart";
 import BotonStartGoogle from "../../components/Buttons/botonStartGoogle";
@@ -151,6 +152,7 @@ function Sign() {
       </Container>
     </>
   );
+
 }
 
 export default Sign;

@@ -26,6 +26,15 @@
 	gap: 0.5rem;
 }
 
+/* Nuevo estilo para iconos móviles encima del header */
+.finance-mobile-icons {
+	display: flex;
+	gap: 0.5rem;
+	justify-content: flex-end;
+	margin-bottom: 1rem;
+	transition: opacity 0.3s ease; /* Añadido para suavizar la transición */
+}
+
 .finance-layout {
 	display: flex;
 	flex-direction: column;
@@ -63,8 +72,108 @@
 	flex-direction: column;
 	gap: 1.5rem;
 }
+
 .finance-buttons {
 	display: flex;
 	gap: 1rem;
 	margin-bottom: 2rem;
+}
+
+/* ===== RESPONSIVE STYLES ===== */
+
+/* Tablet (iPad) - 768px a 1024px */
+@media screen and (max-width: 1024px) {
+	.finance-container {
+		flex-direction: column;
+	}
+
+	.finance-content {
+		padding: 1.5rem;
+		padding-bottom: 90px; /* Espacio para la barra de navegación móvil */
+	}
+
+	.finance-main {
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
+	.finance-left-column,
+	.finance-right-column {
+		width: 100%;
+	}
+
+	.finance-buttons {
+		flex-wrap: wrap;
+	}
+
+	/* Estilos específicos para los iconos móviles */
+	.finance-mobile-icons {
+		padding: 0.5rem 0;
+	}
+}
+
+/* Móvil Grande - 426px a 767px */
+@media screen and (max-width: 767px) {
+	.finance-content {
+		padding: 1rem;
+		padding-bottom: 80px;
+	}
+
+	.finance-header {
+		flex-direction: column;
+		align-items: flex-start;
+		margin-bottom: 1.5rem;
+	}
+
+	.finance-buttons {
+		flex-direction: column;
+		gap: 0.75rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.finance-main {
+		gap: 1rem;
+	}
+
+	.finance-left-column {
+		gap: 1rem;
+	}
+
+	.stats-cards {
+		gap: 1rem;
+	}
+}
+
+/* Móvil Pequeño - < 426px */
+@media screen and (max-width: 425px) {
+	.finance-content {
+		padding: 0.75rem;
+		padding-bottom: 80px; /* Espacio para la barra de navegación móvil */
+	}
+
+	.finance-header {
+		margin-bottom: 1rem;
+	}
+
+	/* Ajuste de los iconos móviles para pantallas muy pequeñas */
+	.finance-mobile-icons {
+		margin-bottom: 0.5rem;
+	}
+
+	/* Ajustes para las tablas en pantallas pequeñas */
+	.finance-left-column table {
+		font-size: 0.9rem;
+	}
+
+	.finance-left-column th,
+	.finance-left-column td {
+		padding: 0.5rem;
+	}
+}
+
+/* Ajuste para asegurar que el menú lateral no se muestre en móvil/tablet */
+@media screen and (max-width: 1024px) {
+	.menu-container {
+		display: none;
+	}
 }

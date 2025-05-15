@@ -1,3 +1,4 @@
+
 import React from "react";
 import AddButton from "../../components/Buttons/add";
 import Header from "../../components/Header/header";
@@ -18,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setDataSpends } from "../../redux/DataSlice/DataSpends";
 import { fetchJournal } from "../../services/firebaseUtils";
+
 function Dashboard() {
   const [Data, setData] = useState();
   const [Loading, setLoading] = useState(true);
@@ -34,10 +36,10 @@ function Dashboard() {
     navigate("/log");
   };
 
-  const handleJournalClick = () => {
-    console.log("Daily journal clicked");
-    navigate("/journal/write");
-  };
+	const handleJournalClick = () => {
+		console.log('Daily journal clicked');
+		navigate('/journal/write');
+	};
 
   const handleSpendClick = () => {
     console.log("Add spend clicked");
@@ -71,6 +73,7 @@ function Dashboard() {
           </div>
         </div>
 
+
         <div className="dashboard-buttons">
           <AddButton onClick={handleJournalClick} text={"Daily journal"} />
           <AddButton onClick={handleSpendClick} text={"Add spend"} />
@@ -97,8 +100,16 @@ function Dashboard() {
           )}
         </div>
       </div>
+			{/* Mostrar la barra de navegación móvil solo en pantallas pequeñas y medianas */}
+
+{isMobile && <MobileNavBar />}
     </div>
   );
+=======
+
+			
+
+		
 }
 
 export default Dashboard;
