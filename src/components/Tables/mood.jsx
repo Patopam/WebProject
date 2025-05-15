@@ -42,7 +42,7 @@ export default function MoodTracker() {
 		if (!uid) return;
 		const fetchJournals = async () => {
 			try {
-				const snapshot = await getDocs(collection(db, `users/${uid}/journals`));
+				const snapshot = await getDocs(collection(db, `users/${uid}/journals`)); //firebase
 				const data = snapshot.docs.map((doc) => {
 					const item = doc.data();
 					const dateObj = item.date?.toDate?.() || new Date();
@@ -72,7 +72,7 @@ export default function MoodTracker() {
 		setMoodData(moodData.map((item) => (item.id === currentEditingItemId ? { ...item, mood: moodId } : item)));
 		setMoodSelectorOpen(false);
 	};
-
+	//finamic filter
 	const filterDataByTimeRange = () => {
 		const oneDay = 24 * 60 * 60 * 1000;
 		const oneWeekAgo = new Date(today.getTime() - 7 * oneDay);
@@ -101,7 +101,7 @@ export default function MoodTracker() {
 				return moodData;
 		}
 	};
-
+	//filter organitation
 	const organizeByMonth = (data) => {
 		const organized = {};
 		data.forEach((item) => {
