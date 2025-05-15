@@ -1,4 +1,3 @@
-
 import React from "react";
 import AddButton from "../../components/Buttons/add";
 import Header from "../../components/Header/header";
@@ -23,23 +22,71 @@ import { fetchJournal } from "../../services/firebaseUtils";
 function Dashboard() {
   const [Data, setData] = useState();
   const [Loading, setLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
+  const [showButtons, setShowButtons] = useState(true);
+
   const id = useSelector((state) => state.userId.id);
   const NombreU = useSelector((state) => state.NombreU.Nombre);
   useEffect(() => {
     fetchJournal({ uid: id })
       .then((Emotion) => setData([...Emotion]))
       .finally(() => setLoading(false));
-  }, []);
+
+    // Función para actualizar el estado de isMobile cuando cambia el tamaño de la ventana
+    const handleResize = () => {
+      const mobile = window.innerWidth <= 1024;
+      setIsMobile(mobile);
+      setShowButtons(!mobile); // Siempre mostrar botones en desktop
+    };
+
+    // Llamar handleResize una vez para inicializar correctamente
+    handleResize();
+
+    // Agregar event listener para el cambio de tamaño
+    window.addEventListener("resize", handleResize);
+
+    // Definir un punto de entrada para el observador de intersección
+    const handleIntersection = (entries) => {
+      // Si la navbar está visible (intersecting), ocultar los botones
+      if (entries[0].isIntersecting) {
+        setShowButtons(false);
+      } else {
+        // Si estamos en móvil pero la navbar no es visible, mostrar los botones
+        setShowButtons(isMobile);
+      }
+    };
+
+    // Crear un observador para la barra de navegación móvil
+    if (isMobile) {
+      const navbarElement = document.querySelector(".mobile-navbar");
+      if (navbarElement) {
+        const observer = new IntersectionObserver(handleIntersection, {
+          threshold: 0.1, // Disparar cuando al menos el 10% de la navbar es visible
+        });
+        observer.observe(navbarElement);
+
+        // Limpiar observador
+        return () => {
+          observer.disconnect();
+        };
+      }
+    }
+
+    // Limpiar event listener cuando el componente se desmonta
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [isMobile]);
 
   let navigate = useNavigate();
   const goLogin = () => {
     navigate("/log");
   };
 
-	const handleJournalClick = () => {
-		console.log('Daily journal clicked');
-		navigate('/journal/write');
-	};
+  const handleJournalClick = () => {
+    console.log("Daily journal clicked");
+    navigate("/journal/write");
+  };
 
   const handleSpendClick = () => {
     console.log("Add spend clicked");
@@ -51,15 +98,13 @@ function Dashboard() {
 
   return (
     <div className="dashboard-container">
-      <Menu />
+      {/* Mostrar el menú lateral solo en pantallas grandes */}
+      {!isMobile && <Menu />}
+
       <div className="dashboard-content">
-        <div className="dashboard-header">
-          <Header
-            Nombre={NombreU}
-            subtitle="How are you feeling today?"
-            emoji="😊"
-          />
-          <div className="dashboard-icons">
+        {/* Mobile/iPad icons above header - solo mostrar si showButtons es true */}
+        {isMobile && showButtons && (
+          <div className="dashboard-mobile-icons">
             <CustomIconButton
               icon={<AccountCircleIcon />}
               ariaLabel="user"
@@ -71,8 +116,26 @@ function Dashboard() {
               onClick={goLogin}
             />
           </div>
-        </div>
+        )}
 
+        <div className="dashboard-header">
+          <Header Nombre={NombreU} subtitle="How are you feeling today?" />
+          {/* Desktop icons - only show on non-mobile */}
+          {!isMobile && (
+            <div className="dashboard-icons">
+              <CustomIconButton
+                icon={<AccountCircleIcon />}
+                ariaLabel="user"
+                onClick={goSettings}
+              />
+              <CustomIconButton
+                icon={<LogoutIcon />}
+                ariaLabel="logout"
+                onClick={goLogin}
+              />
+            </div>
+          )}
+        </div>
 
         <div className="dashboard-buttons">
           <AddButton onClick={handleJournalClick} text={"Daily journal"} />
@@ -89,8 +152,9 @@ function Dashboard() {
         {/* Bottom row with expenses table on left and emotion week on right */}
         <div className="dashboard-bottom-row">
           <div className="expenses-container">
-            <ExpensesTable dashboard={true} />
+            <ExpensesTable data={expensesData} dashboard={true} />
           </div>
+
           {Loading ? (
             <p> Loading</p>
           ) : (
@@ -100,16 +164,11 @@ function Dashboard() {
           )}
         </div>
       </div>
-			{/* Mostrar la barra de navegación móvil solo en pantallas pequeñas y medianas */}
 
-{isMobile && <MobileNavBar />}
+      {/* Mostrar la barra de navegación móvil solo en pantallas pequeñas y medianas */}
+      {isMobile && <MobileNavBar />}
     </div>
   );
-=======
-
-			
-
-		
 }
 
 export default Dashboard;
