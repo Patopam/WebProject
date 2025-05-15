@@ -1,5 +1,3 @@
-// services/aiService.js
-
 export async function getMotivationalQuote() {
 	try {
 		const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -71,8 +69,6 @@ Do NOT include any explanation. Do NOT add text outside the JSON. Respond ONLY w
 		const data = await response.json();
 		const rawText = data?.choices?.[0]?.message?.content?.trim();
 
-		console.log(' Texto recibido de OpenAI:', rawText); // para debug
-
 		const jsonMatch = rawText?.match(/\{[\s\S]*\}/);
 		if (!jsonMatch) throw new Error('No valid JSON in OpenAI response');
 
@@ -81,9 +77,9 @@ Do NOT include any explanation. Do NOT add text outside the JSON. Respond ONLY w
 	} catch (error) {
 		console.error('Error fetching recommendation from OpenAI:', error);
 		return {
-			intro: 'La IA está descansando en este momento...',
-			title: 'Respira profundo',
-			description: 'Intenta más tarde cuando esté lista',
+			intro: 'The AI ​​is currently resting...',
+			title: 'Take a deep breath',
+			description: 'Please try again later when you are ready.',
 			imageKeyword: 'calm nature',
 		};
 	}
