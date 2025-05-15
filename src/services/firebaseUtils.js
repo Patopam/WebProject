@@ -20,19 +20,22 @@ export const addGoals = async ({ uid, startDate, endDate, price, description }) 
 		return;
 	}
 
-	try {
-		const GoalsRef = collection(doc(db, 'users', uid), 'Goals');
-		await addDoc(GoalsRef, {
-			startDate,
-			endDate,
-			price,
-			description,
-			date: serverTimestamp(),
-		});
-		console.log('Goal guardado correctamente');
-	} catch (error) {
-		console.error('Error guardando journal:', error);
-	}
+
+  try {
+    const GoalsRef = collection(doc(db, "users", uid), "Goals");
+    await addDoc(GoalsRef, {
+      startDate,
+      endDate,
+      price,
+      description,
+      date: serverTimestamp(),
+      status: "Procces",
+    });
+    console.log("Goal guardado correctamente");
+  } catch (error) {
+    console.error("Error guardando journal:", error);
+  }
+
 };
 
 export const addSpend = async ({ uid, startDate, category, price, description }) => {
@@ -106,4 +109,20 @@ export const fetchGoal = async ({ uid }) => {
 	} catch (error) {
 		console.error('Error cargando journals:', error);
 	}
+};
+
+export const fetchJournal = async ({ uid }) => {
+  if (!uid) return console.log("hola");
+
+  try {
+    const JournalRef = collection(doc(db, "users", uid), "journals");
+    const snapshot = await getDocs(JournalRef);
+    const Journal = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    return Journal;
+  } catch (error) {
+    console.error("Error cargando journals:", error);
+  }
 };

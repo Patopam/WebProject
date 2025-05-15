@@ -1,9 +1,98 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import SendIcon from '@mui/icons-material/Send';
-import CloseIcon from '@mui/icons-material/Close';
-import { addGoals } from '../../services/firebaseUtils';
-import { useSelector } from 'react-redux';
+
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import EditInput from "../../components/Inputs/EditInput";
+import SendIcon from "@mui/icons-material/Send";
+import CloseIcon from "@mui/icons-material/Close";
+import { addGoals } from "../../services/firebaseUtils";
+import { useSelector } from "react-redux";
+const AddGoal = () => {
+  const fechaActual = new Date().toLocaleDateString();
+
+  const id = useSelector((state) => state.userId.id);
+  const navigate = useNavigate();
+
+  const [startDate, setStartDate] = useState(fechaActual);
+  const [endDate, setEndDate] = useState(fechaActual);
+  const [price, setPrice] = useState("$50.000");
+  const [description, setDescription] = useState("Write here....");
+
+  const [editStart, setEditStart] = useState(false);
+  const [editEnd, setEditEnd] = useState(false);
+  const [editPrice, setEditPrice] = useState(false);
+  const [editDesc, setEditDesc] = useState(false);
+
+  const setGoal = () => {
+    addGoals({
+      uid: id,
+      startDate: startDate,
+      endDate: endDate,
+      price: price,
+      description: description,
+    });
+    navigate(-1);
+  };
+  const handleClose = () => {
+    navigate(-1);
+  };
+  return (
+    <div style={container}>
+      <div style={header}>
+        <h2 style={title}>Set new goal</h2>
+        <CloseIcon onClick={handleClose} style={closeIcon} />
+      </div>
+
+      {/* Row with two inputs */}
+      <div style={dateRowContainer}>
+        <div style={dateInputContainer}>
+          <EditInput
+            label="Add start date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            editable={editStart}
+            onEditClick={() => setEditStart(!editStart)}
+          />
+        </div>
+        <div style={dateInputContainer}>
+          <EditInput
+            label="Add start finish"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+            editable={editEnd}
+            onEditClick={() => setEditEnd(!editEnd)}
+          />
+        </div>
+      </div>
+
+      {/* Single inputs */}
+      <div style={singleInputContainer}>
+        <EditInput
+          label="Add Price"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          editable={editPrice}
+          onEditClick={() => setEditPrice(!editPrice)}
+        />
+      </div>
+
+      <div style={singleInputContainer}>
+        <EditInput
+          label="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          editable={editDesc}
+          onEditClick={() => setEditDesc(!editDesc)}
+        />
+      </div>
+
+      <button style={saveButton} onClick={setGoal}>
+        <SendIcon style={{ fontSize: "20px" }} />
+        <span style={{ marginLeft: "8px" }}>Save</span>
+      </button>
+    </div>
+  );
+};
+
 
 // Custom EditInput component that fixes truncation issues
 const EditInput = ({ label, value, onChange, editable, onEditClick }) => {

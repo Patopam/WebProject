@@ -12,8 +12,9 @@ export const UserIdSlice = createSlice({
       state.id = action.payload;
       console.log(state.id);
     },
+
     clearUser: (state) => {
-      state.user = null;
+      state.id = null;
     },
   },
 });
