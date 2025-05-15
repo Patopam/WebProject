@@ -1,0 +1,209 @@
+.settings-container {
+	display: flex;
+	height: 100vh;
+	width: 100%;
+	background-color: #ffffff;
+	font-family: 'Manrope', sans-serif;
+}
+
+.settings-content {
+	flex: 1;
+	padding: 2rem;
+	display: flex;
+	flex-direction: column;
+	overflow-y: auto;
+	max-width: 100%;
+	margin: 0 auto;
+}
+
+.settings-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 2rem;
+}
+
+.settings-icons {
+	display: flex;
+	gap: 0.5rem;
+}
+
+.profile-section {
+	display: flex;
+	align-items: center;
+	margin-bottom: 2rem;
+}
+
+.avatar-image {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.profile-info {
+	margin-left: 1rem;
+}
+
+.profile-name {
+	font-weight: 600;
+	font-size: 1.2rem;
+	color: #333333;
+	margin: 0;
+}
+
+.profile-subtitle {
+	color: #777777;
+	margin: 0.25rem 0 0 0;
+	font-size: 0.9rem;
+}
+
+.divider {
+	height: 1px;
+	background-color: #eeeeee;
+	margin: 1.5rem 0;
+	width: 100%;
+}
+
+.form-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 2rem;
+	margin-bottom: 1.5rem;
+}
+
+.form-column {
+	width: 100%;
+}
+
+.full-width {
+	width: 100%;
+	margin-bottom: 1.5rem;
+}
+
+.input-label {
+	margin-bottom: 0.5rem;
+	font-weight: 500;
+	font-size: 1rem;
+	color: #333333;
+}
+
+.input-with-icon {
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+
+.input-icon {
+	position: absolute;
+	left: 15px;
+	z-index: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #777777;
+}
+
+.buttons-container {
+	display: flex;
+	justify-content: flex-end;
+	gap: 1rem;
+	margin-top: auto;
+	padding-top: 2rem;
+}
+
+.cancel-button {
+	background-color: #cbcbe7;
+	color: #333333;
+	border-radius: 16px;
+	padding: 0.75rem 2rem;
+	font-weight: 500;
+	font-size: 1rem;
+	border: none;
+	cursor: pointer;
+	font-family: 'Manrope', sans-serif;
+}
+
+.cancel-button:hover {
+	background-color: #b8b8d9;
+}
+
+.save-button {
+	background-color: #33336f;
+	color: #ffffff;
+	border-radius: 16px;
+	padding: 0.75rem 2rem;
+	font-weight: 500;
+	font-size: 1rem;
+	border: none;
+	cursor: pointer;
+	font-family: 'Manrope', sans-serif;
+}
+
+.save-button:hover {
+	background-color: #22224a;
+}
+
+/* Fixed styling for inputs */
+.input-field {
+	width: 100% !important;
+	height: 48px !important;
+	border-radius: 8px !important;
+	border: 1px solid #ddd !important;
+	padding: 0 16px !important;
+	font-family: 'Manrope', sans-serif !important;
+	font-size: 1rem !important;
+	box-sizing: border-box !important;
+}
+
+.input-with-icon .input-field {
+	padding-left: 40px !important;
+}
+
+/* Estilos responsivos para el boton de logout en móvil */
+@media screen and (max-width: 1024px) {
+	.settings-content {
+		padding: 1.5rem;
+		padding-bottom: 90px; /* Espacio para la barra de navegación móvil */
+	}
+
+	/* Ajuste para cuando el contenido no cabe bien en pantallas más pequeñas */
+	.form-grid {
+		grid-template-columns: 1fr;
+		gap: 1.5rem;
+	}
+}
+
+@media screen and (max-width: 767px) {
+	.settings-content {
+		padding: 1rem;
+		padding-bottom: 80px;
+	}
+
+	.buttons-container {
+		flex-direction: column-reverse;
+		gap: 0.75rem;
+	}
+
+	.save-button,
+	.cancel-button {
+		width: 100%;
+		padding: 0.75rem 1rem;
+	}
+
+	.profile-section {
+		flex-direction: column;
+		text-align: center;
+	}
+
+	.profile-info {
+		margin-left: 0;
+		margin-top: 1rem;
+	}
+}
+
+@media screen and (max-width: 425px) {
+	.settings-content {
+		padding: 0.75rem;
+		padding-bottom: 80px;
+	}
+}

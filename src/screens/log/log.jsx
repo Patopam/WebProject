@@ -1,36 +1,71 @@
-import { obetenerContraseña, obtenerCorreo } from "../../utils/utils";
+
 import { Typography, Container, Stack, Box } from "@mui/material";
 import BotonStart from "../../components/Buttons/botonesStart";
 import BotonStartGoogle from "../../components/Buttons/botonStartGoogle";
 import { useNavigate, Link } from "react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { auth } from "../../services/firebase";
+import {
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+} from "firebase/auth";
+import { saveUserData } from "../../services/firebaseUtils";
 import Inputs from "../../components/Inputs/Inputs";
+import { useDispatch } from "react-redux";
+import { setUserid } from "../../redux/UserSlice/UserSlice";
+import { setUserNombre } from "../../redux/UserSlice/NombreSlice";
 import "./log.css";
 function Log() {
-  useEffect(() => {
-    setCorreoVerificacion(obtenerCorreo());
-    setContraseñaVerificacion(obetenerContraseña());
-    console.log("HOLA INICIO");
-  });
+  const dispatch = useDispatch();
   const [Correo, setCorreo] = useState("");
   const [Constraseña, setConstraseña] = useState("");
-  const [ContraseñaVerificacion, setContraseñaVerificacion] = useState();
-  const [CorreoVerificacion, setCorreoVerificacion] = useState();
 
-  const navigate = useNavigate();
+  const Navigate = useNavigate();
+  const provider = new GoogleAuthProvider();
+  const SingUpGoogle = () => {
+    signInWithPopup(auth, provider)
+      .then(async (result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
 
-  const Summit = () => {
-    if (
-      Correo === ContraseñaVerificacion &&
-      Constraseña === CorreoVerificacion
-    ) {
-      navigate("/dashboard");
-      console.log("Usuario correcto");
-    } else {
-      alert("Usuario o contraseña incorrectos");
-      console.log(ContraseñaVerificacion, CorreoVerificacion);
-      console.log("inputs" + Correo, Constraseña);
-    }
+        const user = result.user;
+        await saveUserData({
+          uid: user.uid,
+          name: user.displayName,
+          email: user.email,
+        });
+
+        dispatch(setUserid(user.uid));
+        dispatch(setUserNombre(user.displayName));
+        console.log(user);
+
+        Navigate("/dashboard");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage);
+      });
+  };
+  const Summit = (e) => {
+    e.preventDefault();
+    signInWithEmailAndPassword(auth, Correo, Constraseña)
+      .then((userCredential) => {
+        const user = userCredential.user;
+
+        dispatch(setUserid(user.uid));
+        dispatch(setUserNombre(user.displayName));
+        console.log(user);
+        localStorage.setItem("uid", user.uid);
+
+        console.log("UID guardado en localStorage:", user.uid);
+
+        Navigate("/dashboard");
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   };
   const styleText = {
     Centrado: {
@@ -76,7 +111,7 @@ function Log() {
             </Typography>
           </Box>
           <Box>
-            <form>
+            <form onSubmit={Summit}>
               <Stack spacing={3}>
                 <Inputs
                   value={Correo}
@@ -90,24 +125,32 @@ function Log() {
                   onChange={(e) => setConstraseña(e.target.value)}
                   placeholder={"Write your password *"}
                 />
+                <Typography sx={styleText.NoCentrado}>
+                  Forgot password?
+                </Typography>
+                <Box sx={{ width: 460 }}>
+                  <Stack spacing={3}>
+                    <BotonStart text="Log In" />
+                    <BotonStartGoogle
+                      text="Connect with Google"
+                      onClick={SingUpGoogle}
+                    />
+                  </Stack>
+
+                  <Typography sx={styleText.Centrado}>
+                    <Link style={styleText.Centrado} to="/sing">
+                      No account? Create an account
+                    </Link>
+                  </Typography>
+                </Box>
               </Stack>
             </form>
-            <Typography sx={styleText.NoCentrado}>Forgot password?</Typography>
-          </Box>
-          <Box sx={{ width: 460 }}>
-            <Stack spacing={3}>
-              <BotonStart text="Log In" onClick={Summit} />
-              <BotonStartGoogle text="Connect with Google" />
-            </Stack>
-            <Typography sx={styleText.Centrado}>
-              <Link style={styleText.Centrado} to="/sing">
-                No account? Create an account
-              </Link>
-            </Typography>
           </Box>
         </Stack>
       </Container>
     </>
   );
+
 }
+
 export default Log;

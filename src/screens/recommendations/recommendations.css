@@ -1,0 +1,107 @@
+.recommendations-container {
+	display: flex;
+	height: 100vh;
+	width: 100%;
+	background-color: #ffffff;
+	font-family: 'Manrope', sans-serif;
+}
+
+.recommendations-content {
+	flex: 1;
+	padding: 2rem;
+	display: flex;
+	flex-direction: column;
+	overflow-y: auto;
+	max-width: 100%;
+	margin: 0 auto; /* Centrado en la pantalla */
+}
+
+.recommendations-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 2rem;
+}
+
+.recommendations-icons {
+	display: flex;
+	gap: 0.5rem;
+}
+
+/* Iconos móviles encima del header */
+.recommendations-mobile-icons {
+	display: flex;
+	gap: 0.5rem;
+	justify-content: flex-end;
+	margin-bottom: 1rem;
+	transition: opacity 0.3s ease;
+}
+
+/* Barra de navegación móvil */
+.mobile-navbar {
+	display: none; /* Oculta por defecto */
+}
+
+/* ===== RESPONSIVE STYLES ===== */
+
+/* Tablet/Móvil - <= 1024px */
+@media screen and (max-width: 1024px) {
+	.recommendations-container {
+		flex-direction: column;
+	}
+
+	.recommendations-content {
+		padding: 1.5rem;
+		padding-bottom: 90px; /* Espacio para la barra de navegación móvil */
+	}
+
+	/* Mostrar navbar móvil */
+	.mobile-navbar {
+		display: flex !important;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		z-index: 1000;
+	}
+
+	/* Ocultar menú lateral */
+	.menu-container {
+		display: none;
+	}
+
+	/* Estilo para los iconos móviles */
+	.recommendations-mobile-icons {
+		padding: 0.5rem 0;
+	}
+}
+
+/* Móvil - <= 767px */
+@media screen and (max-width: 767px) {
+	.recommendations-content {
+		padding: 1rem;
+		padding-bottom: 80px;
+	}
+
+	.recommendations-header {
+		flex-direction: column;
+		align-items: flex-start;
+		margin-bottom: 1.5rem;
+	}
+}
+
+/* Móvil Pequeño - <= 425px */
+@media screen and (max-width: 425px) {
+	.recommendations-content {
+		padding: 0.75rem;
+		padding-bottom: 80px;
+	}
+
+	.recommendations-header {
+		margin-bottom: 1rem;
+	}
+
+	.recommendations-mobile-icons {
+		margin-bottom: 0.5rem;
+	}
+}

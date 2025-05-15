@@ -7,31 +7,29 @@ const JournalCards = ({ journalData }) => {
 			<Typography
 				sx={{
 					fontFamily: "'Manrope', sans-serif",
-					fontSize: '1rem', // 16px convertido a rem
+					fontSize: '1rem',
 					fontWeight: 400,
 					color: '#666',
+					textAlign: 'center',
+					marginTop: '2rem',
 				}}
 			>
-				No hay entradas para este mes.
+				No journal entries available yet.
 			</Typography>
 		);
 	}
 
 	return (
 		<Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-			{' '}
-			{/* 32px a 2rem */}
 			{journalData.map((week) => (
 				<Box key={week.week} sx={{ marginBottom: '1.5rem' }}>
-					{' '}
-					{/* 24px a 1.5rem */}
 					<Typography
 						sx={{
 							fontFamily: "'Manrope', sans-serif",
-							fontSize: '2rem', // 32px a 2rem
+							fontSize: '2rem',
 							fontWeight: 700,
 							color: '#333',
-							marginBottom: '1rem', // 16px a 1rem
+							marginBottom: '1rem',
 						}}
 					>
 						Week {week.week}
@@ -40,7 +38,7 @@ const JournalCards = ({ journalData }) => {
 						sx={{
 							display: 'flex',
 							flexWrap: 'wrap',
-							gap: '1rem', // 16px a 1rem
+							gap: '1rem',
 							justifyContent: 'flex-start',
 						}}
 					>
@@ -51,22 +49,22 @@ const JournalCards = ({ journalData }) => {
 									display: 'flex',
 									flexDirection: 'column',
 									width: {
-										xs: '100%', // En pantallas muy pequeñas, ocupará el 100%
-										sm: 'calc(50% - 0.5rem)', // En pantallas pequeñas, 2 tarjetas por fila
-										md: 'calc(33.33% - 0.67rem)', // En pantallas medianas, 3 tarjetas por fila
-										lg: 'calc(25% - 0.75rem)', // En pantallas grandes, 4 tarjetas por fila
+										xs: '100%',
+										sm: 'calc(50% - 0.5rem)',
+										md: 'calc(33.33% - 0.67rem)',
+										lg: 'calc(25% - 0.75rem)',
 									},
-									height: '0', // Necesario para mantener la proporción
+									height: '0',
 									paddingBottom: {
-										xs: '100%', // Mantiene proporción cuadrada en xs
-										sm: 'calc(50% - 0.5rem)', // Proporción en pequeñas pantallas
-										md: 'calc(33.33% - 0.67rem)', // Proporción en medianas pantallas
-										lg: 'calc(25% - 0.75rem)', // Proporción en grandes pantallas
+										xs: '100%',
+										sm: 'calc(50% - 0.5rem)',
+										md: 'calc(33.33% - 0.67rem)',
+										lg: 'calc(25% - 0.75rem)',
 									},
 									position: 'relative',
-									borderRadius: '1rem', // 16px a 1rem
-									background: entry.color,
-									overflow: 'hidden', // Para mantener el contenido dentro de los bordes redondeados
+									borderRadius: '1rem',
+									background: entry.color || '#FDE3A7', // color por defecto si no existe
+									overflow: 'hidden',
 								}}
 							>
 								<Box
@@ -76,7 +74,7 @@ const JournalCards = ({ journalData }) => {
 										left: 0,
 										right: 0,
 										bottom: 0,
-										padding: '1.5rem', // 24px a 1.5rem
+										padding: '1.5rem',
 										display: 'flex',
 										flexDirection: 'column',
 									}}
@@ -85,28 +83,28 @@ const JournalCards = ({ journalData }) => {
 										sx={{
 											fontFamily: "'Manrope', sans-serif",
 											fontSize: {
-												xs: '1.5rem', // Más pequeño en dispositivos pequeños
-												sm: '1.75rem', // 28px aproximadamente en dispositivos medianos/grandes
+												xs: '1.5rem',
+												sm: '1.75rem',
 											},
 											fontWeight: 700,
 											color: '#33356B',
-											marginBottom: '1rem', // 16px a 1rem
+											marginBottom: '1rem',
 										}}
 									>
-										{entry.day}
+										{entry.day || 'Unknown Day'}
 									</Typography>
 
 									<Typography
 										sx={{
 											fontFamily: "'Manrope', sans-serif",
-											fontSize: '1rem', // 16px a 1rem
+											fontSize: '1rem',
 											fontWeight: 400,
 											color: '#33356B',
-											lineHeight: 1.5, // 150% como número
-											overflow: 'auto', // Permitir scroll si el contenido es muy largo
+											lineHeight: 1.5,
+											overflow: 'auto',
 										}}
 									>
-										{entry.content}
+										{entry.description || 'No content available.'}
 									</Typography>
 								</Box>
 							</Box>
