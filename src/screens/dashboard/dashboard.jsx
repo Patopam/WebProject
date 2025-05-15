@@ -9,6 +9,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
 import FeelingsCard from "../../components/Cards/FeelingsCard";
 import Menu from "../../components/Menu/menu";
+import MobileNavBar from "../../components/Menu/mobileNavBar"; // Importamos la barra de navegación móvil
 import ExpensesTable from "../../components/Tables/expensesTable";
 import expensesData from "../../Data/expensesData";
 import "./style.css";
