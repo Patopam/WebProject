@@ -11,7 +11,6 @@ const RecommendationDay = ({ emotion }) => {
 	const [localLoading, setLocalLoading] = useState(false);
 	const dispatch = useDispatch();
 	const loadingAI = useSelector((state) => state.aiStatus.loading);
-
 	const today = new Date().toISOString().split('T')[0];
 
 	useEffect(() => {
