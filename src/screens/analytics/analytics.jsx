@@ -8,7 +8,7 @@ import FeelingsCard from '../../components/Cards/FeelingsCard';
 import GoalProgressCard from '../../components/Cards/goal';
 import EmotionsLineChartCentered from '../../components/Charts/emotionChart';
 import ExpensesLineChart from '../../components/Charts/ChartsGastos';
-import MobileNavBar from '../../components/Menu/mobileNavBar'; // NAVBAR MÓVIL
+import MobileNavBar from '../../components/Menu/mobileNavBar';
 import './analytics.css';
 import { useNavigate } from 'react-router-dom';
 
