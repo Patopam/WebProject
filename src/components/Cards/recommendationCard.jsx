@@ -113,7 +113,6 @@ const RecommendationCard = ({ showInfo, selectedCategory, recommendation, loadin
 	);
 };
 
-// Helper functions for card styling
 function getCardColor(category) {
 	const colors = {
 		'Breathing exercise': '#B7D0EE',

@@ -41,8 +41,6 @@ const RecommendationDay = ({ emotion }) => {
 				description: aiData.description,
 				imageUrl: image,
 			};
-
-			// Save to localStorage
 			localStorage.setItem(
 				'dailyRecommendation',
 				JSON.stringify({

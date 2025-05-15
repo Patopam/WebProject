@@ -18,16 +18,12 @@ export default function JournalForm({ compact = false }) {
 	const [selectedTags, setSelectedTags] = useState([]);
 	const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
 
-	// Detectar cambios de tamaño de pantalla
 	useEffect(() => {
 		const handleResize = () => {
 			setIsMobile(window.innerWidth <= 767);
 		};
-
-		// Inicializar
 		handleResize();
 
-		// Añadir listener para cambios de tamaño
 		window.addEventListener('resize', handleResize);
 
 		return () => {

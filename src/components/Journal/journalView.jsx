@@ -18,7 +18,6 @@ const JournalView = () => {
 			if (!uid) return;
 
 			try {
-				// ✅ Corregido: accedemos a la subcolección de un documento
 				const journalRef = collection(doc(db, 'users', uid), 'journals');
 				const snapshot = await getDocs(journalRef);
 
