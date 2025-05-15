@@ -24,12 +24,11 @@ function Journal() {
 		navigate('/settings');
 	};
 
-	// Efecto para detectar el tamaño de la pantalla
 	useEffect(() => {
 		const handleResize = () => {
 			const mobile = window.innerWidth <= 1024;
 			setIsMobile(mobile);
-			// En desktop siempre mostramos los botones en el header
+
 			if (!mobile) {
 				setShowButtons(false);
 			} else {
@@ -37,10 +36,7 @@ function Journal() {
 			}
 		};
 
-		// Inicializar
 		handleResize();
-
-		// Listener para cambios de tamaño
 		window.addEventListener('resize', handleResize);
 
 		return () => {
@@ -48,7 +44,6 @@ function Journal() {
 		};
 	}, []);
 
-	// Efecto para manejar la visibilidad de los botones basado en la navbar
 	useEffect(() => {
 		if (!isMobile) return;
 
@@ -58,7 +53,7 @@ function Journal() {
 		const observer = new IntersectionObserver(
 			(entries) => {
 				const [entry] = entries;
-				setShowButtons(!entry.isIntersecting); // ocultar si está visible
+				setShowButtons(!entry.isIntersecting);
 			},
 			{
 				root: null,
@@ -76,11 +71,8 @@ function Journal() {
 
 	return (
 		<div className='journal-container'>
-			{/* Menú lateral solo visible en desktop */}
 			{!isMobile && <Menu />}
-
 			<div className='journal-content'>
-				{/* Iconos móviles encima del header */}
 				{isMobile && showButtons && (
 					<div className='journal-mobile-icons'>
 						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
@@ -90,7 +82,6 @@ function Journal() {
 
 				<div className='journal-header'>
 					<Header2 title='My journal' subtitle='Write your thoughts of the day.' />
-					{/* Iconos desktop en el header */}
 					{!isMobile && (
 						<div className='journal-icons'>
 							<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
@@ -98,8 +89,6 @@ function Journal() {
 						</div>
 					)}
 				</div>
-
-				{/* Grid principal */}
 				<div className='journal-main-grid'>
 					<div className='journal-left'>
 						<JournalForm compact />
@@ -115,8 +104,6 @@ function Journal() {
 					</div>
 				</div>
 			</div>
-
-			{/* Barra de navegación móvil */}
 			{isMobile && <MobileNavBar className='mobile-navbar' />}
 		</div>
 	);

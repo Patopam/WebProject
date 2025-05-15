@@ -54,7 +54,6 @@ function Analytics() {
 		<div className='analytics-container'>
 			{!isMobile && <Menu />}
 			<div className='analytics-content'>
-				{/* Íconos móviles arriba del header */}
 				{isMobile && showButtons && (
 					<div className='analytics-mobile-icons'>
 						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
@@ -94,7 +93,6 @@ function Analytics() {
 				</div>
 			</div>
 
-			{/* Barra de navegación móvil */}
 			{isMobile && <MobileNavBar />}
 		</div>
 	);

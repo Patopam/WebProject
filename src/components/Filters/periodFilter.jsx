@@ -11,12 +11,10 @@ const PeriodFilter = ({
 	availableMonths = [],
 	availableYears = [],
 }) => {
-	// Cambiar periodo (semana, mes, año)
 	const handlePeriodSelect = (newPeriod) => {
 		onPeriodChange(newPeriod);
 	};
 
-	// Moverse entre semanas/meses/años con flechas
 	const handleDateOffset = (direction) => {
 		const offset = direction === 'prev' ? -1 : 1;
 		const newDate = new Date(selectedDate);
@@ -28,7 +26,6 @@ const PeriodFilter = ({
 
 	return (
 		<Box display='flex' flexDirection='column' alignItems='start' gap={1}>
-			{/* Botones de periodo */}
 			<ButtonGroup variant='outlined' size='small'>
 				<Button onClick={() => handlePeriodSelect('week')} variant={period === 'week' ? 'contained' : 'outlined'}>
 					Semana
@@ -41,7 +38,6 @@ const PeriodFilter = ({
 				</Button>
 			</ButtonGroup>
 
-			{/* Control por periodo */}
 			<Box display='flex' alignItems='center' gap={1}>
 				<IconButton onClick={() => handleDateOffset('prev')}>
 					<ArrowBackIosNewIcon fontSize='small' />
