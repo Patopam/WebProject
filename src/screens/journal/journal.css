@@ -26,6 +26,15 @@
 	gap: 0.5rem;
 }
 
+/* Iconos móviles encima del header */
+.journal-mobile-icons {
+	display: flex;
+	gap: 0.5rem;
+	justify-content: flex-end;
+	margin-bottom: 1rem;
+	transition: opacity 0.3s ease;
+}
+
 .journal-main-grid {
 	display: grid;
 	grid-template-columns: 2fr 1fr;
@@ -52,8 +61,90 @@
 	width: 100%;
 }
 
-@media (max-width: 1024px) {
+/* Barra de navegación móvil */
+.mobile-navbar {
+	display: none; /* Oculta por defecto */
+}
+
+/* ===== RESPONSIVE STYLES ===== */
+
+/* Tablet/Móvil - <= 1024px */
+@media screen and (max-width: 1024px) {
+	.journal-container {
+		flex-direction: column;
+	}
+
+	.journal-content {
+		padding: 1.5rem;
+		padding-bottom: 90px; /* Espacio para la barra de navegación móvil */
+	}
+
 	.journal-main-grid {
 		grid-template-columns: 1fr;
+		gap: 1.5rem;
+	}
+
+	/* Mostrar navbar móvil */
+	.mobile-navbar {
+		display: flex !important;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		z-index: 1000;
+	}
+
+	/* Ocultar menú lateral */
+	.menu-container {
+		display: none;
+	}
+
+	/* Estilo para los iconos móviles */
+	.journal-mobile-icons {
+		padding: 0.5rem 0;
+	}
+}
+
+/* Móvil - <= 767px */
+@media screen and (max-width: 767px) {
+	.journal-content {
+		padding: 1rem;
+		padding-bottom: 80px;
+	}
+
+	.journal-header {
+		flex-direction: column;
+		align-items: flex-start;
+		margin-bottom: 1.5rem;
+	}
+
+	.journal-main-grid {
+		gap: 1rem;
+	}
+
+	.journal-right {
+		gap: 1rem;
+	}
+}
+
+/* Móvil Pequeño - <= 425px */
+@media screen and (max-width: 425px) {
+	.journal-content {
+		padding: 0.75rem;
+		padding-bottom: 80px;
+	}
+
+	.journal-header {
+		margin-bottom: 1rem;
+	}
+
+	.journal-mobile-icons {
+		margin-bottom: 0.5rem;
+	}
+}
+
+@media screen and (max-width: 1024px) {
+	.mobile-navbar + .journal-mobile-icons {
+		display: none;
 	}
 }

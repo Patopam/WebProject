@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import CategoryMenu from '../../components/Filters/categoryMenu';
 import RecommendationCard from '../../components/Cards/recommendationCard';
 
-import { getRecommendation } from '../../services/aiService';
+import { getRecommendation } from '../../services/openaiService';
 
 function Recommendations() {
 	const id = useSelector((state) => state.userId.id);
