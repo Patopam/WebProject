@@ -9,7 +9,6 @@ import PhotoAlbumOutlinedIcon from '@mui/icons-material/PhotoAlbumOutlined';
 
 const MobileNavBar = () => {
 	const location = useLocation();
-	// Function to check if the current route matches the link
 	const isActive = (path) => {
 		return location.pathname === path || location.pathname.startsWith(path + '/');
 	};

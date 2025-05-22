@@ -7,11 +7,9 @@ import { useSelector } from 'react-redux';
 import './start.css';
 function Start() {
 	let navigate = useNavigate();
-
 	const goLogin = () => {
 		navigate('/log');
 	};
-
 	const goSign = () => {
 		navigate('/sing');
 	};

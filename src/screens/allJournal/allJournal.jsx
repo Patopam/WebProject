@@ -22,12 +22,11 @@ function AllJournal() {
 		navigate('/settings');
 	};
 
-	// Efecto para detectar el tamaño de la pantalla
 	useEffect(() => {
 		const handleResize = () => {
 			const mobile = window.innerWidth <= 1024;
 			setIsMobile(mobile);
-			// En desktop siempre mostramos los botones en el header
+
 			if (!mobile) {
 				setShowButtons(false);
 			} else {

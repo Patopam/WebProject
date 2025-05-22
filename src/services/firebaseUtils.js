@@ -8,39 +8,36 @@ export const saveUserData = async ({ uid, name, email }) => {
 			email,
 			createdAt: new Date(),
 		});
-		console.log('Datos del usuario guardados correctamente en users/{uid}');
 	} catch (error) {
-		console.error('Error al guardar los datos del usuario:', error);
+		console.error('Error saving user data:', error);
 	}
 };
 
 export const addGoals = async ({ uid, startDate, endDate, price, description }) => {
 	if (!uid) {
-		console.error('UID inválido al intentar guardar journal.');
+		console.error('Invalid UID when trying to save journal.');
 		return;
 	}
 
-
-  try {
-    const GoalsRef = collection(doc(db, "users", uid), "Goals");
-    await addDoc(GoalsRef, {
-      startDate,
-      endDate,
-      price,
-      description,
-      date: serverTimestamp(),
-      status: "Procces",
-    });
-    console.log("Goal guardado correctamente");
-  } catch (error) {
-    console.error("Error guardando journal:", error);
-  }
-
+	try {
+		const GoalsRef = collection(doc(db, 'users', uid), 'Goals');
+		await addDoc(GoalsRef, {
+			startDate,
+			endDate,
+			price,
+			description,
+			date: serverTimestamp(),
+			status: 'Procces',
+		});
+		console.log('Goal saved successfully');
+	} catch (error) {
+		console.error('Error saving journal:', error);
+	}
 };
 
 export const addSpend = async ({ uid, startDate, category, price, description }) => {
 	if (!uid) {
-		console.error('UID inválido al intentar guardar journal.');
+		console.error('Invalid UID when trying to save journal.');
 		return;
 	}
 
@@ -53,15 +50,15 @@ export const addSpend = async ({ uid, startDate, category, price, description })
 			description,
 			date: serverTimestamp(),
 		});
-		console.log('Spend guardado correctamente');
+		console.log('Spend saved successfully');
 	} catch (error) {
-		console.error('Error guardando journal:', error);
+		console.error('Error saving journal:', error);
 	}
 };
 
 export const addJournal = async ({ uid, emotion, title, description }) => {
 	if (!uid) {
-		console.error('UID inválido al intentar guardar journal.');
+		console.error('Invalid UID when trying to save journal.');
 		return;
 	}
 
@@ -73,9 +70,8 @@ export const addJournal = async ({ uid, emotion, title, description }) => {
 			description,
 			date: serverTimestamp(),
 		});
-		console.log('Journal guardado correctamente');
 	} catch (error) {
-		console.error('Error guardando journal:', error);
+		console.error('Error saving journal:', error);
 	}
 };
 
@@ -91,7 +87,7 @@ export const fetchSpends = async ({ uid }) => {
 		}));
 		return Spends;
 	} catch (error) {
-		console.error('Error cargando journals:', error);
+		console.error('Error loading journals:', error);
 	}
 };
 
@@ -107,22 +103,22 @@ export const fetchGoal = async ({ uid }) => {
 		}));
 		return Goal;
 	} catch (error) {
-		console.error('Error cargando journals:', error);
+		console.error('Error loading goals:', error);
 	}
 };
 
 export const fetchJournal = async ({ uid }) => {
-  if (!uid) return console.log("hola");
+	if (!uid) return console.log('');
 
-  try {
-    const JournalRef = collection(doc(db, "users", uid), "journals");
-    const snapshot = await getDocs(JournalRef);
-    const Journal = snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    return Journal;
-  } catch (error) {
-    console.error("Error cargando journals:", error);
-  }
+	try {
+		const JournalRef = collection(doc(db, 'users', uid), 'journals');
+		const snapshot = await getDocs(JournalRef);
+		const Journal = snapshot.docs.map((doc) => ({
+			id: doc.id,
+			...doc.data(),
+		}));
+		return Journal;
+	} catch (error) {
+		console.error('Error loading journals:', error);
+	}
 };

@@ -41,15 +41,16 @@ export default function MoodTracker() {
 		if (!uid) return;
 		const fetchJournals = async () => {
 			try {
-				const snapshot = await getDocs(collection(db, `users/${uid}/journals`));
+				const snapshot = await getDocs(collection(db, `users/${uid}/journals`)); //firebase
 				const data = snapshot.docs.map((doc) => {
 					const item = doc.data();
 					const dateObj = item.date?.toDate?.() || new Date();
+
 					return {
 						id: doc.id,
 						title: item.emotion,
 						mood: item.emotion,
-						date: dateObj.toISOString().split('T')[0],
+						date: dateObj,
 						displayDate: dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
 					};
 				});
@@ -70,32 +71,45 @@ export default function MoodTracker() {
 		setMoodData(moodData.map((item) => (item.id === currentEditingItemId ? { ...item, mood: moodId } : item)));
 		setMoodSelectorOpen(false);
 	};
-
+	//finamic filter
 	const filterDataByTimeRange = () => {
 		const oneDay = 24 * 60 * 60 * 1000;
 		const oneWeekAgo = new Date(today.getTime() - 7 * oneDay);
 		const oneMonthAgo = new Date(today.getTime() - 30 * oneDay);
+
 		switch (timeRange) {
-			case 0:
-				return moodData.filter((item) => new Date(item.date).toDateString() === today.toDateString());
+			case 0: {
+				const todayYear = today.getFullYear();
+				const todayMonth = today.getMonth();
+				const todayDate = today.getDate();
+
+				return moodData.filter((item) => {
+					const itemDate = item.date instanceof Date ? item.date : new Date(item.date);
+					return (
+						itemDate.getFullYear() === todayYear &&
+						itemDate.getMonth() === todayMonth &&
+						itemDate.getDate() === todayDate
+					);
+				});
+			}
 			case 1:
-				return moodData.filter((item) => new Date(item.date) >= oneWeekAgo && new Date(item.date) <= today);
+				return moodData.filter((item) => item.date >= oneWeekAgo && item.date <= today);
 			case 2:
-				return moodData.filter((item) => new Date(item.date) >= oneMonthAgo && new Date(item.date) <= today);
+				return moodData.filter((item) => item.date >= oneMonthAgo && item.date <= today);
 			default:
 				return moodData;
 		}
 	};
-
+	//filter organitation
 	const organizeByMonth = (data) => {
 		const organized = {};
 		data.forEach((item) => {
-			const date = new Date(item.date);
+			const date = item.date;
 			const monthYear = `${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()}`;
 			if (!organized[monthYear]) organized[monthYear] = [];
 			organized[monthYear].push(item);
 		});
-		Object.keys(organized).forEach((month) => organized[month].sort((a, b) => new Date(b.date) - new Date(a.date)));
+		Object.keys(organized).forEach((month) => organized[month].sort((a, b) => b.date - a.date));
 		return organized;
 	};
 
@@ -163,6 +177,7 @@ export default function MoodTracker() {
 	);
 }
 
+//
 const StyledPaper = styled(Paper)(({ theme }) => ({
 	backgroundColor: '#CBCBE7',
 	borderRadius: '20px',

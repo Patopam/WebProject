@@ -31,8 +31,6 @@ function Router() {
 				dispatch(clearUser());
 			}
 		});
-
-		//Desmontar al terminarse de ejecutar
 		return () => unsubscribe();
 	}, [dispatch]);
 

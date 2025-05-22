@@ -24,8 +24,6 @@ export default function JournalForm({ compact = false }) {
 			setIsMobile(window.innerWidth <= 767);
 		};
 		handleResize();
-
-		// Add listener for size changes
 		window.addEventListener('resize', handleResize);
 		return () => {
 			window.removeEventListener('resize', handleResize);
