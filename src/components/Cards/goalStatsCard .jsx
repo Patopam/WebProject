@@ -24,7 +24,6 @@ const GoalStatsCard = ({ title, description, quantity, label, bgColor, iconBg })
 					flexDirection: 'column',
 				}}
 			>
-				{/* Header */}
 				<Box
 					sx={{
 						display: 'flex',
@@ -60,7 +59,6 @@ const GoalStatsCard = ({ title, description, quantity, label, bgColor, iconBg })
 					</Typography>
 				</Box>
 
-				{/* Description */}
 				<Typography
 					variant='body1'
 					sx={{
