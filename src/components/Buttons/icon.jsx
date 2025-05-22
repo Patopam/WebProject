@@ -1,4 +1,3 @@
-import * as React from 'react';
 import IconButton from '@mui/material/IconButton';
 
 export default function CustomIconButton({ icon, onClick, ariaLabel = 'button' }) {

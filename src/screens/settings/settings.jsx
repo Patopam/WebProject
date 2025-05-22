@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Menu from '../../components/Menu/menu';
 import Inputs from '../../components/Inputs/Inputs';
 import Header2 from '../../components/Header/header2';
 import CustomIconButton from '../../components/Buttons/icon';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MobileNavBar from '../../components/Menu/mobileNavBar';
 import { useNavigate } from 'react-router-dom';

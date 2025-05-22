@@ -1,4 +1,3 @@
-import React from 'react';
 import { SentimentSatisfiedAlt } from '@mui/icons-material';
 
 const EmotionWeek = ({ compact = false, Data }) => {

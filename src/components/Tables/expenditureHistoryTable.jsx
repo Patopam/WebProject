@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AttachMoney, ArrowDropDown } from '@mui/icons-material';
-import { filterByTime } from '../../utils/utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSpends } from '../../services/firebaseUtils';
 

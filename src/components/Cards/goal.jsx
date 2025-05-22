@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Card, CardContent, Typography, LinearProgress } from '@mui/material';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 

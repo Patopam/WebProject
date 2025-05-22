@@ -1,5 +1,3 @@
-import React from 'react';
-
 const EditInput = ({ label, value, onChange, editable, onEditClick }) => {
 	return (
 		<div style={inputContainerStyle}>

@@ -3,7 +3,6 @@ import BotonStart from '../../components/Buttons/botonesStart';
 import Logo from '../../assets/logoStart.png';
 import BotonStartGoogle from '../../components/Buttons/botonStartGoogle';
 import { useNavigate } from 'react-router';
-import { useSelector } from 'react-redux';
 import './start.css';
 function Start() {
 	let navigate = useNavigate();

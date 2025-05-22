@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setAiLoading } from '../../redux/aiStatusSlice';
 import Box from '@mui/material/Box';

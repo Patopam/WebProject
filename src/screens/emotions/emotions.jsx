@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { db } from '../../services/firebase';
 import { collection, getDocs, query, orderBy, limit } from 'firebase/firestore';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Typography } from '@mui/material';
 const JournalCards = ({ journalData }) => {
 	if (journalData.length === 0) {

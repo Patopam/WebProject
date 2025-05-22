@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Menu from '../../components/Menu/menu';
 import Header2 from '../../components/Header/header2';
 import LogoutIcon from '@mui/icons-material/Logout';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box } from '@mui/material';
 
 const CategoryMenu = ({ categories, selectedCategory, onCategoryClick }) => {
@@ -30,7 +29,7 @@ const CategoryMenu = ({ categories, selectedCategory, onCategoryClick }) => {
 						border: 'none',
 						cursor: 'pointer',
 						fontFamily: "'Manrope', sans-serif",
-						fontSize: '14px', 
+						fontSize: '14px',
 						fontWeight: 500,
 						whiteSpace: 'nowrap',
 						'&:hover': {

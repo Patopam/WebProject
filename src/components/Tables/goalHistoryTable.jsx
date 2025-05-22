@@ -1,8 +1,8 @@
-import React, { useState, useEffect, use } from 'react';
-import { filterByTime } from '../../utils/utils';
+import { useState, useEffect, use } from 'react';
 import { AttachMoney, ArrowDropDown } from '@mui/icons-material';
 import { fetchGoal } from '../../services/firebaseUtils';
 import { useSelector } from 'react-redux';
+
 const GoalHistoryCard = () => {
 	const id = useSelector((state) => state.userId.id);
 	const [selectedTime, setSelectedTime] = useState('Today');
