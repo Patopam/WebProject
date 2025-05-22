@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './Menu.css';
+import './menu.css';
 import Logo from '../../assets/logo.png';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
