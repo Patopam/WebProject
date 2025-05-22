@@ -52,7 +52,7 @@ const GoalHistoryCard = () => {
 	};
 
 	const titleStyle = {
-		fontSize: 'clamp(1rem, 2vw, 1.125rem)', // Responsive entre 16px y 18px
+		fontSize: 'clamp(1rem, 2vw, 1.125rem)', // Responsive 16px y 18px
 		fontWeight: 300,
 		color: '#333',
 	};
@@ -84,7 +84,7 @@ const GoalHistoryCard = () => {
 		width: '100%',
 		borderCollapse: 'separate',
 		borderSpacing: '1.5% 3%',
-		fontSize: 'clamp(0.75rem, 1.5vw, 0.9rem)', // Responsive entre 12px y 14.5px
+		fontSize: 'clamp(0.75rem, 1.5vw, 0.9rem)', // Responsive  12px y 14.5px
 	};
 
 	const thStyle = {
@@ -115,7 +115,6 @@ const GoalHistoryCard = () => {
 						</div>
 						<div style={titleStyle}>Goal History</div>
 					</div>
-
 					<div style={filterBoxStyle}>
 						<div style={filterGroup}>
 							{timeOptions.map((option) => (
@@ -148,7 +147,6 @@ const GoalHistoryCard = () => {
 							))}
 						</div>
 					</div>
-
 					<div style={tableWrapper}>
 						<table style={tableStyle}>
 							<thead>

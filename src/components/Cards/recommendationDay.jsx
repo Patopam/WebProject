@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setAiLoading } from '../../redux/aiStatusSlice';
 
 const RecommendationDay = ({ emotion }) => {
-	console.log('Emotion received:', emotion);
 	const [recommendation, setRecommendation] = useState(null);
 	const [localLoading, setLocalLoading] = useState(false);
 	const dispatch = useDispatch();
@@ -27,14 +26,11 @@ const RecommendationDay = ({ emotion }) => {
 
 	const handleGetRecommendation = async () => {
 		if (!emotion || loadingAI || localLoading) return;
-
 		setLocalLoading(true);
 		dispatch(setAiLoading(true));
-
 		try {
 			const aiData = await getRecommendationFromEmotion(emotion);
 			const image = await getImageFromKeyword(aiData.imageKeyword);
-
 			const finalData = {
 				intro: aiData.intro,
 				title: aiData.title,
@@ -118,7 +114,6 @@ const RecommendationDay = ({ emotion }) => {
 							{recommendation.description}
 						</Typography>
 					</LeftText>
-
 					<ImageBox>
 						{recommendation.imageUrl && <img src={recommendation.imageUrl} alt={recommendation.title} />}
 					</ImageBox>
@@ -130,7 +125,6 @@ const RecommendationDay = ({ emotion }) => {
 
 export default RecommendationDay;
 
-//
 const CardContainer = styled(Box)(() => ({
 	backgroundColor: '#fdd1bc',
 	padding: '1.8rem',

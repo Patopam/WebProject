@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
-
 const JournalCards = ({ journalData }) => {
 	if (journalData.length === 0) {
 		return (
@@ -63,7 +62,7 @@ const JournalCards = ({ journalData }) => {
 									},
 									position: 'relative',
 									borderRadius: '1rem',
-									background: entry.color || '#FDE3A7', // color por defecto si no existe
+									background: entry.color || '#FDE3A7',
 									overflow: 'hidden',
 								}}
 							>

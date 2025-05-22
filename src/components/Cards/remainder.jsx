@@ -109,7 +109,6 @@ const ReminderCard = () => {
 						<RefreshIcon sx={{ fontSize: '1.25rem' }} />
 					</IconButton>
 				</Box>
-
 				<Typography
 					component='span'
 					sx={{

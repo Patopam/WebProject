@@ -3,6 +3,14 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import { styled } from '@mui/material/styles';
 
+export default function AddButton({ onClick, text }) {
+	return (
+		<ExactButton variant='contained' startIcon={<CustomAddIcon />} onClick={onClick}>
+			{text}
+		</ExactButton>
+	);
+}
+const CustomAddIcon = () => <AddIcon sx={{ fontSize: '24px', color: '#000000' }} />;
 const ExactButton = styled(Button)(() => ({
 	height: '56px',
 	borderRadius: '16px',
@@ -34,13 +42,3 @@ const ExactButton = styled(Button)(() => ({
 	fontWeight: 500,
 	fontFamily: "'Manrope', sans-serif",
 }));
-
-const CustomAddIcon = () => <AddIcon sx={{ fontSize: '24px', color: '#000000' }} />;
-
-export default function AddButton({ onClick, text }) {
-	return (
-		<ExactButton variant='contained' startIcon={<CustomAddIcon />} onClick={onClick}>
-			{text}
-		</ExactButton>
-	);
-}

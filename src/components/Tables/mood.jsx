@@ -29,7 +29,6 @@ const getMoodEmoji = (moodId) => {
 	const mood = moods.find((m) => m.id === moodId);
 	return mood ? mood.emoji : '😐';
 };
-
 export default function MoodTracker() {
 	const uid = useSelector((state) => state.userId.id);
 	const [timeRange, setTimeRange] = useState(0);
@@ -102,7 +101,6 @@ export default function MoodTracker() {
 
 	const filteredData = filterDataByTimeRange();
 	const organizedData = timeRange === 2 ? organizeByMonth(filteredData) : null;
-
 	const renderListItem = (item) => (
 		<StyledListItem key={item.id}>
 			<StyledAvatar onClick={() => openMoodSelector(item.id)}>{getMoodEmoji(item.mood)}</StyledAvatar>

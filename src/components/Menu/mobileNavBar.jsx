@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './MobileNavBar.css';
-
-// Importar íconos de Material UI
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -11,8 +9,7 @@ import PhotoAlbumOutlinedIcon from '@mui/icons-material/PhotoAlbumOutlined';
 
 const MobileNavBar = () => {
 	const location = useLocation();
-
-	// Función para verificar si la ruta actual coincide con el enlace
+	// Function to check if the current route matches the link
 	const isActive = (path) => {
 		return location.pathname === path || location.pathname.startsWith(path + '/');
 	};
