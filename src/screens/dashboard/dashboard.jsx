@@ -1,4 +1,3 @@
-import React from 'react';
 import AddButton from '../../components/Buttons/add';
 import Header from '../../components/Header/header';
 import ReminderCard from '../../components/Cards/remainder';
@@ -14,10 +13,8 @@ import ExpensesTable from '../../components/Tables/expensesTable';
 import expensesData from '../../Data/expensesData';
 import './style.css';
 import { useEffect, useState } from 'react';
-import { obtenerUsuario } from '../../utils/utils';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { setDataSpends } from '../../redux/DataSlice/DataSpends';
+import { useSelector } from 'react-redux';
 import { fetchJournal } from '../../services/firebaseUtils';
 
 function Dashboard() {
