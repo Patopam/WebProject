@@ -1,5 +1,5 @@
 import React from 'react';
-import AddButton from '../../components/Buttons/addbutton';
+import AddButton from '../../components/Buttons/add';
 import Header from '../../components/Header/header';
 import ReminderCard from '../../components/Cards/remainder';
 import GoalProgressCard from '../../components/Cards/goal';
