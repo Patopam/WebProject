@@ -1,3 +1,4 @@
+//mejorar ingles
 import React, { useEffect, useState } from 'react';
 import { Typography, Box, useMediaQuery, useTheme } from '@mui/material';
 import { collection, getDocs } from 'firebase/firestore';
@@ -5,7 +6,6 @@ import { useSelector } from 'react-redux';
 import { db } from '../../services/firebase';
 import PeriodFilter from '../Filters/PeriodFilter';
 import { LabelList } from 'recharts';
-
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 
 const emotionMap = {
@@ -21,7 +21,6 @@ export default function EmotionChart() {
 	const theme = useTheme();
 	const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 	const uid = useSelector((state) => state.userId.id);
-
 	const [allJournals, setAllJournals] = useState([]);
 	const [filteredData, setFilteredData] = useState([]);
 	const [period, setPeriod] = useState('week');
@@ -33,7 +32,6 @@ export default function EmotionChart() {
 
 			const journalsRef = collection(db, 'users', uid, 'journals');
 			const querySnapshot = await getDocs(journalsRef);
-
 			const data = [];
 			querySnapshot.forEach((doc) => {
 				const d = doc.data();
@@ -49,7 +47,6 @@ export default function EmotionChart() {
 
 	useEffect(() => {
 		let filtered = [];
-
 		if (period === 'week') {
 			const referenceDate = new Date(selectedDate);
 			const day = referenceDate.getDay();
@@ -73,7 +70,6 @@ export default function EmotionChart() {
 			const month = selectedDate.getMonth();
 			const year = selectedDate.getFullYear();
 			const grouped = {};
-
 			allJournals.forEach((j) => {
 				const d = j.date;
 				if (d.getMonth() === month && d.getFullYear() === year) {
@@ -89,7 +85,6 @@ export default function EmotionChart() {
 		} else if (period === 'year') {
 			const year = selectedDate.getFullYear();
 			const grouped = {};
-
 			allJournals.forEach((j) => {
 				const d = j.date;
 				if (d.getFullYear() === year) {
@@ -140,7 +135,6 @@ export default function EmotionChart() {
 			<Typography variant='h4' sx={styleText.Titulo}>
 				My emotions
 			</Typography>
-
 			<PeriodFilter
 				period={period}
 				onPeriodChange={setPeriod}
@@ -162,7 +156,6 @@ export default function EmotionChart() {
 				]}
 				availableYears={[2023, 2024, 2025]}
 			/>
-
 			<Box
 				sx={{
 					width: '100%',
@@ -190,7 +183,6 @@ export default function EmotionChart() {
 							<Line dataKey='emotionValue' stroke='#49499D' />
 						</LineChart>
 					)}
-
 					{period === 'month' && (
 						<BarChart data={filteredData} barCategoryGap='30%'>
 							<XAxis dataKey='emotion' />
@@ -201,7 +193,6 @@ export default function EmotionChart() {
 							</Bar>
 						</BarChart>
 					)}
-
 					{period === 'year' && (
 						<BarChart data={filteredData} barCategoryGap='30%'>
 							<XAxis dataKey='month' />

@@ -1,6 +1,6 @@
 import { Typography, Container, Stack, Box } from '@mui/material';
 import BotonStart from '../../components/Buttons/botonesStart';
-import Logo from '../../assets/Sense Logo start.png';
+import Logo from '../../assets/logoStart.png';
 import BotonStartGoogle from '../../components/Buttons/botonStartGoogle';
 import { useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
@@ -10,7 +10,6 @@ function Start() {
 	const goLogin = () => {
 		navigate('/log');
 	};
-
 	const goSign = () => {
 		navigate('/sing');
 	};

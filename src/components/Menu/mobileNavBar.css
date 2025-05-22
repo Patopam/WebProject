@@ -70,14 +70,14 @@
 	transform: translateY(-8px) scale(1.1);
 }
 
-/* Estilos para pantallas más pequeñas */
+/* Styles for smaller screens */
 @media (max-width: 320px) {
 	.mobile-nav-item span {
 		font-size: 0.65rem;
 	}
 }
 
-/* Solo mostrar la barra de navegación móvil en dispositivos móviles y tablets */
+/* Only show the mobile navigation bar on mobile devices and tablets */
 @media (min-width: 1025px) {
 	.mobile-navbar {
 		display: none;

@@ -25,7 +25,7 @@ import {
 	clearError,
 } from '../../redux/cloudinarySlice/cloudinarySlice';
 
-// Imágenes iniciales
+// Initial images
 const initialImages = [
 	'https://i.pinimg.com/736x/c8/52/9c/c8529c9071cc20f4a642dbbb189d3496.jpg',
 	'https://i.pinimg.com/736x/5d/24/d0/5d24d0e1423ee5b4073217e5f2c4465d.jpg',
@@ -95,7 +95,7 @@ const UploadInput = styled('input')({
 });
 
 export default function ImageCarousel() {
-	// Estado local para imágenes iniciales + imágenes de Cloudinary
+	// Local state for initial images + Cloudinary images
 	const [allImages, setAllImages] = useState(initialImages);
 	const [openSnackbar, setOpenSnackbar] = useState(false);
 	const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -114,41 +114,37 @@ export default function ImageCarousel() {
 	const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 3000 })]);
 	const fileInputRef = useRef(null);
 
-	// Efecto para actualizar las imágenes cuando cambian las imágenes de Cloudinary
+	// Effect to update images when Cloudinary images change
 	useEffect(() => {
-		// Actualizar las imágenes cuando cambian las imágenes de Cloudinary
+		// Update images when Cloudinary images change
 		const cloudinaryUrls = cloudinaryImages.map((img) => img.secure_url);
 		setAllImages([...initialImages, ...cloudinaryUrls]);
 	}, [cloudinaryImages]);
 
-	// Efecto para mostrar errores
 	useEffect(() => {
 		if (error) {
 			setSnackbarMessage(error);
 			setSnackbarSeverity('error');
 			setOpenSnackbar(true);
-			// Limpiamos el error después de mostrarlo
+			// clean the error after displaying it
 			dispatch(clearError());
 		}
 	}, [error, dispatch]);
 
-	// Efecto para seguir el índice del slide actual
+	// Effect to follow the index of the current slide
 	useEffect(() => {
 		if (!emblaApi) return;
-
 		const onSelect = () => {
 			setCurrentSlideIndex(emblaApi.selectedScrollSnap());
 		};
 
 		emblaApi.on('select', onSelect);
-		onSelect(); // Establecer estado inicial
-
+		onSelect();
 		return () => {
 			emblaApi.off('select', onSelect);
 		};
 	}, [emblaApi]);
 
-	// Manejadores
 	const handleAddButtonClick = () => {
 		fileInputRef.current.click();
 	};
@@ -158,21 +154,16 @@ export default function ImageCarousel() {
 		if (!file || !file.type.match('image.*')) return;
 
 		try {
-			// Subir imagen a Cloudinary usando Redux
+			// Upload image to Cloudinary using Redux
 			await dispatch(uploadImageToCloudinary(file)).unwrap();
-
-			// Mostrar mensaje de éxito
-			setSnackbarMessage('Imagen subida correctamente');
+			setSnackbarMessage('Image uploaded successfully');
 			setSnackbarSeverity('success');
 			setOpenSnackbar(true);
-
-			// Limpiar input para permitir seleccionar el mismo archivo otra vez
+			// Clear input to allow selecting the same file again
 			event.target.value = '';
 		} catch (err) {
 			console.error('Error al subir la imagen:', err);
-			// El error ya se maneja en el useEffect de arriba
-
-			// Limpiar input para permitir seleccionar el mismo archivo otra vez
+			// Clear input to allow selecting the same file again
 			event.target.value = '';
 		}
 	};
@@ -184,9 +175,9 @@ export default function ImageCarousel() {
 
 	const handleConfirmDelete = () => {
 		if (imageToDeleteIndex >= 0) {
-			// Determinar si la imagen a eliminar es una imagen inicial o de Cloudinary
+			// Determine whether the image to delete is an initial image or a Cloudinary image
 			if (imageToDeleteIndex < initialImages.length) {
-				// Es una imagen inicial, solo podemos eliminarla del estado local
+				// It is an initial image, we can only delete it from the local state
 				const newInitialImages = [...initialImages];
 				newInitialImages.splice(imageToDeleteIndex, 1);
 				const newAllImages = [...newInitialImages, ...cloudinaryImages.map((img) => img.secure_url)];
@@ -196,19 +187,17 @@ export default function ImageCarousel() {
 				setSnackbarSeverity('success');
 				setOpenSnackbar(true);
 			} else {
-				// Es una imagen de Cloudinary
+				// It's an image from Cloudinary
 				const cloudinaryIndex = imageToDeleteIndex - initialImages.length;
 				if (cloudinaryIndex >= 0 && cloudinaryIndex < cloudinaryImages.length) {
 					const imageToDelete = cloudinaryImages[cloudinaryIndex];
 					dispatch(removeImage(imageToDelete.public_id));
-
-					setSnackbarMessage('Imagen eliminada correctamente');
+					setSnackbarMessage('Image deleted successfully');
 					setSnackbarSeverity('success');
 					setOpenSnackbar(true);
 				}
 			}
 		}
-
 		setDeleteDialogOpen(false);
 	};
 
@@ -269,7 +258,7 @@ export default function ImageCarousel() {
 				<UploadInput ref={fileInputRef} accept='image/*' type='file' onChange={handleFileUpload} />
 			</CarouselContainer>
 
-			{/* Diálogo de confirmación para eliminar */}
+			{/* Confirmation dialog to delete */}
 			<Dialog
 				open={deleteDialogOpen}
 				onClose={handleCancelDelete}
@@ -279,15 +268,15 @@ export default function ImageCarousel() {
 				<DialogTitle id='alert-dialog-title'>{'¿Eliminar imagen?'}</DialogTitle>
 				<DialogContent>
 					<DialogContentText id='alert-dialog-description'>
-						¿Estás seguro de que deseas eliminar esta imagen del carrusel?
+						Are you sure you want to remove this image from the carousel?
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={handleCancelDelete} color='primary'>
-						Cancelar
+						Cancel
 					</Button>
 					<Button onClick={handleConfirmDelete} color='error' autoFocus>
-						Eliminar
+						Eliminate
 					</Button>
 				</DialogActions>
 			</Dialog>

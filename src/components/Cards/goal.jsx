@@ -31,7 +31,7 @@ const GoalProgressCard = ({ spent = 150000, total = 200000, compact = false }) =
 				height: 'auto',
 				minHeight: compact ? '11.375rem' : '14.875rem', // 182px o 238px
 				boxShadow: 'none',
-				padding: '1.75rem', // 28px uniforme
+				padding: '1.75rem', // 28px uniformn
 				boxSizing: 'border-box',
 			}}
 		>

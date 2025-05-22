@@ -7,15 +7,14 @@ import CustomIconButton from '../../components/Buttons/icon';
 import FeelingsCard from '../../components/Cards/FeelingsCard';
 import GoalProgressCard from '../../components/Cards/goal';
 import EmotionsLineChartCentered from '../../components/Charts/emotionChart';
-import ExpensesLineChart from '../../components/Charts/ChartsGastos';
-import MobileNavBar from '../../components/Menu/mobileNavBar'; // NAVBAR MÓVIL
+import ExpensesLineChart from '../../components/Charts/expenseChart';
+import MobileNavBar from '../../components/Menu/mobileNavBar';
 import './analytics.css';
 import { useNavigate } from 'react-router-dom';
 
 function Analytics() {
 	const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
 	const [showButtons, setShowButtons] = useState(true);
-
 	let navigate = useNavigate();
 	const goLogin = () => navigate('/log');
 	const goSettings = () => navigate('/settings');
@@ -29,7 +28,6 @@ function Analytics() {
 
 		handleResize();
 		window.addEventListener('resize', handleResize);
-
 		const handleIntersection = (entries) => {
 			if (entries[0].isIntersecting) {
 				setShowButtons(false);
@@ -60,7 +58,6 @@ function Analytics() {
 						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={goLogin} />
 					</div>
 				)}
-
 				<div className='analytics-header'>
 					<Header2 title='Analytics' subtitle='Set goals and look at your track record.' />
 					{!isMobile && (
@@ -70,7 +67,6 @@ function Analytics() {
 						</div>
 					)}
 				</div>
-
 				<div className='main-layout'>
 					<div className='charts-section'>
 						<div className='chart-container'>
@@ -92,7 +88,6 @@ function Analytics() {
 					</div>
 				</div>
 			</div>
-
 			{isMobile && <MobileNavBar />}
 		</div>
 	);

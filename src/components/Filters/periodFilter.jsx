@@ -28,23 +28,20 @@ const PeriodFilter = ({
 		<Box display='flex' flexDirection='column' alignItems='start' gap={1}>
 			<ButtonGroup variant='outlined' size='small'>
 				<Button onClick={() => handlePeriodSelect('week')} variant={period === 'week' ? 'contained' : 'outlined'}>
-					Semana
+					Week
 				</Button>
 				<Button onClick={() => handlePeriodSelect('month')} variant={period === 'month' ? 'contained' : 'outlined'}>
-					Mes
+					Month
 				</Button>
 				<Button onClick={() => handlePeriodSelect('year')} variant={period === 'year' ? 'contained' : 'outlined'}>
-					Año
+					Year
 				</Button>
 			</ButtonGroup>
-
 			<Box display='flex' alignItems='center' gap={1}>
 				<IconButton onClick={() => handleDateOffset('prev')}>
 					<ArrowBackIosNewIcon fontSize='small' />
 				</IconButton>
-
 				{period === 'week' && <Typography variant='body2'>Semana de {selectedDate.toLocaleDateString()}</Typography>}
-
 				{period === 'month' && (
 					<Select
 						size='small'
@@ -80,7 +77,6 @@ const PeriodFilter = ({
 						))}
 					</Select>
 				)}
-
 				<IconButton onClick={() => handleDateOffset('next')}>
 					<ArrowForwardIosIcon fontSize='small' />
 				</IconButton>
