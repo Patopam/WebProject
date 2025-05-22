@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { addJournal } from '../../services/firebaseUtils';
 import { useSelector } from 'react-redux';
 import './journalForms.css';
+
 export default function JournalForm({ compact = false }) {
 	const navigate = useNavigate();
 	const id = useSelector((state) => state.userId.id);
@@ -18,18 +19,14 @@ export default function JournalForm({ compact = false }) {
 	const [selectedTags, setSelectedTags] = useState([]);
 	const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
 
-	// Detectar cambios de tamaño de pantalla
 	useEffect(() => {
 		const handleResize = () => {
 			setIsMobile(window.innerWidth <= 767);
 		};
-
-		// Inicializar
 		handleResize();
 
-		// Añadir listener para cambios de tamaño
+		// Add listener for size changes
 		window.addEventListener('resize', handleResize);
-
 		return () => {
 			window.removeEventListener('resize', handleResize);
 		};
@@ -45,7 +42,6 @@ export default function JournalForm({ compact = false }) {
 	];
 
 	const tags = ['Reflection', 'Gratitude', 'Daily Intention', 'Release'];
-
 	const templates = {
 		Reflection: "Today I'm reflecting on...\n\nWhat went well:\n\nWhat could have gone better:\n\nWhat I learned:",
 		Gratitude: "Today I'm grateful for:\n\n1.\n2.\n3.\n\nWhy these matter to me:",
@@ -92,7 +88,6 @@ export default function JournalForm({ compact = false }) {
 		setEntryTitle('');
 		setEntryText('');
 		setSelectedTags([]);
-
 		alert('Journal saved successfully.');
 	};
 
@@ -109,7 +104,6 @@ export default function JournalForm({ compact = false }) {
 					{compact ? <OpenInFullOutlinedIcon sx={{ color: '#000' }} /> : <CloseFullscreenIcon sx={{ color: '#000' }} />}
 				</IconButton>
 			</HeaderSection>
-
 			<FeelingsSection className='feelings-section'>
 				<Typography
 					variant='h3'
@@ -130,7 +124,6 @@ export default function JournalForm({ compact = false }) {
 					))}
 				</EmojiWrapper>
 			</FeelingsSection>
-
 			<TagWrapper className='tag-wrapper'>
 				{tags.map((tag, index) => (
 					<TagButton
@@ -143,7 +136,6 @@ export default function JournalForm({ compact = false }) {
 					</TagButton>
 				))}
 			</TagWrapper>
-
 			<EntrySection compact={compact} className='entry-section'>
 				<EntryTitle
 					fullWidth
@@ -166,7 +158,6 @@ export default function JournalForm({ compact = false }) {
 					className='entry-textarea'
 				/>
 			</EntrySection>
-
 			<SaveButtonWrapper>
 				<SaveButton onClick={send} className='save-button'>
 					<IconCircle bgcolor='#f6d776' className='icon-circle'>
@@ -184,7 +175,6 @@ export default function JournalForm({ compact = false }) {
 }
 
 const HOVER_COLOR = '#fcd48f';
-
 const JournalContainer = styled(Box, {
 	shouldForwardProp: (prop) => prop !== 'compact',
 })(({ compact }) => ({

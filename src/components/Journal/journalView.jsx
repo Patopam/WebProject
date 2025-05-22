@@ -13,15 +13,11 @@ const JournalView = () => {
 
 	useEffect(() => {
 		const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Agu', 'Sep', 'Oct', 'Nov', 'Dic'];
-
 		const fetchJournals = async () => {
 			if (!uid) return;
-
 			try {
-				// ✅ Corregido: accedemos a la subcolección de un documento
 				const journalRef = collection(doc(db, 'users', uid), 'journals');
 				const snapshot = await getDocs(journalRef);
-
 				const data = snapshot.docs.map((doc) => {
 					const entry = doc.data();
 					const date = entry.date?.toDate ? entry.date.toDate() : new Date();
@@ -37,7 +33,6 @@ const JournalView = () => {
 				console.error('Error cargando journals:', error);
 			}
 		};
-
 		fetchJournals();
 	}, [uid]);
 

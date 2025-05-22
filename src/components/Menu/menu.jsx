@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Menu.css';
 import Logo from '../../assets/logo.png';
-
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import PhotoAlbumOutlinedIcon from '@mui/icons-material/PhotoAlbumOutlined';
@@ -17,7 +16,6 @@ const Menu = () => {
 			<div className='menu-logo'>
 				<img src={Logo} alt='Sense Logo' className='menu-logo-img' />
 			</div>
-
 			<div className='menu-section'>
 				<p className='section-title'>MAIN</p>
 				<ul>
@@ -47,7 +45,6 @@ const Menu = () => {
 					</li>
 				</ul>
 			</div>
-
 			<div className='menu-section'>
 				<p className='section-title'>ACTIVITY</p>
 				<ul>
