@@ -1,4 +1,4 @@
-import AddButton from '../../components/Buttons/add';
+import AddButton from '../../components/Buttons/addButton';
 import Header from '../../components/Header/header';
 import ReminderCard from '../../components/Cards/remainder';
 import GoalProgressCard from '../../components/Cards/goal';
