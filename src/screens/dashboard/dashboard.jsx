@@ -1,4 +1,4 @@
-// import AddButton from '../../components/Buttons/add';
+import AddButton from '../../components/Buttons/add';
 import Header from '../../components/Header/header';
 import ReminderCard from '../../components/Cards/remainder';
 import GoalProgressCard from '../../components/Cards/goal';
@@ -109,10 +109,10 @@ function Dashboard() {
 					)}
 				</div>
 
-				{/* <div className='dashboard-buttons'>
+				<div className='dashboard-buttons'>
 					<AddButton onClick={handleJournalClick} text={'Daily journal'} />
 					<AddButton onClick={handleSpendClick} text={'Add spend'} />
-				</div> */}
+				</div>
 
 				<div className='dashboard-cards-row'>
 					<ReminderCard />
