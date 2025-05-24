@@ -1,4 +1,3 @@
-//mejorar ingles
 import React, { useEffect, useState } from 'react';
 import { Typography, Box, useMediaQuery, useTheme } from '@mui/material';
 import { collection, getDocs } from 'firebase/firestore';
