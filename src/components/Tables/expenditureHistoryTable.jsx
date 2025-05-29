@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AttachMoney, ArrowDropDown } from '@mui/icons-material';
 import { filterByTime } from '../../utils/utils';
 import { useDispatch, useSelector } from 'react-redux';
@@ -32,7 +32,7 @@ const ExpenditureHistoryTable = () => {
 						<div style={titleStyle}>Expenditure History</div>
 					</div>
 
-					{/* Filtros */}
+					{/* Filters */}
 					<div style={filterBoxStyle}>
 						{timeOptions.map((option) => (
 							<span
@@ -49,7 +49,6 @@ const ExpenditureHistoryTable = () => {
 							</span>
 						))}
 					</div>
-
 					<div style={tableWrapper}>
 						<table style={tableStyle}>
 							<thead>
@@ -76,7 +75,7 @@ const ExpenditureHistoryTable = () => {
 	);
 };
 export default ExpenditureHistoryTable;
-//
+
 const containerStyle = {
 	display: 'flex',
 	flexDirection: 'column',

@@ -1,9 +1,7 @@
-import React from 'react';
 import { Box, Card, CardContent, Typography, LinearProgress } from '@mui/material';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 
 const GoalProgressCard = ({ spent = 150000, total = 200000, compact = false }) => {
-	// Calculate progress percentage
 	const progressPercentage = (spent / total) * 100;
 
 	// Format currency values
@@ -73,7 +71,6 @@ const GoalProgressCard = ({ spent = 150000, total = 200000, compact = false }) =
 						Goal progress
 					</Typography>
 				</Box>
-
 				<Box
 					sx={{
 						display: 'flex',
@@ -138,13 +135,3 @@ const GoalProgressCard = ({ spent = 150000, total = 200000, compact = false }) =
 };
 
 export default GoalProgressCard;
-
-{
-	/* Versión normal */
-}
-//<GoalProgressCard spent={150000} total={200000} />
-
-{
-	/* Versión compacta */
-}
-//<GoalProgressCard spent={150000} total={200000} compact={true} />

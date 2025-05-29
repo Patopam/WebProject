@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Typography } from '@mui/material';
 const JournalCards = ({ journalData }) => {
 	if (journalData.length === 0) {
@@ -92,7 +91,6 @@ const JournalCards = ({ journalData }) => {
 									>
 										{entry.day || 'Unknown Day'}
 									</Typography>
-
 									<Typography
 										sx={{
 											fontFamily: "'Manrope', sans-serif",

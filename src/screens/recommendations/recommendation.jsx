@@ -1,23 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import Header2 from '../../components/Header/header2';
-import CustomIconButton from '../../components/Buttons/icon';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import LogoutIcon from '@mui/icons-material/Logout';
-import Menu from '../../components/Menu/menu';
 import './recommendations.css';
-import { obtenerUsuario } from '../../utils/utils';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { obtenerUsuario } from '../../utils/utils';
+import { getRecommendation } from '../../services/openaiService';
+import LogoutIcon from '@mui/icons-material/Logout';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import Header2 from '../../components/Header/header2';
+import CustomIconButton from '../../components/Buttons/icon';
+import Menu from '../../components/Menu/menu';
 import CategoryMenu from '../../components/Filters/categoryMenu';
 import RecommendationCard from '../../components/Cards/recommendationCard';
 import MobileNavBar from '../../components/Menu/mobileNavBar';
 
-import { getRecommendation } from '../../services/openaiService';
-
 function Recommendations() {
 	const id = useSelector((state) => state.userId.id);
 	let navigate = useNavigate();
-
 	const [selectedCategory, setSelectedCategory] = useState('');
 	const [recommendation, setRecommendation] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -47,45 +45,32 @@ function Recommendations() {
 		setNombre(obtenerUsuario());
 	}, []);
 
-	// Efecto para detectar el tamaño de la pantalla
 	useEffect(() => {
 		const handleResize = () => {
 			const mobile = window.innerWidth <= 1024;
 			setIsMobile(mobile);
-			// En desktop siempre mostramos los botones en el header
 			if (!mobile) {
 				setShowButtons(false);
 			} else {
 				setShowButtons(true);
 			}
 		};
-
-		// Inicializar
 		handleResize();
-
-		// Listener para cambios de tamaño
 		window.addEventListener('resize', handleResize);
-
 		return () => {
 			window.removeEventListener('resize', handleResize);
 		};
 	}, []);
-
-	// Efecto para manejar la visibilidad de los botones basado en la navbar
 	useEffect(() => {
 		if (!isMobile) return;
 
 		const handleIntersection = (entries) => {
 			if (entries[0].isIntersecting) {
-				// Si la navbar es visible, ocultamos los botones superiores
 				setShowButtons(false);
 			} else {
-				// Si la navbar no es visible, mostramos los botones superiores
 				setShowButtons(true);
 			}
 		};
-
-		// Dar tiempo para que el DOM esté listo
 		const timer = setTimeout(() => {
 			const navbarElement = document.querySelector('.mobile-navbar');
 			if (navbarElement) {
@@ -93,7 +78,6 @@ function Recommendations() {
 					threshold: 0.1,
 				});
 				observer.observe(navbarElement);
-
 				return () => observer.disconnect();
 			}
 		}, 500);
@@ -105,7 +89,6 @@ function Recommendations() {
 		setSelectedCategory(category);
 		setLoading(true);
 		setShowInfo(false);
-
 		try {
 			const newRecommendation = await getRecommendation(category);
 			setRecommendation(newRecommendation);
@@ -145,7 +128,6 @@ function Recommendations() {
 						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={goLogin} />
 					</div>
 				)}
-
 				<div className='recommendations-header'>
 					<Header2 title='For you' subtitle='Recommendation for you' />
 					{/* Iconos desktop en el header */}
@@ -156,13 +138,11 @@ function Recommendations() {
 						</div>
 					)}
 				</div>
-
 				<CategoryMenu
 					categories={categories}
 					selectedCategory={selectedCategory}
 					onCategoryClick={handleCategoryClick}
 				/>
-
 				<RecommendationCard
 					showInfo={showInfo}
 					selectedCategory={selectedCategory}
@@ -171,11 +151,8 @@ function Recommendations() {
 					onRefresh={handleRefresh}
 				/>
 			</div>
-
-			{/* Barra de navegación móvil */}
 			{isMobile && <MobileNavBar className='mobile-navbar' />}
 		</div>
 	);
 }
-
 export default Recommendations;

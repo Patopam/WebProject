@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 
 const ProtectedRoute = ({ children }) => {
 	const user = useSelector((state) => state.userId.id);
-
 	return user ? children : <Navigate to='/log' />;
 };
 export default ProtectedRoute;

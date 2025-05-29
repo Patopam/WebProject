@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import Menu from '../../components/Menu/menu';
-import Header2 from '../../components/Header/header2';
+import { useEffect, useState } from 'react';
+import './journal.css';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import Menu from '../../components/Menu/menu';
+import Header2 from '../../components/Header/header2';
 import CustomIconButton from '../../components/Buttons/icon';
-import './journal.css';
 import JournalForm from '../../components/Journal/journalForms';
 import ReminderCard from '../../components/Cards/remainder';
 import ImageCarousel from '../../components/Cards/imageCarousel';
@@ -15,50 +15,37 @@ function Journal() {
 	const navigate = useNavigate();
 	const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
 	const [showButtons, setShowButtons] = useState(true);
-
 	const goLogin = () => {
 		navigate('/log');
 	};
-
 	const goSettings = () => {
 		navigate('/settings');
 	};
 
-	// Efecto para detectar el tamaño de la pantalla
 	useEffect(() => {
 		const handleResize = () => {
 			const mobile = window.innerWidth <= 1024;
 			setIsMobile(mobile);
-			// En desktop siempre mostramos los botones en el header
 			if (!mobile) {
 				setShowButtons(false);
 			} else {
 				setShowButtons(true);
 			}
 		};
-
-		// Inicializar
 		handleResize();
-
-		// Listener para cambios de tamaño
 		window.addEventListener('resize', handleResize);
-
 		return () => {
 			window.removeEventListener('resize', handleResize);
 		};
 	}, []);
-
-	// Efecto para manejar la visibilidad de los botones basado en la navbar
 	useEffect(() => {
 		if (!isMobile) return;
-
 		const navbarElement = document.querySelector('.mobile-navbar');
 		if (!navbarElement) return;
-
 		const observer = new IntersectionObserver(
 			(entries) => {
 				const [entry] = entries;
-				setShowButtons(!entry.isIntersecting); // ocultar si está visible
+				setShowButtons(!entry.isIntersecting);
 			},
 			{
 				root: null,
@@ -66,9 +53,7 @@ function Journal() {
 				threshold: 0.1,
 			}
 		);
-
 		observer.observe(navbarElement);
-
 		return () => {
 			observer.disconnect();
 		};
@@ -76,11 +61,8 @@ function Journal() {
 
 	return (
 		<div className='journal-container'>
-			{/* Menú lateral solo visible en desktop */}
 			{!isMobile && <Menu />}
-
 			<div className='journal-content'>
-				{/* Iconos móviles encima del header */}
 				{isMobile && showButtons && (
 					<div className='journal-mobile-icons'>
 						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
@@ -104,7 +86,6 @@ function Journal() {
 					<div className='journal-left'>
 						<JournalForm compact />
 					</div>
-
 					<div className='journal-right'>
 						<div className='journal-reminder'>
 							<ReminderCard />
@@ -121,5 +102,4 @@ function Journal() {
 		</div>
 	);
 }
-
 export default Journal;

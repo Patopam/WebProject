@@ -1,4 +1,3 @@
-import React from 'react';
 import { Card, CardContent, Typography, Box } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
@@ -58,7 +57,6 @@ const GoalStatsCard = ({ title, description, quantity, label, bgColor, iconBg })
 						{title}
 					</Typography>
 				</Box>
-
 				<Typography
 					variant='body1'
 					sx={{
@@ -71,7 +69,6 @@ const GoalStatsCard = ({ title, description, quantity, label, bgColor, iconBg })
 				>
 					{description}
 				</Typography>
-
 				<Typography
 					variant='h5'
 					sx={{

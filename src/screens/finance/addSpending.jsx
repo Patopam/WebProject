@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 import { useSelector } from 'react-redux';
@@ -14,7 +14,6 @@ const EditInput = ({ label, value, onChange, editable, onEditClick }) => {
 					Edit
 				</button>
 			</div>
-
 			<div style={inputStyles.inputWrapper}>
 				{editable ? (
 					<input style={inputStyles.input} value={value} onChange={onChange} autoFocus />
@@ -28,15 +27,12 @@ const EditInput = ({ label, value, onChange, editable, onEditClick }) => {
 
 const AddSpending = () => {
 	const fechaActual = new Date().toLocaleDateString();
-
 	const id = useSelector((state) => state.userId.id);
 	const navigate = useNavigate();
-
 	const [date, setDate] = useState(fechaActual);
 	const [category, setCategory] = useState('Write here....');
 	const [price, setPrice] = useState('$20.000');
 	const [description, setDescription] = useState('Write here....');
-
 	const [editDate, setEditDate] = useState(false);
 	const [editCategory, setEditCategory] = useState(false);
 	const [editPrice, setEditPrice] = useState(false);
@@ -60,7 +56,6 @@ const AddSpending = () => {
 				<h2 style={styles.title}>Add spending</h2>
 				<CloseIcon onClick={handleClose} style={styles.closeIcon} />
 			</div>
-
 			<div style={styles.formWrapper}>
 				<div style={styles.inputContainer}>
 					<EditInput
@@ -71,7 +66,6 @@ const AddSpending = () => {
 						onEditClick={() => setEditDate(!editDate)}
 					/>
 				</div>
-
 				<div style={styles.inputContainer}>
 					<EditInput
 						label='Add Category'
@@ -81,7 +75,6 @@ const AddSpending = () => {
 						onEditClick={() => setEditCategory(!editCategory)}
 					/>
 				</div>
-
 				<div style={styles.inputContainer}>
 					<EditInput
 						label='Add Price'
@@ -91,7 +84,6 @@ const AddSpending = () => {
 						onEditClick={() => setEditPrice(!editPrice)}
 					/>
 				</div>
-
 				<div style={styles.inputContainer}>
 					<EditInput
 						label='Description'
@@ -102,7 +94,6 @@ const AddSpending = () => {
 					/>
 				</div>
 			</div>
-
 			<div style={styles.buttonContainer}>
 				<button style={styles.saveButton} onClick={setSpend}>
 					<span style={styles.saveIcon}>▶</span>
@@ -113,7 +104,6 @@ const AddSpending = () => {
 	);
 };
 
-// Styles for the EditInput component
 const inputStyles = {
 	container: {
 		width: '100%',

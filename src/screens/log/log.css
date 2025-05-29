@@ -1,4 +1,3 @@
-/* Base styles */
 .Container-log {
 	display: flex;
 	flex-direction: column;
@@ -13,12 +12,9 @@
 	font-family: 'Manrope', sans-serif;
 }
 
-/* Form styles */
 .Container-log form {
 	width: 100%;
 }
-
-/* Responsive styles */
 
 /* Tablet (iPad) - 768px to 1024px */
 @media screen and (max-width: 1024px) {

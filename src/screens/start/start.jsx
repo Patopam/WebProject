@@ -1,17 +1,14 @@
 import { Typography, Container, Stack, Box } from '@mui/material';
-import BotonStart from '../../components/Buttons/botonesStart';
+import BotonStart from '../../components/Buttons/botonStart';
 import Logo from '../../assets/logoStart.png';
 import BotonStartGoogle from '../../components/Buttons/botonStartGoogle';
 import { useNavigate } from 'react-router';
-import { useSelector } from 'react-redux';
 import './start.css';
 function Start() {
 	let navigate = useNavigate();
-
 	const goLogin = () => {
 		navigate('/log');
 	};
-
 	const goSign = () => {
 		navigate('/sing');
 	};
@@ -48,5 +45,4 @@ function Start() {
 		</>
 	);
 }
-
 export default Start;

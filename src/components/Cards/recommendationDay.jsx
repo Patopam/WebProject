@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Box, Typography, styled, Button } from '@mui/material';
 import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
 import { getRecommendationFromEmotion } from '../../services/openaiService';
@@ -11,7 +11,6 @@ const RecommendationDay = ({ emotion }) => {
 	const [localLoading, setLocalLoading] = useState(false);
 	const dispatch = useDispatch();
 	const loadingAI = useSelector((state) => state.aiStatus.loading);
-
 	const today = new Date().toISOString().split('T')[0];
 
 	useEffect(() => {
@@ -159,7 +158,6 @@ const IconCircle = styled(Box)(() => ({
 }));
 
 const SectionEmotion = styled(Box)(() => ({}));
-
 const SectionRecommendation = styled(Box)(() => ({
 	display: 'flex',
 	justifyContent: 'space-between',

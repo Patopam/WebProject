@@ -1,9 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-//limite de espera entre peticion
+//waiting limit between requests
 const initialState = {
 	loading: false,
 };
-
 const aiStatusSlice = createSlice({
 	name: 'aiStatus',
 	initialState,
@@ -13,6 +12,5 @@ const aiStatusSlice = createSlice({
 		},
 	},
 });
-
 export const { setAiLoading } = aiStatusSlice.actions;
 export default aiStatusSlice.reducer;

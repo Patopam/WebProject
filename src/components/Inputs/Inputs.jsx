@@ -1,5 +1,3 @@
-import { colors } from '@mui/material';
-
 function Inputs({ type, placeholder, value, onChange }) {
 	const styles = {
 		input: {

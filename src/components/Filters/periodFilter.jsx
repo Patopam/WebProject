@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Button, ButtonGroup, IconButton, MenuItem, Select, Typography } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';

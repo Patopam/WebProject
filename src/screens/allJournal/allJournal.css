@@ -40,8 +40,6 @@
 	display: none; /* Oculta por defecto */
 }
 
-/* ===== RESPONSIVE STYLES ===== */
-
 /* Tablet/Móvil - <= 1024px */
 @media screen and (max-width: 1024px) {
 	.journal-container {

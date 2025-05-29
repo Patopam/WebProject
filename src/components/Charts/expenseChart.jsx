@@ -1,4 +1,3 @@
-import React from 'react';
 import { Typography, Container, Stack, Box, useTheme, useMediaQuery } from '@mui/material';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -20,7 +19,6 @@ const FeelingsCard = ({ compact = false }) => {
 				background: '#FCD8C2',
 				boxShadow: 'none',
 				padding: compact ? '1.75rem' : '1.75rem',
-
 				boxSizing: 'border-box',
 			}}
 		>
@@ -92,7 +90,6 @@ const FeelingsCard = ({ compact = false }) => {
 					>
 						50%
 					</Typography>
-
 					<Typography
 						sx={{
 							fontFamily: "'Manrope', sans-serif",
@@ -112,7 +109,6 @@ const FeelingsCard = ({ compact = false }) => {
 						<span>are when you are</span>
 					</Typography>
 				</Box>
-
 				<Typography
 					sx={{
 						fontFamily: "'Manrope', sans-serif",

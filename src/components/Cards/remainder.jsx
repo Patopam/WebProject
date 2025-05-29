@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setAiLoading } from '../../redux/aiStatusSlice';
 import Box from '@mui/material/Box';
@@ -14,10 +14,9 @@ const ReminderCard = () => {
 	const [currentPhrase, setCurrentPhrase] = useState('Take a breath. You’re doing great.');
 	const [loading, setLoading] = useState(false);
 	const dispatch = useDispatch();
-
 	const fetchPhrase = async () => {
 		setLoading(true);
-		dispatch(setAiLoading(true)); //si ocupa la IA
+		dispatch(setAiLoading(true));
 		try {
 			const newQuote = await getMotivationalQuote();
 			setCurrentPhrase(newQuote);
