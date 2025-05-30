@@ -82,7 +82,6 @@ function Dashboard() {
 	return (
 		<div className='dashboard-container'>
 			{!isMobile && <Menu />}
-
 			<div className='dashboard-content'>
 				{isMobile && showButtons && (
 					<div className='dashboard-mobile-icons'>

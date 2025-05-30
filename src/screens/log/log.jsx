@@ -23,7 +23,6 @@ function Log() {
 			.then(async (result) => {
 				const credential = GoogleAuthProvider.credentialFromResult(result);
 				const token = credential.accessToken;
-
 				const user = result.user;
 				await saveUserData({
 					uid: user.uid,
@@ -48,14 +47,8 @@ function Log() {
 		signInWithEmailAndPassword(auth, Correo, Constraseña)
 			.then((userCredential) => {
 				const user = userCredential.user;
-
 				dispatch(setUserid(user.uid));
 				dispatch(setUserNombre(user.displayName));
-				console.log(user);
-				localStorage.setItem('uid', user.uid);
-
-				console.log('UID guardado en localStorage:', user.uid);
-
 				Navigate('/dashboard');
 			})
 			.catch((error) => {
@@ -111,11 +104,11 @@ function Log() {
 								<Inputs
 									value={Correo}
 									onChange={(e) => setCorreo(e.target.value)}
-									label='Usuario'
+									label='User'
 									placeholder='Write your email *'
 								/>
 								<Inputs
-									type='password'
+									type='Password'
 									value={Constraseña}
 									onChange={(e) => setConstraseña(e.target.value)}
 									placeholder={'Write your password *'}
