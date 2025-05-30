@@ -1,47 +1,61 @@
-import { Button, Typography } from '@mui/material';
+import { Button, Typography, useMediaQuery } from '@mui/material';
 import { FcGoogle } from 'react-icons/fc';
 import { styled } from '@mui/material/styles';
 
 export default function BotonStartGoogle({ onClick, text }) {
+	const isMobile = useMediaQuery('(max-width:480px)');
+	const height = isMobile ? '50px' : '63px';
+	const maxWidth = isMobile ? '260px' : '100%';
+	const fontSize = isMobile ? '16px' : '20px';
+	const borderRadius = isMobile ? '16px' : '16px';
+	const paddingX = isMobile ? '12px' : '24px';
+
 	return (
-		<StyleBotton variant='contained' onClick={onClick} startIcon={<FcGoogle />}>
+		<StyledGoogleButton
+			variant='contained'
+			onClick={onClick}
+			startIcon={<FcGoogle />}
+			sx={{
+				height,
+				maxWidth,
+				borderRadius,
+				paddingLeft: paddingX,
+				paddingRight: paddingX,
+			}}
+		>
 			<Typography
 				sx={{
 					color: '#1F1F1F',
 					fontFamily: 'Manrope, sans-serif',
-					fontSize: '20px',
-					fontStyle: 'normal',
+					fontSize,
 					fontWeight: 400,
 					lineHeight: 'normal',
 				}}
 			>
 				{text}
 			</Typography>
-		</StyleBotton>
+		</StyledGoogleButton>
 	);
 }
 
-const StyleBotton = styled(Button)(() => ({
-	height: '56px',
-	borderRadius: '16px',
+const StyledGoogleButton = styled(Button)(() => ({
 	backgroundColor: '#D2D2D2',
 	textTransform: 'none',
-	paddingLeft: '16px',
-	paddingRight: '24px',
 	boxShadow: 'none',
 	display: 'flex',
 	justifyContent: 'center',
 	alignItems: 'center',
-	gap: 8,
+	gap: '8px',
 	'&:hover': {
 		backgroundColor: '#A4A4A4',
 		boxShadow: 'none',
 	},
 	'& .MuiButton-startIcon': {
 		margin: 0,
-		color: '#000000',
 		display: 'flex',
 		justifyContent: 'center',
 		alignItems: 'center',
+		color: '#000000',
 	},
+	fontFamily: "'Manrope', sans-serif",
 }));

@@ -1,4 +1,4 @@
-body {
+body.start-mode {
 	background-color: #f3f3f3;
 }
 .container-start {
@@ -6,14 +6,43 @@ body {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	height: 98vh;
-}
-.logo-img {
-	width: 100%;
+	min-height: 100vh;
+	padding: 2rem 1rem;
+	box-sizing: border-box;
 }
 .menu-logo {
-	margin-bottom: 50px;
+	margin-bottom: 2.1rem;
+}
+.logo-img {
+	max-width: 400px;
+	width: 100%;
+	height: auto;
 }
 .text-start {
-	margin-top: 20px;
+	margin-top: 2rem;
+	text-align: center;
+	max-width: 500px;
+}
+.start-buttons-wrapper {
+	width: 100%;
+	max-width: 400px;
+	padding: 0 0.8rem;
+	box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+	.logo-img {
+		max-width: 270px;
+	}
+
+	.text-start p {
+		font-size: 16px !important;
+	}
+
+	.container-start {
+		padding: 3rem 1rem;
+	}
+	.start-buttons-wrapper {
+		max-width: 300px;
+	}
 }

@@ -1,15 +1,32 @@
-import { Button, Typography } from '@mui/material';
+import { Button, Typography, useMediaQuery } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 export default function BotonStart({ text, Icono, onClick }) {
+	const isMobile = useMediaQuery('(max-width:480px)');
+	const height = isMobile ? '50px' : '63px';
+	const maxWidth = isMobile ? '260px' : '100%';
+	const fontSize = isMobile ? '16px' : '20px';
+	const borderRadius = isMobile ? '16px' : '18px';
+	const paddingX = isMobile ? '12px' : '24px';
+
 	return (
-		<StyleBotton variant='contained' type='summit' onClick={onClick}>
+		<StyledButton
+			variant='contained'
+			type='submit'
+			onClick={onClick}
+			sx={{
+				height,
+				maxWidth,
+				borderRadius,
+				paddingLeft: paddingX,
+				paddingRight: paddingX,
+			}}
+		>
 			<Typography
 				sx={{
 					color: '#E8E8E8',
 					fontFamily: 'Manrope, sans-serif',
-					fontSize: '20px',
-					fontStyle: 'normal',
+					fontSize,
 					fontWeight: 400,
 					lineHeight: 'normal',
 				}}
@@ -17,27 +34,21 @@ export default function BotonStart({ text, Icono, onClick }) {
 				{Icono}
 				{text}
 			</Typography>
-		</StyleBotton>
+		</StyledButton>
 	);
 }
-const StyleBotton = styled(Button)(() => ({
-	height: '56px',
-	borderRadius: '16px',
+
+const StyledButton = styled(Button)(() => ({
 	backgroundColor: '#49499D',
 	textTransform: 'none',
-	paddingLeft: '16px',
-	paddingRight: '24px',
 	boxShadow: 'none',
 	display: 'flex',
 	justifyContent: 'center',
 	alignItems: 'center',
-	gap: 8,
+	gap: '8px',
 	'&:hover': {
 		backgroundColor: '#8A8AC0',
 		boxShadow: 'none',
 	},
-
-	fontSize: '18px',
-	fontWeight: 500,
 	fontFamily: "'Manrope', sans-serif",
 }));
