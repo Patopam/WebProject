@@ -1,5 +1,5 @@
 import { Typography, Container, Stack, Box } from '@mui/material';
-import BotonStart from '../../components/Buttons/botonesStart';
+import BotonStart from '../../components/Buttons/botonStart';
 import BotonStartGoogle from '../../components/Buttons/botonStartGoogle';
 import { useNavigate, Link } from 'react-router';
 import { useState } from 'react';
