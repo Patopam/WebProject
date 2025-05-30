@@ -14,15 +14,15 @@ import Settings from '../screens/settings/settings';
 import AddGoal from '../screens/finance/addGoal';
 import AddSpending from '../screens/finance/addSpending';
 import Recommendations from '../screens/recommendations/recommendation';
-import ProtectedRoute from '../components/Protector/Protector';
+import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { auth } from '../services/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { clearUser, setUserid } from '../redux/UserSlice/UserSlice';
+
 function Router() {
 	const dispatch = useDispatch();
-
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
 			if (user) {

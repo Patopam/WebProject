@@ -1,4 +1,3 @@
-import React, { use } from 'react';
 import { AttachMoney } from '@mui/icons-material';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -28,7 +27,6 @@ const ExpensesDay = ({ data }) => {
 							<div style={headerTitleStyle}>Expenses of the day</div>
 						</div>
 					</div>
-
 					<table style={tableStyle}>
 						<thead>
 							<tr>
@@ -54,7 +52,6 @@ const ExpensesDay = ({ data }) => {
 };
 export default ExpensesDay;
 
-//
 const containerStyle = {
 	display: 'flex',
 	flexDirection: 'column',

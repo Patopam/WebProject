@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import EditInput from '../../components/Inputs/EditInput';
 import SendIcon from '@mui/icons-material/Send';
@@ -7,7 +7,6 @@ import { addGoals } from '../../services/firebaseUtils';
 import { useSelector } from 'react-redux';
 const AddGoal = () => {
 	const fechaActual = new Date().toLocaleDateString();
-
 	const id = useSelector((state) => state.userId.id);
 	const navigate = useNavigate();
 
@@ -64,6 +63,7 @@ const AddGoal = () => {
 				<CloseIcon onClick={handleClose} style={styles.closeIcon} />
 			</div>
 
+			{/* Row with two inputs */}
 			<div style={styles.dateRowContainer}>
 				<div style={styles.dateInputContainer}>
 					<EditInput
@@ -180,7 +180,7 @@ const styles = {
 		fontFamily: "'Manrope', sans-serif",
 		position: 'relative',
 		boxSizing: 'border-box',
-
+		// Media query handled with max-width conditional
 		'@media (min-width: 768px)': {
 			padding: '50px 80px',
 		},
@@ -211,7 +211,7 @@ const styles = {
 		flexDirection: 'column',
 		width: '100%',
 		gap: '16px',
-
+		// On desktop, make it a row
 		'@media (min-width: 768px)': {
 			flexDirection: 'row',
 			gap: '40px',
@@ -220,7 +220,7 @@ const styles = {
 
 	dateInputContainer: {
 		width: '100%',
-
+		// On desktop, take appropriate width
 		'@media (min-width: 768px)': {
 			flex: 1,
 			maxWidth: 'calc(50% - 20px)',

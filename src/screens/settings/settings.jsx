@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Menu from '../../components/Menu/menu';
-import Inputs from '../../components/Inputs/Inputs';
+import Inputs from '../../components/Inputs/inputs';
 import Header2 from '../../components/Header/header2';
 import CustomIconButton from '../../components/Buttons/icon';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MobileNavBar from '../../components/Menu/mobileNavBar';
 import { useNavigate } from 'react-router-dom';
@@ -31,7 +30,6 @@ function Settings() {
 	const [phoneNumber, setPhoneNumber] = useState(() => {
 		return localStorage.getItem('phoneNumber') || '';
 	});
-
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -39,7 +37,6 @@ function Settings() {
 			setIsMobile(window.innerWidth <= 1024);
 		};
 		window.addEventListener('resize', handleResize);
-
 		const handleIntersection = (entries) => {
 			if (entries[0].isIntersecting) {
 				setShowLogoutButton(false);
@@ -47,7 +44,6 @@ function Settings() {
 				setShowLogoutButton(true);
 			}
 		};
-
 		if (isMobile) {
 			setTimeout(() => {
 				const navbarElement = document.querySelector('.mobile-navbar');
@@ -66,14 +62,12 @@ function Settings() {
 			window.removeEventListener('resize', handleResize);
 		};
 	}, [isMobile]);
-
 	const handleSave = () => {
 		localStorage.setItem('firstName', firstName);
 		localStorage.setItem('lastName', lastName);
 		localStorage.setItem('userName', userName);
 		localStorage.setItem('email', email);
 		localStorage.setItem('phoneNumber', phoneNumber);
-		console.log('Changes saved successfully');
 	};
 
 	const handleCancel = () => {
@@ -87,23 +81,21 @@ function Settings() {
 	return (
 		<div className='settings-container'>
 			{!isMobile && <Menu />}
-
 			<div className='settings-content'>
 				{isMobile && showLogoutButton && (
 					<div className='settings-mobile-logout'>
 						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={handleLogout} />
 					</div>
 				)}
-
 				<div className='settings-header'>
 					<Header2 title='Settings' subtitle='User profile' showEmoji={false} />
+
 					{isMobile && (
 						<div className='settings-icons'>
 							<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={handleLogout} />
 						</div>
 					)}
 				</div>
-
 				<div className='profile-section'>
 					<div className='profile-info'>
 						<h2 className='profile-name'>
@@ -112,9 +104,7 @@ function Settings() {
 						<p className='profile-subtitle'>{userName}</p>
 					</div>
 				</div>
-
 				<div className='divider'></div>
-
 				<div className='form-grid'>
 					<div className='form-column'>
 						<p className='input-label'>First Name</p>
@@ -135,7 +125,6 @@ function Settings() {
 						/>
 					</div>
 				</div>
-
 				<div className='full-width'>
 					<p className='input-label'>User Name</p>
 					<Inputs
@@ -145,9 +134,7 @@ function Settings() {
 						onChange={(e) => setUserName(e.target.value)}
 					/>
 				</div>
-
 				<div className='divider'></div>
-
 				<div className='form-grid'>
 					<div className='form-column'>
 						<p className='input-label'>Email Address</p>
@@ -162,7 +149,6 @@ function Settings() {
 						</div>
 					</div>
 				</div>
-
 				<div className='buttons-container'>
 					<button className='cancel-button' onClick={handleCancel}>
 						Cancel
@@ -176,5 +162,4 @@ function Settings() {
 		</div>
 	);
 }
-
 export default Settings;

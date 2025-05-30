@@ -1,9 +1,10 @@
+// REvisar google
 import { Typography, Container, Stack, Box } from '@mui/material';
-import BotonStart from '../../components/Buttons/botonesStart';
+import BotonStart from '../../components/Buttons/botonStart';
 import BotonStartGoogle from '../../components/Buttons/botonStartGoogle';
 import { useNavigate, Link } from 'react-router';
 import { useState } from 'react';
-import Inputs from '../../components/Inputs/Inputs';
+import Inputs from '../../components/Inputs/inputs';
 import { FaRegEyeSlash } from 'react-icons/fa';
 import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { saveUserData } from '../../services/firebaseUtils';
@@ -49,12 +50,16 @@ function Sign() {
 		createUserWithEmailAndPassword(auth, Correo, Constraseña)
 			.then(async (userCredential) => {
 				const user = userCredential.user;
+
 				await saveUserData({
 					uid: user.uid,
 					name: Usuario,
 					email: Correo,
 				});
+
 				dispatch(setUserid(user.uid), setUserNombre(Usuario));
+				console.log('UID guardado en Redux desde registro:', user.uid);
+
 				Navigate('/log');
 			})
 			.catch((error) => {
@@ -122,7 +127,6 @@ function Sign() {
 								onChange={(e) => setConstraseña(e.target.value)}
 								placeholder={'Write your password *'}
 							/>
-
 							<Box sx={{ width: 460 }}>
 								<Stack spacing={3}>
 									<BotonStart text='Create your account' />
@@ -139,5 +143,4 @@ function Sign() {
 		</>
 	);
 }
-
 export default Sign;

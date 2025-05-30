@@ -1,4 +1,4 @@
-import React, { useState, useEffect, use } from 'react';
+import { useState, useEffect, use } from 'react';
 import { filterByTime } from '../../utils/utils';
 import { AttachMoney, ArrowDropDown } from '@mui/icons-material';
 import { fetchGoal } from '../../services/firebaseUtils';
@@ -18,7 +18,6 @@ const GoalHistoryCard = () => {
 
 	const timeOptions = ['Today', 'Week', 'Month'];
 	const statusOptions = ['All', 'Completed', 'Failed'];
-
 	const containerStyle = {
 		display: 'flex',
 		flexDirection: 'column',
@@ -132,7 +131,6 @@ const GoalHistoryCard = () => {
 								</span>
 							))}
 						</div>
-
 						<div style={filterGroup}>
 							{statusOptions.map((option) => (
 								<span

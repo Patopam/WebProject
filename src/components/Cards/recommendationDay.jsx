@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Box, Typography, styled, Button } from '@mui/material';
 import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
 import { getRecommendationFromEmotion } from '../../services/openaiService';
@@ -156,7 +156,6 @@ const IconCircle = styled(Box)(() => ({
 }));
 
 const SectionEmotion = styled(Box)(() => ({}));
-
 const SectionRecommendation = styled(Box)(() => ({
 	display: 'flex',
 	justifyContent: 'space-between',

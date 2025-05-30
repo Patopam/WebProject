@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import Menu from '../../components/Menu/menu';
-import Header2 from '../../components/Header/header2';
+import { useEffect, useState } from 'react';
+import './journal.css';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import Menu from '../../components/Menu/menu';
+import Header2 from '../../components/Header/header2';
 import CustomIconButton from '../../components/Buttons/icon';
-import './journal.css';
 import JournalForm from '../../components/Journal/journalForms';
 import ReminderCard from '../../components/Cards/remainder';
 import ImageCarousel from '../../components/Cards/imageCarousel';
@@ -15,11 +15,9 @@ function Journal() {
 	const navigate = useNavigate();
 	const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
 	const [showButtons, setShowButtons] = useState(true);
-
 	const goLogin = () => {
 		navigate('/log');
 	};
-
 	const goSettings = () => {
 		navigate('/settings');
 	};
@@ -35,21 +33,16 @@ function Journal() {
 				setShowButtons(true);
 			}
 		};
-
 		handleResize();
 		window.addEventListener('resize', handleResize);
-
 		return () => {
 			window.removeEventListener('resize', handleResize);
 		};
 	}, []);
-
 	useEffect(() => {
 		if (!isMobile) return;
-
 		const navbarElement = document.querySelector('.mobile-navbar');
 		if (!navbarElement) return;
-
 		const observer = new IntersectionObserver(
 			(entries) => {
 				const [entry] = entries;
@@ -61,9 +54,7 @@ function Journal() {
 				threshold: 0.1,
 			}
 		);
-
 		observer.observe(navbarElement);
-
 		return () => {
 			observer.disconnect();
 		};
@@ -93,7 +84,6 @@ function Journal() {
 					<div className='journal-left'>
 						<JournalForm compact />
 					</div>
-
 					<div className='journal-right'>
 						<div className='journal-reminder'>
 							<ReminderCard />
@@ -108,5 +98,4 @@ function Journal() {
 		</div>
 	);
 }
-
 export default Journal;

@@ -19,17 +19,14 @@ const MobileNavBar = () => {
 				<HomeOutlinedIcon />
 				<span>Dashboard</span>
 			</Link>
-
 			<Link to='/settings' className={`mobile-nav-item ${isActive('/settings') ? 'active' : ''}`}>
 				<PersonOutlineOutlinedIcon />
 				<span>User</span>
 			</Link>
-
 			<Link to='/Alljournal' className={`mobile-nav-item add-item ${isActive('/Alljournal') ? 'active' : ''}`}>
 				<PhotoAlbumOutlinedIcon />
 				<span>Journals</span>
 			</Link>
-
 			<Link to='/analytics' className={`mobile-nav-item ${isActive('/analytics') ? 'active' : ''}`}>
 				<LeaderboardOutlinedIcon />
 				<span>Analytics</span>

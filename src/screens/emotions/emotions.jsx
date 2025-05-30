@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { db } from '../../services/firebase';
+import './emotions.css';
 import { collection, getDocs, query, orderBy, limit } from 'firebase/firestore';
+import Skeleton from '@mui/material/Skeleton';
+import LogoutIcon from '@mui/icons-material/Logout';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MoodTracker from '../../components/Tables/mood';
 import Menu from '../../components/Menu/menu';
-import Skeleton from '@mui/material/Skeleton';
 import ImageCarousel from '../../components/Cards/imageCarousel';
 import RecommendationDay from '../../components/Cards/recommendationDay';
 import Header2 from '../../components/Header/header2';
-import LogoutIcon from '@mui/icons-material/Logout';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CustomIconButton from '../../components/Buttons/icon';
 import MobileNavBar from '../../components/Menu/mobileNavBar';
 import './emotions.css';
@@ -24,13 +25,11 @@ function Emotions() {
 
 	useEffect(() => {
 		if (!uid) return;
-
 		const fetchLastEmotion = async () => {
 			try {
 				const journalsRef = collection(db, `users/${uid}/journals`);
 				const q = query(journalsRef, orderBy('date', 'desc'), limit(1));
 				const querySnapshot = await getDocs(q);
-
 				if (!querySnapshot.empty) {
 					const data = querySnapshot.docs[0].data();
 					const traducciones = {
@@ -49,7 +48,6 @@ function Emotions() {
 				console.error('Error fetching last emotion:', error);
 			}
 		};
-
 		fetchLastEmotion();
 
 		const handleResize = () => {
@@ -57,10 +55,8 @@ function Emotions() {
 			setIsMobile(mobile);
 			setShowButtons(!mobile);
 		};
-
 		handleResize();
 		window.addEventListener('resize', handleResize);
-
 		const handleIntersection = (entries) => {
 			if (entries[0].isIntersecting) {
 				setShowButtons(false);
@@ -76,15 +72,11 @@ function Emotions() {
 					threshold: 0.1,
 				});
 				observer.observe(navbarElement);
-
-				// Limpiar observador
 				return () => {
 					observer.disconnect();
 				};
 			}
 		}
-
-		// Limpiar event listener cuando el componente se desmonta
 		return () => {
 			window.removeEventListener('resize', handleResize);
 		};
@@ -93,7 +85,6 @@ function Emotions() {
 	const goLogin = () => {
 		navigate('/log');
 	};
-
 	const goSettings = () => {
 		navigate('/settings');
 	};
@@ -112,7 +103,6 @@ function Emotions() {
 
 				<div className='emotions-header'>
 					<Header2 title='My emotions' subtitle='Look at your history of your emotions.' />
-
 					{!isMobile && (
 						<div className='emotions-icons'>
 							<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
@@ -120,7 +110,6 @@ function Emotions() {
 						</div>
 					)}
 				</div>
-
 				<div className='emotions-main-grid'>
 					<div className='emotions-left'>
 						<MoodTracker />
@@ -147,5 +136,4 @@ function Emotions() {
 		</div>
 	);
 }
-
 export default Emotions;

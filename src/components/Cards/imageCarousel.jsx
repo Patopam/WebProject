@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
@@ -15,7 +15,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
-
 import {
 	uploadImageToCloudinary,
 	removeImage,
@@ -182,7 +181,6 @@ export default function ImageCarousel() {
 				newInitialImages.splice(imageToDeleteIndex, 1);
 				const newAllImages = [...newInitialImages, ...cloudinaryImages.map((img) => img.secure_url)];
 				setAllImages(newAllImages);
-
 				setSnackbarMessage('Imagen eliminada correctamente');
 				setSnackbarSeverity('success');
 				setOpenSnackbar(true);
@@ -238,7 +236,6 @@ export default function ImageCarousel() {
 						))}
 					</EmblaSlideContainer>
 				</EmblaContainer>
-
 				<AddButtonContainer>
 					<ActionButtonCircle onClick={handleAddButtonClick} disabled={isUploading}>
 						{isUploading ? (
@@ -248,16 +245,13 @@ export default function ImageCarousel() {
 						)}
 					</ActionButtonCircle>
 				</AddButtonContainer>
-
 				<DeleteButtonContainer>
 					<ActionButtonCircle onClick={handleDeleteButtonClick} disabled={isUploading || allImages.length <= 1}>
 						<DeleteIcon style={{ fontSize: '1.25rem', color: '#000000' }} />
 					</ActionButtonCircle>
 				</DeleteButtonContainer>
-
 				<UploadInput ref={fileInputRef} accept='image/*' type='file' onChange={handleFileUpload} />
 			</CarouselContainer>
-
 			{/* Confirmation dialog to delete */}
 			<Dialog
 				open={deleteDialogOpen}
@@ -280,7 +274,6 @@ export default function ImageCarousel() {
 					</Button>
 				</DialogActions>
 			</Dialog>
-
 			{/* Notificaciones */}
 			<Snackbar
 				open={openSnackbar}

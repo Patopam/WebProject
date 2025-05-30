@@ -1,4 +1,3 @@
-import React from 'react';
 import { SentimentSatisfiedAlt } from '@mui/icons-material';
 
 const EmotionWeek = ({ compact = false, Data }) => {
@@ -14,11 +13,9 @@ const EmotionWeek = ({ compact = false, Data }) => {
 	const sortedData = Data.sort((a, b) => a.date.seconds - b.date.seconds);
 	const uniqueByDay = [];
 	const seenDays = new Set();
-
 	for (const entry of sortedData) {
 		const dateObj = new Date(entry.date.seconds * 1000);
 		const dateKey = dateObj.toDateString();
-
 		if (!seenDays.has(dateKey)) {
 			seenDays.add(dateKey);
 			uniqueByDay.push(entry);
@@ -33,6 +30,7 @@ const EmotionWeek = ({ compact = false, Data }) => {
 			emoji: emotionToEmoji[entry.emotion] || '❓',
 		};
 	});
+
 	const containerStyle = {
 		display: 'flex',
 		width: compact ? '100%' : '100%',
@@ -128,7 +126,6 @@ const EmotionWeek = ({ compact = false, Data }) => {
 				</div>
 				<div style={titleStyle}>Emotion week</div>
 			</div>
-
 			<div style={dayRowStyle}>
 				{transformedWeekData.map((item, index) => (
 					<div key={index} style={dayColumnStyle}>

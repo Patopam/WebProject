@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Menu from '../../components/Menu/menu';
 import Header2 from '../../components/Header/header2';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CustomIconButton from '../../components/Buttons/icon';
-import FeelingsCard from '../../components/Cards/FeelingsCard';
+import FeelingsCard from '../../components/Cards/feelingsCard';
 import GoalProgressCard from '../../components/Cards/goal';
 import EmotionsLineChartCentered from '../../components/Charts/emotionChart';
 import ExpensesLineChart from '../../components/Charts/expenseChart';
@@ -18,7 +18,6 @@ function Analytics() {
 	let navigate = useNavigate();
 	const goLogin = () => navigate('/log');
 	const goSettings = () => navigate('/settings');
-
 	useEffect(() => {
 		const handleResize = () => {
 			const mobile = window.innerWidth <= 1024;
@@ -44,7 +43,6 @@ function Analytics() {
 				return () => observer.disconnect();
 			}
 		}
-
 		return () => window.removeEventListener('resize', handleResize);
 	}, [isMobile]);
 
@@ -92,5 +90,4 @@ function Analytics() {
 		</div>
 	);
 }
-
 export default Analytics;

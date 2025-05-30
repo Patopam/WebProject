@@ -7,17 +7,15 @@ import EmotionWeek from '../../components/Cards/emotionWeek';
 import CustomIconButton from '../../components/Buttons/icon';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
-import FeelingsCard from '../../components/Cards/FeelingsCard';
+import FeelingsCard from '../../components/Cards/feelingsCard';
 import Menu from '../../components/Menu/menu';
 import MobileNavBar from '../../components/Menu/mobileNavBar';
 import ExpensesTable from '../../components/Tables/expensesTable';
 import expensesData from '../../Data/expensesData';
 import './style.css';
 import { useEffect, useState } from 'react';
-import { obtenerUsuario } from '../../utils/utils';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { setDataSpends } from '../../redux/DataSlice/DataSpends';
+import { useSelector } from 'react-redux';
 import { fetchJournal } from '../../services/firebaseUtils';
 
 function Dashboard() {
@@ -38,11 +36,8 @@ function Dashboard() {
 			setIsMobile(mobile);
 			setShowButtons(!mobile);
 		};
-
 		handleResize();
-
 		window.addEventListener('resize', handleResize);
-
 		const handleIntersection = (entries) => {
 			if (entries[0].isIntersecting) {
 				setShowButtons(false);
@@ -58,8 +53,6 @@ function Dashboard() {
 					threshold: 0.1,
 				});
 				observer.observe(navbarElement);
-
-				// Limpiar observador
 				return () => {
 					observer.disconnect();
 				};
@@ -77,12 +70,10 @@ function Dashboard() {
 	};
 
 	const handleJournalClick = () => {
-		console.log('Daily journal clicked');
 		navigate('/journal/write');
 	};
 
 	const handleSpendClick = () => {
-		console.log('Add spend clicked');
 		navigate('/finance/add-spending');
 	};
 	const goSettings = () => {
@@ -103,7 +94,6 @@ function Dashboard() {
 
 				<div className='dashboard-header'>
 					<Header Nombre={NombreU} subtitle='How are you feeling today?' />
-
 					{!isMobile && (
 						<div className='dashboard-icons'>
 							<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
@@ -137,12 +127,8 @@ function Dashboard() {
 					)}
 				</div>
 			</div>
-
 			{isMobile && <MobileNavBar />}
 		</div>
 	);
 }
-
 export default Dashboard;
-
-//hola

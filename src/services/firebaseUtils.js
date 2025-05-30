@@ -1,3 +1,4 @@
+//Revisar este codigo
 import { db } from './firebase';
 import { addDoc, collection, doc, setDoc, serverTimestamp, getDocs } from 'firebase/firestore';
 
@@ -12,7 +13,6 @@ export const saveUserData = async ({ uid, name, email }) => {
 		console.error('Error saving user data:', error);
 	}
 };
-
 export const addGoals = async ({ uid, startDate, endDate, price, description }) => {
 	if (!uid) {
 		console.error('Invalid UID when trying to save journal.');
@@ -31,7 +31,7 @@ export const addGoals = async ({ uid, startDate, endDate, price, description }) 
 		});
 		console.log('Goal saved successfully');
 	} catch (error) {
-		console.error('Error saving journal:', error);
+		console.error('Error guardando journal:', error);
 	}
 };
 
@@ -40,7 +40,6 @@ export const addSpend = async ({ uid, startDate, category, price, description })
 		console.error('Invalid UID when trying to save journal.');
 		return;
 	}
-
 	try {
 		const SpendsRef = collection(doc(db, 'users', uid), 'Spends');
 		await addDoc(SpendsRef, {
@@ -50,7 +49,6 @@ export const addSpend = async ({ uid, startDate, category, price, description })
 			description,
 			date: serverTimestamp(),
 		});
-		console.log('Spend saved successfully');
 	} catch (error) {
 		console.error('Error saving journal:', error);
 	}
@@ -61,7 +59,6 @@ export const addJournal = async ({ uid, emotion, title, description }) => {
 		console.error('Invalid UID when trying to save journal.');
 		return;
 	}
-
 	try {
 		const journalRef = collection(doc(db, 'users', uid), 'journals');
 		await addDoc(journalRef, {
@@ -77,7 +74,6 @@ export const addJournal = async ({ uid, emotion, title, description }) => {
 
 export const fetchSpends = async ({ uid }) => {
 	if (!uid) return console.log('hola');
-
 	try {
 		const SpendsRef = collection(doc(db, 'users', uid), 'Spends');
 		const snapshot = await getDocs(SpendsRef);
@@ -93,7 +89,6 @@ export const fetchSpends = async ({ uid }) => {
 
 export const fetchGoal = async ({ uid }) => {
 	if (!uid) return console.log('hola');
-
 	try {
 		const GoalRef = collection(doc(db, 'users', uid), 'Goals');
 		const snapshot = await getDocs(GoalRef);
@@ -103,7 +98,7 @@ export const fetchGoal = async ({ uid }) => {
 		}));
 		return Goal;
 	} catch (error) {
-		console.error('Error loading goals:', error);
+		console.error('Error loading journals:', error);
 	}
 };
 
@@ -119,6 +114,6 @@ export const fetchJournal = async ({ uid }) => {
 		}));
 		return Journal;
 	} catch (error) {
-		console.error('Error loading journals:', error);
+		console.error('Error cargando journals:', error);
 	}
 };

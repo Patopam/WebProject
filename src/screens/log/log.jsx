@@ -51,7 +51,11 @@ function Log() {
 
 				dispatch(setUserid(user.uid));
 				dispatch(setUserNombre(user.displayName));
+				console.log(user);
 				localStorage.setItem('uid', user.uid);
+
+				console.log('UID guardado en localStorage:', user.uid);
+
 				Navigate('/dashboard');
 			})
 			.catch((error) => {
