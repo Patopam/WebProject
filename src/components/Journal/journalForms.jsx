@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useSnackbar } from 'notistack';
 import { Box, Typography, TextField, Button, IconButton, styled } from '@mui/material';
 import SentimentSatisfiedOutlinedIcon from '@mui/icons-material/SentimentSatisfiedOutlined';
 import OpenInFullOutlinedIcon from '@mui/icons-material/OpenInFullOutlined';
@@ -12,6 +13,7 @@ import './journalForms.css';
 
 export default function JournalForm({ compact = false, redirectTo }) {
 	const navigate = useNavigate();
+	const { enqueueSnackbar } = useSnackbar();
 	const id = useSelector((state) => state.userId.id);
 	const [entryText, setEntryText] = useState('');
 	const [entryTitle, setEntryTitle] = useState('');
@@ -86,13 +88,14 @@ export default function JournalForm({ compact = false, redirectTo }) {
 		setEntryTitle('');
 		setEntryText('');
 		setSelectedTags([]);
-		alert('Journal saved successfully.');
+		enqueueSnackbar('Journal saved successfully', { variant: 'success' });
 		// If we are in expanded screen and a redirection route was passed
 		if (!compact && redirectTo) {
-			navigate(redirectTo);
+			setTimeout(() => {
+				navigate(redirectTo);
+			}, 2500); // Wait 2.5s before redirecting
 		}
 	};
-
 	return (
 		<JournalContainer compact={compact} className='journal-container'>
 			<HeaderSection className='header-section'>
