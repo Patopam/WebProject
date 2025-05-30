@@ -4,10 +4,10 @@ import { styled } from '@mui/material/styles';
 
 export default function BotonStartGoogle({ onClick, text }) {
 	const isMobile = useMediaQuery('(max-width:480px)');
-	const height = isMobile ? '50px' : '63px';
-	const maxWidth = isMobile ? '260px' : '100%';
-	const fontSize = isMobile ? '16px' : '20px';
-	const borderRadius = isMobile ? '16px' : '16px';
+	const height = isMobile ? '53px' : '53px';
+	const maxWidth = isMobile ? '600px' : '100%';
+	const fontSize = isMobile ? '16px' : '17px';
+	const borderRadius = isMobile ? '16px' : '18px';
 	const paddingX = isMobile ? '12px' : '24px';
 
 	return (

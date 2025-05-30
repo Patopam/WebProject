@@ -40,10 +40,10 @@ function Start() {
 					sx={{
 						color: '#000000',
 						fontFamily: 'Manrope, sans-serif',
-						fontSize: '20px',
+						fontSize: '18px',
 						fontWeight: 400,
 						textAlign: 'center',
-						lineHeight: 1.4,
+						lineHeight: 1.1,
 					}}
 				>
 					A space that supports what you
