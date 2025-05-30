@@ -1,5 +1,4 @@
-import { useState, useEffect, use } from 'react';
-import { filterByTime } from '../../utils/utils';
+import { useState, useEffect } from 'react';
 import { AttachMoney, ArrowDropDown } from '@mui/icons-material';
 import { fetchGoal } from '../../services/firebaseUtils';
 import { useSelector } from 'react-redux';
@@ -18,89 +17,6 @@ const GoalHistoryCard = () => {
 
 	const timeOptions = ['Today', 'Week', 'Month'];
 	const statusOptions = ['All', 'Completed', 'Failed'];
-	const containerStyle = {
-		display: 'flex',
-		flexDirection: 'column',
-		width: '100%',
-		height: '23rem',
-		minHeight: '23rem',
-		padding: '3.5%',
-		borderRadius: '1.5rem',
-		backgroundColor: '#FCE2A9',
-		boxSizing: 'border-box',
-		fontFamily: "'Manrope', sans-serif",
-		gap: '2.5%',
-		overflow: 'hidden',
-	};
-
-	const headerStyle = {
-		display: 'flex',
-		alignItems: 'center',
-		gap: '2%',
-	};
-
-	const iconContainer = {
-		width: '4.6%',
-		minWidth: '30px',
-		aspectRatio: '1 / 1',
-		borderRadius: '50%',
-		backgroundColor: '#FACD69',
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'center',
-	};
-
-	const titleStyle = {
-		fontSize: 'clamp(1rem, 2vw, 1.125rem)', // Responsive 16px y 18px
-		fontWeight: 300,
-		color: '#333',
-	};
-
-	const filterBoxStyle = {
-		display: 'flex',
-		justifyContent: 'space-between',
-		backgroundColor: '#F5D889',
-		borderRadius: '0.75rem',
-		padding: '1% 2%',
-	};
-
-	const filterGroup = {
-		display: 'flex',
-		gap: '2.5%',
-		fontWeight: 600,
-		color: '#333',
-		cursor: 'pointer',
-	};
-
-	const tableWrapper = {
-		overflowY: 'auto',
-		height: '160px',
-		scrollbarWidth: 'none',
-		msOverflowStyle: 'none',
-	};
-
-	const tableStyle = {
-		width: '100%',
-		borderCollapse: 'separate',
-		borderSpacing: '1.5% 3%',
-		fontSize: 'clamp(0.75rem, 1.5vw, 0.9rem)', // Responsive  12px y 14.5px
-	};
-
-	const thStyle = {
-		textAlign: 'left',
-		fontWeight: 600,
-		color: '#333',
-		padding: '0 1%',
-	};
-
-	const tdStyle = {
-		backgroundColor: 'white',
-		padding: '1.25% 1.75%',
-		borderRadius: '0.75rem',
-		whiteSpace: 'nowrap',
-		overflow: 'hidden',
-		textOverflow: 'ellipsis',
-	};
 
 	return (
 		<div>
@@ -160,7 +76,7 @@ const GoalHistoryCard = () => {
 									<tr key={goal.id}>
 										<td style={tdStyle}>{goal.date?.toDate().toLocaleDateString()}</td>
 										<td style={tdStyle}>{goal?.description}</td>
-										<td style={tdStyle}>{goal?.price}</td>
+										<td style={tdStyle}>${goal.amount}</td>
 										<td style={tdStyle}>{goal?.status}</td>
 									</tr>
 								))}
@@ -172,5 +88,88 @@ const GoalHistoryCard = () => {
 		</div>
 	);
 };
-
 export default GoalHistoryCard;
+
+const containerStyle = {
+	display: 'flex',
+	flexDirection: 'column',
+	width: '100%',
+	height: '23rem',
+	minHeight: '23rem',
+	padding: '3.5%',
+	borderRadius: '1.5rem',
+	backgroundColor: '#FCE2A9',
+	boxSizing: 'border-box',
+	fontFamily: "'Manrope', sans-serif",
+	gap: '2.5%',
+	overflow: 'hidden',
+};
+
+const headerStyle = {
+	display: 'flex',
+	alignItems: 'center',
+	gap: '2%',
+};
+
+const iconContainer = {
+	width: '4.6%',
+	minWidth: '30px',
+	aspectRatio: '1 / 1',
+	borderRadius: '50%',
+	backgroundColor: '#FACD69',
+	display: 'flex',
+	alignItems: 'center',
+	justifyContent: 'center',
+};
+
+const titleStyle = {
+	fontSize: 'clamp(1rem, 2vw, 1.125rem)', // Responsive 16px y 18px
+	fontWeight: 300,
+	color: '#333',
+};
+
+const filterBoxStyle = {
+	display: 'flex',
+	justifyContent: 'space-between',
+	backgroundColor: '#F5D889',
+	borderRadius: '0.75rem',
+	padding: '1% 2%',
+};
+
+const filterGroup = {
+	display: 'flex',
+	gap: '2.5%',
+	fontWeight: 600,
+	color: '#333',
+	cursor: 'pointer',
+};
+
+const tableWrapper = {
+	overflowY: 'auto',
+	height: '160px',
+	scrollbarWidth: 'none',
+	msOverflowStyle: 'none',
+};
+
+const tableStyle = {
+	width: '100%',
+	borderCollapse: 'separate',
+	borderSpacing: '1.5% 3%',
+	fontSize: 'clamp(0.75rem, 1.5vw, 0.9rem)', // Responsive  12px y 14.5px
+};
+
+const thStyle = {
+	textAlign: 'left',
+	fontWeight: 600,
+	color: '#333',
+	padding: '0 1%',
+};
+
+const tdStyle = {
+	backgroundColor: 'white',
+	padding: '1.25% 1.75%',
+	borderRadius: '0.75rem',
+	whiteSpace: 'nowrap',
+	overflow: 'hidden',
+	textOverflow: 'ellipsis',
+};

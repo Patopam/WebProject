@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { AttachMoney, ArrowDropDown } from '@mui/icons-material';
-import { filterByTime } from '../../utils/utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSpends } from '../../services/firebaseUtils';
 
@@ -62,7 +61,7 @@ const ExpenditureHistoryTable = () => {
 								{Data.map((item) => (
 									<tr key={item.id}>
 										<td style={tdStyle}>{item.date?.toDate().toLocaleDateString()}</td>
-										<td style={tdStyle}>{item.price}</td>
+										<td style={tdStyle}>${item.amount}</td>
 										<td style={tdStyle}>{item.category}</td>
 									</tr>
 								))}

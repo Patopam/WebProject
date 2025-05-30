@@ -39,7 +39,7 @@ const ExpensesDay = () => {
 							{Data.map((item) => (
 								<tr key={item.id}>
 									<td style={tdStyle}>{item.date?.toDate().toLocaleDateString()}</td>
-									<td style={tdStyle}>{item.price}</td>
+									<td style={tdStyle}>${item.amount}</td>
 									<td style={tdStyle}>{item.category}</td>
 								</tr>
 							))}
