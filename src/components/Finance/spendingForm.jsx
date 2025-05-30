@@ -6,30 +6,37 @@ import { useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 import toast from 'react-hot-toast';
 
+const categoryOptions = ['Food', 'Sweets', 'Coffee', 'Entertainment', 'Shopping', 'Experiences', 'Other'];
+
 const SpendingForm = () => {
 	const navigate = useNavigate();
 	const id = useSelector((state) => state.userId.id);
 	const fechaActual = new Date().toLocaleDateString();
 
 	const [date, setDate] = useState(fechaActual);
-	const [category, setCategory] = useState('Write here...');
+	const [category, setCategory] = useState('');
 	const [price, setPrice] = useState('$20.000');
 	const [description, setDescription] = useState('Write here...');
 
 	const [editDate, setEditDate] = useState(false);
-	const [editCategory, setEditCategory] = useState(false);
 	const [editPrice, setEditPrice] = useState(false);
 	const [editDesc, setEditDesc] = useState(false);
 
 	const handleClose = () => navigate(-1);
 
 	const handleSubmit = async () => {
+		const amount = Number(price.replace(/\D/g, ''));
+		if (!category || isNaN(amount)) {
+			toast.error('Por favor selecciona una categoría y un valor válido.');
+			return;
+		}
+
 		try {
 			await addSpend({
 				uid: id,
 				startDate: date,
 				category,
-				price,
+				amount,
 				description,
 			});
 			toast.success('¡Gasto guardado con éxito!');
@@ -54,13 +61,22 @@ const SpendingForm = () => {
 				editable={editDate}
 				onEditClick={() => setEditDate(!editDate)}
 			/>
-			<EditInput
-				label='Add Category'
-				value={category}
-				onChange={(e) => setCategory(e.target.value)}
-				editable={editCategory}
-				onEditClick={() => setEditCategory(!editCategory)}
-			/>
+
+			{/* Select fijo de categorías */}
+			<div style={{ margin: '16px 0' }}>
+				<label style={{ fontWeight: 'bold' }}>Category</label>
+				<select
+					value={category}
+					onChange={(e) => setCategory(e.target.value)}
+					style={{ width: '100%', padding: '10px', borderRadius: '10px', marginTop: '8px' }}
+				>
+					<option value=''>Select a category</option>
+					{categoryOptions.map((option) => (
+						<option key={option}>{option}</option>
+					))}
+				</select>
+			</div>
+
 			<EditInput
 				label='Add Price'
 				value={price}

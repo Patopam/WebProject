@@ -2,7 +2,7 @@ import { AttachMoney } from '@mui/icons-material';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { fetchSpends } from '../../services/firebaseUtils';
-const ExpensesDay = ({ data }) => {
+const ExpensesDay = () => {
 	const [Data, setData] = useState();
 	const [Loading, setLoading] = useState(true);
 	const id = useSelector((state) => state.userId.id);

@@ -24,19 +24,25 @@ const GoalForm = () => {
 	const handleClose = () => navigate(-1);
 
 	const handleSubmit = async () => {
+		const amount = Number(price.replace(/\D/g, ''));
+		if (isNaN(amount)) {
+			toast.error('Please enter a valid numeric value.');
+			return;
+		}
+
 		try {
 			await addGoals({
 				uid: id,
 				startDate,
 				endDate,
-				price,
+				amount,
 				description,
 			});
-			toast.success('¡Meta guardada con éxito!');
+			toast.success('Goal saved successfully!');
 			navigate('/finance');
 		} catch (err) {
 			console.error(err);
-			toast.error('Error al guardar la meta.');
+			toast.error('Error saving goal.');
 		}
 	};
 

@@ -13,9 +13,10 @@ export const saveUserData = async ({ uid, name, email }) => {
 		console.error('Error saving user data:', error);
 	}
 };
-export const addGoals = async ({ uid, startDate, endDate, price, description }) => {
+
+export const addGoals = async ({ uid, startDate, endDate, amount, description }) => {
 	if (!uid) {
-		console.error('Invalid UID when trying to save journal.');
+		console.error('Invalid UID when trying to save goal.');
 		return;
 	}
 
@@ -24,20 +25,19 @@ export const addGoals = async ({ uid, startDate, endDate, price, description }) 
 		await addDoc(GoalsRef, {
 			startDate,
 			endDate,
-			price,
+			amount,
 			description,
 			date: serverTimestamp(),
 			status: 'Procces',
 		});
-		console.log('Goal saved successfully');
 	} catch (error) {
-		console.error('Error guardando journal:', error);
+		console.error('Error saving goal:', error);
 	}
 };
 
-export const addSpend = async ({ uid, startDate, category, price, description }) => {
+export const addSpend = async ({ uid, startDate, category, amount, description }) => {
 	if (!uid) {
-		console.error('Invalid UID when trying to save journal.');
+		console.error('Invalid UID when trying to save spend.');
 		return;
 	}
 	try {
@@ -45,12 +45,12 @@ export const addSpend = async ({ uid, startDate, category, price, description })
 		await addDoc(SpendsRef, {
 			startDate,
 			category,
-			price,
+			amount,
 			description,
 			date: serverTimestamp(),
 		});
 	} catch (error) {
-		console.error('Error saving journal:', error);
+		console.error('Error saving spend:', error);
 	}
 };
 
