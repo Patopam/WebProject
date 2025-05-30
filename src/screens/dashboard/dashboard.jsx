@@ -1,4 +1,3 @@
-import React from 'react';
 import AddButton from '../../components/Buttons/add';
 import Header from '../../components/Header/header';
 import ReminderCard from '../../components/Cards/remainder';
@@ -70,7 +69,7 @@ function Dashboard() {
 	};
 
 	const handleJournalClick = () => {
-		navigate('/journal/write');
+		navigate('/journal/write', { state: { redirectTo: '/dashboard' } }); // I'll tell you where to redirect next
 	};
 
 	const handleSpendClick = () => {

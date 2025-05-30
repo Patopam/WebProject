@@ -10,7 +10,7 @@ import { addJournal } from '../../services/firebaseUtils';
 import { useSelector } from 'react-redux';
 import './journalForms.css';
 
-export default function JournalForm({ compact = false }) {
+export default function JournalForm({ compact = false, redirectTo }) {
 	const navigate = useNavigate();
 	const id = useSelector((state) => state.userId.id);
 	const [entryText, setEntryText] = useState('');
@@ -87,6 +87,10 @@ export default function JournalForm({ compact = false }) {
 		setEntryText('');
 		setSelectedTags([]);
 		alert('Journal saved successfully.');
+		// If we are in expanded screen and a redirection route was passed
+		if (!compact && redirectTo) {
+			navigate(redirectTo);
+		}
 	};
 
 	return (
