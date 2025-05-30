@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
+import { Toaster } from 'react-hot-toast';
 import Dashboard from '../screens/dashboard/dashboard';
 import Emotions from '../screens/emotions/emotions';
 import Finance from '../screens/finance/finance';
@@ -36,6 +36,7 @@ function Router() {
 
 	return (
 		<BrowserRouter>
+			<Toaster position='top-right' reverseOrder={false} />
 			<Routes>
 				<Route path='/' element={<Start />} />
 				<Route path='/sing' element={<Sign />} />
