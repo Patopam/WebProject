@@ -6,7 +6,7 @@ import Router from './routers/router';
 function App() {
 	return (
 		<Provider store={store}>
-			<SnackbarProvider maxSnack={3} autoHideDuration={2500}>
+			<SnackbarProvider maxSnack={3} autoHideDuration={1700} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
 				<Router />
 			</SnackbarProvider>
 		</Provider>
