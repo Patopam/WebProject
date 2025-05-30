@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 
 const categoryOptions = ['Food', 'Sweets', 'Coffee', 'Entertainment', 'Shopping', 'Experiences', 'Other'];
 
-const SpendingForm = () => {
+const SpendingForm = ({ redirectTo = '/finance' }) => {
 	const navigate = useNavigate();
 	const id = useSelector((state) => state.userId.id);
 	const fechaActual = new Date().toLocaleDateString();
@@ -27,7 +27,7 @@ const SpendingForm = () => {
 	const handleSubmit = async () => {
 		const amount = Number(price.replace(/\D/g, ''));
 		if (!category || isNaN(amount)) {
-			toast.error('Por favor selecciona una categoría y un valor válido.');
+			toast.error('Please select a category and a valid value.');
 			return;
 		}
 
@@ -39,11 +39,11 @@ const SpendingForm = () => {
 				amount,
 				description,
 			});
-			toast.success('¡Gasto guardado con éxito!');
-			navigate('/finance');
+			toast.success('Spending saved!');
+			navigate(redirectTo);
 		} catch (err) {
 			console.error(err);
-			toast.error('Hubo un error al guardar el gasto.');
+			toast.error('Error saving expense');
 		}
 	};
 

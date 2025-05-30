@@ -61,7 +61,7 @@ function Finance() {
 	};
 
 	const handleSpendClick = () => {
-		navigate('/finance/add-spending');
+		navigate('/finance/add-spending', { state: { from: '/finance' } });
 	};
 
 	const handleGoalClick = () => {

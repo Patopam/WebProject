@@ -73,7 +73,7 @@ function Dashboard() {
 	};
 
 	const handleSpendClick = () => {
-		navigate('/finance/add-spending');
+		navigate('/finance/add-spending', { state: { from: '/dashboard' } });
 	};
 	const goSettings = () => {
 		navigate('/settings');
