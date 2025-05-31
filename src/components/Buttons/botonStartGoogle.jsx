@@ -3,10 +3,11 @@ import { FcGoogle } from 'react-icons/fc';
 import { styled } from '@mui/material/styles';
 
 export default function BotonStartGoogle({ onClick, text }) {
-	const isMobile = useMediaQuery('(max-width:480px)');
-	const height = isMobile ? '53px' : '53px';
+	const isMobile = useMediaQuery('(max-width:420px)');
+	const isLargeMobile = useMediaQuery('(min-width:421px) and (max-width:600px)');
+	const height = isMobile ? '53px' : isLargeMobile ? '60px' : '53px';
 	const maxWidth = isMobile ? '600px' : '100%';
-	const fontSize = isMobile ? '16px' : '17px';
+	const fontSize = isMobile ? '16px' : isLargeMobile ? '18px' : '17px';
 	const borderRadius = isMobile ? '16px' : '18px';
 	const paddingX = isMobile ? '12px' : '24px';
 

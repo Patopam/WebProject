@@ -3,9 +3,10 @@ import { styled } from '@mui/material/styles';
 
 export default function BotonStart({ text, Icono, onClick }) {
 	const isMobile = useMediaQuery('(max-width:480px)');
-	const height = isMobile ? '50px' : '53px';
+	const isLargeMobile = useMediaQuery('(min-width:421px) and (max-width:600px)');
+	const height = isMobile ? '50px' : isLargeMobile ? '58px' : '53px';
 	const maxWidth = isMobile ? '450px' : '100%';
-	const fontSize = isMobile ? '16px' : '17px';
+	const fontSize = isMobile ? '16px' : isLargeMobile ? '18px' : '17px';
 	const borderRadius = isMobile ? '16px' : '18px';
 	const paddingX = isMobile ? '12px' : '24px';
 
