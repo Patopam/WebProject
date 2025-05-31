@@ -1,10 +1,9 @@
-// REvisar google
 import { Typography, Container, Stack, Box } from '@mui/material';
 import BotonStart from '../../components/Buttons/botonStart';
 import BotonStartGoogle from '../../components/Buttons/botonStartGoogle';
 import { useNavigate, Link } from 'react-router';
 import { useState } from 'react';
-import Inputs from '../../components/Inputs/inputs';
+import Inputs from '../../components/Inputs/Inputs';
 import { FaRegEyeSlash } from 'react-icons/fa';
 import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { saveUserData } from '../../services/firebaseUtils';
@@ -40,7 +39,9 @@ function Sign() {
 			.catch((error) => {
 				const errorCode = error.code;
 				const errorMessage = error.message;
+
 				const email = error.customData.email;
+
 				const credential = GoogleAuthProvider.credentialFromError(error);
 			});
 	};
@@ -127,6 +128,7 @@ function Sign() {
 								onChange={(e) => setConstraseña(e.target.value)}
 								placeholder={'Write your password *'}
 							/>
+
 							<Box sx={{ width: 460 }}>
 								<Stack spacing={3}>
 									<BotonStart text='Create your account' />
