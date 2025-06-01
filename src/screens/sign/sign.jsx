@@ -2,7 +2,7 @@ import { Typography, Container, Stack, Box } from '@mui/material';
 import BotonStart from '../../components/Buttons/botonStart';
 import BotonStartGoogle from '../../components/Buttons/botonStartGoogle';
 import { useNavigate, Link } from 'react-router';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Inputs from '../../components/Inputs/Inputs';
 import { FaRegEyeSlash } from 'react-icons/fa';
 import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
@@ -12,14 +12,8 @@ import { useDispatch } from 'react-redux';
 import { setUserid } from '../../redux/UserSlice/UserSlice';
 import { setUserNombre } from '../../redux/UserSlice/NombreSlice';
 import './sign.css';
-import { useEffect } from 'react';
 
 function Sign() {
-	useEffect(() => {
-		document.body.classList.add('sign-mode');
-		return () => document.body.classList.remove('sign-mode');
-	}, []);
-
 	const [Usuario, setUsuario] = useState('');
 	const [Correo, setCorreo] = useState('');
 	const [Constraseña, setConstraseña] = useState('');
@@ -27,6 +21,11 @@ function Sign() {
 	const dispatch = useDispatch();
 	const Navigate = useNavigate();
 	const provider = new GoogleAuthProvider();
+
+	useEffect(() => {
+		document.body.classList.add('sign-mode');
+		return () => document.body.classList.remove('sign-mode');
+	}, []);
 
 	const SingUpGoogle = () => {
 		signInWithPopup(auth, provider)
@@ -87,7 +86,7 @@ function Sign() {
 						placeholder='Write your password *'
 					/>
 
-					<Stack spacing={2}>
+					<Stack spacing={2} className='buttons-stack'>
 						<BotonStart text='Create your account' />
 						<BotonStartGoogle text='Connect with Google' onClick={SingUpGoogle} />
 					</Stack>

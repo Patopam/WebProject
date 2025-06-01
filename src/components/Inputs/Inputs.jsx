@@ -7,7 +7,7 @@ function Inputs({ type, placeholder, value, onChange }) {
 			alignItems: 'center',
 			border: '1px solid #777777',
 			borderRadius: '16px',
-			fontSize: 'clamp(15px, 2.3vw, 18px)',
+			fontSize: 'clamp(15px, 2.3vw, 17px)',
 			fontFamily: 'Manrope, sans-serif',
 			width: '100%',
 			color: '#333333',

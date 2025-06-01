@@ -3,45 +3,59 @@ body.sign-mode {
 	overflow: hidden;
 	height: 100dvh;
 }
+
 .Container-sign {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	min-height: 100dvh;
-	padding: clamp(2rem, 4vw, 4rem) clamp(1rem, 6vw, 2rem);
-	max-width: 600px;
+	padding: clamp(2rem, 2vw, 4rem) clamp(1rem, 4vw, 2rem);
+	max-width: 420px;
 	margin: 0 auto;
 	box-sizing: border-box;
 	font-family: 'Manrope', sans-serif;
 }
 
+/* Título y subtítulo */
 .sign-header {
 	text-align: center;
-	margin-bottom: 2rem;
+	margin-bottom: 0.8rem;
 }
 
 .title {
-	font-size: clamp(1.8rem, 5vw, 2.8rem);
-	color: #000;
-	font-weight: 600;
+	font-size: clamp(1.8rem, 4vw, 2.8rem);
+	color: #111;
+	font-weight: 700;
 }
 
 .subtitle {
-	font-size: clamp(1rem, 2.5vw, 1.3rem);
+	font-size: clamp(1rem, 2vw, 1.3rem);
 	color: #333;
 	margin-top: 0.8rem;
-	line-height: 1.4;
+	line-height: 1.5;
 }
 
 .form-sign {
 	width: 100%;
 }
 
+.form-sign input {
+	max-width: 420px;
+	margin: 0 auto;
+	display: block;
+}
+.MuiStack-root.buttons-stack button {
+	max-width: 460px;
+	width: 100%;
+	margin: 0 auto;
+	display: block;
+}
+/* Texto de abajo */
 .link-log {
 	text-align: center;
 	font-size: clamp(0.9rem, 2vw, 1.1rem);
-	margin-top: 1rem;
+	margin-top: 10rem;
 	color: #5c35d2;
 }
 
@@ -49,21 +63,31 @@ body.sign-mode {
 	color: inherit;
 	text-decoration: underline;
 }
+.buttons-stack {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1rem;
+}
 
-/* Breakpoints específicos */
-
+/* Breakpoints móviles */
 @media (max-width: 480px) {
 	.Container-sign {
 		padding: 2rem 1rem;
+		max-width: 410px;
 	}
 
-	.form-sign .MuiStack-root {
-		gap: 1.5rem;
+	.buttons-stack {
+		gap: 0.8rem; /* más separación entre Create Account y Google */
 	}
-}
 
-@media (min-width: 768px) and (max-width: 1024px) {
-	.Container-sign {
-		max-width: 650px;
+	.title {
+		font-size: clamp(1.6rem, 5vw, 2.2rem);
+		font-weight: 700;
+	}
+
+	.link-log {
+		margin-top: 0.5rem;
 	}
 }

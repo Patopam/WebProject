@@ -1,4 +1,4 @@
-import { Button, Typography } from '@mui/material';
+import { Button } from '@mui/material';
 import { FcGoogle } from 'react-icons/fc';
 import { styled } from '@mui/material/styles';
 
@@ -14,58 +14,61 @@ export default function BotonStartGoogle({ onClick, text }) {
 					sm: '60px',
 					md: '62px',
 				},
-				maxWidth: '100%',
+				width: '100%',
+				maxWidth: '450px',
 				borderRadius: {
 					xs: '16px',
 					sm: '18px',
 				},
-				paddingLeft: {
-					xs: '12px',
+				paddingX: {
+					xs: '16px',
 					sm: '24px',
 				},
-				paddingRight: {
-					xs: '12px',
-					sm: '24px',
+				fontSize: {
+					xs: '16px',
+					sm: '18px',
+					md: '19px',
 				},
+				fontFamily: 'Manrope, sans-serif',
+				color: '#1F1F1F',
+				fontWeight: 400,
+				textTransform: 'none',
 			}}
 		>
-			<Typography
-				sx={{
-					color: '#1F1F1F',
-					fontFamily: 'Manrope, sans-serif',
-					fontSize: {
-						xs: '16px',
-						sm: '18px',
-						md: '19px',
-					},
-					fontWeight: 400,
-					lineHeight: 'normal',
-				}}
-			>
-				{text}
-			</Typography>
+			{text}
 		</StyledGoogleButton>
 	);
 }
-
 const StyledGoogleButton = styled(Button)(() => ({
 	backgroundColor: '#D2D2D2',
 	textTransform: 'none',
 	boxShadow: 'none',
+	minWidth: 'auto',
+	width: '100%',
+	whiteSpace: 'nowrap',
+
 	display: 'flex',
+	flexDirection: 'row',
 	justifyContent: 'center',
 	alignItems: 'center',
 	gap: '8px',
+
+	overflow: 'hidden',
+	textOverflow: 'ellipsis',
+
 	'&:hover': {
 		backgroundColor: '#A4A4A4',
 		boxShadow: 'none',
 	},
+
 	'& .MuiButton-startIcon': {
 		margin: 0,
+		width: '22px',
+		height: '22px',
 		display: 'flex',
 		justifyContent: 'center',
 		alignItems: 'center',
-		color: '#000000',
 	},
+
 	fontFamily: "'Manrope', sans-serif",
 }));
