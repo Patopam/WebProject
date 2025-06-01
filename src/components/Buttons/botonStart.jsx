@@ -1,33 +1,42 @@
-import { Button, Typography, useMediaQuery } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 export default function BotonStart({ text, Icono, onClick }) {
-	const isMobile = useMediaQuery('(max-width:480px)');
-	const isLargeMobile = useMediaQuery('(min-width:421px) and (max-width:600px)');
-	const height = isMobile ? '50px' : isLargeMobile ? '58px' : '53px';
-	const maxWidth = isMobile ? '450px' : '100%';
-	const fontSize = isMobile ? '16px' : isLargeMobile ? '18px' : '17px';
-	const borderRadius = isMobile ? '16px' : '18px';
-	const paddingX = isMobile ? '12px' : '24px';
-
 	return (
 		<StyledButton
 			variant='contained'
 			type='submit'
 			onClick={onClick}
 			sx={{
-				height,
-				maxWidth,
-				borderRadius,
-				paddingLeft: paddingX,
-				paddingRight: paddingX,
+				height: {
+					xs: '50px',
+					sm: '58px',
+					md: '60px',
+				},
+				maxWidth: '100%',
+				borderRadius: {
+					xs: '16px',
+					sm: '18px',
+				},
+				paddingLeft: {
+					xs: '12px',
+					sm: '24px',
+				},
+				paddingRight: {
+					xs: '12px',
+					sm: '24px',
+				},
 			}}
 		>
 			<Typography
 				sx={{
 					color: '#E8E8E8',
 					fontFamily: 'Manrope, sans-serif',
-					fontSize,
+					fontSize: {
+						xs: '16px',
+						sm: '18px',
+						md: '19px',
+					},
 					fontWeight: 400,
 					lineHeight: 'normal',
 				}}

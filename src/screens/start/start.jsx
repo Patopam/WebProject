@@ -40,7 +40,7 @@ function Start() {
 					sx={{
 						color: '#000000',
 						fontFamily: 'Manrope, sans-serif',
-						fontSize: '18px',
+						fontSize: 'clamp(15px, 2.5vw, 20px)',
 						fontWeight: 400,
 						textAlign: 'center',
 						lineHeight: 1.1,

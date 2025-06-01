@@ -7,7 +7,7 @@ body.start-mode {
 	justify-content: center;
 	align-items: center;
 	min-height: 100vh;
-	padding: 4rem 2rem;
+	padding: clamp(2rem, 4vw, 4rem) clamp(1rem, 4vw, 2rem);
 	box-sizing: border-box;
 }
 .menu-logo {
@@ -30,7 +30,28 @@ body.start-mode {
 	box-sizing: border-box;
 }
 
-@media (max-width: 600px) {
+/* Mobile S */
+@media (max-width: 380px) {
+	.logo-img {
+		max-width: 220px;
+	}
+
+	.text-start p {
+		font-size: 15px !important;
+	}
+
+	.container-start {
+		padding: 2.5rem 1rem;
+	}
+
+	.start-buttons-wrapper {
+		max-width: 280px;
+		padding: 0 0.5rem;
+	}
+}
+
+/* Mobile M y L */
+@media (min-width: 421px) and (max-width: 600px) {
 	.logo-img {
 		max-width: 270px;
 	}
@@ -39,26 +60,27 @@ body.start-mode {
 		font-size: 16px !important;
 	}
 
+	.start-buttons-wrapper {
+		max-width: 360px;
+		padding: 0 1.6rem;
+	}
 	.container-start {
 		padding: 3rem 1rem;
 	}
-	.start-buttons-wrapper {
-		max-width: 300px;
-		padding: 0 1rem;
-	}
 }
 
-@media (min-width: 421px) and (max-width: 600px) {
+/* Tablet */
+@media (min-width: 601px) and (max-width: 768px) {
 	.logo-img {
-		max-width: 300px;
+		max-width: 330px;
+	}
+
+	.start-buttons-wrapper {
+		max-width: 440px;
+		padding: 0 2rem;
 	}
 
 	.text-start p {
-		font-size: 17.5px !important;
-	}
-
-	.start-buttons-wrapper {
-		max-width: 370px;
-		padding: 0 1.6rem;
+		font-size: 18px !important;
 	}
 }

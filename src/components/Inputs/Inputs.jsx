@@ -2,15 +2,16 @@ function Inputs({ type, placeholder, value, onChange }) {
 	const styles = {
 		input: {
 			flex: 1,
-			padding: '15px',
+			padding: '14px 18px',
 			display: 'flex',
 			alignItems: 'center',
 			border: '1px solid #777777',
 			borderRadius: '16px',
-			fontSize: '20px',
+			fontSize: 'clamp(15px, 2.3vw, 18px)',
 			fontFamily: 'Manrope, sans-serif',
-			width: '95%',
+			width: '100%',
 			color: '#333333',
+			backgroundColor: '#eef1fc',
 		},
 		div: {
 			display: 'flex',

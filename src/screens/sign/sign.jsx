@@ -12,8 +12,14 @@ import { useDispatch } from 'react-redux';
 import { setUserid } from '../../redux/UserSlice/UserSlice';
 import { setUserNombre } from '../../redux/UserSlice/NombreSlice';
 import './sign.css';
+import { useEffect } from 'react';
 
 function Sign() {
+	useEffect(() => {
+		document.body.classList.add('sign-mode');
+		return () => document.body.classList.remove('sign-mode');
+	}, []);
+
 	const [Usuario, setUsuario] = useState('');
 	const [Correo, setCorreo] = useState('');
 	const [Constraseña, setConstraseña] = useState('');
@@ -21,12 +27,10 @@ function Sign() {
 	const dispatch = useDispatch();
 	const Navigate = useNavigate();
 	const provider = new GoogleAuthProvider();
+
 	const SingUpGoogle = () => {
 		signInWithPopup(auth, provider)
 			.then(async (result) => {
-				const credential = GoogleAuthProvider.credentialFromResult(result);
-				const token = credential.accessToken;
-
 				const user = result.user;
 				await saveUserData({
 					uid: user.uid,
@@ -37,112 +41,64 @@ function Sign() {
 				Navigate('/dashboard');
 			})
 			.catch((error) => {
-				const errorCode = error.code;
-				const errorMessage = error.message;
-
-				const email = error.customData.email;
-
-				const credential = GoogleAuthProvider.credentialFromError(error);
+				console.log(error.code, error.message);
 			});
 	};
+
 	const Summit = (e) => {
 		e.preventDefault();
-
 		createUserWithEmailAndPassword(auth, Correo, Constraseña)
 			.then(async (userCredential) => {
 				const user = userCredential.user;
-
 				await saveUserData({
 					uid: user.uid,
 					name: Usuario,
 					email: Correo,
 				});
-
 				dispatch(setUserid(user.uid), setUserNombre(Usuario));
-				console.log('UID guardado en Redux desde registro:', user.uid);
-
 				Navigate('/log');
 			})
 			.catch((error) => {
-				console.log(error.code);
-				console.log(error.message);
 				alert(error.message);
 			});
 	};
 
-	const styleText = {
-		Centrado: {
-			color: '#000000',
-			fontFamily: 'Manrope, sans-serif',
-			fontSize: '20px',
-			fontWeight: 400,
-			marginTop: '20px',
-			textAlign: 'center',
-		},
-		NoCentrado: {
-			color: '#000000',
-			fontFamily: 'Manrope, sans-serif',
-			fontSize: '20px',
-			fontWeight: 400,
-			marginTop: '20px',
-		},
-		Titulo: {
-			color: '#000000',
-			fontFamily: 'Manrope, sans-serif',
-			fontWeight: 400,
-			marginTop: '20px',
-			textAlign: 'center',
-		},
-	};
-
 	return (
-		<>
-			<Container className='Container-sign' sx={{ width: 500 }}>
-				<Box>
-					<Typography variant='h2' sx={styleText.Titulo}>
-						Register
-					</Typography>
-					<Typography sx={styleText.Centrado}>
-						Join Sense and take control of your emotional and financial habit.
-					</Typography>
-				</Box>
-				<Box>
-					<form onSubmit={Summit}>
-						<Stack spacing={3}>
-							<Inputs
-								value={Usuario}
-								onChange={(e) => setUsuario(e.target.value)}
-								label='Usuario'
-								placeholder='Write your name *'
-							/>
-							<Inputs
-								value={Correo}
-								onChange={(e) => setCorreo(e.target.value)}
-								label='Usuario'
-								placeholder='Write your email *'
-							/>
-							<Inputs
-								type='password'
-								icon={<FaRegEyeSlash />}
-								value={Constraseña}
-								onChange={(e) => setConstraseña(e.target.value)}
-								placeholder={'Write your password *'}
-							/>
+		<Container className='Container-sign'>
+			<Box className='sign-header'>
+				<Typography variant='h2' className='title'>
+					Register
+				</Typography>
+				<Typography className='subtitle'>
+					Join Sense and take control of your <br />
+					emotional and financial habit.
+				</Typography>
+			</Box>
 
-							<Box sx={{ width: 460 }}>
-								<Stack spacing={3}>
-									<BotonStart text='Create your account' />
-									<BotonStartGoogle text='Connect with Google' onClick={SingUpGoogle} />
-								</Stack>
-								<Typography sx={styleText.Centrado}>
-									<Link to='/log'>Do you have an account? Log in</Link>
-								</Typography>
-							</Box>
-						</Stack>
-					</form>
-				</Box>
-			</Container>
-		</>
+			<form onSubmit={Summit} className='form-sign'>
+				<Stack spacing={2.2}>
+					<Inputs value={Usuario} onChange={(e) => setUsuario(e.target.value)} placeholder='Write your name *' />
+					<Inputs value={Correo} onChange={(e) => setCorreo(e.target.value)} placeholder='Write your email *' />
+					<Inputs
+						type='password'
+						icon={<FaRegEyeSlash />}
+						value={Constraseña}
+						onChange={(e) => setConstraseña(e.target.value)}
+						placeholder='Write your password *'
+					/>
+
+					<Stack spacing={2}>
+						<BotonStart text='Create your account' />
+						<BotonStartGoogle text='Connect with Google' onClick={SingUpGoogle} />
+					</Stack>
+
+					<Typography className='link-log'>
+						<Link to='/log'>Do you have an account? Log in</Link>
+					</Typography>
+				</Stack>
+			</form>
+		</Container>
 	);
 }
+
 export default Sign;
