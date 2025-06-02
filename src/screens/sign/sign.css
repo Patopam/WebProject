@@ -4,90 +4,103 @@ body.sign-mode {
 	height: 100dvh;
 }
 
+/*  Contenedor principal del formulario de registro */
 .Container-sign {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	min-height: 100dvh;
-	padding: clamp(2rem, 2vw, 4rem) clamp(1rem, 4vw, 2rem);
-	max-width: 420px;
+	width: 100%;
+	max-width: 500px;
 	margin: 0 auto;
+	padding: 2rem;
 	box-sizing: border-box;
 	font-family: 'Manrope', sans-serif;
+	min-height: 100vh;
 }
 
-/* Título y subtítulo */
-.sign-header {
+/* Encabezado (título + descripción) */
+.Sign-header {
 	text-align: center;
-	margin-bottom: 0.8rem;
+	margin-bottom: 1rem;
 }
 
-.title {
-	font-size: clamp(1.8rem, 4vw, 2.8rem);
-	color: #111;
+.Sign-title {
+	font-size: clamp(1.8rem, 4vw, 2.5rem); /* Responsive: se adapta entre 1.8rem y 2.5rem */
 	font-weight: 700;
+	margin-bottom: 0.5rem;
 }
 
-.subtitle {
-	font-size: clamp(1rem, 2vw, 1.3rem);
+.Sign-subtitle {
+	font-size: clamp(1rem, 2.5vw, 1.2rem); /* Escala suavemente en dispositivos */
+	line-height: 1.4;
+	margin-bottom: 1.5rem;
 	color: #333;
-	margin-top: 0.8rem;
-	line-height: 1.5;
 }
 
-.form-sign {
+/* Formulario */
+.Sign-form {
 	width: 100%;
 }
 
-.form-sign input {
-	max-width: 420px;
-	margin: 0 auto;
-	display: block;
-}
-.MuiStack-root.buttons-stack button {
+/* Botones + enlace final */
+.Sign-buttons {
+	width: 100%;
 	max-width: 460px;
-	width: 100%;
-	margin: 0 auto;
-	display: block;
+	margin: 1.5rem auto 0 auto;
 }
-/* Texto de abajo */
-.link-log {
+
+.Sign-loginlink {
 	text-align: center;
-	font-size: clamp(0.9rem, 2vw, 1.1rem);
-	margin-top: 10rem;
-	color: #5c35d2;
+	margin-top: 1rem;
+	color: #5e35b1;
+	font-size: 0.95rem;
+	padding-top: 1rem;
 }
 
-.link-log a {
-	color: inherit;
-	text-decoration: underline;
-}
-.buttons-stack {
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 1rem;
-}
-
-/* Breakpoints móviles */
-@media (max-width: 480px) {
+@media screen and (max-width: 1024px) {
 	.Container-sign {
-		padding: 2rem 1rem;
-		max-width: 410px;
+		padding: 1.5rem;
+	}
+}
+
+/* Móviles medianos */
+@media screen and (max-width: 767px) {
+	.Container-sign {
+		padding: 1.25rem;
+		padding-top: 2rem;
+		padding-inline: 1.75rem;
 	}
 
-	.buttons-stack {
-		gap: 0.8rem; /* más separación entre Create Account y Google */
+	.Sign-title {
+		font-size: 2rem;
 	}
 
-	.title {
-		font-size: clamp(1.6rem, 5vw, 2.2rem);
-		font-weight: 700;
+	.Sign-subtitle {
+		margin-bottom: 1rem;
 	}
 
-	.link-log {
-		margin-top: 0.5rem;
+	.Sign-buttons {
+		max-width: 100%;
+	}
+
+	/* Botones full width */
+	.Sign-buttons button {
+		width: 100%;
+	}
+}
+
+/* Móviles pequeños */
+@media screen and (max-width: 425px) {
+	.Container-sign {
+		padding: 1rem;
+	}
+
+	.Sign-subtitle {
+		font-size: 1rem;
+	}
+
+	.Sign-buttons {
+		margin-top: 1rem;
 	}
 }

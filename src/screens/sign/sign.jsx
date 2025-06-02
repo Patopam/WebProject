@@ -28,20 +28,16 @@ function Sign() {
 	}, []);
 
 	const SingUpGoogle = () => {
-		signInWithPopup(auth, provider)
-			.then(async (result) => {
-				const user = result.user;
-				await saveUserData({
-					uid: user.uid,
-					name: user.displayName,
-					email: user.email,
-				});
-				dispatch(setUserid(user.uid), setUserNombre(user.displayName));
-				Navigate('/dashboard');
-			})
-			.catch((error) => {
-				console.log(error.code, error.message);
+		signInWithPopup(auth, provider).then(async (result) => {
+			const user = result.user;
+			await saveUserData({
+				uid: user.uid,
+				name: user.displayName,
+				email: user.email,
 			});
+			dispatch(setUserid(user.uid), setUserNombre(user.displayName));
+			Navigate('/dashboard');
+		});
 	};
 
 	const Summit = (e) => {
@@ -64,36 +60,46 @@ function Sign() {
 
 	return (
 		<Container className='Container-sign'>
-			<Box className='sign-header'>
-				<Typography variant='h2' className='title'>
+			<Box className='Sign-header'>
+				<Typography variant='h2' className='Sign-title'>
 					Register
 				</Typography>
-				<Typography className='subtitle'>
-					Join Sense and take control of your <br />
-					emotional and financial habit.
+				<Typography className='Sign-subtitle'>
+					Join Sense and take control of your <br /> emotional and financial habit.
 				</Typography>
 			</Box>
 
-			<form onSubmit={Summit} className='form-sign'>
-				<Stack spacing={2.2}>
-					<Inputs value={Usuario} onChange={(e) => setUsuario(e.target.value)} placeholder='Write your name *' />
-					<Inputs value={Correo} onChange={(e) => setCorreo(e.target.value)} placeholder='Write your email *' />
+			<form onSubmit={Summit} className='Sign-form'>
+				<Stack spacing={2}>
+					<Inputs
+						value={Usuario}
+						onChange={(e) => setUsuario(e.target.value)}
+						label='Usuario'
+						placeholder='Write your name *'
+					/>
+					<Inputs
+						value={Correo}
+						onChange={(e) => setCorreo(e.target.value)}
+						label='Correo'
+						placeholder='Write your email *'
+					/>
 					<Inputs
 						type='password'
 						icon={<FaRegEyeSlash />}
 						value={Constraseña}
 						onChange={(e) => setConstraseña(e.target.value)}
-						placeholder='Write your password *'
+						placeholder={'Write your password *'}
 					/>
 
-					<Stack spacing={2} className='buttons-stack'>
-						<BotonStart text='Create your account' />
-						<BotonStartGoogle text='Connect with Google' onClick={SingUpGoogle} />
-					</Stack>
-
-					<Typography className='link-log'>
-						<Link to='/log'>Do you have an account? Log in</Link>
-					</Typography>
+					<Box className='Sign-buttons'>
+						<Stack spacing={1.5}>
+							<BotonStart text='Create your account' />
+							<BotonStartGoogle text='Connect with Google' onClick={SingUpGoogle} />
+						</Stack>
+						<Typography className='Sign-loginlink'>
+							<Link to='/log'>Do you have an account? Log in</Link>
+						</Typography>
+					</Box>
 				</Stack>
 			</form>
 		</Container>
