@@ -25,13 +25,13 @@ body.sign-mode {
 
 .Sign-title {
 	font-size: clamp(1.8rem, 4vw, 2.5rem);
-	font-weight: 700;
+	font-weight: 800;
 	margin-bottom: 0.5rem;
 }
 
 .Sign-subtitle {
 	font-size: clamp(1rem, 2.5vw, 1.2rem);
-	line-height: 1.4;
+	line-height: 1.2;
 	margin-bottom: 1.5rem;
 	color: #333;
 }

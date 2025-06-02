@@ -17,7 +17,6 @@ function Sign() {
 	const [Usuario, setUsuario] = useState('');
 	const [Correo, setCorreo] = useState('');
 	const [Constraseña, setConstraseña] = useState('');
-
 	const dispatch = useDispatch();
 	const Navigate = useNavigate();
 	const provider = new GoogleAuthProvider();
@@ -61,7 +60,14 @@ function Sign() {
 	return (
 		<Container className='Container-sign'>
 			<Box className='Sign-header'>
-				<Typography variant='h2' className='Sign-title'>
+				<Typography
+					variant='h2'
+					className='Sign-title'
+					sx={{
+						fontStyle: 'normal',
+						fontWeight: 400,
+					}}
+				>
 					Register
 				</Typography>
 				<Typography className='Sign-subtitle'>
