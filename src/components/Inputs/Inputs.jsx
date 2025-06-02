@@ -1,10 +1,24 @@
+import { useState } from 'react';
+import RemoveRedEyeRoundedIcon from '@mui/icons-material/RemoveRedEyeRounded';
+import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
+
 function Inputs({ type, placeholder, value, onChange }) {
+	const [showPassword, setShowPassword] = useState(false);
+	const isPassword = type === 'password';
+
+	// Cambiar tipo dinámicamente si es password
+	const inputType = isPassword ? (showPassword ? 'text' : 'password') : type;
+
 	const styles = {
-		input: {
-			flex: 1,
-			padding: '14px 18px',
+		wrapper: {
+			position: 'relative',
+			width: '100%',
 			display: 'flex',
 			alignItems: 'center',
+		},
+		input: {
+			flex: 1,
+			padding: isPassword ? '14px 48px 14px 18px' : '14px 18px', // más padding a la derecha si hay ícono
 			border: '1px solid #777777',
 			borderRadius: '16px',
 			fontSize: 'clamp(15px, 2.3vw, 17px)',
@@ -13,15 +27,22 @@ function Inputs({ type, placeholder, value, onChange }) {
 			color: '#333333',
 			backgroundColor: '#eef1fc',
 		},
-		div: {
-			display: 'flex',
-			alignItems: 'center',
-			width: '100%',
+		icon: {
+			position: 'absolute',
+			right: '12px',
+			cursor: 'pointer',
+			color: '#666666',
 		},
 	};
+
 	return (
-		<div className='input-container' style={styles.div}>
-			<input style={styles.input} type={type} placeholder={placeholder} value={value} onChange={onChange} />
+		<div className='input-container' style={styles.wrapper}>
+			<input style={styles.input} type={inputType} placeholder={placeholder} value={value} onChange={onChange} />
+			{isPassword && (
+				<span onClick={() => setShowPassword(!showPassword)} style={styles.icon}>
+					{showPassword ? <VisibilityOffRoundedIcon /> : <RemoveRedEyeRoundedIcon />}
+				</span>
+			)}
 		</div>
 	);
 }
