@@ -4,7 +4,6 @@ body.sign-mode {
 	height: 100dvh;
 }
 
-/*  Contenedor principal del formulario de registro */
 .Container-sign {
 	display: flex;
 	flex-direction: column;
@@ -19,31 +18,28 @@ body.sign-mode {
 	min-height: 100vh;
 }
 
-/* Encabezado (título + descripción) */
 .Sign-header {
 	text-align: center;
 	margin-bottom: 1rem;
 }
 
 .Sign-title {
-	font-size: clamp(1.8rem, 4vw, 2.5rem); /* Responsive: se adapta entre 1.8rem y 2.5rem */
+	font-size: clamp(1.8rem, 4vw, 2.5rem);
 	font-weight: 700;
 	margin-bottom: 0.5rem;
 }
 
 .Sign-subtitle {
-	font-size: clamp(1rem, 2.5vw, 1.2rem); /* Escala suavemente en dispositivos */
+	font-size: clamp(1rem, 2.5vw, 1.2rem);
 	line-height: 1.4;
 	margin-bottom: 1.5rem;
 	color: #333;
 }
 
-/* Formulario */
 .Sign-form {
 	width: 100%;
 }
 
-/* Botones + enlace final */
 .Sign-buttons {
 	width: 100%;
 	max-width: 460px;
@@ -64,7 +60,6 @@ body.sign-mode {
 	}
 }
 
-/* Móviles medianos */
 @media screen and (max-width: 767px) {
 	.Container-sign {
 		padding: 1.25rem;
@@ -84,13 +79,11 @@ body.sign-mode {
 		max-width: 100%;
 	}
 
-	/* Botones full width */
 	.Sign-buttons button {
 		width: 100%;
 	}
 }
 
-/* Móviles pequeños */
 @media screen and (max-width: 425px) {
 	.Container-sign {
 		padding: 1rem;
@@ -102,5 +95,23 @@ body.sign-mode {
 
 	.Sign-buttons {
 		margin-top: 1rem;
+	}
+}
+
+@media screen and (min-width: 1025px) {
+	.Sign-form .MuiStack-root {
+		max-width: 400px; /* Limit input size */
+		width: 100%;
+		margin: 0 auto;
+	}
+
+	.Sign-buttons {
+		max-width: 400px; /* Same width as inputs */
+		width: 100%;
+		margin: 1.5rem auto 0 auto;
+	}
+
+	.Sign-buttons button {
+		width: 100%;
 	}
 }
