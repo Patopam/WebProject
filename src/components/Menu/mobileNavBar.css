@@ -23,20 +23,9 @@
 	transform: translateX(0);
 }
 
-.menu-logo {
-	display: flex;
-	justify-content: center;
-	margin-bottom: 1rem;
-}
-
-.menu-logo-img {
-	width: 120px !important;
-	height: auto;
-	object-fit: contain;
-}
-
 .menu-section {
-	margin-bottom: 2rem;
+	margin-bottom: 0.5rem;
+	padding-top: 2rem;
 }
 
 .section-title {
@@ -92,8 +81,8 @@
 }
 .menu-close-button {
 	position: absolute;
-	top: 1rem;
-	right: 1rem;
+	top: 2rem;
+	right: 1.5rem;
 	cursor: pointer;
 	color: #cbcbe7;
 	font-size: 1.5rem;
