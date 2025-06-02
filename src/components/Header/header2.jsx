@@ -9,11 +9,11 @@ const Header2 = ({ title, subtitle = '', emoji = '', showEmoji = true }) => {
 					alignSelf: 'stretch',
 					color: 'var(--Neutral-1000, #333)',
 					fontFamily: 'Manrope, sans-serif',
-					fontSize: '55px',
+					fontSize: '44px',
 					fontStyle: 'normal',
 					fontWeight: 600,
 					lineHeight: 'normal',
-					mb: 1,
+					mb: 1.2,
 				}}
 			>
 				{title}
@@ -26,7 +26,7 @@ const Header2 = ({ title, subtitle = '', emoji = '', showEmoji = true }) => {
 						alignSelf: 'stretch',
 						color: 'var(--Neutral-1000, #333)',
 						fontFamily: 'Manrope, sans-serif',
-						fontSize: '30px',
+						fontSize: '25px',
 						fontStyle: 'normal',
 						fontWeight: 400,
 						lineHeight: 'normal',
