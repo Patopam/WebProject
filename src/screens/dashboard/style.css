@@ -4,6 +4,8 @@
 	width: 100%;
 	background-color: #ffffff;
 	font-family: 'Manrope', sans-serif;
+	position: relative;
+	overflow-x: hidden;
 }
 
 .dashboard-content {
@@ -185,11 +187,5 @@
 	.expenses-container th,
 	.expenses-container td {
 		padding: 0.5rem;
-	}
-}
-
-@media screen and (max-width: 1024px) {
-	.menu-container {
-		display: none;
 	}
 }
