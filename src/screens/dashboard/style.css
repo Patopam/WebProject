@@ -3,7 +3,7 @@ body {
 }
 .dashboard-container {
 	display: flex;
-	min-height: 100vh; /* ✅ permite crecer si el contenido es más alto */
+	min-height: 100vh;
 	width: 100%;
 	background-color: #ffffff;
 	font-family: 'Manrope', sans-serif;
@@ -24,8 +24,8 @@ body {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	margin-bottom: 2rem;
-	padding-top: 2rem;
+	margin-bottom: 1.5rem;
+	padding-bottom: 0.2rem;
 }
 
 .dashboard-icons {
@@ -64,7 +64,7 @@ body {
 	align-items: start;
 }
 
-/* Tablet (iPad) - 768px a 1024px */
+/* Tablets- 768px a 1024px */
 @media screen and (max-width: 1024px) {
 	.dashboard-container {
 		flex-direction: column;
@@ -72,7 +72,7 @@ body {
 
 	.dashboard-content {
 		padding: 1.5rem;
-		padding-bottom: 90px; /* Espacio para la barra de navegación móvil */
+		padding-bottom: 90px;
 	}
 
 	.dashboard-cards-row {
@@ -92,6 +92,9 @@ body {
 	.dashboard-mobile-icons {
 		padding: 0.5rem 0;
 	}
+	.dashboard-header {
+		margin-top: 4rem;
+	}
 }
 
 /* Móvil Grande - 426px a 767px */
@@ -104,7 +107,7 @@ body {
 	.dashboard-header {
 		flex-direction: column;
 		align-items: flex-start;
-		margin-bottom: 1.2rem;
+		margin-top: 4rem;
 	}
 
 	.dashboard-buttons {
@@ -141,7 +144,7 @@ body {
 	}
 
 	.dashboard-header {
-		margin-bottom: 1rem;
+		margin-top: 4rem;
 	}
 
 	.dashboard-cards-row {
@@ -171,14 +174,14 @@ body {
 	}
 
 	.dashboard-header {
-		margin-bottom: 1rem;
+		margin-top: 4rem;
 	}
 }
 
 /* Estilos para ajustar las tablas en responsive */
 @media screen and (max-width: 767px) {
 	.dashboard-header {
-		margin-top: 2.2rem;
+		margin-top: 4rem;
 	}
 	.expenses-container table {
 		font-size: 0.9rem;

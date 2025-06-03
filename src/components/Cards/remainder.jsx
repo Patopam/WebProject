@@ -14,6 +14,7 @@ const ReminderCard = () => {
 	const [currentPhrase, setCurrentPhrase] = useState('Take a breath. You’re doing great.');
 	const [loading, setLoading] = useState(false);
 	const dispatch = useDispatch();
+
 	const fetchPhrase = async () => {
 		setLoading(true);
 		dispatch(setAiLoading(true));
@@ -39,15 +40,14 @@ const ReminderCard = () => {
 			sx={{
 				display: 'flex',
 				width: '100%',
-				maxWidth: '40rem',
-				height: 'auto',
-				minHeight: '14.875rem',
+				maxWidth: '36rem', // ancho máximo aquí (antes estaba en 40rem)
+				minHeight: '14rem', // Altura mínima
 				justifyContent: 'center',
 				alignItems: 'center',
 				borderRadius: '1.5rem',
 				background: '#B7D0EE',
 				boxShadow: 'none',
-				padding: '1.75rem',
+				padding: '1.5rem', // Padding general del contenedor
 				boxSizing: 'border-box',
 			}}
 		>
@@ -56,14 +56,15 @@ const ReminderCard = () => {
 					display: 'flex',
 					width: '100%',
 					maxWidth: '28rem',
-					minHeight: '10.875rem',
+					minHeight: '10rem',
 					flexDirection: 'column',
 					alignItems: 'flex-end',
-					gap: '1.25rem',
+					gap: '1.2rem',
 					padding: 0,
 					'&:last-child': { paddingBottom: 0 },
 				}}
 			>
+				{/* Header superior con ícono y texto */}
 				<Box
 					sx={{
 						display: 'flex',
@@ -74,51 +75,58 @@ const ReminderCard = () => {
 					}}
 				>
 					<Box sx={{ display: 'flex', alignItems: 'center' }}>
+						{/* Círculo del ícono */}
 						<Box
 							sx={{
 								backgroundColor: '#70A1DE',
 								borderRadius: '50%',
-								width: '2.31rem',
-								height: '2.31rem',
+								width: '2rem', // Tamaño  del círculo
+								height: '2rem',
 								display: 'flex',
 								justifyContent: 'center',
 								alignItems: 'center',
-								marginRight: '0.625rem',
+								marginRight: '0.5rem',
 							}}
 						>
-							<FavoriteBorderIcon sx={{ color: '#333', fontSize: '1.25rem' }} />
+							<FavoriteBorderIcon sx={{ color: '#333', fontSize: '1.125rem' }} />
 						</Box>
+
+						{/* Texto "Reminder" */}
 						<Typography
 							sx={{
 								fontFamily: "'Manrope', sans-serif",
-								fontSize: '1.125rem',
-								fontWeight: 300,
+								fontSize: '1rem', //  Tamaño reducido
+								fontWeight: 400,
 								color: '#333',
 							}}
 						>
 							Reminder
 						</Typography>
 					</Box>
+
 					<IconButton
 						aria-label='refresh'
 						onClick={handleRefresh}
-						sx={{ color: '#333', padding: '0.5rem' }}
+						sx={{ color: '#333', padding: '0.4rem' }}
 						disabled={loading}
 					>
-						<RefreshIcon sx={{ fontSize: '1.25rem' }} />
+						<RefreshIcon sx={{ fontSize: '1.125rem' }} />
 					</IconButton>
 				</Box>
+
+				{/* Frase motivacional */}
 				<Typography
 					component='span'
 					sx={{
 						display: 'flex',
-						minHeight: '5.625rem',
+						minHeight: '4.75rem',
 						justifyContent: 'center',
 						color: '#333',
 						fontFamily: "'Manrope', sans-serif",
-						fontSize: '1.75rem',
-						fontWeight: 700,
-						lineHeight: '125%',
+						fontSize: '1.5rem', //  Tamaño del texto de la frase
+						fontWeight: 550, // Menos pesado
+						lineHeight: '120%', // Menos interlineado
+						textAlign: 'left',
 						alignSelf: 'stretch',
 						overflow: 'hidden',
 						wordWrap: 'break-word',

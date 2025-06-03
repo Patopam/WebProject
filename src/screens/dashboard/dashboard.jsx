@@ -76,7 +76,7 @@ function Dashboard() {
 				</div>
 
 				<div className='dashboard-buttons'>
-					<AddButton onClick={handleJournalClick} text={'Daily journal'} />
+					<AddButton onClick={handleJournalClick} text={'Add journal'} />
 					<AddButton onClick={handleSpendClick} text={'Add spend'} />
 				</div>
 

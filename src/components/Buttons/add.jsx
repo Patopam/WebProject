@@ -9,15 +9,18 @@ export default function AddButton({ onClick, text }) {
 		</ExactButton>
 	);
 }
-const CustomAddIcon = () => <AddIcon sx={{ fontSize: '24px', color: '#000000' }} />;
+
+// Ícono más pequeño
+const CustomAddIcon = () => <AddIcon sx={{ fontSize: '20px', color: '#000000' }} />;
+
 const ExactButton = styled(Button)(() => ({
-	height: '56px',
-	borderRadius: '16px',
+	height: '46px', // 🔽 antes 56px
+	borderRadius: '12px', // 🔽 antes 16px
 	backgroundColor: '#CBCBE7',
 	color: '#000000',
 	textTransform: 'none',
-	paddingLeft: '16px',
-	paddingRight: '24px',
+	paddingLeft: '12px', // 🔽 antes 16px
+	paddingRight: '18px', // 🔽 antes 24px
 	boxShadow: 'none',
 	display: 'flex',
 	justifyContent: 'center',
@@ -30,14 +33,14 @@ const ExactButton = styled(Button)(() => ({
 	'& .MuiButton-startIcon': {
 		margin: 0,
 		backgroundColor: '#9C9CD2',
-		width: '40px',
-		height: '40px',
+		width: '30px', // 🔽 antes 40px
+		height: '30px',
 		borderRadius: '50%',
 		display: 'flex',
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
-	fontSize: '18px',
+	fontSize: '16px', // 🔽 antes 18px
 	fontWeight: 500,
 	fontFamily: "'Manrope', sans-serif",
 }));

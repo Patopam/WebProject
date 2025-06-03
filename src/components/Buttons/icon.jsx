@@ -9,8 +9,8 @@ export default function CustomIconButton({ icon, onClick, ariaLabel = 'button' }
 				alignItems: 'center',
 				backgroundColor: '#33336F',
 				color: '#ffffff',
-				width: '55px',
-				height: '55px',
+				width: '44px',
+				height: '44px',
 				'&:hover': {
 					backgroundColor: '#CBCBE7',
 				},
