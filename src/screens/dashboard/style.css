@@ -1,11 +1,14 @@
+body {
+	overflow-x: hidden;
+}
 .dashboard-container {
 	display: flex;
-	height: 100vh;
+	min-height: 100vh; /* ✅ permite crecer si el contenido es más alto */
 	width: 100%;
 	background-color: #ffffff;
 	font-family: 'Manrope', sans-serif;
 	position: relative;
-	overflow-x: hidden;
+	overflow-x: hidden; /* ✅ evita scroll horizontal */
 }
 
 .dashboard-content {
@@ -13,9 +16,11 @@
 	padding: 2rem;
 	display: flex;
 	flex-direction: column;
-	overflow-y: auto;
 	max-width: 100%;
 	margin: 0 auto;
+	min-height: 100vh;
+	box-sizing: border-box;
+	overflow-x: hidden;
 }
 
 .dashboard-header {
@@ -156,8 +161,7 @@
 /* Móvil Pequeño - < 426px */
 @media screen and (max-width: 425px) {
 	.dashboard-content {
-		padding: 0.75rem;
-		padding-bottom: 80px; /* Espacio para la barra de navegación móvil */
+		padding: 1rem 1rem 80px 1.5rem;
 	}
 
 	.dashboard-cards-row {
@@ -172,15 +176,13 @@
 	.dashboard-header {
 		margin-bottom: 1rem;
 	}
-
-	/* Ajuste de los iconos móviles para pantallas muy pequeñas */
-	.dashboard-mobile-icons {
-		margin-bottom: 0.5rem;
-	}
 }
 
 /* Estilos para ajustar las tablas en responsive */
 @media screen and (max-width: 767px) {
+	.dashboard-header {
+		margin-top: 2.2rem;
+	}
 	.expenses-container table {
 		font-size: 0.9rem;
 	}
