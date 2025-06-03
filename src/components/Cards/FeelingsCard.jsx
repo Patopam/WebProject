@@ -73,7 +73,6 @@ const FeelingsCard = () => {
 					</Box>
 				</Box>
 
-				{/*Contenido */}
 				<Box
 					sx={{
 						width: '100%',
@@ -84,7 +83,6 @@ const FeelingsCard = () => {
 						gap: '0.6rem',
 					}}
 				>
-					{/* Porcentaje + texto */}
 					<Box
 						sx={{
 							display: 'flex',
@@ -125,7 +123,6 @@ const FeelingsCard = () => {
 						</Typography>
 					</Box>
 
-					{/* Emoción */}
 					<Typography
 						sx={{
 							fontFamily: "'Manrope', sans-serif",

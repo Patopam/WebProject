@@ -59,9 +59,13 @@ body {
 /* Segunda fila: gastos y emociones */
 .dashboard-bottom-row {
 	display: grid;
-	grid-template-columns: 2fr 1.2fr;
-	gap: 2rem;
+	grid-template-columns: 1.5fr 1.5fr;
+	gap: 2.2rem;
 	align-items: start;
+}
+.expenses-container,
+.emotion-container {
+	width: 100%;
 }
 
 /* Tablets- 768px a 1024px */

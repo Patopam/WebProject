@@ -1,6 +1,6 @@
 import { SentimentSatisfiedAlt } from '@mui/icons-material';
 
-const EmotionWeek = ({ compact = false, Data }) => {
+const EmotionWeek = ({ Data }) => {
 	const emotionToEmoji = {
 		happy: '😄',
 		angry: '😡',
@@ -11,9 +11,9 @@ const EmotionWeek = ({ compact = false, Data }) => {
 	};
 
 	const today = new Date();
-	const dayOfWeek = today.getDay(); // 0 (domingo) - 6 (sábado)
+	const dayOfWeek = today.getDay();
 	const monday = new Date(today);
-	monday.setDate(today.getDate() - ((dayOfWeek + 6) % 7)); // retroceder hasta lunes
+	monday.setDate(today.getDate() - ((dayOfWeek + 6) % 7));
 	monday.setHours(0, 0, 0, 0);
 	const sunday = new Date(monday);
 	sunday.setDate(monday.getDate() + 6);
@@ -49,96 +49,90 @@ const EmotionWeek = ({ compact = false, Data }) => {
 
 	const containerStyle = {
 		display: 'flex',
-		width: compact ? '100%' : '100%',
-		maxWidth: compact ? '26.75rem' : '40rem',
-		height: '22.5rem',
-		padding: compact ? '1.75rem 1.75rem 3.3rem 1.75rem' : '1.75rem 1.75rem 4.2rem 1.75rem',
 		flexDirection: 'column',
-		alignItems: 'flex-start',
-		gap: compact ? '2.46rem' : '3.13rem',
+		width: '100%',
+		height: '320px',
+		minHeight: '320px',
+		padding: '1.5rem',
 		borderRadius: '1.5rem',
 		background: '#E3E9CF',
 		boxSizing: 'border-box',
+		fontFamily: "'Manrope', sans-serif",
+		gap: '1rem',
+		marginLeft: 'auto',
+		marginRight: 'auto',
 	};
 
 	const headerStyle = {
 		display: 'flex',
 		alignItems: 'center',
-		gap: '1rem',
-		width: '100%',
+		gap: '0.5rem',
+		marginBottom: '0.5rem',
 	};
 
 	const iconContainerStyle = {
-		width: '2.31rem',
-		height: '2.31rem',
+		width: '2rem',
+		height: '2rem',
 		borderRadius: '50%',
 		backgroundColor: '#C8D39F',
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'center',
-		flexShrink: 0,
 	};
 
 	const titleStyle = {
-		fontFamily: "'Manrope', sans-serif",
-		fontSize: '1.125rem',
-		fontWeight: 300,
+		fontSize: '0.95rem',
+		fontWeight: 400,
 		color: '#333',
-		lineHeight: 'normal',
-		fontStyle: 'normal',
+		whiteSpace: 'nowrap',
+		overflow: 'hidden',
+		textOverflow: 'ellipsis',
 	};
 
 	const dayRowStyle = {
 		display: 'flex',
 		width: '100%',
 		justifyContent: 'space-between',
+		gap: '0.7rem',
 	};
 
 	const dayColumnStyle = {
-		width: compact ? '13%' : '13%',
-		minWidth: compact ? '2.6rem' : '3.3rem',
-		height: 'auto',
+		width: '13%',
+		minWidth: '2.4rem',
+		padding: '4.2rem 0.6rem',
+		borderRadius: '1.5rem',
+		backgroundColor: '#C8D39F',
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
-		justifyContent: 'space-between',
-		padding: compact ? '1.25rem 0.625rem' : '1.875rem 1.25rem',
-		borderRadius: '1.875rem',
-		backgroundColor: '#C8D39F',
+		justifyContent: 'center',
 		boxSizing: 'border-box',
-		aspectRatio: compact ? '41.7/118.01' : '53/150',
+		flexGrow: 1,
 	};
 
 	const dayTextStyle = {
-		fontFamily: "'Manrope', sans-serif",
-		fontSize: '1rem',
+		fontSize: '0.75rem',
 		fontWeight: 500,
 		color: '#333',
-		lineHeight: '110%',
-		fontStyle: 'normal',
-		marginBottom: '0.5rem',
+		marginBottom: '0.2rem',
 	};
 
 	const dayNumberStyle = {
-		fontFamily: "'Manrope', sans-serif",
-		fontSize: '1.25rem',
+		fontSize: '1rem',
 		fontWeight: 500,
 		color: '#333',
-		lineHeight: '110%',
-		fontStyle: 'normal',
-		margin: '0.5rem 0',
+		marginBottom: '0.2rem',
 	};
 
 	const emojiStyle = {
-		fontSize: compact ? '1.5rem' : '2rem',
-		marginTop: '0.5rem',
+		fontSize: '1.4rem',
 	};
 
 	return (
 		<div style={containerStyle}>
 			<div style={headerStyle}>
 				<div style={iconContainerStyle}>
-					<SentimentSatisfiedAlt style={{ fontSize: '1.5rem', color: '#333' }} />
+					<SentimentSatisfiedAlt style={{ fontSize: '1.2rem', color: '#333' }} />
 				</div>
 				<div style={titleStyle}>Emotion week</div>
 			</div>
