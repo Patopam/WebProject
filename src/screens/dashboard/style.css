@@ -49,11 +49,11 @@ body {
 
 /* Primera fila con tres tarjetas iguales */
 .dashboard-cards-row {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
+	display: flex;
+	justify-content: space-between;
 	gap: 2rem;
 	margin-bottom: 2rem;
-	align-items: start;
+	align-items: stretch;
 }
 
 /* Segunda fila: gastos y emociones */

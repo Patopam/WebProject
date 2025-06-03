@@ -39,29 +39,30 @@ const ReminderCard = () => {
 		<Card
 			sx={{
 				display: 'flex',
+				flexDirection: 'column',
+				flex: '1 1 20rem', // se adapta al espacio disponible
 				width: '100%',
-				maxWidth: '36rem', // ancho máximo aquí (antes estaba en 40rem)
-				minHeight: '14rem', // Altura mínima
-				justifyContent: 'center',
-				alignItems: 'center',
+				minHeight: '13rem',
+				height: '100%', // se estira si el contenedor lo permite
+				justifyContent: 'flex-start',
+				alignItems: 'stretch',
 				borderRadius: '1.5rem',
 				background: '#B7D0EE',
 				boxShadow: 'none',
-				padding: '1.5rem', // Padding general del contenedor
+				padding: '1.5rem',
 				boxSizing: 'border-box',
 			}}
 		>
 			<CardContent
 				sx={{
 					display: 'flex',
-					width: '100%',
-					maxWidth: '28rem',
-					minHeight: '10rem',
 					flexDirection: 'column',
-					alignItems: 'flex-end',
-					gap: '1.2rem',
+					flexGrow: 1,
+					justifyContent: 'flex-start',
+					width: '100%',
 					padding: 0,
 					'&:last-child': { paddingBottom: 0 },
+					gap: '1.3rem',
 				}}
 			>
 				{/* Header superior con ícono y texto */}
@@ -70,17 +71,15 @@ const ReminderCard = () => {
 						display: 'flex',
 						justifyContent: 'space-between',
 						alignItems: 'center',
-						alignSelf: 'stretch',
 						width: '100%',
 					}}
 				>
 					<Box sx={{ display: 'flex', alignItems: 'center' }}>
-						{/* Círculo del ícono */}
 						<Box
 							sx={{
 								backgroundColor: '#70A1DE',
 								borderRadius: '50%',
-								width: '2rem', // Tamaño  del círculo
+								width: '2rem',
 								height: '2rem',
 								display: 'flex',
 								justifyContent: 'center',
@@ -91,11 +90,10 @@ const ReminderCard = () => {
 							<FavoriteBorderIcon sx={{ color: '#333', fontSize: '1.125rem' }} />
 						</Box>
 
-						{/* Texto "Reminder" */}
 						<Typography
 							sx={{
 								fontFamily: "'Manrope', sans-serif",
-								fontSize: '1rem', //  Tamaño reducido
+								fontSize: '1rem',
 								fontWeight: 400,
 								color: '#333',
 							}}
@@ -115,25 +113,22 @@ const ReminderCard = () => {
 				</Box>
 
 				{/* Frase motivacional */}
-				<Typography
-					component='span'
-					sx={{
-						display: 'flex',
-						minHeight: '4.75rem',
-						justifyContent: 'center',
-						color: '#333',
-						fontFamily: "'Manrope', sans-serif",
-						fontSize: '1.5rem', //  Tamaño del texto de la frase
-						fontWeight: 550, // Menos pesado
-						lineHeight: '120%', // Menos interlineado
-						textAlign: 'left',
-						alignSelf: 'stretch',
-						overflow: 'hidden',
-						wordWrap: 'break-word',
-					}}
-				>
-					{loading ? 'Loading inspiration...' : currentPhrase}
-				</Typography>
+				<Box sx={{ width: '100%' }}>
+					<Typography
+						component='span'
+						sx={{
+							color: '#333',
+							fontFamily: "'Manrope', sans-serif",
+							fontSize: '1.35rem',
+							fontWeight: 600,
+							lineHeight: '120%',
+							textAlign: 'left',
+							wordWrap: 'break-word',
+						}}
+					>
+						{loading ? 'Loading inspiration...' : currentPhrase}
+					</Typography>
+				</Box>
 			</CardContent>
 		</Card>
 	);
