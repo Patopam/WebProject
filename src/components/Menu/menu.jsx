@@ -7,7 +7,7 @@ import PhotoAlbumOutlinedIcon from '@mui/icons-material/PhotoAlbumOutlined';
 import LeaderboardOutlinedIcon from '@mui/icons-material/LeaderboardOutlined';
 import TagFacesOutlinedIcon from '@mui/icons-material/TagFacesOutlined';
 import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 
 const Menu = () => {
 	return (
@@ -63,7 +63,7 @@ const Menu = () => {
 				<ul>
 					<li>
 						<Link to='/recommendations' className='menu-item-link'>
-							<FavoriteIcon />
+							<FavoriteBorderRoundedIcon />
 							<span>Recommendations</span>
 						</Link>
 					</li>

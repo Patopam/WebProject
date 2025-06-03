@@ -71,14 +71,18 @@
 
 .menu-toggle-button {
 	position: fixed;
-	top: 1rem;
+	top: 2rem;
 	left: 1rem;
 	z-index: 1000;
 	background-color: transparent;
-	color: #cbcbe7;
+	color: #b9b9e6;
 	cursor: pointer;
 	display: none;
 }
+.menu-toggle-button svg {
+	font-size: 2.1rem;
+}
+
 .menu-close-button {
 	position: absolute;
 	top: 2rem;
