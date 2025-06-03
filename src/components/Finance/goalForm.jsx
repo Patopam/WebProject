@@ -1,32 +1,33 @@
+// GoalForm.jsx
 import { useState } from 'react';
-import EditInput from '../Inputs/EditInput';
 import { useSelector } from 'react-redux';
-import { addGoals } from '../../services/firebaseUtils';
 import { useNavigate } from 'react-router-dom';
-import CloseIcon from '@mui/icons-material/Close';
-import toast from 'react-hot-toast';
+import { addGoals } from '../../services/firebaseUtils';
+import { useSnackbar } from 'notistack';
 
-const GoalForm = () => {
+// Material UI
+import { Box, Button, Typography, IconButton, styled, TextField } from '@mui/material';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import CloseIcon from '@mui/icons-material/Close';
+import SendIcon from '@mui/icons-material/Send';
+
+export default function GoalForm({ redirectTo = '/finance' }) {
 	const navigate = useNavigate();
+	const { enqueueSnackbar } = useSnackbar();
 	const id = useSelector((state) => state.userId.id);
 	const fechaActual = new Date().toLocaleDateString();
 
 	const [startDate, setStartDate] = useState(fechaActual);
 	const [endDate, setEndDate] = useState(fechaActual);
-	const [price, setPrice] = useState('$50.000');
-	const [description, setDescription] = useState('Write here...');
-
-	const [editStart, setEditStart] = useState(false);
-	const [editEnd, setEditEnd] = useState(false);
-	const [editPrice, setEditPrice] = useState(false);
-	const [editDesc, setEditDesc] = useState(false);
+	const [price, setPrice] = useState('');
+	const [description, setDescription] = useState('');
 
 	const handleClose = () => navigate(-1);
 
 	const handleSubmit = async () => {
 		const amount = Number(price.replace(/\D/g, ''));
 		if (isNaN(amount)) {
-			toast.error('Please enter a valid numeric value.');
+			enqueueSnackbar('Please enter a valid numeric value.', { variant: 'error' });
 			return;
 		}
 
@@ -38,53 +39,160 @@ const GoalForm = () => {
 				amount,
 				description,
 			});
-			toast.success('Goal saved successfully!');
-			navigate('/finance');
+
+			enqueueSnackbar('Goal saved successfully!', { variant: 'success' });
+
+			setTimeout(() => {
+				navigate(redirectTo);
+			}, 1800);
 		} catch (err) {
 			console.error(err);
-			toast.error('Error saving goal.');
+			enqueueSnackbar('Error saving goal.', { variant: 'error' });
 		}
 	};
 
 	return (
-		<div>
-			<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-				<h2>Set new goal</h2>
-				<CloseIcon onClick={handleClose} />
-			</div>
+		<ScreenWrapper>
+			<FormCard>
+				<HeaderSection>
+					<TitleGroup>
+						<IconCircle>
+							<AttachMoneyIcon sx={{ color: '#fff', fontSize: 20 }} />
+						</IconCircle>
+						<Typography sx={{ fontSize: 18, fontWeight: 600 }}>Set new goal</Typography>
+					</TitleGroup>
+					<IconButton onClick={handleClose}>
+						<CloseIcon sx={{ color: '#000' }} />
+					</IconButton>
+				</HeaderSection>
 
-			<EditInput
-				label='Start date'
-				value={startDate}
-				onChange={(e) => setStartDate(e.target.value)}
-				editable={editStart}
-				onEditClick={() => setEditStart(!editStart)}
-			/>
-			<EditInput
-				label='End date'
-				value={endDate}
-				onChange={(e) => setEndDate(e.target.value)}
-				editable={editEnd}
-				onEditClick={() => setEditEnd(!editEnd)}
-			/>
-			<EditInput
-				label='Price'
-				value={price}
-				onChange={(e) => setPrice(e.target.value)}
-				editable={editPrice}
-				onEditClick={() => setEditPrice(!editPrice)}
-			/>
-			<EditInput
-				label='Description'
-				value={description}
-				onChange={(e) => setDescription(e.target.value)}
-				editable={editDesc}
-				onEditClick={() => setEditDesc(!editDesc)}
-			/>
+				<StyledInput
+					label='Start Date'
+					variant='outlined'
+					fullWidth
+					value={startDate}
+					onChange={(e) => setStartDate(e.target.value)}
+				/>
 
-			<button onClick={handleSubmit}>Guardar</button>
-		</div>
+				<StyledInput
+					label='End Date'
+					variant='outlined'
+					fullWidth
+					value={endDate}
+					onChange={(e) => setEndDate(e.target.value)}
+				/>
+
+				<StyledInput
+					label='Value'
+					variant='outlined'
+					fullWidth
+					value={price}
+					onChange={(e) => setPrice(e.target.value)}
+					placeholder='$50.000'
+				/>
+
+				<StyledInput
+					label='Description'
+					variant='outlined'
+					fullWidth
+					multiline
+					minRows={3}
+					value={description}
+					onChange={(e) => setDescription(e.target.value)}
+					placeholder='Write here...'
+				/>
+
+				<SaveButtonWrapper>
+					<SaveButton onClick={handleSubmit}>
+						<IconCircle bgcolor='#837AD8'>
+							<SendIcon sx={{ color: '#fff', fontSize: 20 }} />
+						</IconCircle>
+						<span>Save</span>
+					</SaveButton>
+				</SaveButtonWrapper>
+			</FormCard>
+		</ScreenWrapper>
 	);
-};
+}
 
-export default GoalForm;
+//
+// 🎨 Estilos personalizados
+//
+
+const ScreenWrapper = styled(Box)({
+	backgroundColor: '#DFDFF4',
+	minHeight: '100vh',
+	padding: '40px 20px',
+	boxSizing: 'border-box',
+	display: 'flex',
+	justifyContent: 'center',
+	alignItems: 'center',
+});
+
+const FormCard = styled(Box)({
+	backgroundColor: '#B8B8D9',
+	padding: '32px',
+	borderRadius: '24px',
+	width: '100%',
+	maxWidth: '700px',
+	display: 'flex',
+	flexDirection: 'column',
+	gap: '20px',
+	fontFamily: '"Manrope", sans-serif',
+});
+
+const HeaderSection = styled(Box)({
+	display: 'flex',
+	justifyContent: 'space-between',
+	alignItems: 'center',
+	marginBottom: '1rem',
+});
+
+const TitleGroup = styled(Box)({
+	display: 'flex',
+	alignItems: 'center',
+	gap: '0.75rem',
+});
+
+const IconCircle = styled(Box)(({ bgcolor = '#837AD8' }) => ({
+	backgroundColor: bgcolor,
+	width: '2rem',
+	height: '2rem',
+	borderRadius: '50%',
+	display: 'flex',
+	alignItems: 'center',
+	justifyContent: 'center',
+}));
+
+const StyledInput = styled(TextField)({
+	backgroundColor: '#E6E4F6',
+	borderRadius: '12px',
+	'& .MuiOutlinedInput-root': {
+		borderRadius: '12px',
+	},
+});
+
+const SaveButtonWrapper = styled(Box)({
+	display: 'flex',
+	justifyContent: 'center',
+	marginTop: '12px',
+});
+
+const SaveButton = styled(Button)({
+	display: 'flex',
+	alignItems: 'center',
+	gap: '12px',
+	padding: '12px 20px',
+	backgroundColor: '#837AD8',
+	borderRadius: '12px',
+	cursor: 'pointer',
+	fontSize: '16px',
+	fontWeight: 500,
+	textTransform: 'none',
+	color: '#fff',
+	fontFamily: '"Manrope", sans-serif',
+	'&:hover': {
+		backgroundColor: '#6F64D8',
+		opacity: 0.95,
+	},
+});
