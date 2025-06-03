@@ -7,8 +7,7 @@ body {
 	width: 100%;
 	background-color: #ffffff;
 	font-family: 'Manrope', sans-serif;
-	position: relative;
-	overflow-x: hidden; /* ✅ evita scroll horizontal */
+	overflow: hidden;
 }
 
 .dashboard-content {
@@ -16,11 +15,9 @@ body {
 	padding: 2rem;
 	display: flex;
 	flex-direction: column;
-	max-width: 100%;
-	margin: 0 auto;
-	min-height: 100vh;
+	overflow-y: auto;
+	height: 100vh;
 	box-sizing: border-box;
-	overflow-x: hidden;
 }
 
 .dashboard-header {

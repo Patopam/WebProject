@@ -13,7 +13,7 @@ const Header = ({ Nombre, subtitle = '', emoji = '', showEmoji = true }) => {
 					fontStyle: 'normal',
 					fontWeight: 600,
 					lineHeight: 'normal',
-					mb: 1.2,
+					mb: 0.3,
 				}}
 			>
 				Welcome {Nombre} !
