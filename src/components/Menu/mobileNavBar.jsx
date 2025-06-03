@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import './mobileNavBar.css';
+import { Link } from 'react-router-dom';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import CloseIcon from '@mui/icons-material/Close';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
@@ -10,6 +10,8 @@ import LeaderboardOutlinedIcon from '@mui/icons-material/LeaderboardOutlined';
 import TagFacesOutlinedIcon from '@mui/icons-material/TagFacesOutlined';
 import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
+import PersonOutlineRoundedIcon from '@mui/icons-material/PersonOutlineRounded';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const MobileNavBar = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -79,6 +81,24 @@ const MobileNavBar = () => {
 							<Link to='/recommendations' className='menu-item-link'>
 								<FavoriteBorderRoundedIcon />
 								<span>Recommendations</span>
+							</Link>
+						</li>
+					</ul>
+				</div>
+
+				<div className='menu-section'>
+					<p className='section-title'>ACCOUNT</p>
+					<ul>
+						<li>
+							<Link to='/settings' className='menu-item-link'>
+								<PersonOutlineRoundedIcon />
+								<span>Settings</span>
+							</Link>
+						</li>
+						<li>
+							<Link to='/log' className='menu-item-link'>
+								<LogoutIcon />
+								<span>Logout</span>
 							</Link>
 						</li>
 					</ul>

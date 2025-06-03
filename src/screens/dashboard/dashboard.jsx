@@ -1,3 +1,4 @@
+import './style.css';
 import AddButton from '../../components/Buttons/add';
 import Header from '../../components/Header/header';
 import ReminderCard from '../../components/Cards/remainder';
@@ -11,7 +12,6 @@ import Menu from '../../components/Menu/menu';
 import MobileNavBar from '../../components/Menu/mobileNavBar';
 import ExpensesTable from '../../components/Tables/expensesTable';
 import expensesData from '../../Data/expensesData';
-import './style.css';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -21,10 +21,10 @@ function Dashboard() {
 	const [Data, setData] = useState();
 	const [Loading, setLoading] = useState(true);
 	const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
-	const [showButtons, setShowButtons] = useState(true);
 
 	const id = useSelector((state) => state.userId.id);
 	const NombreU = useSelector((state) => state.NombreU.Nombre);
+
 	useEffect(() => {
 		fetchJournal({ uid: id })
 			.then((Emotion) => setData([...Emotion]))
@@ -33,48 +33,30 @@ function Dashboard() {
 		const handleResize = () => {
 			const mobile = window.innerWidth <= 1024;
 			setIsMobile(mobile);
-			setShowButtons(!mobile);
-		};
-		handleResize();
-		window.addEventListener('resize', handleResize);
-		const handleIntersection = (entries) => {
-			if (entries[0].isIntersecting) {
-				setShowButtons(false);
-			} else {
-				setShowButtons(isMobile);
-			}
 		};
 
-		if (isMobile) {
-			const navbarElement = document.querySelector('.mobile-navbar');
-			if (navbarElement) {
-				const observer = new IntersectionObserver(handleIntersection, {
-					threshold: 0.1,
-				});
-				observer.observe(navbarElement);
-				return () => {
-					observer.disconnect();
-				};
-			}
-		}
+		handleResize();
+		window.addEventListener('resize', handleResize);
 
 		return () => {
 			window.removeEventListener('resize', handleResize);
 		};
-	}, [isMobile]);
+	}, []);
 
-	let navigate = useNavigate();
+	const navigate = useNavigate();
+
 	const goLogin = () => {
 		navigate('/log');
 	};
 
 	const handleJournalClick = () => {
-		navigate('/journal/write', { state: { redirectTo: '/dashboard' } }); // I'll tell you where to redirect next
+		navigate('/journal/write', { state: { redirectTo: '/dashboard' } });
 	};
 
 	const handleSpendClick = () => {
 		navigate('/finance/add-spending', { state: { from: '/dashboard' } });
 	};
+
 	const goSettings = () => {
 		navigate('/settings');
 	};
@@ -83,13 +65,6 @@ function Dashboard() {
 		<div className='dashboard-container'>
 			{!isMobile && <Menu />}
 			<div className='dashboard-content'>
-				{isMobile && showButtons && (
-					<div className='dashboard-mobile-icons'>
-						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
-						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={goLogin} />
-					</div>
-				)}
-
 				<div className='dashboard-header'>
 					<Header Nombre={NombreU} subtitle='How are you feeling today?' />
 					{!isMobile && (
@@ -117,7 +92,7 @@ function Dashboard() {
 					</div>
 
 					{Loading ? (
-						<p> Loading</p>
+						<p>Loading</p>
 					) : (
 						<div className='emotion-container'>
 							<EmotionWeek dashboard={true} Data={Data} />
@@ -129,4 +104,5 @@ function Dashboard() {
 		</div>
 	);
 }
+
 export default Dashboard;
