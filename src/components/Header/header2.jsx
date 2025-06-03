@@ -13,7 +13,7 @@ const Header2 = ({ title, subtitle = '', emoji = '', showEmoji = true }) => {
 					fontStyle: 'normal',
 					fontWeight: 600,
 					lineHeight: 'normal',
-					mb: 1.2,
+					mb: 0.4,
 				}}
 			>
 				{title}
@@ -26,7 +26,7 @@ const Header2 = ({ title, subtitle = '', emoji = '', showEmoji = true }) => {
 						alignSelf: 'stretch',
 						color: 'var(--Neutral-1000, #333)',
 						fontFamily: 'Manrope, sans-serif',
-						fontSize: '25px',
+						fontSize: '24px',
 						fontStyle: 'normal',
 						fontWeight: 400,
 						lineHeight: 'normal',
