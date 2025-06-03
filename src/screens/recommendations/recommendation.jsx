@@ -21,7 +21,6 @@ function Recommendations() {
 	const [loading, setLoading] = useState(false);
 	const [showInfo, setShowInfo] = useState(true);
 	const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
-	const [showButtons, setShowButtons] = useState(true);
 
 	const categories = [
 		'Breathing exercise',
@@ -47,14 +46,7 @@ function Recommendations() {
 
 	useEffect(() => {
 		const handleResize = () => {
-			const mobile = window.innerWidth <= 1024;
-			setIsMobile(mobile);
-
-			if (!mobile) {
-				setShowButtons(false);
-			} else {
-				setShowButtons(true);
-			}
+			setIsMobile(window.innerWidth <= 1024);
 		};
 		handleResize();
 		window.addEventListener('resize', handleResize);
@@ -62,29 +54,6 @@ function Recommendations() {
 			window.removeEventListener('resize', handleResize);
 		};
 	}, []);
-	useEffect(() => {
-		if (!isMobile) return;
-
-		const handleIntersection = (entries) => {
-			if (entries[0].isIntersecting) {
-				setShowButtons(false);
-			} else {
-				setShowButtons(true);
-			}
-		};
-		const timer = setTimeout(() => {
-			const navbarElement = document.querySelector('.mobile-navbar');
-			if (navbarElement) {
-				const observer = new IntersectionObserver(handleIntersection, {
-					threshold: 0.1,
-				});
-				observer.observe(navbarElement);
-				return () => observer.disconnect();
-			}
-		}, 500);
-
-		return () => clearTimeout(timer);
-	}, [isMobile]);
 
 	const handleCategoryClick = async (category) => {
 		setSelectedCategory(category);
@@ -121,12 +90,6 @@ function Recommendations() {
 			{!isMobile && <Menu />}
 
 			<div className='recommendations-content'>
-				{isMobile && showButtons && (
-					<div className='recommendations-mobile-icons'>
-						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
-						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={goLogin} />
-					</div>
-				)}
 				<div className='recommendations-header'>
 					<Header2 title='For you' subtitle='Recommendation for you' />
 					{!isMobile && (

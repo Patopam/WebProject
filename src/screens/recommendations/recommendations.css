@@ -13,7 +13,7 @@
 	flex-direction: column;
 	overflow-y: auto;
 	max-width: 100%;
-	margin: 0 auto; /* Centrado en la pantalla */
+	margin: 0 auto;
 }
 
 .recommendations-header {
@@ -28,23 +28,10 @@
 	gap: 0.5rem;
 }
 
-/* Iconos móviles encima del header */
-.recommendations-mobile-icons {
-	display: flex;
-	gap: 0.5rem;
-	justify-content: flex-end;
-	margin-bottom: 1rem;
-	transition: opacity 0.3s ease;
-}
-
-/* Barra de navegación móvil */
 .mobile-navbar {
-	display: none; /* Oculta por defecto */
+	display: none;
 }
 
-/* ===== RESPONSIVE STYLES ===== */
-
-/* Tablet/Móvil - <= 1024px */
 @media screen and (max-width: 1024px) {
 	.recommendations-container {
 		flex-direction: column;
@@ -52,10 +39,9 @@
 
 	.recommendations-content {
 		padding: 1.5rem;
-		padding-bottom: 90px; /* Espacio para la barra de navegación móvil */
+		padding-bottom: 90px;
 	}
 
-	/* Mostrar navbar móvil */
 	.mobile-navbar {
 		display: flex !important;
 		position: fixed;
@@ -65,18 +51,11 @@
 		z-index: 1000;
 	}
 
-	/* Ocultar menú lateral */
 	.menu-container {
 		display: none;
 	}
-
-	/* Estilo para los iconos móviles */
-	.recommendations-mobile-icons {
-		padding: 0.5rem 0;
-	}
 }
 
-/* Móvil - <= 767px */
 @media screen and (max-width: 767px) {
 	.recommendations-content {
 		padding: 1rem;
@@ -90,7 +69,6 @@
 	}
 }
 
-/* Móvil Pequeño - <= 425px */
 @media screen and (max-width: 425px) {
 	.recommendations-content {
 		padding: 0.75rem;
@@ -99,9 +77,5 @@
 
 	.recommendations-header {
 		margin-bottom: 1rem;
-	}
-
-	.recommendations-mobile-icons {
-		margin-bottom: 0.5rem;
 	}
 }

@@ -14,48 +14,24 @@ import { useNavigate } from 'react-router-dom';
 
 function Analytics() {
 	const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
-	const [showButtons, setShowButtons] = useState(true);
 	let navigate = useNavigate();
 	const goLogin = () => navigate('/log');
 	const goSettings = () => navigate('/settings');
+
 	useEffect(() => {
 		const handleResize = () => {
-			const mobile = window.innerWidth <= 1024;
-			setIsMobile(mobile);
-			setShowButtons(!mobile);
+			setIsMobile(window.innerWidth <= 1024);
 		};
 
 		handleResize();
 		window.addEventListener('resize', handleResize);
-		const handleIntersection = (entries) => {
-			if (entries[0].isIntersecting) {
-				setShowButtons(false);
-			} else {
-				setShowButtons(isMobile);
-			}
-		};
-
-		if (isMobile) {
-			const navbarElement = document.querySelector('.mobile-navbar');
-			if (navbarElement) {
-				const observer = new IntersectionObserver(handleIntersection, { threshold: 0.1 });
-				observer.observe(navbarElement);
-				return () => observer.disconnect();
-			}
-		}
 		return () => window.removeEventListener('resize', handleResize);
-	}, [isMobile]);
+	}, []);
 
 	return (
 		<div className='analytics-container'>
 			{!isMobile && <Menu />}
 			<div className='analytics-content'>
-				{isMobile && showButtons && (
-					<div className='analytics-mobile-icons'>
-						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
-						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={goLogin} />
-					</div>
-				)}
 				<div className='analytics-header'>
 					<Header2 title='Analytics' subtitle='Set goals and look at your track record.' />
 					{!isMobile && (
@@ -90,4 +66,5 @@ function Analytics() {
 		</div>
 	);
 }
+
 export default Analytics;

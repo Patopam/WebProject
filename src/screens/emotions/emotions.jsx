@@ -13,23 +13,23 @@ import RecommendationDay from '../../components/Cards/recommendationDay';
 import Header2 from '../../components/Header/header2';
 import CustomIconButton from '../../components/Buttons/icon';
 import MobileNavBar from '../../components/Menu/mobileNavBar';
-import './emotions.css';
 import { useNavigate } from 'react-router-dom';
 
 function Emotions() {
 	const [ultimaEmocion, setUltimaEmocion] = useState('');
 	const uid = useSelector((state) => state.userId.id);
 	const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
-	const [showButtons, setShowButtons] = useState(true);
-	let navigate = useNavigate();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (!uid) return;
+
 		const fetchLastEmotion = async () => {
 			try {
 				const journalsRef = collection(db, `users/${uid}/journals`);
 				const q = query(journalsRef, orderBy('date', 'desc'), limit(1));
 				const querySnapshot = await getDocs(q);
+
 				if (!querySnapshot.empty) {
 					const data = querySnapshot.docs[0].data();
 					const traducciones = {
@@ -48,59 +48,25 @@ function Emotions() {
 				console.error('Error fetching last emotion:', error);
 			}
 		};
-		fetchLastEmotion();
 
 		const handleResize = () => {
-			const mobile = window.innerWidth <= 1024;
-			setIsMobile(mobile);
-			setShowButtons(!mobile);
+			setIsMobile(window.innerWidth <= 1024);
 		};
+
+		fetchLastEmotion();
 		handleResize();
 		window.addEventListener('resize', handleResize);
-		const handleIntersection = (entries) => {
-			if (entries[0].isIntersecting) {
-				setShowButtons(false);
-			} else {
-				setShowButtons(isMobile);
-			}
-		};
+		return () => window.removeEventListener('resize', handleResize);
+	}, [uid]);
 
-		if (isMobile) {
-			const navbarElement = document.querySelector('.mobile-navbar');
-			if (navbarElement) {
-				const observer = new IntersectionObserver(handleIntersection, {
-					threshold: 0.1,
-				});
-				observer.observe(navbarElement);
-				return () => {
-					observer.disconnect();
-				};
-			}
-		}
-		return () => {
-			window.removeEventListener('resize', handleResize);
-		};
-	}, [uid, isMobile]);
-
-	const goLogin = () => {
-		navigate('/log');
-	};
-	const goSettings = () => {
-		navigate('/settings');
-	};
+	const goLogin = () => navigate('/log');
+	const goSettings = () => navigate('/settings');
 
 	return (
 		<div className='emotions-container'>
 			{!isMobile && <Menu />}
 
 			<div className='emotions-content'>
-				{isMobile && showButtons && (
-					<div className='emotions-mobile-icons'>
-						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
-						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={goLogin} />
-					</div>
-				)}
-
 				<div className='emotions-header'>
 					<Header2 title='My emotions' subtitle='Look at your history of your emotions.' />
 					{!isMobile && (
@@ -110,6 +76,7 @@ function Emotions() {
 						</div>
 					)}
 				</div>
+
 				<div className='emotions-main-grid'>
 					<div className='emotions-left'>
 						<MoodTracker />
@@ -132,8 +99,10 @@ function Emotions() {
 					</div>
 				</div>
 			</div>
+
 			{isMobile && <MobileNavBar />}
 		</div>
 	);
 }
+
 export default Emotions;

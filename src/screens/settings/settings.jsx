@@ -10,26 +10,11 @@ import './settings.css';
 
 function Settings() {
 	const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
-	const [showLogoutButton, setShowLogoutButton] = useState(true);
-	const [firstName, setFirstName] = useState(() => {
-		return localStorage.getItem('firstName') || 'Name';
-	});
-
-	const [lastName, setLastName] = useState(() => {
-		return localStorage.getItem('lastName') || 'LastName';
-	});
-
-	const [userName, setUserName] = useState(() => {
-		return localStorage.getItem('userName') || 'UserName';
-	});
-
-	const [email, setEmail] = useState(() => {
-		return localStorage.getItem('email') || '';
-	});
-
-	const [phoneNumber, setPhoneNumber] = useState(() => {
-		return localStorage.getItem('phoneNumber') || '';
-	});
+	const [firstName, setFirstName] = useState(() => localStorage.getItem('firstName') || 'Name');
+	const [lastName, setLastName] = useState(() => localStorage.getItem('lastName') || 'LastName');
+	const [userName, setUserName] = useState(() => localStorage.getItem('userName') || 'UserName');
+	const [email, setEmail] = useState(() => localStorage.getItem('email') || '');
+	const [phoneNumber, setPhoneNumber] = useState(() => localStorage.getItem('phoneNumber') || '');
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -37,31 +22,11 @@ function Settings() {
 			setIsMobile(window.innerWidth <= 1024);
 		};
 		window.addEventListener('resize', handleResize);
-		const handleIntersection = (entries) => {
-			if (entries[0].isIntersecting) {
-				setShowLogoutButton(false);
-			} else {
-				setShowLogoutButton(true);
-			}
-		};
-		if (isMobile) {
-			setTimeout(() => {
-				const navbarElement = document.querySelector('.mobile-navbar');
-				if (navbarElement) {
-					const observer = new IntersectionObserver(handleIntersection, {
-						threshold: 0.1,
-					});
-					observer.observe(navbarElement);
-					return () => {
-						observer.disconnect();
-					};
-				}
-			}, 100);
-		}
 		return () => {
 			window.removeEventListener('resize', handleResize);
 		};
-	}, [isMobile]);
+	}, []);
+
 	const handleSave = () => {
 		localStorage.setItem('firstName', firstName);
 		localStorage.setItem('lastName', lastName);
@@ -70,32 +35,23 @@ function Settings() {
 		localStorage.setItem('phoneNumber', phoneNumber);
 	};
 
-	const handleCancel = () => {
-		navigate(-1);
-	};
-
-	const handleLogout = () => {
-		navigate('/log');
-	};
+	const handleCancel = () => navigate(-1);
+	const handleLogout = () => navigate('/log');
 
 	return (
 		<div className='settings-container'>
 			{!isMobile && <Menu />}
 			<div className='settings-content'>
-				{isMobile && showLogoutButton && (
-					<div className='settings-mobile-logout'>
-						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={handleLogout} />
-					</div>
-				)}
 				<div className='settings-header'>
 					<Header2 title='Settings' subtitle='User profile' showEmoji={false} />
-
-					{isMobile && (
+					{/* Ícono de logout solo en desktop */}
+					{!isMobile && (
 						<div className='settings-icons'>
 							<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={handleLogout} />
 						</div>
 					)}
 				</div>
+
 				<div className='profile-section'>
 					<div className='profile-info'>
 						<h2 className='profile-name'>
@@ -104,7 +60,9 @@ function Settings() {
 						<p className='profile-subtitle'>{userName}</p>
 					</div>
 				</div>
+
 				<div className='divider'></div>
+
 				<div className='form-grid'>
 					<div className='form-column'>
 						<p className='input-label'>First Name</p>
@@ -125,6 +83,7 @@ function Settings() {
 						/>
 					</div>
 				</div>
+
 				<div className='full-width'>
 					<p className='input-label'>User Name</p>
 					<Inputs
@@ -134,21 +93,24 @@ function Settings() {
 						onChange={(e) => setUserName(e.target.value)}
 					/>
 				</div>
+
 				<div className='divider'></div>
+
 				<div className='form-grid'>
 					<div className='form-column'>
 						<p className='input-label'>Email Address</p>
 						<div className='input-with-icon'>
-							<Inputs type='email' placeholder='' value={email} onChange={(e) => setEmail(e.target.value)} />
+							<Inputs type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
 						</div>
 					</div>
 					<div className='form-column'>
 						<p className='input-label'>Phone Number</p>
 						<div className='input-with-icon'>
-							<Inputs type='tel' placeholder='' value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+							<Inputs type='tel' value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
 						</div>
 					</div>
 				</div>
+
 				<div className='buttons-container'>
 					<button className='cancel-button' onClick={handleCancel}>
 						Cancel
@@ -162,4 +124,5 @@ function Settings() {
 		</div>
 	);
 }
+
 export default Settings;

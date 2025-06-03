@@ -26,14 +26,6 @@
 	gap: 0.5rem;
 }
 
-.emotions-mobile-icons {
-	display: flex;
-	gap: 0.5rem;
-	justify-content: flex-end;
-	margin-bottom: 1rem;
-	transition: opacity 0.3s ease;
-}
-
 .emotions-main-grid {
 	display: grid;
 	grid-template-columns: 2fr 1fr;
@@ -52,7 +44,6 @@
 	gap: 1.5rem;
 }
 
-/* Tablet (iPad) - 768px a 1024px */
 @media screen and (max-width: 1024px) {
 	.emotions-container {
 		flex-direction: column;
@@ -67,13 +58,8 @@
 		grid-template-columns: 1fr;
 		gap: 1.5rem;
 	}
-
-	.emotions-mobile-icons {
-		padding: 0.5rem 0;
-	}
 }
 
-/* Móvil Grande - 426px a 767px */
 @media screen and (max-width: 767px) {
 	.emotions-content {
 		padding: 1rem;
@@ -114,7 +100,6 @@
 	}
 }
 
-/* Móvil Pequeño - < 426px */
 @media screen and (max-width: 425px) {
 	.emotions-content {
 		padding: 0.75rem;
@@ -123,10 +108,6 @@
 
 	.emotions-header {
 		margin-bottom: 1rem;
-	}
-
-	.emotions-mobile-icons {
-		margin-bottom: 0.5rem;
 	}
 
 	.journal-carousel {
