@@ -46,7 +46,6 @@ const EmotionWeek = ({ Data }) => {
 	}
 
 	const transformedWeekData = dayNames.map((day) => weekMap[day]);
-
 	const containerStyle = {
 		display: 'flex',
 		flexDirection: 'column',

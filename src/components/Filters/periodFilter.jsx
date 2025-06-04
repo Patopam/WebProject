@@ -83,5 +83,4 @@ const PeriodFilter = ({
 		</Box>
 	);
 };
-
 export default PeriodFilter;

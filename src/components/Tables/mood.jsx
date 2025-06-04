@@ -41,7 +41,7 @@ export default function MoodTracker() {
 		if (!uid) return;
 		const fetchJournals = async () => {
 			try {
-				const snapshot = await getDocs(collection(db, `users/${uid}/journals`)); //firebase
+				const snapshot = await getDocs(collection(db, `users/${uid}/journals`));
 				const data = snapshot.docs.map((doc) => {
 					const item = doc.data();
 					const dateObj = item.date?.toDate?.() || new Date();

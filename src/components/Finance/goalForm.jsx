@@ -1,11 +1,8 @@
-// GoalForm.jsx
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addGoals } from '../../services/firebaseUtils';
 import { useSnackbar } from 'notistack';
-
-// Material UI
 import { Box, Button, Typography, IconButton, styled, TextField } from '@mui/material';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import CloseIcon from '@mui/icons-material/Close';
@@ -21,7 +18,6 @@ export default function GoalForm({ redirectTo = '/finance' }) {
 	const [endDate, setEndDate] = useState(fechaActual);
 	const [price, setPrice] = useState('');
 	const [description, setDescription] = useState('');
-
 	const handleClose = () => navigate(-1);
 
 	const handleSubmit = async () => {
@@ -114,10 +110,6 @@ export default function GoalForm({ redirectTo = '/finance' }) {
 		</ScreenWrapper>
 	);
 }
-
-//
-// 🎨 Estilos personalizados
-//
 
 const ScreenWrapper = styled(Box)({
 	backgroundColor: '#DFDFF4',

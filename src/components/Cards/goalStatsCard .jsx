@@ -6,12 +6,12 @@ const GoalStatsCard = ({ title, description, quantity, label, bgColor, iconBg })
 		<Card
 			sx={{
 				backgroundColor: bgColor,
-				borderRadius: '1.5rem', // 24px
+				borderRadius: '1.5rem',
 				boxShadow: 'none',
 				width: '100%',
-				minHeight: '14.875rem', // 238px
+				minHeight: '14.875rem',
 				height: 'auto',
-				padding: '1.75rem', // 28px
+				padding: '1.75rem',
 				boxSizing: 'border-box',
 			}}
 		>
@@ -27,16 +27,16 @@ const GoalStatsCard = ({ title, description, quantity, label, bgColor, iconBg })
 					sx={{
 						display: 'flex',
 						alignItems: 'center',
-						gap: '0.625rem', // 10px
-						marginBottom: '1rem', // 16px
+						gap: '0.625rem',
+						marginBottom: '1rem',
 					}}
 				>
 					<Box
 						sx={{
 							backgroundColor: iconBg,
 							borderRadius: '50%',
-							width: '2.31rem', // 37px
-							height: '2.31rem', // 37px
+							width: '2.31rem',
+							height: '2.31rem',
 							display: 'flex',
 							justifyContent: 'center',
 							alignItems: 'center',
@@ -49,7 +49,7 @@ const GoalStatsCard = ({ title, description, quantity, label, bgColor, iconBg })
 						variant='h6'
 						sx={{
 							fontWeight: 400,
-							fontSize: '1.125rem', // 18px
+							fontSize: '1.125rem',
 							fontFamily: "'Manrope', sans-serif",
 							lineHeight: 'normal',
 						}}
@@ -60,8 +60,8 @@ const GoalStatsCard = ({ title, description, quantity, label, bgColor, iconBg })
 				<Typography
 					variant='body1'
 					sx={{
-						marginBottom: '0.5rem', // 8px
-						fontSize: '1.125rem', // 18px
+						marginBottom: '0.5rem',
+						fontSize: '1.125rem',
 						fontFamily: "'Manrope', sans-serif",
 						lineHeight: '1.5',
 						color: '#333',
@@ -73,7 +73,7 @@ const GoalStatsCard = ({ title, description, quantity, label, bgColor, iconBg })
 					variant='h5'
 					sx={{
 						fontWeight: 'bold',
-						fontSize: '1.5rem', // 24px
+						fontSize: '1.5rem',
 						fontFamily: "'Manrope', sans-serif",
 						lineHeight: '1.25',
 						color: '#000',
@@ -90,5 +90,4 @@ const GoalStatsCard = ({ title, description, quantity, label, bgColor, iconBg })
 		</Card>
 	);
 };
-
 export default GoalStatsCard;

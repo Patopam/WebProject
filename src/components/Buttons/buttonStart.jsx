@@ -4,7 +4,6 @@ import { useMediaQuery } from '@mui/material';
 
 export default function BotonStart({ text, Icono, onClick }) {
 	const isLargeMobile = useMediaQuery('(min-width:430px)');
-
 	const height = isLargeMobile
 		? '63px'
 		: {

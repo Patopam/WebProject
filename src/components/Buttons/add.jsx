@@ -11,7 +11,6 @@ export default function AddButton({ onClick, text }) {
 }
 
 const CustomAddIcon = () => <AddIcon sx={{ fontSize: '20px', color: '#000000' }} />;
-
 const ExactButton = styled(Button)(() => ({
 	height: '46px',
 	borderRadius: '12px',

@@ -21,9 +21,9 @@ export default function ExpensesLineChart() {
 			color: 'var(--Neutral-1000, #333)',
 			fontFamily: 'Manrope, sans-serif',
 			fontSize: {
-				xs: '1.5rem', // Smaller on mobile
-				sm: '1.75rem', // Medium on tablets
-				md: '2rem', // Normal on desktop
+				xs: '1.5rem',
+				sm: '1.75rem',
+				md: '2rem',
 			},
 			fontWeight: 400,
 			color: '#000000',
@@ -82,7 +82,7 @@ export default function ExpensesLineChart() {
 
 	const getYAxisTicks = () => {
 		if (isMobile) {
-			return [0, 20, 40, 60, 80]; // Menos ticks  movile
+			return [0, 20, 40, 60, 80]; // Fewer mobile ticks
 		}
 		return [0, 10, 20, 30, 40, 50, 60, 70, 80]; // All ticks on desktop
 	};

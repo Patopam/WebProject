@@ -44,7 +44,7 @@ const GoalProgressCard = ({ spent = 150000, total = 200000 }) => {
 					gap: '1.3rem',
 				}}
 			>
-				{/* Header con ícono y texto */}
+				{/* Header ícon and texto */}
 				<Box
 					sx={{
 						display: 'flex',
@@ -82,7 +82,7 @@ const GoalProgressCard = ({ spent = 150000, total = 200000 }) => {
 					</Box>
 				</Box>
 
-				{/* Contenido del progreso */}
+				{/* Progress content */}
 				<Box
 					sx={{
 						display: 'flex',
@@ -143,5 +143,4 @@ const GoalProgressCard = ({ spent = 150000, total = 200000 }) => {
 		</Card>
 	);
 };
-
 export default GoalProgressCard;

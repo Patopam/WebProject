@@ -139,5 +139,4 @@ const FeelingsCard = () => {
 		</Card>
 	);
 };
-
 export default FeelingsCard;

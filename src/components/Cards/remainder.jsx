@@ -40,10 +40,10 @@ const ReminderCard = () => {
 			sx={{
 				display: 'flex',
 				flexDirection: 'column',
-				flex: '1 1 20rem', // se adapta al espacio disponible
+				flex: '1 1 20rem',
 				width: '100%',
 				minHeight: '13rem',
-				height: '100%', // se estira si el contenedor lo permite
+				height: '100%',
 				justifyContent: 'flex-start',
 				alignItems: 'stretch',
 				borderRadius: '1.5rem',
@@ -65,7 +65,7 @@ const ReminderCard = () => {
 					gap: '1.3rem',
 				}}
 			>
-				{/* Header superior con ícono y texto */}
+				{/* Header icon and text*/}
 				<Box
 					sx={{
 						display: 'flex',
@@ -112,7 +112,7 @@ const ReminderCard = () => {
 					</IconButton>
 				</Box>
 
-				{/* Frase motivacional */}
+				{/* phrase */}
 				<Box sx={{ width: '100%' }}>
 					<Typography
 						component='span'
@@ -133,5 +133,4 @@ const ReminderCard = () => {
 		</Card>
 	);
 };
-
 export default ReminderCard;
