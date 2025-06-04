@@ -10,6 +10,7 @@ import { Box, Button, Typography, IconButton, TextField, styled } from '@mui/mat
 
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import SendIcon from '@mui/icons-material/Send';
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function JournalCardView({ journalId }) {
 	const uid = useSelector((state) => state.userId.id);
@@ -19,6 +20,7 @@ export default function JournalCardView({ journalId }) {
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [date, setDate] = useState('');
+	const [originalData, setOriginalData] = useState({ title: '', description: '' }); // nuevo estado
 
 	useEffect(() => {
 		const fetchJournalById = async () => {
@@ -31,6 +33,10 @@ export default function JournalCardView({ journalId }) {
 					setTitle(data.title || '');
 					setDescription(data.description || '');
 					setDate(data.date?.toDate().toDateString() || 'Unknown date');
+					setOriginalData({
+						title: data.title || '',
+						description: data.description || '',
+					});
 				}
 			} catch (err) {
 				console.error('Error loading journal:', err);
@@ -53,6 +59,16 @@ export default function JournalCardView({ journalId }) {
 		}
 	};
 
+	const handleExit = () => {
+		const hasChanges = title !== originalData.title || description !== originalData.description;
+
+		if (hasChanges) {
+			enqueueSnackbar('You have unsaved changes. Leaving now will discard them.', { variant: 'warning' });
+			return;
+		}
+		navigate('/Alljournal');
+	};
+
 	return (
 		<ScreenWrapper>
 			<FormCard>
@@ -63,6 +79,9 @@ export default function JournalCardView({ journalId }) {
 						</IconCircle>
 						<Typography sx={{ fontSize: 18, fontWeight: 600, color: '#000' }}>Edit Journal</Typography>
 					</TitleGroup>
+					<IconButton onClick={handleExit}>
+						<CloseIcon sx={{ color: '#000' }} />
+					</IconButton>
 				</HeaderSection>
 
 				<StyledInput label='Date' variant='outlined' fullWidth value={date} disabled />

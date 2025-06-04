@@ -34,12 +34,10 @@ function AllJournal() {
 
 	return (
 		<div className='journal-container'>
-			{/* Menú lateral solo visible en desktop */}
 			{!isMobile && <Menu />}
 			<div className='journal-content'>
 				<div className='journal-header'>
 					<Header2 title='All my journals' subtitle='Look back at what you’ve felt, written and lived.' />
-					{/* Iconos solo en versión desktop */}
 					{!isMobile && (
 						<div className='journal-icons'>
 							<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
@@ -51,7 +49,6 @@ function AllJournal() {
 					<JournalView />
 				</div>
 			</div>
-			{/* Barra de navegación móvil */}
 			{isMobile && <MobileNavBar className='mobile-navbar' />}
 		</div>
 	);

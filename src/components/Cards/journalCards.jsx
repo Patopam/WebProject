@@ -39,9 +39,9 @@ const JournalCards = ({ journalData }) => {
 				return (
 					<Box
 						key={entry.id}
-						onClick={() => handleClick(entry.id)} // ✅ Click redirecciona
+						onClick={() => handleClick(entry.id)}
 						sx={{
-							cursor: 'pointer', // ✅ Indica interacción
+							cursor: 'pointer',
 							width: {
 								xs: '100%',
 								sm: 'calc(50% - 0.75rem)',
