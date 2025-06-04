@@ -113,6 +113,6 @@ export const fetchJournal = async ({ uid }) => {
 		}));
 		return Journal;
 	} catch (error) {
-		console.error('Error cargando journals:', error);
+		console.error('Error loading journals:', error);
 	}
 };

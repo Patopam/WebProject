@@ -1,7 +1,7 @@
 import { Typography, Container, Stack, Box } from '@mui/material';
-import BotonStart from '../../components/Buttons/botonStart';
+import BotonStart from '../../components/Buttons/buttonStart';
 import Logo from '../../assets/logoStart.png';
-import BotonStartGoogle from '../../components/Buttons/botonStartGoogle';
+import BotonStartGoogle from '../../components/Buttons/buttonStartGoogle';
 import { useNavigate } from 'react-router';
 import { useEffect } from 'react';
 import './start.css';

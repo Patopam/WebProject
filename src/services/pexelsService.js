@@ -7,7 +7,7 @@ export async function getImageFromKeyword(keyword) {
 		});
 		const data = await response.json();
 		if (data.photos && data.photos.length > 0) {
-			return data.photos[0].src.medium; // o .large para mayor resolución
+			return data.photos[0].src.medium;
 		} else {
 			console.warn('No image found for keyword:', keyword);
 			return 'https://via.placeholder.com/300x200?text=No+image+found';

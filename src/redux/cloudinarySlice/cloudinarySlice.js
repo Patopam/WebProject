@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-// Thunk para subir imágenes a Cloudinary
 export const uploadImageToCloudinary = createAsyncThunk('cloudinary/uploadImage', async (file, { rejectWithValue }) => {
 	const cloudName = 'dwkycobbx';
 	const uploadPreset = 'my_unsigned_preset';
@@ -10,29 +9,25 @@ export const uploadImageToCloudinary = createAsyncThunk('cloudinary/uploadImage'
 	formData.append('timestamp', Math.floor(Date.now() / 1000).toString());
 
 	try {
-		console.log('Enviando imagen a Cloudinary con preset:', uploadPreset);
 		const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
 			method: 'POST',
 			body: formData,
 		});
 		if (!response.ok) {
 			const errorData = await response.json();
-			console.error('Error de Cloudinary:', errorData);
+			console.error('Error of Cloudinary:', errorData);
 			const errorMessage =
-				errorData.error?.message ||
-				(typeof errorData.error === 'string' ? errorData.error : 'Error al subir la imagen');
+				errorData.error?.message || (typeof errorData.error === 'string' ? errorData.error : 'Error uploading image');
 			return rejectWithValue(errorMessage);
 		}
 		const data = await response.json();
-		console.log('Respuesta de Cloudinary:', data);
 		return data;
 	} catch (error) {
-		console.error('Error en la solicitud:', error);
-		return rejectWithValue(error.message || 'Error en la subida');
+		console.error('Error in the request:', error);
+		return rejectWithValue(error.message || 'Upload error');
 	}
 });
 
-// initial state
 const initialState = {
 	images: [],
 	currentUpload: null,
@@ -77,7 +72,7 @@ const cloudinarySlice = createSlice({
 			})
 			.addCase(uploadImageToCloudinary.rejected, (state, action) => {
 				state.isLoading = false;
-				state.error = typeof action.payload === 'string' ? action.payload : 'Error desconocido al subir la imagen';
+				state.error = typeof action.payload === 'string' ? action.payload : 'Unknown error uploading image';
 			});
 	},
 });
