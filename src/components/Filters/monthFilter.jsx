@@ -1,7 +1,8 @@
-import { Box } from '@mui/material';
+import { Box, MenuItem, Select } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-const MonthFilter = ({ selectedMonth, setSelectedMonth }) => {
-	const months = ['All', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Agu', 'Jul', 'Sep', 'Oct', 'Nov', 'Dic'];
+const MonthFilter = ({ selectedMonth, setSelectedMonth, selectedYear, setSelectedYear, availableYears }) => {
+	const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Agu', 'Jul', 'Sep', 'Oct', 'Nov', 'Dic'];
 
 	return (
 		<Box
@@ -9,8 +10,69 @@ const MonthFilter = ({ selectedMonth, setSelectedMonth }) => {
 				display: 'flex',
 				flexWrap: 'wrap',
 				gap: '8px',
+				alignItems: 'center',
 			}}
 		>
+			{/* Selector de año como primer chip */}
+			<Select
+				value={selectedYear}
+				onChange={(e) => setSelectedYear(Number(e.target.value))}
+				IconComponent={ExpandMoreIcon}
+				size='small'
+				sx={{
+					width: '5rem',
+					height: '2.813rem',
+					borderRadius: '999px',
+					background: '#5F5DA6',
+					color: '#fff',
+					fontFamily: "'Manrope', sans-serif",
+					fontSize: '14px',
+					fontWeight: 500,
+					textAlign: 'center',
+					'.MuiOutlinedInput-notchedOutline': { border: 'none' },
+					'&:hover': { background: '#4B4990' },
+					'& .MuiSelect-icon': {
+						color: '#fff',
+						right: '10px',
+					},
+				}}
+			>
+				{availableYears.map((year) => (
+					<MenuItem key={year} value={year}>
+						{year}
+					</MenuItem>
+				))}
+			</Select>
+
+			{/* Botón All justo después del año */}
+			<Box
+				component='button'
+				onClick={() => setSelectedMonth('All')}
+				sx={{
+					display: 'flex',
+					width: '5rem',
+					height: '2.813rem',
+					padding: '6px 24px',
+					justifyContent: 'center',
+					alignItems: 'center',
+					gap: '24px',
+					borderRadius: '999px',
+					background: selectedMonth === 'All' ? '#4B4990' : '#5F5DA6',
+					color: '#fff',
+					border: 'none',
+					cursor: 'pointer',
+					fontFamily: "'Manrope', sans-serif",
+					fontSize: '14px',
+					fontWeight: 500,
+					'&:hover': {
+						background: '#4B4990',
+					},
+				}}
+			>
+				All
+			</Box>
+
+			{/* Resto de meses */}
 			{months.map((month) => (
 				<Box
 					key={month}

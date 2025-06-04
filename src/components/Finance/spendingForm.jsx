@@ -20,7 +20,7 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import CloseIcon from '@mui/icons-material/Close';
 import SendIcon from '@mui/icons-material/Send';
 
-const categoryOptions = ['Food', 'Sweets', 'Coffee', 'Entertainment', 'Shopping', 'Experiences', 'Other'];
+const categoryOptions = ['Food', 'Sweets', 'Entertainment', 'Shopping', 'Experiences', 'Other'];
 
 export default function SpendingForm({ redirectTo = '/finance' }) {
 	const navigate = useNavigate();
