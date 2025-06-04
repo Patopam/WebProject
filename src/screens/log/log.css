@@ -67,7 +67,7 @@ body.login-mode {
 	color: #5e35b1;
 }
 
-/* Mobile S/M (hasta 425px) */
+/* Mobile S/M (max 425px) */
 @media screen and (max-width: 425px) {
 	.Container-sign {
 		padding: 1rem;
@@ -118,7 +118,7 @@ body.login-mode {
 	}
 }
 
-/* Desktop (1441px en adelante) */
+/* Desktop (1441px --> ) */
 @media screen and (min-width: 1441px) {
 	.Container-sign {
 		padding: 4rem 3rem;

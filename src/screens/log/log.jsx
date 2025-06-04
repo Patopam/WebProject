@@ -8,15 +8,15 @@ import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 
 import { saveUserData } from '../../services/firebaseUtils';
 import { auth } from '../../services/firebase';
 import { useDispatch } from 'react-redux';
-import { setUserid } from '../../redux/UserSlice/UserSlice';
-import { setUserNombre } from '../../redux/UserSlice/NombreSlice';
+import { setUserId } from '../../redux/UserSlice/UserSlice';
+import { setUserName } from '../../redux/UserSlice/NameSlice';
 import './log.css';
 
 function Log() {
-	const [Correo, setCorreo] = useState('');
-	const [Constraseña, setConstraseña] = useState('');
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
 	const dispatch = useDispatch();
-	const Navigate = useNavigate();
+	const navigate = useNavigate();
 	const provider = new GoogleAuthProvider();
 
 	useEffect(() => {
@@ -24,7 +24,7 @@ function Log() {
 		return () => document.body.classList.remove('login-mode');
 	}, []);
 
-	const SingUpGoogle = () => {
+	const handleGoogleSignIn = () => {
 		signInWithPopup(auth, provider)
 			.then(async (result) => {
 				const user = result.user;
@@ -33,21 +33,21 @@ function Log() {
 					name: user.displayName,
 					email: user.email,
 				});
-				dispatch(setUserid(user.uid));
-				dispatch(setUserNombre(user.displayName));
-				Navigate('/dashboard');
+				dispatch(setUserId(user.uid));
+				dispatch(setUserName(user.displayName));
+				navigate('/dashboard');
 			})
 			.catch((error) => alert(error.message));
 	};
 
-	const Summit = (e) => {
+	const handleSubmit = (e) => {
 		e.preventDefault();
-		signInWithEmailAndPassword(auth, Correo, Constraseña)
+		signInWithEmailAndPassword(auth, email, password)
 			.then((userCredential) => {
 				const user = userCredential.user;
-				dispatch(setUserid(user.uid));
-				dispatch(setUserNombre(user.displayName));
-				Navigate('/dashboard');
+				dispatch(setUserId(user.uid));
+				dispatch(setUserName(user.displayName));
+				navigate('/dashboard');
 			})
 			.catch((error) => alert(error.message));
 	};
@@ -55,14 +55,7 @@ function Log() {
 	return (
 		<Container className='Container-sign'>
 			<Box className='Sign-header'>
-				<Typography
-					variant='h2'
-					sx={{
-						fontStyle: 'normal',
-						fontWeight: 400,
-					}}
-					className='Sign-title'
-				>
+				<Typography variant='h2' sx={{ fontStyle: 'normal', fontWeight: 400 }} className='Sign-title'>
 					Welcome
 				</Typography>
 				<Typography className='Sign-subtitle'>
@@ -71,18 +64,18 @@ function Log() {
 				</Typography>
 			</Box>
 
-			<form onSubmit={Summit} className='Sign-form'>
+			<form onSubmit={handleSubmit} className='Sign-form'>
 				<Stack spacing={2}>
 					<Inputs
-						value={Correo}
-						onChange={(e) => setCorreo(e.target.value)}
+						value={email}
+						onChange={(e) => setEmail(e.target.value)}
 						label='Email'
 						placeholder='Write your email *'
 					/>
 					<Inputs
 						type='password'
-						value={Constraseña}
-						onChange={(e) => setConstraseña(e.target.value)}
+						value={password}
+						onChange={(e) => setPassword(e.target.value)}
 						placeholder='Write your password *'
 					/>
 					<Typography className='forgot-password-text'>Forgot password?</Typography>
@@ -90,7 +83,7 @@ function Log() {
 					<Box className='Sign-buttons'>
 						<Stack spacing={1.5}>
 							<BotonStart text='Log In' />
-							<BotonStartGoogle text='Connect with Google' onClick={SingUpGoogle} />
+							<BotonStartGoogle text='Connect with Google' onClick={handleGoogleSignIn} />
 						</Stack>
 						<Typography className='Sign-loginlink'>
 							<Link to='/sing'>No account? Create an account</Link>

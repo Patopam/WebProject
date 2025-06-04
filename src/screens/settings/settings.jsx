@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Menu from '../../components/Menu/menu';
-import Inputs from '../../components/Inputs/inputs';
+import Inputs from '../../components/Inputs/Inputs';
 import Header2 from '../../components/Header/header2';
 import CustomIconButton from '../../components/Buttons/icon';
 import LogoutIcon from '@mui/icons-material/Logout';
