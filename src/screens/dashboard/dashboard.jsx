@@ -23,7 +23,7 @@ function Dashboard() {
 	const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
 
 	const id = useSelector((state) => state.userId.id);
-	const NombreU = useSelector((state) => state.NombreU.Nombre);
+	const userName = useSelector((state) => state.userName.name);
 
 	useEffect(() => {
 		fetchJournal({ uid: id })
@@ -66,7 +66,7 @@ function Dashboard() {
 			{!isMobile && <Menu />}
 			<div className='dashboard-content'>
 				<div className='dashboard-header'>
-					<Header Nombre={NombreU} subtitle='How are you feeling today?' />
+					<Header Nombre={userName} subtitle='How are you feeling today?' />
 					{!isMobile && (
 						<div className='dashboard-icons'>
 							<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />

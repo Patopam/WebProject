@@ -14,24 +14,39 @@ import AddGoal from '../screens/finance/addGoal';
 import AddSpending from '../screens/finance/addSpending';
 import Recommendations from '../screens/recommendations/recommendation';
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { auth } from '../services/firebase';
+import { auth, db } from '../services/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import { clearUser, setUserid } from '../redux/UserSlice/UserSlice';
+import { clearUser, setUserId } from '../redux/UserSlice/UserSlice';
+import { setUserName } from '../redux/UserSlice/NameSlice';
+import { doc, getDoc } from 'firebase/firestore';
 
 function Router() {
 	const dispatch = useDispatch();
+	const [loading, setLoading] = useState(true); // ✅ loading hasta cargar userName
+
 	useEffect(() => {
-		const unsubscribe = onAuthStateChanged(auth, (user) => {
+		const unsubscribe = onAuthStateChanged(auth, async (user) => {
 			if (user) {
-				dispatch(setUserid(user.uid));
+				dispatch(setUserId(user.uid));
+
+				const userRef = doc(db, 'users', user.uid);
+				const userSnap = await getDoc(userRef);
+				const name = userSnap.exists() ? userSnap.data().name : '';
+
+				dispatch(setUserName(name || ''));
 			} else {
 				dispatch(clearUser());
+				dispatch(setUserName('')); // ✅ limpia también el name
 			}
+			setLoading(false); // ✅ ya cargó, puede renderizar
 		});
+
 		return () => unsubscribe();
 	}, [dispatch]);
+
+	if (loading) return null;
 
 	return (
 		<BrowserRouter>
