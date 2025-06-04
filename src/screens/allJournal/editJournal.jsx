@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import JournalCardView from '../../components/Journal/journalCardView';
+import JournalCardView from '../../components/Cards/journalCardsView';
 
 const EditJournal = () => {
 	const { id } = useParams();
