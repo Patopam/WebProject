@@ -5,6 +5,7 @@ import Finance from '../screens/finance/finance';
 import Analytics from '../screens/analytics/analytics';
 import Journal from '../screens/journal/journal';
 import AllJournal from '../screens/allJournal/allJournal';
+import EditJournal from '../screens/allJournal/editJournal';
 import ExpandedJournal from '../screens/journal/expandedJournal';
 import Start from '../screens/start/start';
 import Log from '../screens/log/log';
@@ -99,6 +100,15 @@ function Router() {
 					element={
 						<ProtectedRoute>
 							<AllJournal />
+						</ProtectedRoute>
+					}
+				/>
+
+				<Route
+					path='/journal/edit/:id'
+					element={
+						<ProtectedRoute>
+							<EditJournal />
 						</ProtectedRoute>
 					}
 				/>

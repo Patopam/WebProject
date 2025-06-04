@@ -1,6 +1,13 @@
 import { Box, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const JournalCards = ({ journalData }) => {
+	const navigate = useNavigate();
+
+	const handleClick = (journalId) => {
+		navigate(`/journal/edit/${journalId}`);
+	};
+
 	if (journalData.length === 0) {
 		return (
 			<Typography
@@ -32,7 +39,9 @@ const JournalCards = ({ journalData }) => {
 				return (
 					<Box
 						key={entry.id}
+						onClick={() => handleClick(entry.id)} // ✅ Click redirecciona
 						sx={{
+							cursor: 'pointer', // ✅ Indica interacción
 							width: {
 								xs: '100%',
 								sm: 'calc(50% - 0.75rem)',
@@ -46,6 +55,10 @@ const JournalCards = ({ journalData }) => {
 							display: 'flex',
 							flexDirection: 'column',
 							gap: '0.5rem',
+							transition: 'transform 0.2s ease',
+							'&:hover': {
+								transform: 'scale(1.02)',
+							},
 						}}
 					>
 						<Typography
