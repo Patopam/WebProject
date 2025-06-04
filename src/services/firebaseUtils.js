@@ -1,4 +1,3 @@
-//Revisar este codigo
 import { db } from './firebase';
 import { addDoc, collection, doc, setDoc, serverTimestamp, getDocs } from 'firebase/firestore';
 

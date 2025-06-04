@@ -1,34 +1,35 @@
-import { Button } from '@mui/material';
+import { Button, useMediaQuery } from '@mui/material';
 import { FcGoogle } from 'react-icons/fc';
 import { styled } from '@mui/material/styles';
 
 export default function BotonStartGoogle({ onClick, text }) {
+	const isLargeMobile = useMediaQuery('(min-width:430px)');
+	const height = isLargeMobile
+		? '63px'
+		: {
+				xs: '56px',
+				sm: '60px',
+				md: '62px',
+		  };
+
+	const fontSize = {
+		xs: '17px',
+		sm: '18px',
+		md: '19px',
+	};
+
 	return (
 		<StyledGoogleButton
 			variant='contained'
 			onClick={onClick}
 			startIcon={<FcGoogle />}
 			sx={{
-				height: {
-					xs: '53px',
-					sm: '60px',
-					md: '62px',
-				},
+				height,
 				width: '100%',
 				maxWidth: '450px',
-				borderRadius: {
-					xs: '16px',
-					sm: '18px',
-				},
-				paddingX: {
-					xs: '16px',
-					sm: '24px',
-				},
-				fontSize: {
-					xs: '16px',
-					sm: '18px',
-					md: '19px',
-				},
+				borderRadius: { xs: '16px', sm: '18px' },
+				paddingX: { xs: '16px', sm: '24px' },
+				fontSize,
 				fontFamily: 'Manrope, sans-serif',
 				color: '#1F1F1F',
 				fontWeight: 400,
@@ -39,6 +40,7 @@ export default function BotonStartGoogle({ onClick, text }) {
 		</StyledGoogleButton>
 	);
 }
+
 const StyledGoogleButton = styled(Button)(() => ({
 	backgroundColor: '#D2D2D2',
 	textTransform: 'none',
@@ -46,13 +48,11 @@ const StyledGoogleButton = styled(Button)(() => ({
 	minWidth: 'auto',
 	width: '100%',
 	whiteSpace: 'nowrap',
-
 	display: 'flex',
 	flexDirection: 'row',
 	justifyContent: 'center',
 	alignItems: 'center',
 	gap: '8px',
-
 	overflow: 'hidden',
 	textOverflow: 'ellipsis',
 
@@ -69,6 +69,5 @@ const StyledGoogleButton = styled(Button)(() => ({
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
-
 	fontFamily: "'Manrope', sans-serif",
 }));

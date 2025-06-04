@@ -30,10 +30,12 @@ body.sign-mode {
 }
 
 .Sign-subtitle {
-	font-size: clamp(1rem, 2.5vw, 1.2rem);
-	line-height: 1.2;
+	font-size: clamp(1rem, 2.7vw, 1.3rem);
+	line-height: 1.4;
 	margin-bottom: 1.5rem;
 	color: #333;
+	text-wrap: balance;
+	text-align: center;
 }
 
 .Sign-form {
@@ -54,13 +56,24 @@ body.sign-mode {
 	padding-top: 1rem;
 }
 
-@media screen and (max-width: 1024px) {
+/* Mobile (max 425px) */
+@media screen and (max-width: 425px) {
 	.Container-sign {
-		padding: 1.5rem;
+		padding: 1rem;
+	}
+
+	.Sign-subtitle {
+		font-size: 1rem;
+		margin-bottom: 1rem;
+	}
+
+	.Sign-buttons {
+		margin-top: 1rem;
 	}
 }
 
-@media screen and (max-width: 767px) {
+/* Movile M/L (426px – 767px) */
+@media screen and (min-width: 426px) and (max-width: 767px) {
 	.Container-sign {
 		padding: 1.25rem;
 		padding-top: 2rem;
@@ -71,47 +84,45 @@ body.sign-mode {
 		font-size: 2rem;
 	}
 
-	.Sign-subtitle {
-		margin-bottom: 1rem;
-	}
-
 	.Sign-buttons {
 		max-width: 100%;
 	}
-
-	.Sign-buttons button {
-		width: 100%;
-	}
 }
 
-@media screen and (max-width: 425px) {
-	.Container-sign {
-		padding: 1rem;
-	}
-
-	.Sign-subtitle {
-		font-size: 1rem;
-	}
-
-	.Sign-buttons {
-		margin-top: 1rem;
-	}
-}
-
-@media screen and (min-width: 1025px) {
+/* Laptop(1025px – 1440px) */
+@media screen and (min-width: 1025px) and (max-width: 1440px) {
 	.Sign-form .MuiStack-root {
-		max-width: 400px; /* Limit input size */
+		max-width: 400px;
 		width: 100%;
 		margin: 0 auto;
 	}
 
 	.Sign-buttons {
-		max-width: 400px; /* Same width as inputs */
+		max-width: 400px;
 		width: 100%;
 		margin: 1.5rem auto 0 auto;
 	}
 
 	.Sign-buttons button {
 		width: 100%;
+	}
+}
+
+/* Desktop (1441px --) */
+@media screen and (min-width: 1441px) {
+	.Container-sign {
+		padding: 4rem 3rem;
+	}
+
+	.Sign-title {
+		font-size: 2.6rem;
+	}
+
+	.Sign-subtitle {
+		font-size: 1.4rem;
+	}
+
+	.Sign-buttons {
+		max-width: 480px;
 	}
 }

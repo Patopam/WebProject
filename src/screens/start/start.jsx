@@ -5,6 +5,7 @@ import BotonStartGoogle from '../../components/Buttons/botonStartGoogle';
 import { useNavigate } from 'react-router';
 import { useEffect } from 'react';
 import './start.css';
+import { useMediaQuery } from '@mui/material';
 
 function Start() {
 	const navigate = useNavigate();
@@ -21,6 +22,7 @@ function Start() {
 		navigate('/sing');
 	};
 
+	const isLargeMobile = useMediaQuery('(min-width:430px)');
 	return (
 		<Container className='container-start'>
 			<div className='menu-logo'>
@@ -28,7 +30,7 @@ function Start() {
 			</div>
 
 			<Box className='start-buttons-wrapper'>
-				<Stack spacing={1.8}>
+				<Stack spacing={2}>
 					<BotonStart text='Log In' onClick={goLogin} />
 					<BotonStart text='Create your account' onClick={goSign} />
 					<BotonStartGoogle text='Connect with Google' />
@@ -40,10 +42,10 @@ function Start() {
 					sx={{
 						color: '#000000',
 						fontFamily: 'Manrope, sans-serif',
-						fontSize: 'clamp(15px, 2.5vw, 20px)',
+						fontSize: isLargeMobile ? '20px' : 'clamp(18px, 2.5vw, 20px)',
 						fontWeight: 400,
 						textAlign: 'center',
-						lineHeight: 1.1,
+						lineHeight: 1.3,
 					}}
 				>
 					A space that supports what you

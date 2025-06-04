@@ -76,7 +76,7 @@ function Log() {
 					<Inputs
 						value={Correo}
 						onChange={(e) => setCorreo(e.target.value)}
-						label='Correo'
+						label='Email'
 						placeholder='Write your email *'
 					/>
 					<Inputs
