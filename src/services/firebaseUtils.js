@@ -1,5 +1,5 @@
 import { db } from './firebase';
-import { addDoc, collection, doc, setDoc, serverTimestamp, getDocs } from 'firebase/firestore';
+import { addDoc, collection, doc, setDoc, serverTimestamp, getDocs, updateDoc } from 'firebase/firestore';
 
 export const saveUserData = async ({ uid, name, email }) => {
 	try {
@@ -18,7 +18,6 @@ export const addGoals = async ({ uid, startDate, endDate, amount, description })
 		console.error('Invalid UID when trying to save goal.');
 		return;
 	}
-
 	try {
 		const GoalsRef = collection(doc(db, 'users', uid), 'Goals');
 		await addDoc(GoalsRef, {
@@ -103,7 +102,6 @@ export const fetchGoal = async ({ uid }) => {
 
 export const fetchJournal = async ({ uid }) => {
 	if (!uid) return console.log('');
-
 	try {
 		const JournalRef = collection(doc(db, 'users', uid), 'journals');
 		const snapshot = await getDocs(JournalRef);
@@ -114,5 +112,22 @@ export const fetchJournal = async ({ uid }) => {
 		return Journal;
 	} catch (error) {
 		console.error('Error loading journals:', error);
+	}
+};
+
+export const updateJournal = async ({ uid, journalId, title, description }) => {
+	if (!uid || !journalId) {
+		console.error('Invalid UID or Journal ID when updating.');
+		return;
+	}
+
+	try {
+		const journalDocRef = doc(db, 'users', uid, 'journals', journalId);
+		await updateDoc(journalDocRef, {
+			title,
+			description,
+		});
+	} catch (error) {
+		console.error('Error updating journal:', error);
 	}
 };
