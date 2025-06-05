@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import FlashOnOutlinedIcon from '@mui/icons-material/FlashOnOutlined';
 
-const FeelingsCard = () => {
+const FeelingsCard = ({ emotion = 'none', percentage = 0 }) => {
 	return (
 		<Card
 			sx={{
@@ -100,7 +100,7 @@ const FeelingsCard = () => {
 								lineHeight: 1,
 							}}
 						>
-							50%
+							{percentage}%
 						</Typography>
 
 						<Typography
@@ -130,13 +130,15 @@ const FeelingsCard = () => {
 							fontWeight: 500,
 							color: '#333',
 							lineHeight: '125%',
+							textTransform: 'capitalize',
 						}}
 					>
-						stressed
+						{emotion}
 					</Typography>
 				</Box>
 			</CardContent>
 		</Card>
 	);
 };
+
 export default FeelingsCard;

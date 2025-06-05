@@ -16,50 +16,40 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { fetchJournal } from '../../services/firebaseUtils';
+import { getEmotionSpendingStats } from '../../services/analysisUtils';
 
 function Dashboard() {
 	const [Data, setData] = useState();
 	const [Loading, setLoading] = useState(true);
 	const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
+	const [emotionStats, setEmotionStats] = useState(null);
 
 	const id = useSelector((state) => state.userId.id);
 	const userName = useSelector((state) => state.userName.name);
+	const navigate = useNavigate();
 
 	useEffect(() => {
-		fetchJournal({ uid: id })
-			.then((Emotion) => setData([...Emotion]))
-			.finally(() => setLoading(false));
+		if (id) {
+			fetchJournal({ uid: id })
+				.then((Emotion) => setData([...Emotion]))
+				.finally(() => setLoading(false));
+
+			getEmotionSpendingStats(id).then(setEmotionStats);
+		}
 
 		const handleResize = () => {
-			const mobile = window.innerWidth <= 1024;
-			setIsMobile(mobile);
+			setIsMobile(window.innerWidth <= 1024);
 		};
 
 		handleResize();
 		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
+	}, [id]);
 
-		return () => {
-			window.removeEventListener('resize', handleResize);
-		};
-	}, []);
-
-	const navigate = useNavigate();
-
-	const goLogin = () => {
-		navigate('/log');
-	};
-
-	const handleJournalClick = () => {
-		navigate('/journal/write', { state: { redirectTo: '/dashboard' } });
-	};
-
-	const handleSpendClick = () => {
-		navigate('/finance/add-spending', { state: { from: '/dashboard' } });
-	};
-
-	const goSettings = () => {
-		navigate('/settings');
-	};
+	const goLogin = () => navigate('/log');
+	const handleJournalClick = () => navigate('/journal/write', { state: { redirectTo: '/dashboard' } });
+	const handleSpendClick = () => navigate('/finance/add-spending', { state: { from: '/dashboard' } });
+	const goSettings = () => navigate('/settings');
 
 	return (
 		<div className='dashboard-container'>
@@ -82,7 +72,11 @@ function Dashboard() {
 
 				<div className='dashboard-cards-row'>
 					<ReminderCard />
-					<FeelingsCard />
+					{emotionStats ? (
+						<FeelingsCard emotion={emotionStats.emotion} percentage={emotionStats.percentage} />
+					) : (
+						<FeelingsCard emotion='none' percentage={0} />
+					)}
 					<GoalProgressCard />
 				</div>
 
