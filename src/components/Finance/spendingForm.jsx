@@ -25,10 +25,11 @@ const categoryOptions = ['Food', 'Sweets', 'Entertainment', 'Shopping', 'Experie
 export default function SpendingForm({ redirectTo = '/finance' }) {
 	const navigate = useNavigate();
 	const { enqueueSnackbar } = useSnackbar();
-	const id = useSelector((state) => state.userId.id);
-	const fechaActual = new Date().toLocaleDateString();
+	const uid = useSelector((state) => state.userId.id);
 
-	const [date, setDate] = useState(fechaActual);
+	const localToday = new Date();
+	localToday.setHours(0, 0, 0, 0);
+	const [date, setDate] = useState(localToday);
 	const [category, setCategory] = useState('');
 	const [price, setPrice] = useState('');
 	const [description, setDescription] = useState('');
@@ -43,7 +44,7 @@ export default function SpendingForm({ redirectTo = '/finance' }) {
 		}
 		try {
 			await addSpend({
-				uid: id,
+				uid,
 				startDate: date,
 				category,
 				amount,
@@ -76,7 +77,14 @@ export default function SpendingForm({ redirectTo = '/finance' }) {
 					</IconButton>
 				</HeaderSection>
 
-				<StyledInput label='Date' variant='outlined' fullWidth value={date} onChange={(e) => setDate(e.target.value)} />
+				<StyledInput
+					label='Date'
+					type='date'
+					variant='outlined'
+					fullWidth
+					value={date.toISOString().split('T')[0]}
+					onChange={(e) => setDate(new Date(e.target.value))}
+				/>
 
 				<FormControl fullWidth>
 					<InputLabel>Category</InputLabel>
@@ -128,6 +136,8 @@ export default function SpendingForm({ redirectTo = '/finance' }) {
 		</ScreenWrapper>
 	);
 }
+
+// === STYLES ===
 
 const ScreenWrapper = styled(Box)({
 	backgroundColor: '#DFDFF4',

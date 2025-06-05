@@ -11,11 +11,12 @@ import SendIcon from '@mui/icons-material/Send';
 export default function GoalForm({ redirectTo = '/finance' }) {
 	const navigate = useNavigate();
 	const { enqueueSnackbar } = useSnackbar();
-	const id = useSelector((state) => state.userId.id);
-	const fechaActual = new Date().toLocaleDateString();
+	const uid = useSelector((state) => state.userId.id);
 
-	const [startDate, setStartDate] = useState(fechaActual);
-	const [endDate, setEndDate] = useState(fechaActual);
+	const localToday = new Date();
+	localToday.setHours(0, 0, 0, 0);
+	const [startDate, setStartDate] = useState(localToday);
+	const [endDate, setEndDate] = useState(localToday);
 	const [price, setPrice] = useState('');
 	const [description, setDescription] = useState('');
 	const handleClose = () => navigate(-1);
@@ -23,13 +24,15 @@ export default function GoalForm({ redirectTo = '/finance' }) {
 	const handleSubmit = async () => {
 		const amount = Number(price.replace(/\D/g, ''));
 		if (isNaN(amount)) {
-			enqueueSnackbar('Please enter a valid numeric value.', { variant: 'error' });
+			enqueueSnackbar('Please enter a valid numeric value.', {
+				variant: 'error',
+			});
 			return;
 		}
 
 		try {
 			await addGoals({
-				uid: id,
+				uid,
 				startDate,
 				endDate,
 				amount,
@@ -64,18 +67,20 @@ export default function GoalForm({ redirectTo = '/finance' }) {
 
 				<StyledInput
 					label='Start Date'
+					type='date'
 					variant='outlined'
 					fullWidth
-					value={startDate}
-					onChange={(e) => setStartDate(e.target.value)}
+					value={startDate.toISOString().split('T')[0]}
+					onChange={(e) => setStartDate(new Date(e.target.value))}
 				/>
 
 				<StyledInput
 					label='End Date'
+					type='date'
 					variant='outlined'
 					fullWidth
-					value={endDate}
-					onChange={(e) => setEndDate(e.target.value)}
+					value={endDate.toISOString().split('T')[0]}
+					onChange={(e) => setEndDate(new Date(e.target.value))}
 				/>
 
 				<StyledInput
@@ -110,6 +115,8 @@ export default function GoalForm({ redirectTo = '/finance' }) {
 		</ScreenWrapper>
 	);
 }
+
+// === STYLES ===
 
 const ScreenWrapper = styled(Box)({
 	backgroundColor: '#DFDFF4',

@@ -1,5 +1,5 @@
 import { db } from './firebase';
-import { addDoc, collection, doc, setDoc, serverTimestamp, getDocs, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, setDoc, serverTimestamp, getDocs, updateDoc, Timestamp } from 'firebase/firestore';
 
 export const saveUserData = async ({ uid, name, email }) => {
 	try {
@@ -14,15 +14,12 @@ export const saveUserData = async ({ uid, name, email }) => {
 };
 
 export const addGoals = async ({ uid, startDate, endDate, amount, description }) => {
-	if (!uid) {
-		console.error('Invalid UID when trying to save goal.');
-		return;
-	}
+	if (!uid) return;
 	try {
 		const GoalsRef = collection(doc(db, 'users', uid), 'Goals');
 		await addDoc(GoalsRef, {
-			startDate,
-			endDate,
+			startDate: Timestamp.fromDate(new Date(startDate)),
+			endDate: Timestamp.fromDate(new Date(endDate)),
 			amount,
 			description,
 			date: serverTimestamp(),
@@ -34,14 +31,11 @@ export const addGoals = async ({ uid, startDate, endDate, amount, description })
 };
 
 export const addSpend = async ({ uid, startDate, category, amount, description }) => {
-	if (!uid) {
-		console.error('Invalid UID when trying to save spend.');
-		return;
-	}
+	if (!uid) return;
 	try {
 		const SpendsRef = collection(doc(db, 'users', uid), 'Spends');
 		await addDoc(SpendsRef, {
-			startDate,
+			startDate: Timestamp.fromDate(new Date(startDate)),
 			category,
 			amount,
 			description,
@@ -53,10 +47,7 @@ export const addSpend = async ({ uid, startDate, category, amount, description }
 };
 
 export const addJournal = async ({ uid, emotion, title, description }) => {
-	if (!uid) {
-		console.error('Invalid UID when trying to save journal.');
-		return;
-	}
+	if (!uid) return;
 	try {
 		const journalRef = collection(doc(db, 'users', uid), 'journals');
 		await addDoc(journalRef, {
@@ -71,63 +62,91 @@ export const addJournal = async ({ uid, emotion, title, description }) => {
 };
 
 export const fetchSpends = async ({ uid }) => {
-	if (!uid) return console.log('hola');
+	if (!uid) return;
 	try {
 		const SpendsRef = collection(doc(db, 'users', uid), 'Spends');
 		const snapshot = await getDocs(SpendsRef);
-		const Spends = snapshot.docs.map((doc) => ({
-			id: doc.id,
-			...doc.data(),
-		}));
-		return Spends;
+		return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 	} catch (error) {
-		console.error('Error loading journals:', error);
+		console.error('Error loading spends:', error);
 	}
 };
 
 export const fetchGoal = async ({ uid }) => {
-	if (!uid) return console.log('hola');
+	if (!uid) return;
 	try {
 		const GoalRef = collection(doc(db, 'users', uid), 'Goals');
 		const snapshot = await getDocs(GoalRef);
-		const Goal = snapshot.docs.map((doc) => ({
-			id: doc.id,
-			...doc.data(),
-		}));
-		return Goal;
+		return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 	} catch (error) {
-		console.error('Error loading journals:', error);
+		console.error('Error loading goals:', error);
 	}
 };
 
 export const fetchJournal = async ({ uid }) => {
-	if (!uid) return console.log('');
+	if (!uid) return;
 	try {
 		const JournalRef = collection(doc(db, 'users', uid), 'journals');
 		const snapshot = await getDocs(JournalRef);
-		const Journal = snapshot.docs.map((doc) => ({
-			id: doc.id,
-			...doc.data(),
-		}));
-		return Journal;
+		return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 	} catch (error) {
 		console.error('Error loading journals:', error);
 	}
 };
 
 export const updateJournal = async ({ uid, journalId, title, description }) => {
-	if (!uid || !journalId) {
-		console.error('Invalid UID or Journal ID when updating.');
-		return;
-	}
-
+	if (!uid || !journalId) return;
 	try {
 		const journalDocRef = doc(db, 'users', uid, 'journals', journalId);
-		await updateDoc(journalDocRef, {
-			title,
-			description,
-		});
+		await updateDoc(journalDocRef, { title, description });
 	} catch (error) {
 		console.error('Error updating journal:', error);
+	}
+};
+
+export const getActiveGoalProgress = async ({ uid }) => {
+	if (!uid) return null;
+	try {
+		const GoalRef = collection(doc(db, 'users', uid), 'Goals');
+		const SpendRef = collection(doc(db, 'users', uid), 'Spends');
+
+		const goalsSnapshot = await getDocs(GoalRef);
+		const goals = goalsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+
+		const today = new Date();
+		const activeGoals = goals.filter((goal) => goal.endDate?.toDate() >= today);
+		if (activeGoals.length === 0) return null;
+
+		const activeGoal = activeGoals.sort((a, b) => b.endDate.toDate() - a.endDate.toDate())[0];
+
+		const spendsSnapshot = await getDocs(SpendRef);
+		const spends = spendsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+
+		const filteredSpends = spends.filter((spend) => {
+			let dateObj;
+			if (spend.startDate?.toDate) {
+				dateObj = spend.startDate.toDate();
+			} else if (typeof spend.startDate === 'string' || typeof spend.startDate === 'object') {
+				dateObj = new Date(spend.startDate);
+			} else {
+				return false;
+			}
+			return dateObj >= activeGoal.startDate.toDate() && dateObj <= activeGoal.endDate.toDate();
+		});
+
+		const totalSpent = filteredSpends.reduce((sum, spend) => sum + Number(spend.amount), 0);
+		const totalGoal = Number(activeGoal.amount);
+		const percentage = (totalSpent / totalGoal) * 100;
+
+		return {
+			spent: totalSpent,
+			total: totalGoal,
+			percentage,
+			goalId: activeGoal.id,
+			description: activeGoal.description || '',
+		};
+	} catch (error) {
+		console.error('Error loading active goal progress:', error);
+		return null;
 	}
 };
