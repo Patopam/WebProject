@@ -78,9 +78,9 @@ const GoalProgressCard = () => {
 						sx={{
 							height: '0.5rem',
 							borderRadius: '0.25rem',
-							backgroundColor: '#C8D39F',
+							backgroundColor: percentage >= 100 ? '#F1B0B7' : '#C8D39F',
 							'& .MuiLinearProgress-bar': {
-								backgroundColor: '#8C9F49',
+								backgroundColor: percentage >= 100 ? '#B00020' : '#8C9F49',
 								borderRadius: '0.25rem',
 							},
 							margin: '0.4rem 0',
@@ -102,7 +102,6 @@ const GoalProgressCard = () => {
 
 export default GoalProgressCard;
 
-// Styles
 const cardStyle = {
 	display: 'flex',
 	flexDirection: 'column',
