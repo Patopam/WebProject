@@ -11,10 +11,16 @@ import ExpensesLineChart from '../../components/Charts/expenseChart';
 import MobileNavBar from '../../components/Menu/mobileNavBar';
 import './analytics.css';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { getEmotionSpendingStats } from '../../services/analysisUtils';
 
 function Analytics() {
 	const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
-	let navigate = useNavigate();
+	const [emotionStats, setEmotionStats] = useState(null);
+
+	const uid = useSelector((state) => state.userId.id);
+	const navigate = useNavigate();
+
 	const goLogin = () => navigate('/log');
 	const goSettings = () => navigate('/settings');
 
@@ -27,6 +33,12 @@ function Analytics() {
 		window.addEventListener('resize', handleResize);
 		return () => window.removeEventListener('resize', handleResize);
 	}, []);
+
+	useEffect(() => {
+		if (uid) {
+			getEmotionSpendingStats(uid).then(setEmotionStats);
+		}
+	}, [uid]);
 
 	return (
 		<div className='analytics-container'>
@@ -54,7 +66,11 @@ function Analytics() {
 					</div>
 					<div className='cards-section'>
 						<div className='card-item'>
-							<FeelingsCard />
+							{emotionStats ? (
+								<FeelingsCard emotion={emotionStats.emotion} percentage={emotionStats.percentage} />
+							) : (
+								<FeelingsCard emotion='none' percentage={0} />
+							)}
 						</div>
 						<div className='card-item'>
 							<GoalProgressCard />
