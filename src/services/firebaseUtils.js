@@ -109,10 +109,8 @@ export const getActiveGoalProgress = async ({ uid }) => {
 	try {
 		const GoalRef = collection(doc(db, 'users', uid), 'Goals');
 		const SpendRef = collection(doc(db, 'users', uid), 'Spends');
-
 		const goalsSnapshot = await getDocs(GoalRef);
 		const goals = goalsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-
 		const today = new Date();
 		today.setHours(0, 0, 0, 0);
 
@@ -126,7 +124,6 @@ export const getActiveGoalProgress = async ({ uid }) => {
 		if (activeGoals.length === 0) return null;
 
 		const activeGoal = activeGoals.sort((a, b) => b.endDate.toDate() - a.endDate.toDate())[0];
-
 		const spendsSnapshot = await getDocs(SpendRef);
 		const spends = spendsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
@@ -166,7 +163,6 @@ export const evaluateGoalsStatus = async ({ uid }) => {
 		const SpendRef = collection(doc(db, 'users', uid), 'Spends');
 
 		const [goalsSnapshot, spendsSnapshot] = await Promise.all([getDocs(GoalRef), getDocs(SpendRef)]);
-
 		const goals = goalsSnapshot.docs.map((doc) => ({
 			id: doc.id,
 			ref: doc.ref,
@@ -187,7 +183,6 @@ export const evaluateGoalsStatus = async ({ uid }) => {
 			});
 
 			const totalSpent = filteredSpends.reduce((sum, spend) => sum + Number(spend.amount), 0);
-
 			let status = goal.status || 'inProgress';
 
 			const endOfDay = new Date(end);
