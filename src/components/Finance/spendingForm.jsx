@@ -137,8 +137,6 @@ export default function SpendingForm({ redirectTo = '/finance' }) {
 	);
 }
 
-// === STYLES ===
-
 const ScreenWrapper = styled(Box)({
 	backgroundColor: '#DFDFF4',
 	minHeight: '100vh',
