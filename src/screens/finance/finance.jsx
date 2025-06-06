@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Menu from '../../components/Menu/menu';
 import AddButton from '../../components/Buttons/add';
@@ -17,6 +17,7 @@ import './finance.css';
 
 function Finance() {
 	const navigate = useNavigate();
+	const location = useLocation();
 	const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
 	const uid = useSelector((state) => state.userId.id);
 	const [completedCount, setCompletedCount] = useState(0);
@@ -37,10 +38,11 @@ function Finance() {
 	useEffect(() => {
 		if (!uid) return;
 
-		evaluateGoalsStatus({ uid });
-		getCompletedGoals({ uid }).then((goals) => setCompletedCount(goals.length));
-		getFailedGoals({ uid }).then((goals) => setFailedCount(goals.length));
-	}, [uid]);
+		evaluateGoalsStatus({ uid }).then(() => {
+			getCompletedGoals({ uid }).then((goals) => setCompletedCount(goals.length));
+			getFailedGoals({ uid }).then((goals) => setFailedCount(goals.length));
+		});
+	}, [uid, location]);
 
 	const goLogin = () => navigate('/log');
 	const goSettings = () => navigate('/settings');
