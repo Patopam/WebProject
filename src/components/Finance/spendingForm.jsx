@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { addSpend } from '../../services/firebaseUtils';
+import { addSpend, evaluateGoalsStatus } from '../../services/firebaseUtils';
 import { useSnackbar } from 'notistack';
 import {
 	Box,
@@ -35,7 +35,6 @@ export default function SpendingForm({ redirectTo = '/finance' }) {
 	const [description, setDescription] = useState('');
 
 	const handleClose = () => navigate(-1);
-
 	const handleSubmit = async () => {
 		const amount = Number(price.replace(/\D/g, ''));
 		if (!category || isNaN(amount)) {
@@ -50,9 +49,9 @@ export default function SpendingForm({ redirectTo = '/finance' }) {
 				amount,
 				description,
 			});
+			await evaluateGoalsStatus({ uid });
 
 			enqueueSnackbar('Spending saved successfully', { variant: 'success' });
-
 			setTimeout(() => {
 				navigate(redirectTo);
 			}, 1800);
