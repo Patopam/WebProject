@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Menu from '../../components/Menu/menu';
 import AddButton from '../../components/Buttons/add';
 import Header2 from '../../components/Header/header2';
@@ -11,11 +12,15 @@ import GoalHistoryTable from '../../components/Tables/goalHistoryTable';
 import GoalProgressCard from '../../components/Cards/goal';
 import ExpenditureHistoryTable from '../../components/Tables/expenditureHistoryTable';
 import MobileNavBar from '../../components/Menu/mobileNavBar';
+import { evaluateGoalsStatus, getCompletedGoals, getFailedGoals } from '../../services/firebaseUtils';
 import './finance.css';
 
 function Finance() {
 	const navigate = useNavigate();
 	const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
+	const uid = useSelector((state) => state.userId.id);
+	const [completedCount, setCompletedCount] = useState(0);
+	const [failedCount, setFailedCount] = useState(0);
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -24,11 +29,18 @@ function Finance() {
 
 		handleResize();
 		window.addEventListener('resize', handleResize);
-
 		return () => {
 			window.removeEventListener('resize', handleResize);
 		};
 	}, []);
+
+	useEffect(() => {
+		if (!uid) return;
+
+		evaluateGoalsStatus({ uid });
+		getCompletedGoals({ uid }).then((goals) => setCompletedCount(goals.length));
+		getFailedGoals({ uid }).then((goals) => setFailedCount(goals.length));
+	}, [uid]);
 
 	const goLogin = () => navigate('/log');
 	const goSettings = () => navigate('/settings');
@@ -72,7 +84,23 @@ function Finance() {
 							</div>
 
 							<div className='stats-cards'>
-								<GoalStatsCard />
+								<GoalStatsCard
+									title='Goals completed'
+									description='You have successfully completed a total of'
+									quantity={completedCount}
+									label='goals'
+									bgColor='#C7DDF9'
+									iconBg='#85A9E8'
+								/>
+
+								<GoalStatsCard
+									title='Goals failed'
+									description='You have failed a total of'
+									quantity={failedCount}
+									label='goals'
+									bgColor='#F7C8B6'
+									iconBg='#E68067'
+								/>
 							</div>
 						</div>
 					</div>
