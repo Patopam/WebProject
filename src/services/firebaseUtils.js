@@ -23,7 +23,7 @@ export const addGoals = async ({ uid, startDate, endDate, amount, description })
 			amount,
 			description,
 			date: serverTimestamp(),
-			status: 'Procces',
+			status: 'inProgress',
 		});
 	} catch (error) {
 		console.error('Error saving goal:', error);
@@ -114,7 +114,15 @@ export const getActiveGoalProgress = async ({ uid }) => {
 		const goals = goalsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
 		const today = new Date();
-		const activeGoals = goals.filter((goal) => goal.endDate?.toDate() >= today);
+		today.setHours(0, 0, 0, 0);
+
+		const activeGoals = goals.filter((goal) => {
+			const endDate = goal.endDate?.toDate?.() || new Date(goal.endDate);
+			endDate.setHours(0, 0, 0, 0);
+
+			return endDate >= today && goal.status === 'inProgress';
+		});
+
 		if (activeGoals.length === 0) return null;
 
 		const activeGoal = activeGoals.sort((a, b) => b.endDate.toDate() - a.endDate.toDate())[0];
@@ -149,4 +157,65 @@ export const getActiveGoalProgress = async ({ uid }) => {
 		console.error('Error loading active goal progress:', error);
 		return null;
 	}
+};
+
+export const evaluateGoalsStatus = async ({ uid }) => {
+	if (!uid) return;
+	try {
+		const GoalRef = collection(doc(db, 'users', uid), 'Goals');
+		const SpendRef = collection(doc(db, 'users', uid), 'Spends');
+
+		const [goalsSnapshot, spendsSnapshot] = await Promise.all([getDocs(GoalRef), getDocs(SpendRef)]);
+
+		const goals = goalsSnapshot.docs.map((doc) => ({
+			id: doc.id,
+			ref: doc.ref,
+			...doc.data(),
+		}));
+
+		const spends = spendsSnapshot.docs.map((doc) => ({ ...doc.data() }));
+		const now = new Date();
+
+		for (const goal of goals) {
+			const start = goal.startDate?.toDate?.() || new Date(goal.startDate);
+			const end = goal.endDate?.toDate?.() || new Date(goal.endDate);
+			const amount = Number(goal.amount);
+
+			const filteredSpends = spends.filter((spend) => {
+				const spendDate = spend.startDate?.toDate?.() || new Date(spend.startDate);
+				return spendDate >= start && spendDate <= end;
+			});
+
+			const totalSpent = filteredSpends.reduce((sum, spend) => sum + Number(spend.amount), 0);
+
+			let status = goal.status || 'inProgress';
+
+			const endOfDay = new Date(end);
+			endOfDay.setHours(23, 59, 59, 999);
+
+			if (totalSpent > amount) {
+				status = 'failed';
+			} else if (now > endOfDay && totalSpent <= amount) {
+				status = 'completed';
+			}
+
+			if (goal.status !== status) {
+				await updateDoc(goal.ref, { status });
+			}
+		}
+	} catch (error) {
+		console.error('Error evaluating goals status:', error);
+	}
+};
+
+export const getCompletedGoals = async ({ uid }) => {
+	if (!uid) return [];
+	const allGoals = await fetchGoal({ uid });
+	return allGoals.filter((goal) => goal.status === 'completed');
+};
+
+export const getFailedGoals = async ({ uid }) => {
+	if (!uid) return [];
+	const allGoals = await fetchGoal({ uid });
+	return allGoals.filter((goal) => goal.status === 'failed');
 };
