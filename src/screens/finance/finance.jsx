@@ -11,7 +11,6 @@ import GoalHistoryTable from '../../components/Tables/goalHistoryTable';
 import GoalProgressCard from '../../components/Cards/goal';
 import ExpenditureHistoryTable from '../../components/Tables/expenditureHistoryTable';
 import MobileNavBar from '../../components/Menu/mobileNavBar';
-import { goalsSummary } from '../../Data/goalData';
 import './finance.css';
 
 function Finance() {
@@ -69,21 +68,11 @@ function Finance() {
 
 						<div className='finance-right-column'>
 							<div className='goal-progress-placeholder'>
-								<GoalProgressCard spent={150000} total={200000} />
+								<GoalProgressCard />
 							</div>
 
 							<div className='stats-cards'>
-								{goalsSummary.map((goal, index) => (
-									<GoalStatsCard
-										key={index}
-										title={goal.title}
-										description={goal.description}
-										quantity={goal.quantity}
-										label={goal.label}
-										bgColor={goal.bgColor}
-										iconBg={goal.iconBg}
-									/>
-								))}
+								<GoalStatsCard />
 							</div>
 						</div>
 					</div>
