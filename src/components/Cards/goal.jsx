@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Box, Card, CardContent, Typography, LinearProgress } from '@mui/material';
+import { Box, Card, CardContent, Typography, LinearProgress, Button } from '@mui/material';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import { useNavigate } from 'react-router-dom';
 import { getActiveGoalProgress } from '../../services/firebaseUtils';
 
 const GoalProgressCard = () => {
 	const uid = useSelector((state) => state.userId.id);
 	const [loading, setLoading] = useState(true);
 	const [goalData, setGoalData] = useState(null);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (!uid) return;
@@ -26,6 +28,7 @@ const GoalProgressCard = () => {
 			<Typography sx={titleStyle}>Goal progress</Typography>
 		</Box>
 	);
+
 	if (loading) {
 		return (
 			<Card sx={cardStyle}>
@@ -42,13 +45,17 @@ const GoalProgressCard = () => {
 			<Card sx={cardStyle}>
 				<CardContent sx={contentStyle}>
 					{renderHeader()}
-					<Typography sx={titleStyle}>No active goal found</Typography>
+					<Typography sx={mainValueStyle}>No active goal right now.</Typography>
+					<Button variant='contained' onClick={() => navigate('/finance/add-goal')}>
+						Add new goal
+					</Button>
 				</CardContent>
 			</Card>
 		);
 	}
 
 	const { spent, total, percentage } = goalData;
+
 	const formattedSpent = new Intl.NumberFormat('en-US', {
 		style: 'currency',
 		currency: 'USD',
@@ -65,7 +72,7 @@ const GoalProgressCard = () => {
 
 	const limitText =
 		percentage >= 100
-			? 'You have exceeded the limit'
+			? 'Exceed the limit, add your new goal'
 			: percentage >= 80
 			? 'You are approaching the limit'
 			: 'Keep tracking your spending';
@@ -95,6 +102,7 @@ const GoalProgressCard = () => {
 							margin: '0.4rem 0',
 						}}
 					/>
+
 					<Typography sx={limitTextStyle}>{limitText}</Typography>
 				</Box>
 			</CardContent>
