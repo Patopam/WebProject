@@ -9,9 +9,9 @@ const GoalStatsCard = ({ title, description, quantity, label, bgColor, iconBg })
 				borderRadius: '1.5rem',
 				boxShadow: 'none',
 				width: '100%',
-				minHeight: '14.875rem',
+				minHeight: '12rem',
 				height: 'auto',
-				padding: '1.75rem',
+				padding: '1.5rem',
 				boxSizing: 'border-box',
 			}}
 		>
@@ -21,63 +21,63 @@ const GoalStatsCard = ({ title, description, quantity, label, bgColor, iconBg })
 					height: '100%',
 					display: 'flex',
 					flexDirection: 'column',
+					justifyContent: 'flex-start',
+					gap: '1rem',
+					marginBottom: '1rem',
 				}}
 			>
 				<Box
 					sx={{
 						display: 'flex',
 						alignItems: 'center',
-						gap: '0.625rem',
-						marginBottom: '1rem',
+						gap: '0.5rem',
 					}}
 				>
 					<Box
 						sx={{
 							backgroundColor: iconBg,
 							borderRadius: '50%',
-							width: '2.31rem',
-							height: '2.31rem',
+							width: '2rem',
+							height: '2rem',
 							display: 'flex',
 							justifyContent: 'center',
 							alignItems: 'center',
 							flexShrink: 0,
 						}}
 					>
-						<FavoriteBorderIcon sx={{ color: '#333', fontSize: '1.25rem' }} />
+						<FavoriteBorderIcon sx={{ color: '#333', fontSize: '1.125rem' }} />
 					</Box>
 					<Typography
-						variant='h6'
 						sx={{
 							fontWeight: 400,
-							fontSize: '1.125rem',
+							fontSize: '1rem',
 							fontFamily: "'Manrope', sans-serif",
 							lineHeight: 'normal',
+							color: '#333',
 						}}
 					>
 						{title}
 					</Typography>
 				</Box>
+
 				<Typography
-					variant='body1'
 					sx={{
-						marginBottom: '0.5rem',
-						fontSize: '1.125rem',
+						fontSize: '1.12rem',
 						fontFamily: "'Manrope', sans-serif",
-						lineHeight: '1.5',
+						lineHeight: '1.3',
 						color: '#333',
 					}}
 				>
 					{description}
 				</Typography>
+
 				<Typography
-					variant='h5'
 					sx={{
-						fontWeight: 'bold',
-						fontSize: '1.5rem',
+						fontWeight: 600,
+						fontSize: '1.4rem',
 						fontFamily: "'Manrope', sans-serif",
-						lineHeight: '1.25',
+						lineHeight: '1.2',
 						color: '#000',
-						marginTop: '0.5rem',
 						display: 'flex',
 						alignItems: 'center',
 						flexWrap: 'wrap',
@@ -90,4 +90,5 @@ const GoalStatsCard = ({ title, description, quantity, label, bgColor, iconBg })
 		</Card>
 	);
 };
+
 export default GoalStatsCard;
