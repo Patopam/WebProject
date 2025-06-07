@@ -11,7 +11,6 @@ import FeelingsCard from '../../components/Cards/feelingsCard';
 import Menu from '../../components/Menu/menu';
 import MobileNavBar from '../../components/Menu/mobileNavBar';
 import ExpensesTable from '../../components/Tables/expensesTable';
-import expensesData from '../../Data/expensesData';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -82,7 +81,7 @@ function Dashboard() {
 
 				<div className='dashboard-bottom-row'>
 					<div className='expenses-container'>
-						<ExpensesTable data={expensesData} dashboard={true} />
+						<ExpensesTable dashboard={true} />
 					</div>
 
 					{Loading ? (
