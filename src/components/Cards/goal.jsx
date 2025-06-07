@@ -18,10 +18,19 @@ const GoalProgressCard = () => {
 		});
 	}, [uid]);
 
+	const renderHeader = () => (
+		<Box sx={headerStyle}>
+			<Box sx={iconContainer}>
+				<TrendingUpIcon sx={{ color: '#333', fontSize: '1.125rem' }} />
+			</Box>
+			<Typography sx={titleStyle}>Goal progress</Typography>
+		</Box>
+	);
 	if (loading) {
 		return (
 			<Card sx={cardStyle}>
 				<CardContent sx={contentStyle}>
+					{renderHeader()}
 					<Typography sx={titleStyle}>Loading goal progress...</Typography>
 				</CardContent>
 			</Card>
@@ -32,6 +41,7 @@ const GoalProgressCard = () => {
 		return (
 			<Card sx={cardStyle}>
 				<CardContent sx={contentStyle}>
+					{renderHeader()}
 					<Typography sx={titleStyle}>No active goal found</Typography>
 				</CardContent>
 			</Card>
@@ -39,7 +49,6 @@ const GoalProgressCard = () => {
 	}
 
 	const { spent, total, percentage } = goalData;
-
 	const formattedSpent = new Intl.NumberFormat('en-US', {
 		style: 'currency',
 		currency: 'USD',
@@ -54,18 +63,18 @@ const GoalProgressCard = () => {
 		maximumFractionDigits: 0,
 	}).format(total);
 
+	const limitText =
+		percentage >= 100
+			? 'You have exceeded the limit'
+			: percentage >= 80
+			? 'You are approaching the limit'
+			: 'Keep tracking your spending';
+
 	return (
 		<Card sx={cardStyle}>
 			<CardContent sx={contentStyle}>
-				{/* Header */}
-				<Box sx={headerStyle}>
-					<Box sx={iconContainer}>
-						<TrendingUpIcon sx={{ color: '#333', fontSize: '1.125rem' }} />
-					</Box>
-					<Typography sx={titleStyle}>Goal progress</Typography>
-				</Box>
+				{renderHeader()}
 
-				{/* Progress content */}
 				<Box sx={progressContainer}>
 					<Box>
 						<Typography sx={mainValueStyle}>You have spent {formattedSpent}</Typography>
@@ -86,14 +95,7 @@ const GoalProgressCard = () => {
 							margin: '0.4rem 0',
 						}}
 					/>
-
-					<Typography sx={limitTextStyle}>
-						{percentage >= 100
-							? 'You have exceeded the limit'
-							: percentage >= 80
-							? 'You are approaching the limit'
-							: 'Keep tracking your spending'}
-					</Typography>
+					<Typography sx={limitTextStyle}>{limitText}</Typography>
 				</Box>
 			</CardContent>
 		</Card>
