@@ -2,21 +2,15 @@ import { useEffect, useState } from 'react';
 import { AttachMoney, ArrowDropDown, CalendarToday } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import { fetchSpends } from '../../services/firebaseUtils';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import dayjs from 'dayjs';
 
 const ExpenditureHistoryTable = () => {
 	const [selectedTime, setSelectedTime] = useState('Today');
-	const [selectedDate, setSelectedDate] = useState(dayjs());
-	const [openPicker, setOpenPicker] = useState(false);
 	const [Data, setData] = useState([]);
 	const [FilteredData, setFilteredData] = useState([]);
 	const [Loading, setLoading] = useState(true);
-	const timeOptions = ['Today', 'Week', 'Month'];
-
 	const id = useSelector((state) => state.userId.id);
+
+	const timeOptions = ['Today', 'Week', 'Month'];
 
 	useEffect(() => {
 		fetchSpends({ uid: id })
@@ -30,7 +24,6 @@ const ExpenditureHistoryTable = () => {
 
 	useEffect(() => {
 		if (!Data) return;
-
 		const now = new Date();
 		let filtered = [];
 
@@ -52,17 +45,12 @@ const ExpenditureHistoryTable = () => {
 				const date = item.date?.toDate();
 				return date >= startOfWeek && date <= now;
 			});
-		} else if (selectedTime === 'Month') {
-			const month = selectedDate.month();
-			const year = selectedDate.year();
-			filtered = Data.filter((item) => {
-				const date = item.date?.toDate();
-				return date?.getMonth() === month && date?.getFullYear() === year;
-			});
+		} else {
+			filtered = Data;
 		}
 
 		setFilteredData(filtered);
-	}, [selectedTime, selectedDate, Data]);
+	}, [selectedTime, Data]);
 
 	return (
 		<div>
@@ -81,10 +69,7 @@ const ExpenditureHistoryTable = () => {
 						{timeOptions.map((option) => (
 							<span
 								key={option}
-								onClick={() => {
-									setSelectedTime(option);
-									if (option !== 'Month') setOpenPicker(false);
-								}}
+								onClick={() => setSelectedTime(option)}
 								style={{
 									textDecoration: selectedTime === option ? 'underline' : 'none',
 									cursor: 'pointer',
@@ -98,36 +83,12 @@ const ExpenditureHistoryTable = () => {
 						))}
 
 						{selectedTime === 'Month' && (
-							<LocalizationProvider dateAdapter={AdapterDayjs}>
-								<>
-									<CalendarToday
-										onClick={() => setOpenPicker(true)}
-										sx={{
-											cursor: 'pointer',
-											color: '#333',
-											ml: 1,
-											fontSize: '1.2rem',
-											backgroundColor: 'white',
-											padding: '5px',
-											borderRadius: '8px',
-										}}
-									/>
-									<DatePicker
-										open={openPicker}
-										onClose={() => setOpenPicker(false)}
-										views={['year', 'month']}
-										value={selectedDate}
-										onChange={(newValue) => {
-											setSelectedDate(newValue);
-											setOpenPicker(false);
-										}}
-										sx={{ display: 'none' }}
-										slotProps={{
-											textField: { sx: { display: 'none' } },
-										}}
-									/>
-								</>
-							</LocalizationProvider>
+							<CalendarToday
+								sx={{
+									color: '#333',
+									fontSize: '1.2rem',
+								}}
+							/>
 						)}
 					</div>
 
@@ -163,14 +124,12 @@ const containerStyle = {
 	display: 'flex',
 	flexDirection: 'column',
 	width: '100%',
-	height: 'auto',
 	minHeight: '320px',
 	padding: '1.5rem',
 	borderRadius: '1.5rem',
 	backgroundColor: '#CECAE4',
 	boxSizing: 'border-box',
 	fontFamily: "'Manrope', sans-serif",
-	overflow: 'hidden',
 };
 
 const headerStyle = {

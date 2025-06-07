@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { AttachMoney, ArrowDropDown } from '@mui/icons-material';
+import { AttachMoney, ArrowDropDown, CalendarToday } from '@mui/icons-material';
 import { fetchGoal } from '../../services/firebaseUtils';
 import { useSelector } from 'react-redux';
 
@@ -9,15 +9,53 @@ const GoalHistoryCard = () => {
 	const [selectedStatus, setSelectedStatus] = useState('All');
 	const [Loading, setLoading] = useState(true);
 	const [Data, setData] = useState([]);
-
-	useEffect(() => {
-		fetchGoal({ uid: id })
-			.then((Goals) => setData([...Goals]))
-			.finally(() => setLoading(false));
-	}, []);
+	const [FilteredData, setFilteredData] = useState([]);
 
 	const timeOptions = ['Today', 'Week', 'Month'];
 	const statusOptions = ['All', 'Completed', 'Failed'];
+
+	useEffect(() => {
+		fetchGoal({ uid: id })
+			.then((Goals) => {
+				const sorted = [...Goals].sort((a, b) => b.startDate?.seconds - a.startDate?.seconds);
+				setData(sorted);
+				setFilteredData(sorted);
+			})
+			.finally(() => setLoading(false));
+	}, []);
+
+	useEffect(() => {
+		if (!Data) return;
+
+		const now = new Date();
+		let filtered = [...Data];
+
+		if (selectedTime === 'Today') {
+			filtered = filtered.filter((item) => {
+				const date = item.startDate?.toDate();
+				return (
+					date?.getDate() === now.getDate() &&
+					date?.getMonth() === now.getMonth() &&
+					date?.getFullYear() === now.getFullYear()
+				);
+			});
+		} else if (selectedTime === 'Week') {
+			const startOfWeek = new Date(now);
+			startOfWeek.setDate(now.getDate() - now.getDay());
+			startOfWeek.setHours(0, 0, 0, 0);
+
+			filtered = filtered.filter((item) => {
+				const date = item.startDate?.toDate();
+				return date >= startOfWeek && date <= now;
+			});
+		}
+
+		if (selectedStatus !== 'All') {
+			filtered = filtered.filter((item) => item.status?.toLowerCase() === selectedStatus.toLowerCase());
+		}
+
+		setFilteredData(filtered);
+	}, [selectedTime, selectedStatus, Data]);
 
 	return (
 		<div>
@@ -43,13 +81,15 @@ const GoalHistoryCard = () => {
 										cursor: 'pointer',
 										display: 'flex',
 										alignItems: 'center',
-										gap: '1px',
+										gap: '2px',
 									}}
 								>
 									{option} <ArrowDropDown fontSize='small' />
 								</span>
 							))}
+							{selectedTime === 'Month' && <CalendarToday sx={{ color: '#333', fontSize: '1.2rem' }} />}
 						</div>
+
 						<div style={filterGroupStyle}>
 							{statusOptions.map((option) => (
 								<span
@@ -77,7 +117,7 @@ const GoalHistoryCard = () => {
 								</tr>
 							</thead>
 							<tbody>
-								{Data.map((goal) => (
+								{FilteredData.map((goal) => (
 									<tr key={goal.id}>
 										<td style={tdStyle}>{goal.startDate?.toDate().toLocaleDateString()}</td>
 										<td style={tdStyle}>${goal.amount}</td>
@@ -93,6 +133,7 @@ const GoalHistoryCard = () => {
 		</div>
 	);
 };
+
 export default GoalHistoryCard;
 
 const containerStyle = {
