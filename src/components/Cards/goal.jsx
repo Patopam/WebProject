@@ -46,7 +46,7 @@ const GoalProgressCard = () => {
 				<CardContent sx={contentStyle}>
 					{renderHeader()}
 					<Typography sx={mainValueStyle}>No active goal right now.</Typography>
-					<Button variant='contained' onClick={() => navigate('/finance/add-goal')}>
+					<Button variant='contained' onClick={() => navigate('/finance/add-goal')} sx={addButtonStyle}>
 						Add new goal
 					</Button>
 				</CardContent>
@@ -183,4 +183,22 @@ const limitTextStyle = {
 	fontSize: '0.875rem',
 	color: '#666',
 	fontFamily: "'Manrope', sans-serif",
+};
+
+const addButtonStyle = {
+	backgroundColor: '#FACD69',
+	color: '#333',
+	textTransform: 'none',
+	borderRadius: '12px',
+	paddingX: '1.2rem',
+	paddingY: '0.5rem',
+	fontSize: '0.85rem',
+	fontWeight: 600,
+	fontFamily: "'Manrope', sans-serif",
+	boxShadow: '0px 3px 6px rgba(0, 0, 0, 0)',
+	transition: 'all 0.3s ease',
+	'&:hover': {
+		backgroundColor: '#F4BE4F',
+		boxShadow: '0px 3px 8px rgba(50, 50, 50, 0.06)',
+	},
 };
