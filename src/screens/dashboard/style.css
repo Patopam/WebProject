@@ -153,15 +153,14 @@
 		max-width: 320px;
 	}
 
+	/* ✅ Ajuste para que GoalProgressCard ocupe todo el ancho */
 	.goal-progress-wrapper {
 		width: 100%;
 		margin-top: 1rem;
-		padding: 0 1rem;
-		box-sizing: border-box;
 	}
 }
 
-/* Móvil - 425px or - */
+/* Móvil - 425px o menos */
 @media screen and (max-width: 425px) {
 	.dashboard-content {
 		padding: 0.75rem;
