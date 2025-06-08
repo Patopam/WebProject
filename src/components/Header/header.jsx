@@ -16,7 +16,7 @@ const Header = ({ Nombre, subtitle = '', emoji = '', showEmoji = true }) => {
 					mb: 0.3,
 				}}
 			>
-				Welcome {Nombre} !
+				Welcome {Nombre}!
 			</Typography>
 
 			<Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -29,7 +29,7 @@ const Header = ({ Nombre, subtitle = '', emoji = '', showEmoji = true }) => {
 						fontSize: '24px',
 						fontStyle: 'normal',
 						fontWeight: 400,
-						lineHeight: 'normal',
+						lineHeight: '1.3',
 					}}
 				>
 					{subtitle}

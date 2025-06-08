@@ -341,7 +341,7 @@ export default function ImageCarousel() {
 							No images yet
 						</Typography>
 						<Typography variant='body2' color='text.secondary' sx={{ mb: 2 }}>
-							Upload your first image to get started with your personal carousel.
+							Upload your first image to get started <br /> with your personal carousel.
 						</Typography>
 						<ActionButtonCircle onClick={handleAddButtonClick} disabled={isUploading}>
 							{isUploading ? (

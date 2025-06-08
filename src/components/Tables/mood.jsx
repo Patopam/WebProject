@@ -35,7 +35,6 @@ export default function MoodTracker() {
 	const [timeRange, setTimeRange] = useState(0);
 	const [moodData, setMoodData] = useState([]);
 	const [moodSelectorOpen, setMoodSelectorOpen] = useState(false);
-	const [currentEditingItemId] = useState(null);
 	const today = new Date();
 
 	useEffect(() => {
@@ -65,31 +64,21 @@ export default function MoodTracker() {
 
 	const handleTimeRangeChange = (event, newValue) => setTimeRange(newValue);
 
-	const handleMoodSelect = (moodId) => {
-		setMoodData(moodData.map((item) => (item.id === currentEditingItemId ? { ...item, mood: moodId } : item)));
-		setMoodSelectorOpen(false);
-	};
-
 	const filterDataByTimeRange = () => {
 		const oneDay = 24 * 60 * 60 * 1000;
 		const oneWeekAgo = new Date(today.getTime() - 7 * oneDay);
 		const oneMonthAgo = new Date(today.getTime() - 30 * oneDay);
 
 		switch (timeRange) {
-			case 0: {
-				const todayYear = today.getFullYear();
-				const todayMonth = today.getMonth();
-				const todayDate = today.getDate();
-
+			case 0:
 				return moodData.filter((item) => {
 					const itemDate = item.date instanceof Date ? item.date : new Date(item.date);
 					return (
-						itemDate.getFullYear() === todayYear &&
-						itemDate.getMonth() === todayMonth &&
-						itemDate.getDate() === todayDate
+						itemDate.getFullYear() === today.getFullYear() &&
+						itemDate.getMonth() === today.getMonth() &&
+						itemDate.getDate() === today.getDate()
 					);
 				});
-			}
 			case 1:
 				return moodData.filter((item) => item.date >= oneWeekAgo && item.date <= today);
 			case 2:
@@ -113,6 +102,7 @@ export default function MoodTracker() {
 
 	const filteredData = filterDataByTimeRange();
 	const organizedData = timeRange === 2 ? organizeByMonth(filteredData) : null;
+
 	const renderListItem = (item) => (
 		<StyledListItem key={item.id}>
 			<StyledAvatar>{getMoodEmoji(item.mood)}</StyledAvatar>
@@ -130,6 +120,33 @@ export default function MoodTracker() {
 		</StyledListItem>
 	);
 
+	const renderContent = () => {
+		if (filteredData.length === 0 && timeRange !== 2) {
+			return (
+				<NoDataBox>
+					<Typography variant='body2' sx={{ fontSize: '0.95rem', color: '#555' }}>
+						No emotions registered today.
+					</Typography>
+				</NoDataBox>
+			);
+		}
+
+		if (timeRange === 2) {
+			return (
+				<>
+					{Object.keys(organizedData).map((month) => (
+						<React.Fragment key={month}>
+							<MonthHeader variant='subtitle1'>{month}</MonthHeader>
+							<List disablePadding>{organizedData[month].map((item) => renderListItem(item))}</List>
+						</React.Fragment>
+					))}
+				</>
+			);
+		}
+
+		return <List>{filteredData.map((item) => renderListItem(item))}</List>;
+	};
+
 	return (
 		<StyledPaper elevation={3}>
 			<StyledTabs value={timeRange} onChange={handleTimeRangeChange} variant='fullWidth'>
@@ -138,24 +155,11 @@ export default function MoodTracker() {
 				<StyledTab label='Month' />
 			</StyledTabs>
 			<StyledDivider />
-			<ScrollContent>
-				{timeRange === 2 ? (
-					Object.keys(organizedData).map((month) => (
-						<React.Fragment key={month}>
-							<MonthHeader variant='subtitle1'>{month}</MonthHeader>
-							<List disablePadding>{organizedData[month].map((item) => renderListItem(item))}</List>
-						</React.Fragment>
-					))
-				) : (
-					<List>{filteredData.map((item) => renderListItem(item))}</List>
-				)}
-			</ScrollContent>
+			<ScrollContent>{renderContent()}</ScrollContent>
 			<MoodSelectorModal open={moodSelectorOpen} onClose={() => setMoodSelectorOpen(false)}>
 				<MoodSelectorContainer>
 					{moods.map((mood) => (
-						<MoodOption key={mood.id} onClick={() => handleMoodSelect(mood.id)}>
-							{mood.emoji}
-						</MoodOption>
+						<MoodOption key={mood.id}>{mood.emoji}</MoodOption>
 					))}
 				</MoodSelectorContainer>
 			</MoodSelectorModal>
@@ -183,9 +187,12 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 	},
 }));
 
-const ScrollContent = styled(Box)(() => ({
+const ScrollContent = styled(Box)(({ theme }) => ({
 	overflowY: 'auto',
 	flex: 1,
+	[theme.breakpoints.down('sm')]: {
+		minHeight: '28vh',
+	},
 }));
 
 const StyledTabs = styled(Tabs)(() => ({
@@ -287,4 +294,16 @@ const MoodOption = styled(ButtonBase)(() => ({
 	'&:hover': {
 		backgroundColor: 'rgba(255, 255, 255, 0.3)',
 	},
+}));
+
+const NoDataBox = styled(Box)(() => ({
+	width: '100%',
+	height: '100%',
+	display: 'flex',
+	alignItems: 'flex-start',
+	justifyContent: 'flex-start',
+	padding: '1rem 1.2rem',
+	fontFamily: 'Manrope, sans-serif',
+	color: '#333',
+	textAlign: 'left',
 }));
