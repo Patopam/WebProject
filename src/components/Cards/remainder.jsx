@@ -65,7 +65,6 @@ const ReminderCard = () => {
 					gap: '1.3rem',
 				}}
 			>
-				{/* Header icon and text*/}
 				<Box
 					sx={{
 						display: 'flex',
@@ -124,6 +123,9 @@ const ReminderCard = () => {
 							lineHeight: '120%',
 							textAlign: 'left',
 							wordWrap: 'break-word',
+							'@media (max-width: 767px)': {
+								fontSize: '1.24rem',
+							},
 						}}
 					>
 						{loading ? 'Loading inspiration...' : currentPhrase}

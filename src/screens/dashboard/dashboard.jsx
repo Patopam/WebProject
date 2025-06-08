@@ -20,7 +20,7 @@ import { getEmotionSpendingStats } from '../../services/analysisUtils';
 function Dashboard() {
 	const [Data, setData] = useState();
 	const [Loading, setLoading] = useState(true);
-	const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
+	const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
 	const [emotionStats, setEmotionStats] = useState(null);
 
 	const id = useSelector((state) => state.userId.id);
@@ -37,7 +37,7 @@ function Dashboard() {
 		}
 
 		const handleResize = () => {
-			setIsMobile(window.innerWidth <= 1024);
+			setIsMobile(window.innerWidth <= 767);
 		};
 
 		handleResize();
@@ -87,13 +87,16 @@ function Dashboard() {
 							) : (
 								<FeelingsCard emotion='none' percentage={0} />
 							)}
+							<GoalProgressCard />
 						</>
 					)}
+				</div>
 
-					<div className='goal-progress-wrapper'>
+				{isMobile && (
+					<div className='goal-container'>
 						<GoalProgressCard />
 					</div>
-				</div>
+				)}
 
 				<div className='dashboard-bottom-row'>
 					<div className='expenses-container'>

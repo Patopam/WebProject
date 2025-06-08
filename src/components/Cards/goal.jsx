@@ -104,8 +104,7 @@ export default GoalProgressCard;
 const cardStyle = {
 	display: 'flex',
 	flexDirection: 'column',
-	flex: '1 1 20rem',
-	width: '100%',
+	flex: '2 1 22rem',
 	minHeight: '13rem',
 	height: '100%',
 	borderRadius: '1.5rem',
