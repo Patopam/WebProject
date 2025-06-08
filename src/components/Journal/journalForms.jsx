@@ -134,9 +134,15 @@ export default function JournalForm({ compact = false, redirectTo }) {
 						{journalId ? 'Edit your journal' : 'Write what you feel'}
 					</Typography>
 				</TitleGroup>
-				<IconButton onClick={toggleExpand}>
-					{compact ? <OpenInFullOutlinedIcon sx={{ color: '#000' }} /> : <CloseFullscreenIcon sx={{ color: '#000' }} />}
-				</IconButton>
+				{!isMobile && (
+					<IconButton onClick={toggleExpand}>
+						{compact ? (
+							<OpenInFullOutlinedIcon sx={{ color: '#000' }} />
+						) : (
+							<CloseFullscreenIcon sx={{ color: '#000' }} />
+						)}
+					</IconButton>
+				)}
 			</HeaderSection>
 
 			<Typography sx={{ fontSize: 16, fontWeight: 600, mb: 1 }}>How do you feel today?</Typography>
