@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { updateUserData, getUserData, updateUserPassword } from '../../services/firebaseUtils';
 import { setUserName } from '../../redux/UserSlice/NameSlice';
 import { FaRegEyeSlash } from 'react-icons/fa';
+import { IoPersonCircleOutline } from 'react-icons/io5';
 import './settings.css';
 
 function Settings() {
@@ -33,6 +34,28 @@ function Settings() {
 
 	const userId = useSelector((state) => state.userId.id);
 	const userName = useSelector((state) => state.userName.name);
+
+	const generateAvatar = (name) => {
+		if (!name) return '';
+		const initials = name
+			.split(' ')
+			.map((word) => word.charAt(0))
+			.join('')
+			.toUpperCase()
+			.slice(0, 2);
+
+		const colors = ['#33336F'];
+
+		const colorIndex = name.charCodeAt(0) % colors.length;
+		const backgroundColor = colors[colorIndex];
+
+		return {
+			initials,
+			backgroundColor,
+		};
+	};
+
+	const avatarData = generateAvatar(name || userName || 'User');
 
 	const showMessage = (message, isError = false) => {
 		if (isError) {
@@ -246,10 +269,23 @@ function Settings() {
 					)}
 				</div>
 
-				{successMessage && <div className='message success-message'>{successMessage}</div>}
-				{errorMessage && <div className='message error-message'>{errorMessage}</div>}
+				<div className='messages-container'>
+					{successMessage && <div className='message success-message'>{successMessage}</div>}
+					{errorMessage && <div className='message error-message'>{errorMessage}</div>}
+				</div>
 
 				<div className='profile-section'>
+					<div className='avatar-container'>
+						{avatarData.initials ? (
+							<div className='avatar-initials' style={{ backgroundColor: avatarData.backgroundColor }}>
+								{avatarData.initials}
+							</div>
+						) : (
+							<div className='avatar-placeholder'>
+								<IoPersonCircleOutline />
+							</div>
+						)}
+					</div>
 					<div className='profile-info'>
 						<h2 className='profile-name'>{name || 'User'}</h2>
 						<p className='profile-subtitle'>{email}</p>
@@ -283,9 +319,7 @@ function Settings() {
 							value={currentPassword}
 							onChange={(e) => setCurrentPassword(e.target.value)}
 						/>
-						<small style={{ color: '#666', fontSize: '12px', marginTop: '4px', display: 'block' }}>
-							Required to update email address
-						</small>
+						<small className='password-help-text'>Required to update email address</small>
 					</div>
 				)}
 
