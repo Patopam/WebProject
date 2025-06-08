@@ -28,7 +28,8 @@ const emotionMap = {
 
 export default function EmotionChart() {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMobile = useMediaQuery("(max-width: 1024px)");
+  const isSmallMobile = useMediaQuery("(max-width: 480px)");
   const uid = useSelector((state) => state.userId.id);
   const [allJournals, setAllJournals] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
@@ -74,6 +75,7 @@ export default function EmotionChart() {
           day: j.date.toLocaleDateString("en-US", { weekday: "long" }),
           emotion: emotionMap[j.emotion]?.emoji,
           emotionValue: emotionMap[j.emotion]?.value,
+          emotionName: j.emotion,
         }));
     } else if (period === "month") {
       const month = selectedDate.getMonth();
@@ -122,110 +124,305 @@ export default function EmotionChart() {
     setFilteredData(filtered);
   }, [period, selectedDate, allJournals]);
 
-  const styleText = {
-    Titulo: {
-      fontFamily: "Manrope, sans-serif",
-      fontSize: { xs: "1.5rem", sm: "1.75rem", md: "2rem" },
-      fontWeight: 400,
-      color: "#000",
-      textAlign: "center",
-      margin: "1.25rem 0",
-    },
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      const data = payload[0].payload;
+      return (
+        <div
+          style={{
+            backgroundColor: "white",
+            border: "1px solid #ccc",
+            borderRadius: "8px",
+            padding: isSmallMobile
+              ? "6px 8px"
+              : isMobile
+              ? "8px 12px"
+              : "10px 16px",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+            fontSize: isSmallMobile ? "11px" : isMobile ? "12px" : "14px",
+            maxWidth: isSmallMobile ? "150px" : "200px",
+          }}
+        >
+          <p
+            style={{ margin: 0, fontWeight: "bold", color: "#49499d" }}
+          >{`${label}`}</p>
+          <p
+            style={{
+              margin: "4px 0 0 0",
+              fontSize: isSmallMobile ? "14px" : isMobile ? "16px" : "18px",
+            }}
+          >
+            {`Emoción: ${data.emotion || "😐"}`}
+          </p>
+        </div>
+      );
+    }
+    return null;
   };
+
+  const formatYAxisTick = (value) => {
+    const emotionEntry = Object.entries(emotionMap).find(
+      ([key, data]) => data.value === value
+    );
+    return emotionEntry ? emotionEntry[1].emoji : "";
+  };
+
+  const formatXAxisTick = (value) => {
+    if (period === "week" && isMobile) {
+      const dayMap = {
+        Monday: "Lun",
+        Tuesday: "Mar",
+        Wednesday: "Mié",
+        Thursday: "Jue",
+        Friday: "Vie",
+        Saturday: "Sáb",
+        Sunday: "Dom",
+      };
+      return dayMap[value] || value;
+    }
+    return value;
+  };
+
+  const getResponsiveConfig = () => {
+    if (isSmallMobile) {
+      return {
+        chartHeight: {
+          week: 280,
+          month: 320,
+          year: 350,
+        },
+        padding: "0.75rem",
+        headerGap: "0.75rem",
+        titleSize: "1rem",
+        subtitleSize: "0.8rem",
+        strokeWidth: 2,
+        dotSize: 4,
+        fontSize: "10px",
+      };
+    } else if (isMobile) {
+      return {
+        chartHeight: {
+          week: 320,
+          month: 380,
+          year: 420,
+        },
+        padding: "1rem",
+        headerGap: "1rem",
+        titleSize: "1.1rem",
+        subtitleSize: "0.85rem",
+        strokeWidth: 2.5,
+        dotSize: 5,
+        fontSize: "11px",
+      };
+    } else {
+      return {
+        chartHeight: {
+          week: 400,
+          month: 480,
+          year: 520,
+        },
+        padding: "1.5rem",
+        headerGap: "1.5rem",
+        titleSize: "1.5rem",
+        subtitleSize: "1rem",
+        strokeWidth: 3,
+        dotSize: 6,
+        fontSize: "12px",
+      };
+    }
+  };
+
+  const config = getResponsiveConfig();
 
   return (
     <Box
       sx={{
         width: "100%",
-        background: "#E3E9CF",
-        borderRadius: "1rem",
-        p: { xs: 5, sm: 3 },
-        boxSizing: "border-box",
+        height: "100%",
         display: "flex",
         flexDirection: "column",
-        gap: 3,
+        gap: config.headerGap,
       }}
     >
-      <div className="chart-header">
-        <h3 className="chart-title">Gastos Semanales</h3>
-        <p className="chart-subtitle">
-          Seguimiento de gastos por día de la semana
+      <div
+        style={{
+          textAlign: "center",
+          padding: `0 ${isMobile ? "0.5rem" : "1rem"}`,
+        }}
+      >
+        <h3
+          style={{
+            fontFamily: "Manrope, sans-serif",
+            fontSize: config.titleSize,
+            fontWeight: 600,
+            margin: 0,
+            color: "#49499d",
+            lineHeight: 1.2,
+          }}
+        >
+          Emotion Tracking
+        </h3>
+        <p
+          style={{
+            fontSize: config.subtitleSize,
+            color: "#000",
+            margin: "0.25rem 0 0 0",
+            lineHeight: 1.3,
+          }}
+        >
+          Visualization of emotions by selected period
         </p>
       </div>
-      <PeriodFilter
-        period={period}
-        onPeriodChange={setPeriod}
-        selectedDate={selectedDate}
-        onDateChange={setSelectedDate}
-        availableMonths={[
-          "Enero",
-          "Febrero",
-          "Marzo",
-          "Abril",
-          "Mayo",
-          "Junio",
-          "Julio",
-          "Agosto",
-          "Septiembre",
-          "Octubre",
-          "Noviembre",
-          "Diciembre",
-        ]}
-        availableYears={[2023, 2024, 2025]}
-      />
+
       <Box
         sx={{
+          px: isMobile ? 1 : 2,
+          "& .MuiFormControl-root": {
+            minWidth: isSmallMobile ? "100px" : "120px",
+          },
+        }}
+      >
+        <PeriodFilter
+          period={period}
+          onPeriodChange={setPeriod}
+          selectedDate={selectedDate}
+          onDateChange={setSelectedDate}
+          availableMonths={[
+            "Enero",
+            "Febrero",
+            "Marzo",
+            "Abril",
+            "Mayo",
+            "Junio",
+            "Julio",
+            "Agosto",
+            "Septiembre",
+            "Octubre",
+            "Noviembre",
+            "Diciembre",
+          ]}
+          availableYears={[2023, 2024, 2025]}
+        />
+      </Box>
+
+      <Box
+        sx={{
+          flex: 1,
+          minHeight: config.chartHeight[period],
+          height: config.chartHeight[period],
           width: "100%",
-          height:
-            period === "week"
-              ? isMobile
-                ? 400
-                : 500
-              : period === "month"
-              ? isMobile
-                ? 500
-                : 600
-              : isMobile
-              ? 550
-              : 650,
+          px: isMobile ? 0.5 : 1,
         }}
       >
         <ResponsiveContainer width="100%" height="100%">
           {period === "week" && (
-            <LineChart data={filteredData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="day" />
-              <YAxis domain={[0, 5]} />
-              <Tooltip />
-              <Line dataKey="emotionValue" stroke="#49499D" />
+            <LineChart
+              data={filteredData}
+              margin={{
+                top: 20,
+                right: isSmallMobile ? 10 : isMobile ? 15 : 20,
+                left: isSmallMobile ? 10 : isMobile ? 15 : 20,
+                bottom: isSmallMobile ? 10 : isMobile ? 15 : 20,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
+              <XAxis
+                dataKey="day"
+                tickFormatter={formatXAxisTick}
+                fontSize={config.fontSize}
+                angle={isMobile ? -45 : 0}
+                textAnchor={isMobile ? "end" : "middle"}
+                height={isMobile ? 60 : 40}
+              />
+              <YAxis
+                domain={[0, 5]}
+                tickFormatter={formatYAxisTick}
+                ticks={[0, 1, 2, 3, 4, 5]}
+                fontSize={config.fontSize}
+                width={isSmallMobile ? 25 : 30}
+              />
+              <Tooltip content={<CustomTooltip />} />
+              <Line
+                dataKey="emotionValue"
+                stroke="#49499D"
+                strokeWidth={config.strokeWidth}
+                dot={{ fill: "#49499D", strokeWidth: 2, r: config.dotSize }}
+                activeDot={{
+                  r: config.dotSize + 2,
+                  stroke: "#49499D",
+                  strokeWidth: 2,
+                }}
+              />
             </LineChart>
           )}
+
           {period === "month" && (
-            <BarChart data={filteredData} barCategoryGap="30%">
-              <XAxis dataKey="emotion" />
-              <YAxis />
+            <BarChart
+              data={filteredData}
+              barCategoryGap="20%"
+              margin={{
+                top: 30,
+                right: isSmallMobile ? 10 : isMobile ? 15 : 20,
+                left: isSmallMobile ? 10 : isMobile ? 15 : 20,
+                bottom: isSmallMobile ? 10 : isMobile ? 15 : 20,
+              }}
+            >
+              <XAxis dataKey="emotion" fontSize={config.fontSize} />
+              <YAxis fontSize={config.fontSize} />
               <Tooltip
                 formatter={(value) => [`${value}`, "Conteo"]}
                 labelFormatter={(label) => `Emoción: ${label}`}
+                contentStyle={{
+                  fontSize: config.fontSize,
+                  padding: isSmallMobile ? "6px 8px" : "8px 12px",
+                }}
               />
-              <Bar dataKey="count" fill="#7C77B9">
-                <LabelList dataKey="emotion" position="top" />
+              <Bar dataKey="count" fill="#49499d" radius={[4, 4, 0, 0]}>
+                <LabelList
+                  dataKey="emotion"
+                  position="top"
+                  fontSize={isSmallMobile ? "12px" : "14px"}
+                />
               </Bar>
             </BarChart>
           )}
+
           {period === "year" && (
-            <BarChart data={filteredData} barCategoryGap="30%">
-              <XAxis dataKey="month" />
-              <YAxis />
+            <BarChart
+              data={filteredData}
+              barCategoryGap="15%"
+              margin={{
+                top: 30,
+                right: isSmallMobile ? 10 : isMobile ? 15 : 20,
+                left: isSmallMobile ? 10 : isMobile ? 15 : 20,
+                bottom: isSmallMobile ? 10 : isMobile ? 15 : 20,
+              }}
+            >
+              <XAxis
+                dataKey="month"
+                fontSize={config.fontSize}
+                angle={isSmallMobile ? -30 : 0}
+                textAnchor={isSmallMobile ? "end" : "middle"}
+                height={isSmallMobile ? 50 : 40}
+              />
+              <YAxis fontSize={config.fontSize} />
               <Tooltip
                 formatter={(value) => [`${value}`, "Intensidad"]}
                 labelFormatter={(label, payload) => {
                   const emotion = payload?.[0]?.payload?.emotion || "";
                   return `Mes: ${label} | Emoción: ${emotion}`;
                 }}
+                contentStyle={{
+                  fontSize: config.fontSize,
+                  padding: isSmallMobile ? "6px 8px" : "8px 12px",
+                }}
               />
-              <Bar dataKey="emotionValue" fill="#49499D">
-                <LabelList dataKey="emotion" position="top" />
+              <Bar dataKey="emotionValue" fill="#49499D" radius={[4, 4, 0, 0]}>
+                <LabelList
+                  dataKey="emotion"
+                  position="top"
+                  fontSize={isSmallMobile ? "12px" : "14px"}
+                />
               </Bar>
             </BarChart>
           )}

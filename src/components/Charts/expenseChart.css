@@ -15,9 +15,9 @@
 .chart-title {
   font-size: 24px;
   font-weight: 700;
-  color: #1f2937;
+
   margin: 0 0 8px 0;
-  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  background: #49499d;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -25,7 +25,7 @@
 
 .chart-subtitle {
   font-size: 14px;
-  color: #6b7280;
+  color: #000;
   margin: 0;
   font-weight: 500;
 }
@@ -52,7 +52,7 @@
   width: 40px;
   height: 40px;
   border: 3px solid #e5e7eb;
-  border-top: 3px solid #3b82f6;
+  border-top: 3px solid #49499d;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -67,7 +67,7 @@
 }
 
 .loading-text {
-  color: #6b7280;
+  color: #000;
   font-size: 14px;
   font-weight: 500;
   margin: 0;
@@ -84,19 +84,19 @@
 }
 
 .tooltip-label {
-  color: #374151;
+  color: #000;
   font-weight: 600;
   margin: 0 0 4px 0;
 }
 
 .tooltip-value {
-  color: #6b7280;
+  color: #000;
   margin: 0;
   font-weight: 500;
 }
 
 .tooltip .amount {
-  color: #3b82f6;
+  color: #49499d;
   font-weight: 700;
 }
 
@@ -104,7 +104,9 @@
 @media (max-width: 768px) {
   .chart-container-Spends {
     padding: 16px;
-    margin: 16px;
+
+    position: relative;
+    right: 10%;
   }
 
   .chart-title {
