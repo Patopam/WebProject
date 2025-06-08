@@ -55,12 +55,12 @@ const CarouselContainer = styled('div')(({ theme }) => ({
 const EmblaContainer = styled('div')({
 	overflow: 'hidden',
 	width: '100%',
-	height: '100%', // asegura que embla ocupe todo el alto disponible
+	height: '100%',
 });
 
 const EmblaSlideContainer = styled('div')({
 	display: 'flex',
-	height: '100%', // asegura que los slides se alineen con el alto del contenedor
+	height: '100%',
 });
 
 const EmblaSlide = styled('div')({
@@ -68,7 +68,7 @@ const EmblaSlide = styled('div')({
 	padding: '0.5rem',
 	boxSizing: 'border-box',
 	position: 'relative',
-	height: '100%', // importante para que la imagen se ajuste bien
+	height: '100%',
 });
 
 const SlideImage = styled('img')(() => ({
@@ -395,18 +395,66 @@ export default function ImageCarousel() {
 				onClose={handleCancelDelete}
 				aria-labelledby='alert-dialog-title'
 				aria-describedby='alert-dialog-description'
+				PaperProps={{
+					sx: {
+						borderRadius: '24px',
+						backgroundColor: '#eeeeee',
+						color: '#333',
+						padding: '2rem',
+						fontFamily: 'Manrope, sans-serif',
+						boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
+						maxWidth: '400px',
+						width: '90%',
+					},
+				}}
 			>
-				<DialogTitle id='alert-dialog-title'>Delete Image?</DialogTitle>
+				<DialogTitle
+					id='alert-dialog-title'
+					sx={{
+						fontWeight: 700,
+						fontSize: '20px',
+						fontFamily: 'Manrope, sans-serif',
+						color: '#000',
+					}}
+				>
+					Delete Image?
+				</DialogTitle>
+
 				<DialogContent>
-					<DialogContentText id='alert-dialog-description'>
+					<DialogContentText
+						id='alert-dialog-description'
+						sx={{
+							fontSize: '16px',
+							color: '#555',
+							fontFamily: 'Manrope, sans-serif',
+							marginTop: '0.5rem',
+						}}
+					>
 						Are you sure you want to remove this image from your carousel? This action cannot be undone.
 					</DialogContentText>
 				</DialogContent>
-				<DialogActions>
-					<Button onClick={handleCancelDelete} color='primary'>
+
+				<DialogActions sx={{ justifyContent: 'flex-end', marginTop: '1rem' }}>
+					<Button
+						onClick={handleCancelDelete}
+						sx={{
+							color: '#555',
+							fontWeight: 500,
+							fontFamily: 'Manrope, sans-serif',
+							textTransform: 'none',
+						}}
+					>
 						Cancel
 					</Button>
-					<Button onClick={handleConfirmDelete} color='error' autoFocus>
+					<Button
+						onClick={handleConfirmDelete}
+						sx={{
+							color: '#d32f2f',
+							fontWeight: 600,
+							fontFamily: 'Manrope, sans-serif',
+							textTransform: 'none',
+						}}
+					>
 						Delete
 					</Button>
 				</DialogActions>
