@@ -56,19 +56,8 @@ const GoalProgressCard = () => {
 
 	const { spent, total, percentage } = goalData;
 
-	const formattedSpent = new Intl.NumberFormat('en-US', {
-		style: 'currency',
-		currency: 'USD',
-		minimumFractionDigits: 0,
-		maximumFractionDigits: 0,
-	}).format(spent);
-
-	const formattedTotal = new Intl.NumberFormat('en-US', {
-		style: 'currency',
-		currency: 'USD',
-		minimumFractionDigits: 0,
-		maximumFractionDigits: 0,
-	}).format(total);
+	const formattedSpent = `$${spent.toLocaleString('es-CO')}`;
+	const formattedTotal = `$${total.toLocaleString('es-CO')}`;
 
 	const limitText =
 		percentage >= 100
@@ -124,6 +113,15 @@ const cardStyle = {
 	boxShadow: 'none',
 	padding: '1.5rem',
 	boxSizing: 'border-box',
+
+	'@media screen and (max-width: 767px)': {
+		minHeight: '10rem',
+		flex: '0 0 auto',
+	},
+	'@media (max-width: 480px)': {
+		minHeight: '11rem',
+		padding: '1.2rem',
+	},
 };
 
 const contentStyle = {

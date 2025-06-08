@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './mobileNavBar.css';
 import { Link } from 'react-router-dom';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
@@ -15,16 +15,30 @@ import LogoutIcon from '@mui/icons-material/Logout';
 
 const MobileNavBar = () => {
 	const [isOpen, setIsOpen] = useState(false);
+	const [isScrolled, setIsScrolled] = useState(false);
 
 	const toggleMenu = () => {
 		setIsOpen(!isOpen);
 	};
 
+	useEffect(() => {
+		const handleScroll = () => {
+			const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+			setIsScrolled(scrollTop > 50);
+		};
+
+		window.addEventListener('scroll', handleScroll);
+		return () => window.removeEventListener('scroll', handleScroll);
+	}, []);
+
 	return (
 		<>
-			<div className='menu-toggle-button' onClick={toggleMenu}>
-				{isOpen ? <CloseIcon /> : <MenuRoundedIcon />}
+			<div className={`mobile-header ${isScrolled ? 'scrolled' : ''}`}>
+				<div className='menu-toggle-button' onClick={toggleMenu}>
+					{isOpen ? <CloseIcon /> : <MenuRoundedIcon />}
+				</div>
 			</div>
+
 			<div className={`menu-container mobile-navbar ${isOpen ? 'open' : 'closed'}`}>
 				<div className='menu-close-button' onClick={toggleMenu}>
 					<CloseIcon />

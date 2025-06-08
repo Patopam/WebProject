@@ -1,3 +1,25 @@
+.mobile-header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	width: 100%;
+	height: 80px;
+	background-color: rgba(255, 255, 255, 0.95);
+	backdrop-filter: blur(15px);
+	-webkit-backdrop-filter: blur(15px);
+	z-index: 998;
+	display: none;
+	align-items: center;
+	padding: 0 1rem;
+	box-sizing: border-box;
+	transition: box-shadow 0.3s ease;
+}
+
+.mobile-header.scrolled {
+	box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+}
+
 .menu-container {
 	background-color: #837ad8;
 	color: white;
@@ -71,16 +93,30 @@
 
 .menu-toggle-button {
 	position: fixed;
-	top: 2rem;
-	left: 1rem;
+	top: 1.25rem;
+	left: 0.2rem;
 	z-index: 1000;
 	background-color: transparent;
-	color: #b9b9e6;
+	color: #837ad8;
 	cursor: pointer;
 	display: none;
+	width: 55px;
+	height: 55px;
+	border-radius: 50%;
+	transition: all 0.3s ease;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
+
+.menu-toggle-button:hover {
+	background-color: rgba(131, 122, 216, 0.1);
+	transform: scale(1.05);
+}
+
 .menu-toggle-button svg {
-	font-size: 2.1rem;
+	font-size: 2.4rem;
+	display: block;
 }
 
 .menu-close-button {
@@ -94,8 +130,12 @@
 }
 
 @media screen and (max-width: 1024px) {
+	.mobile-header {
+		display: flex;
+	}
+
 	.menu-toggle-button {
-		display: block;
+		display: flex;
 	}
 
 	.menu-container {

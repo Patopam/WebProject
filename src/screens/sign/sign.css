@@ -44,7 +44,6 @@ body.sign-mode {
 
 .Sign-buttons {
 	width: 100%;
-	max-width: 460px;
 	margin: 1.5rem auto 0 auto;
 }
 
@@ -72,7 +71,7 @@ body.sign-mode {
 	}
 }
 
-/* Movile M/L (426px – 767px) */
+/* Mobile M/L (426px – 767px) */
 @media screen and (min-width: 426px) and (max-width: 767px) {
 	.Container-sign {
 		padding: 1.25rem;
@@ -89,26 +88,17 @@ body.sign-mode {
 	}
 }
 
-/* Laptop(1025px – 1440px) */
-@media screen and (min-width: 1025px) and (max-width: 1440px) {
-	.Sign-form .MuiStack-root {
+/* Laptop & Desktop (1025px ->) */
+@media screen and (min-width: 1025px) {
+	.Sign-form .MuiStack-root,
+	.Sign-buttons {
 		max-width: 400px;
 		width: 100%;
 		margin: 0 auto;
 	}
-
-	.Sign-buttons {
-		max-width: 400px;
-		width: 100%;
-		margin: 1.5rem auto 0 auto;
-	}
-
-	.Sign-buttons button {
-		width: 100%;
-	}
 }
 
-/* Desktop (1441px -->) */
+/* Desktop */
 @media screen and (min-width: 1441px) {
 	.Container-sign {
 		padding: 4rem 3rem;
@@ -120,9 +110,5 @@ body.sign-mode {
 
 	.Sign-subtitle {
 		font-size: 1.4rem;
-	}
-
-	.Sign-buttons {
-		max-width: 480px;
 	}
 }

@@ -1,16 +1,22 @@
-import { AttachMoney } from '@mui/icons-material';
+import { AttachMoney, Edit } from '@mui/icons-material';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { fetchSpends } from '../../services/firebaseUtils';
+import { useNavigate } from 'react-router-dom';
+import { IconButton } from '@mui/material';
 
 const ExpensesDay = () => {
 	const [Data, setData] = useState();
 	const [Loading, setLoading] = useState(true);
 	const id = useSelector((state) => state.userId.id);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		fetchSpends({ uid: id })
-			.then((Spends) => setData([...Spends]))
+			.then((Spends) => {
+				const sorted = [...Spends].sort((a, b) => b.date?.seconds - a.date?.seconds);
+				setData(sorted);
+			})
 			.finally(() => setLoading(false));
 	}, []);
 
@@ -23,7 +29,7 @@ const ExpensesDay = () => {
 					<div style={headerStyle}>
 						<div style={headerLeftStyle}>
 							<div style={iconContainerStyle}>
-								<AttachMoney style={{ fontSize: '1rem', color: '#333' }} />
+								<AttachMoney style={{ fontSize: '1.2rem', color: '#333' }} />
 							</div>
 							<div style={headerTitleStyle}>Expenses of the day</div>
 						</div>
@@ -33,17 +39,32 @@ const ExpensesDay = () => {
 						<table style={tableStyle}>
 							<thead>
 								<tr>
-									<th style={thStyle}>Spend</th>
+									<th style={thStyle}>Date</th>
 									<th style={thStyle}>Price</th>
 									<th style={thStyle}>Category</th>
+									<th style={thStyle}></th>
 								</tr>
 							</thead>
 							<tbody>
 								{Data.map((item) => (
 									<tr key={item.id}>
 										<td style={{ ...tdStyle, maxWidth: '6rem' }}>{item.date?.toDate().toLocaleDateString()}</td>
-										<td style={tdStyle}>${item.amount}</td>
+										<td style={tdStyle}>${Number(item.amount).toLocaleString('es-CO')}</td>
 										<td style={{ ...tdStyle, maxWidth: '7rem' }}>{item.category}</td>
+										<td style={iconTdStyle}>
+											<IconButton
+												onClick={() =>
+													navigate(`/finance/edit-spending/${item.id}`, {
+														state: { redirectTo: '/dashboard' },
+													})
+												}
+												sx={{
+													padding: '4px',
+												}}
+											>
+												<Edit sx={{ fontSize: 13, color: '#333' }} />
+											</IconButton>
+										</td>
 									</tr>
 								))}
 							</tbody>
@@ -133,4 +154,11 @@ const tdStyle = {
 	overflow: 'hidden',
 	textOverflow: 'ellipsis',
 	maxWidth: '100%',
+};
+
+const iconTdStyle = {
+	...tdStyle,
+	display: 'flex',
+	alignItems: 'center',
+	justifyContent: 'center',
 };

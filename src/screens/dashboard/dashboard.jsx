@@ -7,7 +7,7 @@ import EmotionWeek from '../../components/Cards/emotionWeek';
 import CustomIconButton from '../../components/Buttons/icon';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
-import FeelingsCard from '../../components/Cards/feelingsCard';
+import FeelingsCard from '../../components/Cards/FeelingsCard';
 import Menu from '../../components/Menu/menu';
 import MobileNavBar from '../../components/Menu/mobileNavBar';
 import ExpensesTable from '../../components/Tables/expensesTable';
@@ -70,13 +70,29 @@ function Dashboard() {
 				</div>
 
 				<div className='dashboard-cards-row'>
-					<ReminderCard />
-					{emotionStats ? (
-						<FeelingsCard emotion={emotionStats.emotion} percentage={emotionStats.percentage} />
+					{isMobile ? (
+						<div className='dashboard-scroll-cards'>
+							<ReminderCard />
+							{emotionStats ? (
+								<FeelingsCard emotion={emotionStats.emotion} percentage={emotionStats.percentage} />
+							) : (
+								<FeelingsCard emotion='none' percentage={0} />
+							)}
+						</div>
 					) : (
-						<FeelingsCard emotion='none' percentage={0} />
+						<>
+							<ReminderCard />
+							{emotionStats ? (
+								<FeelingsCard emotion={emotionStats.emotion} percentage={emotionStats.percentage} />
+							) : (
+								<FeelingsCard emotion='none' percentage={0} />
+							)}
+						</>
 					)}
-					<GoalProgressCard />
+
+					<div className='goal-progress-wrapper'>
+						<GoalProgressCard />
+					</div>
 				</div>
 
 				<div className='dashboard-bottom-row'>

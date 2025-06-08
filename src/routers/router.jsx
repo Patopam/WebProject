@@ -5,7 +5,6 @@ import Finance from '../screens/finance/finance';
 import Analytics from '../screens/analytics/analytics';
 import Journal from '../screens/journal/journal';
 import AllJournal from '../screens/allJournal/allJournal';
-import EditJournal from '../screens/allJournal/editJournal';
 import ExpandedJournal from '../screens/journal/expandedJournal';
 import Start from '../screens/start/start';
 import Log from '../screens/log/log';
@@ -15,6 +14,7 @@ import AddGoal from '../screens/finance/addGoal';
 import AddSpending from '../screens/finance/addSpending';
 import Recommendations from '../screens/recommendations/recommendation';
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
+import EditJournal from '../screens/journal/editJournal';
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { auth, db } from '../services/firebase';
@@ -25,7 +25,7 @@ import { doc, getDoc } from 'firebase/firestore';
 
 function Router() {
 	const dispatch = useDispatch();
-	const [loading, setLoading] = useState(true); // ✅ loading hasta cargar userName
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -39,9 +39,9 @@ function Router() {
 				dispatch(setUserName(name || ''));
 			} else {
 				dispatch(clearUser());
-				dispatch(setUserName('')); // ✅ limpia también el name
+				dispatch(setUserName(''));
 			}
-			setLoading(false); // ✅ ya cargó, puede renderizar
+			setLoading(false);
 		});
 
 		return () => unsubscribe();
@@ -103,15 +103,6 @@ function Router() {
 						</ProtectedRoute>
 					}
 				/>
-
-				<Route
-					path='/journal/edit/:id'
-					element={
-						<ProtectedRoute>
-							<EditJournal />
-						</ProtectedRoute>
-					}
-				/>
 				<Route
 					path='/journal/write'
 					element={
@@ -121,7 +112,24 @@ function Router() {
 					}
 				/>
 				<Route
+					path='/journal/edit/:id'
+					element={
+						<ProtectedRoute>
+							<EditJournal />
+						</ProtectedRoute>
+					}
+				/>
+
+				<Route
 					path='/finance/add-spending'
+					element={
+						<ProtectedRoute>
+							<AddSpending />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path='/finance/edit-spending/:id'
 					element={
 						<ProtectedRoute>
 							<AddSpending />

@@ -1,5 +1,24 @@
 import { db } from './firebase';
-import { addDoc, collection, doc, setDoc, serverTimestamp, getDocs, updateDoc, Timestamp } from 'firebase/firestore';
+import {
+	addDoc,
+	collection,
+	doc,
+	setDoc,
+	getDoc,
+	serverTimestamp,
+	getDocs,
+	updateDoc,
+	deleteDoc,
+	Timestamp,
+} from 'firebase/firestore';
+import {
+	getAuth,
+	updatePassword,
+	updateEmail,
+	updateProfile,
+	EmailAuthProvider,
+	reauthenticateWithCredential,
+} from 'firebase/auth';
 
 export const saveUserData = async ({ uid, name, email }) => {
 	try {
@@ -12,6 +31,157 @@ export const saveUserData = async ({ uid, name, email }) => {
 		console.error('Error saving user data:', error);
 	}
 };
+
+export const getUserData = async (uid) => {
+	try {
+		const auth = getAuth();
+		const currentUser = auth.currentUser;
+
+		const userDoc = await getDoc(doc(db, 'users', uid));
+		let firestoreData = {};
+
+		if (userDoc.exists()) {
+			firestoreData = userDoc.data();
+		}
+
+		if (currentUser && currentUser.uid === uid) {
+			return {
+				...firestoreData,
+				name: currentUser.displayName || firestoreData.name || '',
+				email: currentUser.email || firestoreData.email || '',
+				emailVerified: currentUser.emailVerified,
+			};
+		}
+
+		return firestoreData;
+	} catch (error) {
+		console.error('Error getting user data:', error);
+		return null;
+	}
+};
+
+export const updateUserData = async ({ uid, name, email, currentPassword = null }) => {
+	try {
+		const auth = getAuth();
+		const user = auth.currentUser;
+
+		if (!user) {
+			throw new Error('No authenticated user found');
+		}
+
+		const emailChanged = user.email !== email;
+
+		if (emailChanged && !currentPassword) {
+			throw new Error('REQUIRES_PASSWORD');
+		}
+
+		if (emailChanged && currentPassword) {
+			const credential = EmailAuthProvider.credential(user.email, currentPassword);
+			await reauthenticateWithCredential(user, credential);
+		}
+
+		const userRef = doc(db, 'users', uid);
+		await updateDoc(userRef, {
+			name,
+			email,
+			updatedAt: new Date(),
+		});
+
+		const updates = [];
+
+		if (user.displayName !== name) {
+			updates.push(updateProfile(user, { displayName: name }));
+		}
+
+		if (emailChanged) {
+			updates.push(updateEmail(user, email));
+		}
+
+		if (updates.length > 0) {
+			await Promise.all(updates);
+		}
+
+		console.log('User data updated successfully in both Auth and Firestore');
+	} catch (error) {
+		console.error('Error updating user data:', error);
+
+		if (error.message === 'REQUIRES_PASSWORD') {
+			throw new Error('Current password is required to update email');
+		} else if (error.code === 'auth/wrong-password') {
+			throw new Error('Current password is incorrect');
+		} else if (error.code === 'auth/requires-recent-login') {
+			throw new Error('Please log in again to update your email');
+		} else if (error.code === 'auth/email-already-in-use') {
+			throw new Error('This email is already in use by another account');
+		} else if (error.code === 'auth/invalid-email') {
+			throw new Error('Invalid email format');
+		}
+
+		throw error;
+	}
+};
+
+export const updateUserPassword = async (newPassword) => {
+	try {
+		const auth = getAuth();
+		const user = auth.currentUser;
+
+		if (!user) {
+			throw new Error('No authenticated user found');
+		}
+
+		await updatePassword(user, newPassword);
+		console.log('Password updated successfully');
+	} catch (error) {
+		console.error('Error updating password:', error);
+		throw error;
+	}
+};
+
+// ========== IMAGES FUNCTIONS ==========
+
+export const saveUserImage = async ({ uid, imageData }) => {
+	if (!uid || !imageData) return null;
+	try {
+		const imagesRef = collection(doc(db, 'users', uid), 'images');
+		const docRef = await addDoc(imagesRef, {
+			...imageData,
+			uploadedAt: serverTimestamp(),
+		});
+		return { id: docRef.id, ...imageData };
+	} catch (error) {
+		console.error('Error saving user image:', error);
+		throw error;
+	}
+};
+
+export const getUserImages = async ({ uid }) => {
+	if (!uid) return [];
+	try {
+		const imagesRef = collection(doc(db, 'users', uid), 'images');
+		const snapshot = await getDocs(imagesRef);
+		return snapshot.docs.map((doc) => ({
+			id: doc.id,
+			...doc.data()
+		}));
+	} catch (error) {
+		console.error('Error loading user images:', error);
+		return [];
+	}
+};
+
+export const deleteUserImage = async ({ uid, imageId }) => {
+	if (!uid || !imageId) return;
+	try {
+		const imageRef = doc(db, 'users', uid, 'images', imageId);
+		await deleteDoc(imageRef);
+	} catch (error) {
+		console.error('Error deleting user image:', error);
+		throw error;
+	}
+};
+
+// ========== EXISTING FUNCTIONS ==========
 
 export const addGoals = async ({ uid, startDate, endDate, amount, description }) => {
 	if (!uid) return;

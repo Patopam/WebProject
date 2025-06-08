@@ -83,6 +83,10 @@
 	.menu-container {
 		display: none;
 	}
+
+	.journal-header {
+		margin-top: 4rem;
+	}
 }
 
 @media screen and (max-width: 767px) {
@@ -95,6 +99,7 @@
 		flex-direction: column;
 		align-items: flex-start;
 		margin-bottom: 1.5rem;
+		margin-top: 4rem;
 	}
 
 	.journal-main-grid {
@@ -114,6 +119,7 @@
 
 	.journal-header {
 		margin-bottom: 1rem;
+		margin-top: 4rem;
 	}
 }
 

@@ -29,12 +29,12 @@ const getMoodEmoji = (moodId) => {
 	const mood = moods.find((m) => m.id === moodId);
 	return mood ? mood.emoji : '😐';
 };
+
 export default function MoodTracker() {
 	const uid = useSelector((state) => state.userId.id);
 	const [timeRange, setTimeRange] = useState(0);
 	const [moodData, setMoodData] = useState([]);
 	const [moodSelectorOpen, setMoodSelectorOpen] = useState(false);
-	const [currentEditingItemId, setCurrentEditingItemId] = useState(null);
 	const today = new Date();
 
 	useEffect(() => {
@@ -63,35 +63,22 @@ export default function MoodTracker() {
 	}, [uid]);
 
 	const handleTimeRangeChange = (event, newValue) => setTimeRange(newValue);
-	const openMoodSelector = (id) => {
-		setCurrentEditingItemId(id);
-		setMoodSelectorOpen(true);
-	};
-	const handleMoodSelect = (moodId) => {
-		setMoodData(moodData.map((item) => (item.id === currentEditingItemId ? { ...item, mood: moodId } : item)));
-		setMoodSelectorOpen(false);
-	};
-	//finamic filter
+
 	const filterDataByTimeRange = () => {
 		const oneDay = 24 * 60 * 60 * 1000;
 		const oneWeekAgo = new Date(today.getTime() - 7 * oneDay);
 		const oneMonthAgo = new Date(today.getTime() - 30 * oneDay);
 
 		switch (timeRange) {
-			case 0: {
-				const todayYear = today.getFullYear();
-				const todayMonth = today.getMonth();
-				const todayDate = today.getDate();
-
+			case 0:
 				return moodData.filter((item) => {
 					const itemDate = item.date instanceof Date ? item.date : new Date(item.date);
 					return (
-						itemDate.getFullYear() === todayYear &&
-						itemDate.getMonth() === todayMonth &&
-						itemDate.getDate() === todayDate
+						itemDate.getFullYear() === today.getFullYear() &&
+						itemDate.getMonth() === today.getMonth() &&
+						itemDate.getDate() === today.getDate()
 					);
 				});
-			}
 			case 1:
 				return moodData.filter((item) => item.date >= oneWeekAgo && item.date <= today);
 			case 2:
@@ -100,12 +87,12 @@ export default function MoodTracker() {
 				return moodData;
 		}
 	};
-	//filter organitation
+
 	const organizeByMonth = (data) => {
 		const organized = {};
 		data.forEach((item) => {
 			const date = item.date;
-			const monthYear = `${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()}`;
+			const monthYear = `${date.toLocaleString('en-US', { month: 'long' })} ${date.getFullYear()}`;
 			if (!organized[monthYear]) organized[monthYear] = [];
 			organized[monthYear].push(item);
 		});
@@ -115,15 +102,16 @@ export default function MoodTracker() {
 
 	const filteredData = filterDataByTimeRange();
 	const organizedData = timeRange === 2 ? organizeByMonth(filteredData) : null;
+
 	const renderListItem = (item) => (
 		<StyledListItem key={item.id}>
-			<StyledAvatar onClick={() => openMoodSelector(item.id)}>{getMoodEmoji(item.mood)}</StyledAvatar>
+			<StyledAvatar>{getMoodEmoji(item.mood)}</StyledAvatar>
 			<ListItemText
 				primary={item.title}
 				primaryTypographyProps={{
 					color: '#333',
 					fontFamily: 'Manrope, sans-serif',
-					fontSize: 'clamp(0.9rem, 1.5vw, 1.1rem)',
+					fontSize: 'clamp(1rem, 1.3vw, 1.1rem)',
 					fontWeight: 400,
 				}}
 				sx={{ flexGrow: 1, marginRight: '2%' }}
@@ -133,12 +121,16 @@ export default function MoodTracker() {
 	);
 
 	const renderContent = () => {
-		if (filteredData.length === 0)
+		if (filteredData.length === 0 && timeRange !== 2) {
 			return (
-				<Box textAlign='center' py='4%'>
-					No entries for this time period
-				</Box>
+				<NoDataBox>
+					<Typography variant='body2' sx={{ fontSize: '0.95rem', color: '#555' }}>
+						No emotions registered today.
+					</Typography>
+				</NoDataBox>
 			);
+		}
+
 		if (timeRange === 2) {
 			return (
 				<>
@@ -150,9 +142,9 @@ export default function MoodTracker() {
 					))}
 				</>
 			);
-		} else {
-			return <List>{filteredData.map((item) => renderListItem(item))}</List>;
 		}
+
+		return <List>{filteredData.map((item) => renderListItem(item))}</List>;
 	};
 
 	return (
@@ -163,13 +155,11 @@ export default function MoodTracker() {
 				<StyledTab label='Month' />
 			</StyledTabs>
 			<StyledDivider />
-			{renderContent()}
+			<ScrollContent>{renderContent()}</ScrollContent>
 			<MoodSelectorModal open={moodSelectorOpen} onClose={() => setMoodSelectorOpen(false)}>
 				<MoodSelectorContainer>
 					{moods.map((mood) => (
-						<MoodOption key={mood.id} onClick={() => handleMoodSelect(mood.id)}>
-							{mood.emoji}
-						</MoodOption>
+						<MoodOption key={mood.id}>{mood.emoji}</MoodOption>
 					))}
 				</MoodSelectorContainer>
 			</MoodSelectorModal>
@@ -177,18 +167,32 @@ export default function MoodTracker() {
 	);
 }
 
-//
 const StyledPaper = styled(Paper)(({ theme }) => ({
 	backgroundColor: '#CBCBE7',
 	borderRadius: '20px',
 	padding: theme.spacing(2),
-	height: '90vh',
 	width: '100%',
 	minWidth: '100%',
-	overflowY: 'auto',
-	margin: '0 auto',
+	height: '100%',
+	display: 'flex',
+	flexDirection: 'column',
 	boxSizing: 'border-box',
 	boxShadow: 'none',
+	[theme.breakpoints.up('md')]: {
+		minHeight: '32rem',
+		maxHeight: '32rem',
+	},
+	[theme.breakpoints.down('sm')]: {
+		maxHeight: '20rem',
+	},
+}));
+
+const ScrollContent = styled(Box)(({ theme }) => ({
+	overflowY: 'auto',
+	flex: 1,
+	[theme.breakpoints.down('sm')]: {
+		minHeight: '32vh',
+	},
 }));
 
 const StyledTabs = styled(Tabs)(() => ({
@@ -197,15 +201,18 @@ const StyledTabs = styled(Tabs)(() => ({
 	},
 }));
 
-const StyledTab = styled(Tab)(() => ({
+const StyledTab = styled(Tab)(({ theme }) => ({
 	color: '#333',
 	fontFamily: 'Manrope, sans-serif',
-	fontSize: '1.2rem',
+	fontSize: '1.05rem',
 	textTransform: 'none',
 	fontWeight: 700,
 	'&.Mui-selected': {
 		color: '#49499D',
-		fontWeight: 700,
+	},
+	[theme.breakpoints.down('sm')]: {
+		fontSize: '0.8rem',
+		padding: '4px 6px',
 	},
 }));
 
@@ -213,27 +220,31 @@ const StyledListItem = styled(ListItem)(({ theme }) => ({
 	backgroundColor: 'white',
 	borderRadius: '15px',
 	marginBottom: theme.spacing(2),
-	padding: theme.spacing(1.5, 2),
+	padding: theme.spacing(1.2, 2),
+	display: 'flex',
+	alignItems: 'center',
 }));
 
 const StyledAvatar = styled(Avatar)(() => ({
 	marginRight: '2%',
-	width: '10%',
-	maxWidth: '44px',
-	height: 'auto',
-	aspectRatio: '1/1',
+	width: '35px',
+	height: '35px',
 	cursor: 'pointer',
 	backgroundColor: '#FFFFFF',
-	fontSize: 'clamp(2rem, 2vw, 1.5rem)',
+	display: 'flex',
+	alignItems: 'center',
+	justifyContent: 'center',
+	fontSize: '1.4rem',
 }));
 
 const StyledChip = styled(Chip)(() => ({
 	backgroundColor: '#9C9CD2',
 	borderRadius: '10px',
-	color: 'var(--Neutral-1000, #333)',
+	color: '#333',
 	fontFamily: 'Manrope, sans-serif',
-	fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
+	fontSize: 'clamp(0.75rem, 0.9vw, 1rem)',
 	fontWeight: 400,
+	paddingInline: '8px',
 }));
 
 const StyledDivider = styled('div')({
@@ -243,12 +254,12 @@ const StyledDivider = styled('div')({
 });
 
 const MonthHeader = styled(Typography)(() => ({
-	color: 'var(--Neutral-1000, #333)',
+	color: '#333',
 	fontFamily: 'Manrope, sans-serif',
-	fontSize: 'clamp(1rem, 1.8vw, 1.2rem)',
+	fontSize: 'clamp(1rem, 1.2vw, 1.2rem)',
 	fontWeight: 700,
 	marginTop: '2%',
-	marginBottom: '1%',
+	marginBottom: '1.8%',
 	paddingLeft: '1%',
 }));
 
@@ -273,7 +284,6 @@ const MoodOption = styled(ButtonBase)(() => ({
 	width: '12%',
 	minWidth: '50px',
 	maxWidth: '60px',
-	height: 'auto',
 	aspectRatio: '1/1',
 	fontSize: 'clamp(2rem, 4vw, 3rem)',
 	borderRadius: '50%',
@@ -284,4 +294,16 @@ const MoodOption = styled(ButtonBase)(() => ({
 	'&:hover': {
 		backgroundColor: 'rgba(255, 255, 255, 0.3)',
 	},
+}));
+
+const NoDataBox = styled(Box)(() => ({
+	width: '100%',
+	height: '100%',
+	display: 'flex',
+	alignItems: 'flex-start',
+	justifyContent: 'flex-start',
+	padding: '1rem 1.2rem',
+	fontFamily: 'Manrope, sans-serif',
+	color: '#333',
+	textAlign: 'left',
 }));

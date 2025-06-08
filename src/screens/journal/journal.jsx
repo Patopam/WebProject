@@ -39,7 +39,6 @@ function Journal() {
 		<div className='journal-container'>
 			{!isMobile && <Menu />}
 			<div className='journal-content'>
-				{/* Solo íconos para desktop */}
 				<div className='journal-header'>
 					<Header2 title='My journal' subtitle='Write your thoughts of the day.' />
 					{!isMobile && (

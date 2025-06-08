@@ -33,23 +33,19 @@ const JournalView = () => {
 					};
 				});
 
-				// Ordenamos de más reciente a más antiguo
 				const sortedData = data.sort((a, b) => b.date - a.date);
-
-				// Extraemos años únicos disponibles
 				const years = [...new Set(sortedData.map((j) => j.year))];
 
 				setJournals(sortedData);
 				setAvailableYears(years);
 			} catch (error) {
-				console.error('Error cargando journals:', error);
+				console.error('Error loading journals:', error);
 			}
 		};
 
 		fetchJournals();
 	}, [uid]);
 
-	// Filtro por mes y año
 	const filteredJournals = journals.filter((entry) => {
 		const matchesMonth = selectedMonth === 'All' || entry.month === selectedMonth;
 		const matchesYear = entry.year === selectedYear;
