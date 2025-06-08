@@ -118,6 +118,10 @@ const cardStyle = {
 		minHeight: '10rem',
 		flex: '0 0 auto',
 	},
+	'@media (max-width: 480px)': {
+		minHeight: '11rem',
+		padding: '1.2rem',
+	},
 };
 
 const contentStyle = {
