@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { addSpend, evaluateGoalsStatus } from '../../services/firebaseUtils';
 import { useSnackbar } from 'notistack';
 import {
@@ -19,22 +19,51 @@ import {
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import CloseIcon from '@mui/icons-material/Close';
 import SendIcon from '@mui/icons-material/Send';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../../services/firebase';
 
 const categoryOptions = ['Food', 'Sweets', 'Entertainment', 'Shopping', 'Experiences', 'Other'];
 
-export default function SpendingForm({ redirectTo = '/finance' }) {
+export default function SpendingForm({ redirectTo: defaultRedirect = '/finance', editId: defaultEditId = null }) {
 	const navigate = useNavigate();
+	const location = useLocation();
 	const { enqueueSnackbar } = useSnackbar();
 	const uid = useSelector((state) => state.userId.id);
 
+	const editId = location.state?.editId || defaultEditId;
+	const redirectTo = location.state?.redirectTo || defaultRedirect;
+
 	const localToday = new Date();
-	localToday.setHours(0, 0, 0, 0);
+	localToday.setHours(12, 0, 0, 0);
 	const [date, setDate] = useState(localToday);
 	const [category, setCategory] = useState('');
 	const [price, setPrice] = useState('');
 	const [description, setDescription] = useState('');
 
+	useEffect(() => {
+		if (!editId) return;
+		const loadData = async () => {
+			try {
+				const docRef = doc(db, 'users', uid, 'Spends', editId);
+				const docSnap = await getDoc(docRef);
+				if (docSnap.exists()) {
+					const data = docSnap.data();
+					const loadedDate = data.date?.toDate() || localToday;
+					loadedDate.setHours(12, 0, 0, 0);
+					setDate(loadedDate);
+					setCategory(data.category || '');
+					setPrice(data.amount?.toString() || '');
+					setDescription(data.description || '');
+				}
+			} catch (err) {
+				console.error('Error loading data for editing:', err);
+			}
+		};
+		loadData();
+	}, [editId, uid]);
+
 	const handleClose = () => navigate(-1);
+
 	const handleSubmit = async () => {
 		const amount = Number(price.replace(/\D/g, ''));
 		if (!category || isNaN(amount)) {
@@ -42,16 +71,25 @@ export default function SpendingForm({ redirectTo = '/finance' }) {
 			return;
 		}
 		try {
-			await addSpend({
-				uid,
-				startDate: date,
-				category,
-				amount,
-				description,
-			});
+			const fixedDate = new Date(date);
+			fixedDate.setHours(12, 0, 0, 0);
+
+			if (editId) {
+				const docRef = doc(db, 'users', uid, 'Spends', editId);
+				await updateDoc(docRef, {
+					date: fixedDate,
+					category,
+					amount,
+					description,
+				});
+				enqueueSnackbar('Spending updated successfully', { variant: 'success' });
+			} else {
+				await addSpend({ uid, startDate: fixedDate, category, amount, description });
+				enqueueSnackbar('Spending saved successfully', { variant: 'success' });
+			}
+
 			await evaluateGoalsStatus({ uid });
 
-			enqueueSnackbar('Spending saved successfully', { variant: 'success' });
 			setTimeout(() => {
 				navigate(redirectTo);
 			}, 1800);
@@ -69,7 +107,7 @@ export default function SpendingForm({ redirectTo = '/finance' }) {
 						<IconCircle>
 							<AttachMoneyIcon sx={{ color: '#fff', fontSize: 20 }} />
 						</IconCircle>
-						<Typography sx={{ fontSize: 18, fontWeight: 600 }}>Add spending</Typography>
+						<Typography sx={{ fontSize: 18, fontWeight: 600 }}>{editId ? 'Edit spending' : 'Add spending'}</Typography>
 					</TitleGroup>
 					<IconButton onClick={handleClose}>
 						<CloseIcon sx={{ color: '#000' }} />
@@ -82,7 +120,11 @@ export default function SpendingForm({ redirectTo = '/finance' }) {
 					variant='outlined'
 					fullWidth
 					value={date.toISOString().split('T')[0]}
-					onChange={(e) => setDate(new Date(e.target.value))}
+					onChange={(e) => {
+						const selected = new Date(e.target.value);
+						selected.setHours(12, 0, 0, 0);
+						setDate(selected);
+					}}
 				/>
 
 				<FormControl fullWidth>
@@ -128,7 +170,7 @@ export default function SpendingForm({ redirectTo = '/finance' }) {
 						<IconCircle bgcolor='#837AD8'>
 							<SendIcon sx={{ color: '#fff', fontSize: 20 }} />
 						</IconCircle>
-						<span>Save</span>
+						<span>{editId ? 'Save changes' : 'Save'}</span>
 					</SaveButton>
 				</SaveButtonWrapper>
 			</FormCard>

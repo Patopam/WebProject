@@ -1,12 +1,15 @@
-import { AttachMoney } from '@mui/icons-material';
+import { AttachMoney, Edit } from '@mui/icons-material';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { fetchSpends } from '../../services/firebaseUtils';
+import { useNavigate } from 'react-router-dom';
+import { IconButton } from '@mui/material';
 
 const ExpensesDay = () => {
 	const [Data, setData] = useState();
 	const [Loading, setLoading] = useState(true);
 	const id = useSelector((state) => state.userId.id);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		fetchSpends({ uid: id })
@@ -39,6 +42,7 @@ const ExpensesDay = () => {
 									<th style={thStyle}>Date</th>
 									<th style={thStyle}>Price</th>
 									<th style={thStyle}>Category</th>
+									<th style={thStyle}></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -47,6 +51,19 @@ const ExpensesDay = () => {
 										<td style={{ ...tdStyle, maxWidth: '6rem' }}>{item.date?.toDate().toLocaleDateString()}</td>
 										<td style={tdStyle}>${Number(item.amount).toLocaleString('es-CO')}</td>
 										<td style={{ ...tdStyle, maxWidth: '7rem' }}>{item.category}</td>
+										<td style={tdStyle}>
+											<IconButton
+												onClick={() =>
+													navigate(`/finance/edit-spending/${item.id}`, {
+														state: {
+															redirectTo: '/dashboard',
+														},
+													})
+												}
+											>
+												<Edit fontSize='small' sx={{ color: '#333' }} />
+											</IconButton>
+										</td>
 									</tr>
 								))}
 							</tbody>
