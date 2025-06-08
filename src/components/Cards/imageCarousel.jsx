@@ -72,7 +72,7 @@ const EmblaSlide = styled('div')({
 	position: 'relative',
 });
 
-const SlideImage = styled('img')(({ theme }) => ({
+const SlideImage = styled('img')(() => ({
 	width: '100%',
 	height: 'auto',
 	aspectRatio: '16/9',
@@ -143,11 +143,9 @@ const UploadInput = styled('input')({
 });
 
 export default function ImageCarousel() {
-	// Auth
 	const auth = getAuth();
 	const [user, loading] = useAuthState(auth);
 
-	// Local state
 	const [openSnackbar, setOpenSnackbar] = useState(false);
 	const [snackbarMessage, setSnackbarMessage] = useState('');
 	const [snackbarSeverity, setSnackbarSeverity] = useState('success');
@@ -162,7 +160,6 @@ export default function ImageCarousel() {
 	const error = useSelector(selectCloudinaryError);
 	const userImages = useSelector(selectCloudinaryImages);
 
-	// Embla Carousel
 	const [emblaRef, emblaApi] = useEmblaCarousel(
 		{ loop: userImages.length > 0 },
 		userImages.length > 0 ? [Autoplay({ delay: 3000 })] : []
@@ -176,7 +173,6 @@ export default function ImageCarousel() {
 		}
 	}, [user?.uid, dispatch]);
 
-	// Reset state when user logs out
 	useEffect(() => {
 		if (!user && !loading) {
 			dispatch(resetState());
@@ -209,7 +205,6 @@ export default function ImageCarousel() {
 		};
 	}, [emblaApi, userImages.length]);
 
-	// Reset carousel when images change
 	useEffect(() => {
 		if (emblaApi && userImages.length > 0) {
 			emblaApi.reInit({ loop: userImages.length > 1 });
@@ -295,7 +290,6 @@ export default function ImageCarousel() {
 		setOpenSnackbar(false);
 	};
 
-	// Show loading state while checking authentication
 	if (loading) {
 		return (
 			<CarouselContainer>
@@ -309,7 +303,6 @@ export default function ImageCarousel() {
 		);
 	}
 
-	// Show login prompt if user is not authenticated
 	if (!user) {
 		return (
 			<CarouselContainer>
@@ -339,7 +332,6 @@ export default function ImageCarousel() {
 		);
 	}
 
-	// Show empty state if no images
 	if (userImages.length === 0) {
 		return (
 			<>
@@ -361,7 +353,6 @@ export default function ImageCarousel() {
 					</EmptyStateContainer>
 					<UploadInput ref={fileInputRef} accept='image/*' type='file' onChange={handleFileUpload} />
 				</CarouselContainer>
-				{/* Snackbar for notifications */}
 				<Snackbar
 					open={openSnackbar}
 					autoHideDuration={6000}
@@ -414,7 +405,6 @@ export default function ImageCarousel() {
 				<UploadInput ref={fileInputRef} accept='image/*' type='file' onChange={handleFileUpload} />
 			</CarouselContainer>
 
-			{/* Confirmation dialog for deletion */}
 			<Dialog
 				open={deleteDialogOpen}
 				onClose={handleCancelDelete}
@@ -437,7 +427,6 @@ export default function ImageCarousel() {
 				</DialogActions>
 			</Dialog>
 
-			{/* Notifications */}
 			<Snackbar
 				open={openSnackbar}
 				autoHideDuration={6000}
