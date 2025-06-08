@@ -5,7 +5,7 @@
 	height: 100vh;
 	display: flex;
 	flex-direction: column;
-	padding: 1.5rem 1rem;
+	padding: 2rem 1rem;
 	box-sizing: border-box;
 	font-family: 'Manrope', sans-serif;
 }
@@ -13,11 +13,12 @@
 .menu-logo {
 	display: flex;
 	justify-content: center;
-	margin-bottom: 1rem;
+	margin-bottom: 0.5rem;
+	padding-top: 0.7rem;
 }
 
 .menu-logo-img {
-	width: 120px !important;
+	width: 133px !important;
 	height: auto;
 	object-fit: contain;
 }
@@ -27,7 +28,7 @@
 }
 
 .section-title {
-	font-size: 0.7rem;
+	font-size: 1rem;
 	font-weight: 500;
 	color: #cfcfcf;
 	margin-bottom: 0.5rem;
@@ -69,4 +70,9 @@
 	text-decoration: none;
 	color: white;
 	width: 100%;
+}
+
+.menu-item-link span {
+	font-size: 0.88rem;
+	font-weight: 500;
 }

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Typography } from '@mui/material';
 
 const Header = ({ Nombre, subtitle = '', emoji = '', showEmoji = true }) => {
@@ -10,11 +9,11 @@ const Header = ({ Nombre, subtitle = '', emoji = '', showEmoji = true }) => {
 					alignSelf: 'stretch',
 					color: 'var(--Neutral-1000, #333)',
 					fontFamily: 'Manrope, sans-serif',
-					fontSize: '55px',
+					fontSize: '46px',
 					fontStyle: 'normal',
 					fontWeight: 600,
 					lineHeight: 'normal',
-					mb: 1,
+					mb: 0.3,
 				}}
 			>
 				Welcome {Nombre} !
@@ -27,7 +26,7 @@ const Header = ({ Nombre, subtitle = '', emoji = '', showEmoji = true }) => {
 						alignSelf: 'stretch',
 						color: 'var(--Neutral-1000, #333)',
 						fontFamily: 'Manrope, sans-serif',
-						fontSize: '30px',
+						fontSize: '24px',
 						fontStyle: 'normal',
 						fontWeight: 400,
 						lineHeight: 'normal',

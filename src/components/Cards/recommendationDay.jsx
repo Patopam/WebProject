@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Box, Typography, styled, Button } from '@mui/material';
 import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
 import { getRecommendationFromEmotion } from '../../services/openaiService';
@@ -7,12 +7,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setAiLoading } from '../../redux/aiStatusSlice';
 
 const RecommendationDay = ({ emotion }) => {
-	console.log('Emotion received:', emotion);
 	const [recommendation, setRecommendation] = useState(null);
 	const [localLoading, setLocalLoading] = useState(false);
 	const dispatch = useDispatch();
 	const loadingAI = useSelector((state) => state.aiStatus.loading);
-
 	const today = new Date().toISOString().split('T')[0];
 
 	useEffect(() => {
@@ -27,22 +25,17 @@ const RecommendationDay = ({ emotion }) => {
 
 	const handleGetRecommendation = async () => {
 		if (!emotion || loadingAI || localLoading) return;
-
 		setLocalLoading(true);
 		dispatch(setAiLoading(true));
-
 		try {
 			const aiData = await getRecommendationFromEmotion(emotion);
 			const image = await getImageFromKeyword(aiData.imageKeyword);
-
 			const finalData = {
 				intro: aiData.intro,
 				title: aiData.title,
 				description: aiData.description,
 				imageUrl: image,
 			};
-
-			// Save to localStorage
 			localStorage.setItem(
 				'dailyRecommendation',
 				JSON.stringify({
@@ -118,7 +111,6 @@ const RecommendationDay = ({ emotion }) => {
 							{recommendation.description}
 						</Typography>
 					</LeftText>
-
 					<ImageBox>
 						{recommendation.imageUrl && <img src={recommendation.imageUrl} alt={recommendation.title} />}
 					</ImageBox>
@@ -130,7 +122,6 @@ const RecommendationDay = ({ emotion }) => {
 
 export default RecommendationDay;
 
-//
 const CardContainer = styled(Box)(() => ({
 	backgroundColor: '#fdd1bc',
 	padding: '1.8rem',
@@ -165,7 +156,6 @@ const IconCircle = styled(Box)(() => ({
 }));
 
 const SectionEmotion = styled(Box)(() => ({}));
-
 const SectionRecommendation = styled(Box)(() => ({
 	display: 'flex',
 	justifyContent: 'space-between',

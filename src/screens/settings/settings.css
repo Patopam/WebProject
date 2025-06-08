@@ -143,7 +143,6 @@
 	background-color: #22224a;
 }
 
-/* Fixed styling for inputs */
 .input-field {
 	width: 100% !important;
 	height: 48px !important;
@@ -159,14 +158,12 @@
 	padding-left: 40px !important;
 }
 
-/* Estilos responsivos para el boton de logout en móvil */
 @media screen and (max-width: 1024px) {
 	.settings-content {
 		padding: 1.5rem;
-		padding-bottom: 90px; /* Espacio para la barra de navegación móvil */
+		padding-bottom: 90px;
 	}
 
-	/* Ajuste para cuando el contenido no cabe bien en pantallas más pequeñas */
 	.form-grid {
 		grid-template-columns: 1fr;
 		gap: 1.5rem;

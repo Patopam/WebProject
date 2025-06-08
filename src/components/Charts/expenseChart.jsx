@@ -1,4 +1,3 @@
-import React from 'react';
 import { Typography, Container, Stack, Box, useTheme, useMediaQuery } from '@mui/material';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
@@ -6,7 +5,6 @@ export default function ExpensesLineChart() {
 	const theme = useTheme();
 	const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 	const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
-
 	const styleText = {
 		Linea: {
 			color: 'var(--Neutral-1000, #333)',
@@ -23,9 +21,9 @@ export default function ExpensesLineChart() {
 			color: 'var(--Neutral-1000, #333)',
 			fontFamily: 'Manrope, sans-serif',
 			fontSize: {
-				xs: '1.5rem', // Más pequeño en móviles
-				sm: '1.75rem', // Mediano en tablets
-				md: '2rem', // Normal en escritorio
+				xs: '1.5rem',
+				sm: '1.75rem',
+				md: '2rem',
 			},
 			fontWeight: 400,
 			color: '#000000',
@@ -35,7 +33,7 @@ export default function ExpensesLineChart() {
 		},
 	};
 
-	// Datos de gastos para la semana
+	// Burned-in expense data for the week
 	const expensesData = [
 		{ day: 'Lunes', expense: 51 },
 		{ day: 'Martes', expense: 13 },
@@ -46,7 +44,7 @@ export default function ExpensesLineChart() {
 		{ day: 'Domingo', expense: 18 },
 	];
 
-	// Personalización del tooltip
+	// Customizing the tooltip
 	const CustomTooltip = ({ active, payload }) => {
 		if (active && payload && payload.length) {
 			return (
@@ -68,26 +66,25 @@ export default function ExpensesLineChart() {
 		return null;
 	};
 
-	// Punto personalizado
+	// Custom point
 	const CustomDot = (props) => {
 		const { cx, cy } = props;
-		const radius = isMobile ? 5 : isTablet ? 6 : 7; // Tamaño ajustado según dispositivo
-
+		const radius = isMobile ? 5 : isTablet ? 6 : 7; // Size adjusted according to device
 		return <circle cx={cx} cy={cy} r={radius} fill='#49499D' stroke='white' strokeWidth={isMobile ? 1.5 : 2} />;
 	};
 
-	// Determinar altura del gráfico basada en el tamaño de la pantalla
+	// Determine chart height based on screen size
 	const chartHeight = {
-		xs: 220, // Altura en móviles
-		sm: 280, // Altura en tablets
-		md: 320, // Altura en desktop
+		xs: 220, // Height movile
+		sm: 280, // Height tablets
+		md: 320, // Height desktop
 	};
 
 	const getYAxisTicks = () => {
 		if (isMobile) {
-			return [0, 20, 40, 60, 80]; // Menos ticks en móvil
+			return [0, 20, 40, 60, 80]; // Fewer mobile ticks
 		}
-		return [0, 10, 20, 30, 40, 50, 60, 70, 80]; // Todos los ticks en escritorio
+		return [0, 10, 20, 30, 40, 50, 60, 70, 80]; // All ticks on desktop
 	};
 
 	return (
@@ -136,7 +133,7 @@ export default function ExpensesLineChart() {
 						tickFormatter={(value) => `$${value}`}
 						fontSize={isMobile ? '0.75rem' : '0.875rem'}
 						tick={{ fill: '#666' }}
-						width={isMobile ? 35 : 45} 
+						width={isMobile ? 35 : 45}
 					/>
 					<Tooltip content={<CustomTooltip />} />
 					<Legend

@@ -26,21 +26,10 @@
 	gap: 0.5rem;
 }
 
-/* Iconos móviles encima del header */
-.journal-mobile-icons {
-	display: flex;
-	gap: 0.5rem;
-	justify-content: flex-end;
-	margin-bottom: 1rem;
-	transition: opacity 0.3s ease;
-}
-
 /* Barra de navegación móvil */
 .mobile-navbar {
 	display: none; /* Oculta por defecto */
 }
-
-/* ===== RESPONSIVE STYLES ===== */
 
 /* Tablet/Móvil - <= 1024px */
 @media screen and (max-width: 1024px) {
@@ -67,11 +56,6 @@
 	.menu-container {
 		display: none;
 	}
-
-	/* Estilo para los iconos móviles */
-	.journal-mobile-icons {
-		padding: 0.5rem 0;
-	}
 }
 
 /* Móvil - <= 767px */
@@ -97,9 +81,5 @@
 
 	.journal-header {
 		margin-bottom: 1rem;
-	}
-
-	.journal-mobile-icons {
-		margin-bottom: 0.5rem;
 	}
 }

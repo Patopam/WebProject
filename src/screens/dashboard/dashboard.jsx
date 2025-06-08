@@ -1,115 +1,101 @@
-
-import React from "react";
-import AddButton from "../../components/Buttons/add";
-import Header from "../../components/Header/header";
-import ReminderCard from "../../components/Cards/remainder";
-import GoalProgressCard from "../../components/Cards/goal";
-import EmotionWeek from "../../components/Cards/emotionWeek";
-import CustomIconButton from "../../components/Buttons/icon";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import LogoutIcon from "@mui/icons-material/Logout";
-import FeelingsCard from "../../components/Cards/FeelingsCard";
-import Menu from "../../components/Menu/menu";
-import ExpensesTable from "../../components/Tables/expensesTable";
-import expensesData from "../../Data/expensesData";
-import "./style.css";
-import { useEffect, useState } from "react";
-import { obtenerUsuario } from "../../utils/utils";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { setDataSpends } from "../../redux/DataSlice/DataSpends";
-import { fetchJournal } from "../../services/firebaseUtils";
+import './style.css';
+import AddButton from '../../components/Buttons/add';
+import Header from '../../components/Header/header';
+import ReminderCard from '../../components/Cards/remainder';
+import GoalProgressCard from '../../components/Cards/goal';
+import EmotionWeek from '../../components/Cards/emotionWeek';
+import CustomIconButton from '../../components/Buttons/icon';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LogoutIcon from '@mui/icons-material/Logout';
+import FeelingsCard from '../../components/Cards/feelingsCard';
+import Menu from '../../components/Menu/menu';
+import MobileNavBar from '../../components/Menu/mobileNavBar';
+import ExpensesTable from '../../components/Tables/expensesTable';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { fetchJournal } from '../../services/firebaseUtils';
+import { getEmotionSpendingStats } from '../../services/analysisUtils';
 
 function Dashboard() {
-  const [Data, setData] = useState();
-  const [Loading, setLoading] = useState(true);
-  const id = useSelector((state) => state.userId.id);
-  const NombreU = useSelector((state) => state.NombreU.Nombre);
-  useEffect(() => {
-    fetchJournal({ uid: id })
-      .then((Emotion) => setData([...Emotion]))
-      .finally(() => setLoading(false));
-  }, []);
+	const [Data, setData] = useState();
+	const [Loading, setLoading] = useState(true);
+	const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
+	const [emotionStats, setEmotionStats] = useState(null);
 
-  let navigate = useNavigate();
-  const goLogin = () => {
-    navigate("/log");
-  };
+	const id = useSelector((state) => state.userId.id);
+	const userName = useSelector((state) => state.userName.name);
+	const navigate = useNavigate();
 
-	const handleJournalClick = () => {
-		console.log('Daily journal clicked');
-		navigate('/journal/write');
-	};
+	useEffect(() => {
+		if (id) {
+			fetchJournal({ uid: id })
+				.then((Emotion) => setData([...Emotion]))
+				.finally(() => setLoading(false));
 
-  const handleSpendClick = () => {
-    console.log("Add spend clicked");
-    navigate("/finance/add-spending");
-  };
-  const goSettings = () => {
-    navigate("/settings");
-  };
+			getEmotionSpendingStats(id).then(setEmotionStats);
+		}
 
-  return (
-    <div className="dashboard-container">
-      <Menu />
-      <div className="dashboard-content">
-        <div className="dashboard-header">
-          <Header
-            Nombre={NombreU}
-            subtitle="How are you feeling today?"
-            emoji="😊"
-          />
-          <div className="dashboard-icons">
-            <CustomIconButton
-              icon={<AccountCircleIcon />}
-              ariaLabel="user"
-              onClick={goSettings}
-            />
-            <CustomIconButton
-              icon={<LogoutIcon />}
-              ariaLabel="logout"
-              onClick={goLogin}
-            />
-          </div>
-        </div>
+		const handleResize = () => {
+			setIsMobile(window.innerWidth <= 1024);
+		};
 
+		handleResize();
+		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
+	}, [id]);
 
-        <div className="dashboard-buttons">
-          <AddButton onClick={handleJournalClick} text={"Daily journal"} />
-          <AddButton onClick={handleSpendClick} text={"Add spend"} />
-        </div>
+	const goLogin = () => navigate('/log');
+	const handleJournalClick = () => navigate('/journal/write', { state: { redirectTo: '/dashboard' } });
+	const handleSpendClick = () => navigate('/finance/add-spending', { state: { from: '/dashboard' } });
+	const goSettings = () => navigate('/settings');
 
-        {/* Top row with three equal cards */}
-        <div className="dashboard-cards-row">
-          <ReminderCard />
-          <FeelingsCard />
-          <GoalProgressCard />
-        </div>
+	return (
+		<div className='dashboard-container'>
+			{!isMobile && <Menu />}
+			<div className='dashboard-content'>
+				<div className='dashboard-header'>
+					<Header Nombre={userName} subtitle='How are you feeling today?' />
+					{!isMobile && (
+						<div className='dashboard-icons'>
+							<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
+							<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={goLogin} />
+						</div>
+					)}
+				</div>
 
-        {/* Bottom row with expenses table on left and emotion week on right */}
-        <div className="dashboard-bottom-row">
-          <div className="expenses-container">
-            <ExpensesTable dashboard={true} />
-          </div>
-          {Loading ? (
-            <p> Loading</p>
-          ) : (
-            <div className="emotion-container">
-              <EmotionWeek dashboard={true} Data={Data} />
-            </div>
-          )}
-        </div>
-      </div>
-			{/* Mostrar la barra de navegación móvil solo en pantallas pequeñas y medianas */}
+				<div className='dashboard-buttons'>
+					<AddButton onClick={handleJournalClick} text={'Add journal'} />
+					<AddButton onClick={handleSpendClick} text={'Add spend'} />
+				</div>
 
-{isMobile && <MobileNavBar />}
-    </div>
-  );
-=======
+				<div className='dashboard-cards-row'>
+					<ReminderCard />
+					{emotionStats ? (
+						<FeelingsCard emotion={emotionStats.emotion} percentage={emotionStats.percentage} />
+					) : (
+						<FeelingsCard emotion='none' percentage={0} />
+					)}
+					<GoalProgressCard />
+				</div>
 
-			
+				<div className='dashboard-bottom-row'>
+					<div className='expenses-container'>
+						<ExpensesTable dashboard={true} />
+					</div>
 
-		
+					{Loading ? (
+						<p>Loading</p>
+					) : (
+						<div className='emotion-container'>
+							<EmotionWeek dashboard={true} Data={Data} />
+						</div>
+					)}
+				</div>
+			</div>
+			{isMobile && <MobileNavBar />}
+		</div>
+	);
 }
 
 export default Dashboard;

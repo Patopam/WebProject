@@ -26,15 +26,6 @@
 	gap: 0.5rem;
 }
 
-/* Iconos móviles encima del header */
-.journal-mobile-icons {
-	display: flex;
-	gap: 0.5rem;
-	justify-content: flex-end;
-	margin-bottom: 1rem;
-	transition: opacity 0.3s ease;
-}
-
 .journal-main-grid {
 	display: grid;
 	grid-template-columns: 2fr 1fr;
@@ -61,14 +52,10 @@
 	width: 100%;
 }
 
-/* Barra de navegación móvil */
 .mobile-navbar {
-	display: none; /* Oculta por defecto */
+	display: none;
 }
 
-/* ===== RESPONSIVE STYLES ===== */
-
-/* Tablet/Móvil - <= 1024px */
 @media screen and (max-width: 1024px) {
 	.journal-container {
 		flex-direction: column;
@@ -76,7 +63,7 @@
 
 	.journal-content {
 		padding: 1.5rem;
-		padding-bottom: 90px; /* Espacio para la barra de navegación móvil */
+		padding-bottom: 90px;
 	}
 
 	.journal-main-grid {
@@ -84,7 +71,6 @@
 		gap: 1.5rem;
 	}
 
-	/* Mostrar navbar móvil */
 	.mobile-navbar {
 		display: flex !important;
 		position: fixed;
@@ -94,18 +80,11 @@
 		z-index: 1000;
 	}
 
-	/* Ocultar menú lateral */
 	.menu-container {
 		display: none;
 	}
-
-	/* Estilo para los iconos móviles */
-	.journal-mobile-icons {
-		padding: 0.5rem 0;
-	}
 }
 
-/* Móvil - <= 767px */
 @media screen and (max-width: 767px) {
 	.journal-content {
 		padding: 1rem;
@@ -127,7 +106,6 @@
 	}
 }
 
-/* Móvil Pequeño - <= 425px */
 @media screen and (max-width: 425px) {
 	.journal-content {
 		padding: 0.75rem;
@@ -136,10 +114,6 @@
 
 	.journal-header {
 		margin-bottom: 1rem;
-	}
-
-	.journal-mobile-icons {
-		margin-bottom: 0.5rem;
 	}
 }
 

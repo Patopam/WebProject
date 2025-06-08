@@ -1,153 +1,151 @@
-import React from "react";
-import { SentimentSatisfiedAlt } from "@mui/icons-material";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { fetchJournal } from "../../services/firebaseUtils";
-const EmotionWeek = ({ compact = false, Data }) => {
-  const emotionToEmoji = {
-    happy: "😄",
-    angry: "😡",
-    sad: "😭",
-    stressed: "😩",
-    nostalgic: "😢",
-    neutral: "😑",
-  };
+import { SentimentSatisfiedAlt } from '@mui/icons-material';
 
-  const sortedData = Data.sort((a, b) => a.date.seconds - b.date.seconds);
+const EmotionWeek = ({ Data }) => {
+	const emotionToEmoji = {
+		happy: '😄',
+		angry: '😡',
+		sad: '😭',
+		stressed: '😩',
+		nostalgic: '😢',
+		neutral: '😑',
+	};
 
-  const uniqueByDay = [];
-  const seenDays = new Set();
+	const today = new Date();
+	const dayOfWeek = today.getDay();
+	const monday = new Date(today);
+	monday.setDate(today.getDate() - ((dayOfWeek + 6) % 7));
+	monday.setHours(0, 0, 0, 0);
+	const sunday = new Date(monday);
+	sunday.setDate(monday.getDate() + 6);
+	sunday.setHours(23, 59, 59, 999);
 
-  for (const entry of sortedData) {
-    const dateObj = new Date(entry.date.seconds * 1000);
-    const dateKey = dateObj.toDateString();
+	const weekData = Data.filter((entry) => {
+		const entryDate = new Date(entry.date.seconds * 1000);
+		return entryDate >= monday && entryDate <= sunday;
+	});
 
-    if (!seenDays.has(dateKey)) {
-      seenDays.add(dateKey);
-      uniqueByDay.push(entry);
-    }
-  }
+	const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+	const weekMap = {};
 
-  const transformedWeekData = uniqueByDay.map((entry) => {
-    const dateObj = new Date(entry.date.seconds * 1000);
-    return {
-      day: dateObj.toLocaleDateString("en-US", { weekday: "short" }),
-      dayNum: dateObj.getDate(),
-      emoji: emotionToEmoji[entry.emotion] || "❓",
-    };
-  });
-  console.log(transformedWeekData);
-  const containerStyle = {
-    display: "flex",
-    width: compact ? "100%" : "100%",
-    maxWidth: compact ? "26.75rem" : "40rem", // Equivalente a 428px y 544px
-    height: "22.5rem", // Altura automática basada en el contenido
-    padding: compact
-      ? "1.75rem 1.75rem 3.3rem 1.75rem"
-      : "1.75rem 1.75rem 4.2rem 1.75rem",
-    flexDirection: "column",
-    alignItems: "flex-start",
-    gap: compact ? "2.46rem" : "3.13rem",
-    borderRadius: "1.5rem",
-    background: "#E3E9CF",
-    boxSizing: "border-box",
-  };
+	for (let i = 0; i < 7; i++) {
+		const dayDate = new Date(monday);
+		dayDate.setDate(monday.getDate() + i);
+		const dayLabel = dayDate.toLocaleDateString('en-US', { weekday: 'short' });
+		const dayNum = dayDate.getDate();
 
-  const headerStyle = {
-    display: "flex",
-    alignItems: "center",
-    gap: "1rem",
-    width: "100%",
-  };
+		const matchedEntry = weekData.find((entry) => {
+			const entryDate = new Date(entry.date.seconds * 1000);
+			return entryDate.toDateString() === dayDate.toDateString();
+		});
 
-  const iconContainerStyle = {
-    width: "2.31rem", // 37px
-    height: "2.31rem", // 37px
-    borderRadius: "50%",
-    backgroundColor: "#C8D39F",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    flexShrink: 0,
-  };
+		weekMap[dayLabel] = {
+			day: dayLabel,
+			dayNum: dayNum,
+			emoji: matchedEntry ? emotionToEmoji[matchedEntry.emotion] || '❓' : '–',
+		};
+	}
 
-  const titleStyle = {
-    fontFamily: "'Manrope', sans-serif",
-    fontSize: "1.125rem", // 18px
-    fontWeight: 300,
-    color: "#333",
-    lineHeight: "normal",
-    fontStyle: "normal",
-  };
+	const transformedWeekData = dayNames.map((day) => weekMap[day]);
+	const containerStyle = {
+		display: 'flex',
+		flexDirection: 'column',
+		width: '100%',
+		height: '320px',
+		minHeight: '320px',
+		padding: '1.5rem',
+		borderRadius: '1.5rem',
+		background: '#E3E9CF',
+		boxSizing: 'border-box',
+		fontFamily: "'Manrope', sans-serif",
+		gap: '1rem',
+		marginLeft: 'auto',
+		marginRight: 'auto',
+	};
 
-  const dayRowStyle = {
-    display: "flex",
-    width: "100%",
-    justifyContent: "space-between",
-  };
+	const headerStyle = {
+		display: 'flex',
+		alignItems: 'center',
+		gap: '0.5rem',
+		marginBottom: '0.5rem',
+	};
 
-  const dayColumnStyle = {
-    width: compact ? "13%" : "13%", // Porcentaje del contenedor padre
-    minWidth: compact ? "2.6rem" : "3.3rem", // Mínimo equivalente a 41.7px y 53px
-    height: "auto", // Altura automática
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: compact ? "1.25rem 0.625rem" : "1.875rem 1.25rem",
-    borderRadius: "1.875rem",
-    backgroundColor: "#C8D39F",
-    boxSizing: "border-box",
-    aspectRatio: compact ? "41.7/118.01" : "53/150",
-  };
+	const iconContainerStyle = {
+		width: '2rem',
+		height: '2rem',
+		borderRadius: '50%',
+		backgroundColor: '#C8D39F',
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+	};
 
-  const dayTextStyle = {
-    fontFamily: "'Manrope', sans-serif",
-    fontSize: "1rem", // 16px
-    fontWeight: 500,
-    color: "#333",
-    lineHeight: "110%",
-    fontStyle: "normal",
-    marginBottom: "0.5rem",
-  };
+	const titleStyle = {
+		fontSize: '0.95rem',
+		fontWeight: 400,
+		color: '#333',
+		whiteSpace: 'nowrap',
+		overflow: 'hidden',
+		textOverflow: 'ellipsis',
+	};
 
-  const dayNumberStyle = {
-    fontFamily: "'Manrope', sans-serif",
-    fontSize: "1.25rem", // 20px
-    fontWeight: 500,
-    color: "#333",
-    lineHeight: "110%",
-    fontStyle: "normal",
-    margin: "0.5rem 0",
-  };
+	const dayRowStyle = {
+		display: 'flex',
+		width: '100%',
+		justifyContent: 'space-between',
+		gap: '0.7rem',
+	};
 
-  const emojiStyle = {
-    fontSize: compact ? "1.5rem" : "2rem", // 24px o 32px
-    marginTop: "0.5rem",
-  };
+	const dayColumnStyle = {
+		width: '13%',
+		minWidth: '2.4rem',
+		padding: '4.2rem 0.6rem',
+		borderRadius: '1.5rem',
+		backgroundColor: '#C8D39F',
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center',
+		boxSizing: 'border-box',
+		flexGrow: 1,
+	};
 
-  return (
-    <div style={containerStyle}>
-      <div style={headerStyle}>
-        <div style={iconContainerStyle}>
-          <SentimentSatisfiedAlt
-            style={{ fontSize: "1.5rem", color: "#333" }}
-          />
-        </div>
-        <div style={titleStyle}>Emotion week</div>
-      </div>
+	const dayTextStyle = {
+		fontSize: '0.75rem',
+		fontWeight: 500,
+		color: '#333',
+		marginBottom: '0.2rem',
+	};
 
-      <div style={dayRowStyle}>
-        {transformedWeekData.map((item, index) => (
-          <div key={index} style={dayColumnStyle}>
-            <div style={dayTextStyle}>{item.day}</div>
-            <div style={dayNumberStyle}>{item.dayNum}</div>
-            <div style={emojiStyle}>{item.emoji}</div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+	const dayNumberStyle = {
+		fontSize: '1rem',
+		fontWeight: 500,
+		color: '#333',
+		marginBottom: '0.2rem',
+	};
+
+	const emojiStyle = {
+		fontSize: '1.4rem',
+	};
+
+	return (
+		<div style={containerStyle}>
+			<div style={headerStyle}>
+				<div style={iconContainerStyle}>
+					<SentimentSatisfiedAlt style={{ fontSize: '1.2rem', color: '#333' }} />
+				</div>
+				<div style={titleStyle}>Emotion week</div>
+			</div>
+			<div style={dayRowStyle}>
+				{transformedWeekData.map((item, index) => (
+					<div key={index} style={dayColumnStyle}>
+						<div style={dayTextStyle}>{item.day}</div>
+						<div style={dayNumberStyle}>{item.dayNum}</div>
+						<div style={emojiStyle}>{item.emoji}</div>
+					</div>
+				))}
+			</div>
+		</div>
+	);
 };
 
 export default EmotionWeek;

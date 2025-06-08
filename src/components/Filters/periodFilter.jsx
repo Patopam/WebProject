@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Button, ButtonGroup, IconButton, MenuItem, Select, Typography } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -11,12 +10,10 @@ const PeriodFilter = ({
 	availableMonths = [],
 	availableYears = [],
 }) => {
-	// Cambiar periodo (semana, mes, año)
 	const handlePeriodSelect = (newPeriod) => {
 		onPeriodChange(newPeriod);
 	};
 
-	// Moverse entre semanas/meses/años con flechas
 	const handleDateOffset = (direction) => {
 		const offset = direction === 'prev' ? -1 : 1;
 		const newDate = new Date(selectedDate);
@@ -28,27 +25,22 @@ const PeriodFilter = ({
 
 	return (
 		<Box display='flex' flexDirection='column' alignItems='start' gap={1}>
-			{/* Botones de periodo */}
 			<ButtonGroup variant='outlined' size='small'>
 				<Button onClick={() => handlePeriodSelect('week')} variant={period === 'week' ? 'contained' : 'outlined'}>
-					Semana
+					Week
 				</Button>
 				<Button onClick={() => handlePeriodSelect('month')} variant={period === 'month' ? 'contained' : 'outlined'}>
-					Mes
+					Month
 				</Button>
 				<Button onClick={() => handlePeriodSelect('year')} variant={period === 'year' ? 'contained' : 'outlined'}>
-					Año
+					Year
 				</Button>
 			</ButtonGroup>
-
-			{/* Control por periodo */}
 			<Box display='flex' alignItems='center' gap={1}>
 				<IconButton onClick={() => handleDateOffset('prev')}>
 					<ArrowBackIosNewIcon fontSize='small' />
 				</IconButton>
-
 				{period === 'week' && <Typography variant='body2'>Semana de {selectedDate.toLocaleDateString()}</Typography>}
-
 				{period === 'month' && (
 					<Select
 						size='small'
@@ -84,7 +76,6 @@ const PeriodFilter = ({
 						))}
 					</Select>
 				)}
-
 				<IconButton onClick={() => handleDateOffset('next')}>
 					<ArrowForwardIosIcon fontSize='small' />
 				</IconButton>
@@ -92,5 +83,4 @@ const PeriodFilter = ({
 		</Box>
 	);
 };
-
 export default PeriodFilter;

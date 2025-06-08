@@ -1,128 +1,51 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Menu from '../../components/Menu/menu';
 import Inputs from '../../components/Inputs/Inputs';
 import Header2 from '../../components/Header/header2';
 import CustomIconButton from '../../components/Buttons/icon';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
-import MobileNavBar from '../../components/Menu/mobileNavBar'; // Importamos la barra de navegación móvil
+import MobileNavBar from '../../components/Menu/mobileNavBar';
 import { useNavigate } from 'react-router-dom';
 import './settings.css';
 
 function Settings() {
-	// Detectar si estamos en móvil
 	const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
-	const [showLogoutButton, setShowLogoutButton] = useState(true);
-
-	// Initialize state from localStorage or with default values
-	const [firstName, setFirstName] = useState(() => {
-		return localStorage.getItem('firstName') || 'Name';
-	});
-
-	const [lastName, setLastName] = useState(() => {
-		return localStorage.getItem('lastName') || 'LastName';
-	});
-
-	const [userName, setUserName] = useState(() => {
-		return localStorage.getItem('userName') || 'UserName';
-	});
-
-	const [email, setEmail] = useState(() => {
-		return localStorage.getItem('email') || '';
-	});
-
-	const [phoneNumber, setPhoneNumber] = useState(() => {
-		return localStorage.getItem('phoneNumber') || '';
-	});
-
+	const [firstName, setFirstName] = useState(() => localStorage.getItem('firstName') || 'Name');
+	const [lastName, setLastName] = useState(() => localStorage.getItem('lastName') || 'LastName');
+	const [userName, setUserName] = useState(() => localStorage.getItem('userName') || 'UserName');
+	const [email, setEmail] = useState(() => localStorage.getItem('email') || '');
+	const [phoneNumber, setPhoneNumber] = useState(() => localStorage.getItem('phoneNumber') || '');
 	const navigate = useNavigate();
 
-	// Use effect para manejar el responsive y la visualización del botón de logout
 	useEffect(() => {
-		// Función para actualizar el estado de isMobile
 		const handleResize = () => {
 			setIsMobile(window.innerWidth <= 1024);
 		};
-
-		// Agregar event listener para el cambio de tamaño
 		window.addEventListener('resize', handleResize);
-
-		// Configurar el observer para la barra de navegación móvil
-		const handleIntersection = (entries) => {
-			// Si la navbar está visible (intersecting), ocultar el botón de logout
-			if (entries[0].isIntersecting) {
-				setShowLogoutButton(false);
-			} else {
-				// Si la navbar no es visible, mostrar el botón
-				setShowLogoutButton(true);
-			}
-		};
-
-		// Crear un observador para la barra de navegación móvil si estamos en móvil
-		if (isMobile) {
-			setTimeout(() => {
-				const navbarElement = document.querySelector('.mobile-navbar');
-				if (navbarElement) {
-					const observer = new IntersectionObserver(handleIntersection, {
-						threshold: 0.1, // Disparar cuando al menos el 10% de la navbar es visible
-					});
-					observer.observe(navbarElement);
-
-					// Este timeout es necesario para asegurarnos de que el componente esté montado
-					return () => {
-						observer.disconnect();
-					};
-				}
-			}, 100);
-		}
-
-		// Limpiar event listener cuando el componente se desmonta
 		return () => {
 			window.removeEventListener('resize', handleResize);
 		};
-	}, [isMobile]);
+	}, []);
 
-	// Save current field values to state and localStorage
 	const handleSave = () => {
-		// Save all user data to localStorage
 		localStorage.setItem('firstName', firstName);
 		localStorage.setItem('lastName', lastName);
 		localStorage.setItem('userName', userName);
 		localStorage.setItem('email', email);
 		localStorage.setItem('phoneNumber', phoneNumber);
-
-		console.log('Changes saved successfully');
 	};
 
-	const handleCancel = () => {
-		console.log('Cancel clicked - navigating back');
-		// Navigate to the previous page
-		navigate(-1);
-	};
-
-	const handleLogout = () => {
-		console.log('Logout clicked');
-		navigate('/log');
-	};
+	const handleCancel = () => navigate(-1);
+	const handleLogout = () => navigate('/log');
 
 	return (
 		<div className='settings-container'>
-			{/* Mostrar el menú lateral solo en pantallas grandes */}
 			{!isMobile && <Menu />}
-
 			<div className='settings-content'>
-				{/* Añadir el botón de logout en pantallas móviles */}
-				{isMobile && showLogoutButton && (
-					<div className='settings-mobile-logout'>
-						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={handleLogout} />
-					</div>
-				)}
-
 				<div className='settings-header'>
 					<Header2 title='Settings' subtitle='User profile' showEmoji={false} />
-
-					{/* Mostrar el botón de logout en dispositivos de escritorio */}
-					{isMobile && (
+					{/* Ícono de logout solo en desktop */}
+					{!isMobile && (
 						<div className='settings-icons'>
 							<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={handleLogout} />
 						</div>
@@ -177,13 +100,13 @@ function Settings() {
 					<div className='form-column'>
 						<p className='input-label'>Email Address</p>
 						<div className='input-with-icon'>
-							<Inputs type='email' placeholder='' value={email} onChange={(e) => setEmail(e.target.value)} />
+							<Inputs type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
 						</div>
 					</div>
 					<div className='form-column'>
 						<p className='input-label'>Phone Number</p>
 						<div className='input-with-icon'>
-							<Inputs type='tel' placeholder='' value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+							<Inputs type='tel' value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
 						</div>
 					</div>
 				</div>
@@ -197,8 +120,6 @@ function Settings() {
 					</button>
 				</div>
 			</div>
-
-			{/* Mostrar la barra de navegación móvil solo en pantallas pequeñas y medianas */}
 			{isMobile && <MobileNavBar />}
 		</div>
 	);
