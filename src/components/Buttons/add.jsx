@@ -41,4 +41,7 @@ const ExactButton = styled(Button)(() => ({
 	fontSize: '16px',
 	fontWeight: 500,
 	fontFamily: "'Manrope', sans-serif",
+	'&:active': {
+		transform: 'none',
+	},
 }));
