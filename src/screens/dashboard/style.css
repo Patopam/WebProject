@@ -1,6 +1,3 @@
-body {
-	overflow-x: hidden;
-}
 .dashboard-container {
 	display: flex;
 	min-height: 100vh;
@@ -160,10 +157,6 @@ body {
 
 /* Móvil - < 426px */
 @media screen and (max-width: 425px) {
-	.dashboard-content {
-		padding: 1rem 1rem 80px 1.5rem;
-	}
-
 	.dashboard-cards-row {
 		grid-template-columns: 1fr;
 		gap: 1rem;

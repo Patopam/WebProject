@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 
-const Header = ({ Nombre, subtitle = '', emoji = '', showEmoji = true }) => {
+const Header = ({ Nombre, subtitle = true }) => {
 	return (
 		<Box sx={{ display: 'flex', flexDirection: 'column' }}>
 			<Typography
@@ -29,23 +29,11 @@ const Header = ({ Nombre, subtitle = '', emoji = '', showEmoji = true }) => {
 						fontSize: '24px',
 						fontStyle: 'normal',
 						fontWeight: 400,
-						lineHeight: '1.3',
+						lineHeight: '1.4',
 					}}
 				>
 					{subtitle}
 				</Typography>
-				{showEmoji && (
-					<span
-						role='img'
-						aria-label='Emoji'
-						style={{
-							marginLeft: '8px',
-							fontSize: '30px',
-						}}
-					>
-						{emoji}
-					</span>
-				)}
 			</Box>
 		</Box>
 	);
