@@ -25,7 +25,7 @@ import { doc, getDoc } from 'firebase/firestore';
 
 function Router() {
 	const dispatch = useDispatch();
-	const [loading, setLoading] = useState(true); // ✅ loading hasta cargar userName
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -39,9 +39,9 @@ function Router() {
 				dispatch(setUserName(name || ''));
 			} else {
 				dispatch(clearUser());
-				dispatch(setUserName('')); // ✅ limpia también el name
+				dispatch(setUserName(''));
 			}
-			setLoading(false); // ✅ ya cargó, puede renderizar
+			setLoading(false);
 		});
 
 		return () => unsubscribe();
@@ -122,6 +122,14 @@ function Router() {
 				/>
 				<Route
 					path='/finance/add-spending'
+					element={
+						<ProtectedRoute>
+							<AddSpending />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path='/finance/edit-spending/:id'
 					element={
 						<ProtectedRoute>
 							<AddSpending />

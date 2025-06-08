@@ -120,7 +120,7 @@ const GoalHistoryCard = () => {
 								{FilteredData.map((goal) => (
 									<tr key={goal.id}>
 										<td style={tdStyle}>{goal.startDate?.toDate().toLocaleDateString()}</td>
-										<td style={tdStyle}>${goal.amount}</td>
+										<td style={tdStyle}>${Number(goal.amount).toLocaleString('es-CO')}</td>
 										<td style={tdStyle}>{goal.endDate?.toDate().toLocaleDateString()}</td>
 										<td style={tdStyle}>{goal.status}</td>
 									</tr>

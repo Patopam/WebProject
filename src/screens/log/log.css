@@ -118,6 +118,15 @@ body.login-mode {
 	}
 }
 
+@media screen and (min-width: 1025px) {
+	.Sign-form .MuiStack-root,
+	.Sign-buttons {
+		max-width: 400px;
+		width: 100%;
+		margin: 0 auto;
+	}
+}
+
 /* Desktop (1441px --> ) */
 @media screen and (min-width: 1441px) {
 	.Container-sign {
@@ -130,9 +139,5 @@ body.login-mode {
 
 	.Sign-subtitle {
 		font-size: 1.4rem;
-	}
-
-	.Sign-buttons {
-		max-width: 480px;
 	}
 }
