@@ -24,10 +24,22 @@ const ExactButton = styled(Button)(() => ({
 	justifyContent: 'center',
 	alignItems: 'center',
 	gap: 8,
+	fontSize: '16px',
+	fontWeight: 500,
+	fontFamily: "'Manrope', sans-serif",
+	transition: 'none', // importante en mobile
+
 	'&:hover': {
 		backgroundColor: '#8A8AC0',
 		boxShadow: 'none',
 	},
+
+	'&:active': {
+		transform: 'none',
+		boxShadow: 'none',
+		backgroundColor: '#CBCBE7', // mantener color estático al hacer tap
+	},
+
 	'& .MuiButton-startIcon': {
 		margin: 0,
 		backgroundColor: '#9C9CD2',
@@ -37,11 +49,5 @@ const ExactButton = styled(Button)(() => ({
 		display: 'flex',
 		justifyContent: 'center',
 		alignItems: 'center',
-	},
-	fontSize: '16px',
-	fontWeight: 500,
-	fontFamily: "'Manrope', sans-serif",
-	'&:active': {
-		transform: 'none',
 	},
 }));
