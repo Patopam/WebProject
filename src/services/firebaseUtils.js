@@ -1,5 +1,23 @@
 import { db } from './firebase';
-import { addDoc, collection, doc, setDoc, serverTimestamp, getDocs, updateDoc, Timestamp } from 'firebase/firestore';
+import {
+	addDoc,
+	collection,
+	doc,
+	setDoc,
+	getDoc,
+	serverTimestamp,
+	getDocs,
+	updateDoc,
+	Timestamp,
+} from 'firebase/firestore';
+import {
+	getAuth,
+	updatePassword,
+	updateEmail,
+	updateProfile,
+	EmailAuthProvider,
+	reauthenticateWithCredential,
+} from 'firebase/auth';
 
 export const saveUserData = async ({ uid, name, email }) => {
 	try {
@@ -13,6 +31,128 @@ export const saveUserData = async ({ uid, name, email }) => {
 	}
 };
 
+// Función para obtener datos del usuario - MEJORADA
+export const getUserData = async (uid) => {
+	try {
+		const auth = getAuth();
+		const currentUser = auth.currentUser;
+
+		// Obtener datos de Firestore
+		const userDoc = await getDoc(doc(db, 'users', uid));
+		let firestoreData = {};
+
+		if (userDoc.exists()) {
+			firestoreData = userDoc.data();
+		}
+
+		// Combinar con datos de Firebase Auth si el usuario está autenticado
+		if (currentUser && currentUser.uid === uid) {
+			return {
+				...firestoreData,
+				name: currentUser.displayName || firestoreData.name || '',
+				email: currentUser.email || firestoreData.email || '',
+				// Priorizar datos de Auth sobre Firestore para email
+				emailVerified: currentUser.emailVerified,
+			};
+		}
+
+		return firestoreData;
+	} catch (error) {
+		console.error('Error getting user data:', error);
+		return null;
+	}
+};
+
+// Función para actualizar datos del usuario - CON RE-AUTENTICACIÓN
+export const updateUserData = async ({ uid, name, email, currentPassword = null }) => {
+	try {
+		const auth = getAuth();
+		const user = auth.currentUser;
+
+		if (!user) {
+			throw new Error('No authenticated user found');
+		}
+
+		// Verificar si necesitamos actualizar el email
+		const emailChanged = user.email !== email;
+
+		// Si va a cambiar el email, requerir la contraseña actual
+		if (emailChanged && !currentPassword) {
+			throw new Error('REQUIRES_PASSWORD');
+		}
+
+		// Re-autenticar si se va a cambiar el email
+		if (emailChanged && currentPassword) {
+			const credential = EmailAuthProvider.credential(user.email, currentPassword);
+			await reauthenticateWithCredential(user, credential);
+		}
+
+		// Actualizar en Firestore primero
+		const userRef = doc(db, 'users', uid);
+		await updateDoc(userRef, {
+			name,
+			email,
+			updatedAt: new Date(),
+		});
+
+		// Actualizar en Firebase Auth
+		const updates = [];
+
+		// Actualizar displayName si cambió
+		if (user.displayName !== name) {
+			updates.push(updateProfile(user, { displayName: name }));
+		}
+
+		// Actualizar email si cambió (después de re-autenticar)
+		if (emailChanged) {
+			updates.push(updateEmail(user, email));
+		}
+
+		// Ejecutar todas las actualizaciones
+		if (updates.length > 0) {
+			await Promise.all(updates);
+		}
+
+		console.log('User data updated successfully in both Auth and Firestore');
+	} catch (error) {
+		console.error('Error updating user data:', error);
+
+		// Manejar errores específicos
+		if (error.message === 'REQUIRES_PASSWORD') {
+			throw new Error('Current password is required to update email');
+		} else if (error.code === 'auth/wrong-password') {
+			throw new Error('Current password is incorrect');
+		} else if (error.code === 'auth/requires-recent-login') {
+			throw new Error('Please log in again to update your email');
+		} else if (error.code === 'auth/email-already-in-use') {
+			throw new Error('This email is already in use by another account');
+		} else if (error.code === 'auth/invalid-email') {
+			throw new Error('Invalid email format');
+		}
+
+		throw error;
+	}
+};
+
+// Función para actualizar contraseña del usuario
+export const updateUserPassword = async (newPassword) => {
+	try {
+		const auth = getAuth();
+		const user = auth.currentUser;
+
+		if (!user) {
+			throw new Error('No authenticated user found');
+		}
+
+		await updatePassword(user, newPassword);
+		console.log('Password updated successfully');
+	} catch (error) {
+		console.error('Error updating password:', error);
+		throw error;
+	}
+};
+
+// ... resto de tus funciones (addGoals, addSpend, etc.)
 export const addGoals = async ({ uid, startDate, endDate, amount, description }) => {
 	if (!uid) return;
 	try {
