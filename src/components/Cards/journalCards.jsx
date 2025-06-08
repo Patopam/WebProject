@@ -35,11 +35,13 @@ const JournalCards = ({ journalData }) => {
 			}}
 		>
 			{journalData.map((entry) => {
-				const formattedDate = entry.date.toDateString();
+				const formattedDate = entry.date?.toDateString?.() || 'No date';
+
 				return (
 					<Box
 						key={entry.id}
 						onClick={() => handleClick(entry.id)}
+						aria-label={`Edit journal ${entry.title}`}
 						sx={{
 							cursor: 'pointer',
 							width: {
