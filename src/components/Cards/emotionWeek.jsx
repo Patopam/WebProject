@@ -57,6 +57,7 @@ const EmotionWeek = ({ Data }) => {
 		minHeight: isMobile ? '260px' : '320px',
 		padding: '1.5rem',
 		borderRadius: '1.5rem',
+		paddingBottom: isMobile ? '2rem' : '1.5rem',
 		background: '#E3E9CF',
 		boxSizing: 'border-box',
 		fontFamily: "'Manrope', sans-serif",
