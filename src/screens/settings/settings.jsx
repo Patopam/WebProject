@@ -43,15 +43,11 @@ function Settings() {
 			.join('')
 			.toUpperCase()
 			.slice(0, 2);
-
 		const colors = ['#33336F'];
-
 		const colorIndex = name.charCodeAt(0) % colors.length;
-		const backgroundColor = colors[colorIndex];
-
 		return {
 			initials,
-			backgroundColor,
+			backgroundColor: colors[colorIndex],
 		};
 	};
 
@@ -65,7 +61,6 @@ function Settings() {
 			setSuccessMessage(message);
 			setErrorMessage('');
 		}
-
 		setTimeout(() => {
 			setSuccessMessage('');
 			setErrorMessage('');
@@ -77,9 +72,7 @@ function Settings() {
 			setIsMobile(window.innerWidth <= 1024);
 		};
 		window.addEventListener('resize', handleResize);
-		return () => {
-			window.removeEventListener('resize', handleResize);
-		};
+		return () => window.removeEventListener('resize', handleResize);
 	}, []);
 
 	useEffect(() => {
@@ -88,7 +81,6 @@ function Settings() {
 				showMessage('User not authenticated', true);
 				return;
 			}
-
 			setLoading(true);
 			try {
 				const userData = await getUserData(userId);
@@ -101,81 +93,39 @@ function Settings() {
 					showMessage('No user data found', true);
 				}
 			} catch (error) {
-				console.error('Error loading user data:', error);
 				showMessage('Error loading user data: ' + error.message, true);
 			} finally {
 				setLoading(false);
 			}
 		};
-
 		loadUserData();
 	}, [userId]);
 
 	useEffect(() => {
 		const emailChanged = email.trim() !== originalEmail;
 		setShowCurrentPasswordInput(emailChanged);
-		if (!emailChanged) {
-			setCurrentPassword('');
-		}
+		if (!emailChanged) setCurrentPassword('');
 	}, [email, originalEmail]);
 
 	const validateInputs = () => {
 		const nameChanged = name.trim() !== originalName;
 		const emailChanged = email.trim() !== originalEmail;
 		const passwordChanged = newPassword.trim() !== '';
-
-		if (!nameChanged && !emailChanged && !passwordChanged) {
-			showMessage('No changes to save', true);
-			return false;
-		}
-
-		if (nameChanged && !name.trim()) {
-			showMessage('Name cannot be empty', true);
-			return false;
-		}
-
-		if (emailChanged && !email.trim()) {
-			showMessage('Email cannot be empty', true);
-			return false;
-		}
-
-		if (emailChanged && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
-			showMessage('Please enter a valid email address', true);
-			return false;
-		}
-
-		if (emailChanged && !currentPassword.trim()) {
-			setShowCurrentPasswordInput(true);
-			showMessage('Current password is required to update email', true);
-			return false;
-		}
-
-		if (passwordChanged) {
-			if (newPassword.length < 6) {
-				showMessage('Password must be at least 6 characters long', true);
-				return false;
-			}
-			if (newPassword !== confirmPassword) {
-				showMessage('Passwords do not match', true);
-				return false;
-			}
-		}
-
+		if (!nameChanged && !emailChanged && !passwordChanged) return showMessage('No changes to save', true), false;
+		if (nameChanged && !name.trim()) return showMessage('Name cannot be empty', true), false;
+		if (emailChanged && !email.trim()) return showMessage('Email cannot be empty', true), false;
+		if (emailChanged && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()))
+			return showMessage('Enter a valid email', true), false;
+		if (emailChanged && !currentPassword.trim())
+			return setShowCurrentPasswordInput(true), showMessage('Current password required', true), false;
+		if (passwordChanged && newPassword.length < 6) return showMessage('Password too short', true), false;
+		if (passwordChanged && newPassword !== confirmPassword) return showMessage('Passwords do not match', true), false;
 		return true;
 	};
 
 	const handleSave = async () => {
-		if (!userId) {
-			showMessage('User not authenticated', true);
-			return;
-		}
-
-		if (!validateInputs()) {
-			return;
-		}
-
+		if (!userId || !validateInputs()) return;
 		setIsSaving(true);
-
 		try {
 			const nameChanged = name.trim() !== originalName;
 			const emailChanged = email.trim() !== originalEmail;
@@ -188,11 +138,7 @@ function Settings() {
 					email: email.trim(),
 					currentPassword: emailChanged ? currentPassword : null,
 				});
-
-				if (nameChanged) {
-					dispatch(setUserName(name.trim()));
-				}
-
+				if (nameChanged) dispatch(setUserName(name.trim()));
 				setOriginalName(name.trim());
 				setOriginalEmail(email.trim());
 			}
@@ -205,23 +151,15 @@ function Settings() {
 
 			setCurrentPassword('');
 			setShowCurrentPasswordInput(false);
-
 			showMessage('Settings saved successfully!');
 		} catch (error) {
-			console.error('Error saving settings:', error);
-
 			let errorMsg = 'Error saving settings: ';
-			if (error.message.includes('Current password is required')) {
-				setShowCurrentPasswordInput(true);
+			if (error.message.includes('Current password')) {
 				errorMsg += 'Please enter your current password to update email.';
-			} else if (error.message.includes('Current password is incorrect')) {
-				errorMsg += 'Current password is incorrect.';
-			} else if (error.message.includes('log in again')) {
-				errorMsg += 'Please log out and log in again to update your email.';
+				setShowCurrentPasswordInput(true);
 			} else {
 				errorMsg += error.message;
 			}
-
 			showMessage(errorMsg, true);
 		} finally {
 			setIsSaving(false);
@@ -242,19 +180,16 @@ function Settings() {
 
 	const handleLogout = () => navigate('/log');
 
-	if (loading) {
+	if (loading)
 		return (
 			<div className='settings-container'>
 				{!isMobile && <Menu />}
 				<div className='settings-content'>
-					<div className='loading-container'>
-						<p>Loading user data...</p>
-					</div>
+					<div className='loading-container'>Loading user data...</div>
 				</div>
 				{isMobile && <MobileNavBar />}
 			</div>
 		);
-	}
 
 	return (
 		<div className='settings-container'>
@@ -292,38 +227,34 @@ function Settings() {
 					</div>
 				</div>
 
-				<div className='divider'></div>
-
-				<div className='full-width'>
-					<p className='input-label'>Name</p>
-					<Inputs type='text' placeholder='Enter your name' value={name} onChange={(e) => setName(e.target.value)} />
-				</div>
-
-				<div className='full-width'>
-					<p className='input-label'>Email Address</p>
-					<Inputs
-						type='email'
-						placeholder={originalEmail || 'Enter your email'}
-						value={email}
-						onChange={(e) => setEmail(e.target.value)}
-					/>
-				</div>
-
-				{showCurrentPasswordInput && (
+				<div className='settings-section'>
 					<div className='full-width'>
-						<p className='input-label'>Current Password</p>
-						<Inputs
-							type='password'
-							icon={<FaRegEyeSlash />}
-							placeholder='Enter your current password'
-							value={currentPassword}
-							onChange={(e) => setCurrentPassword(e.target.value)}
-						/>
-						<small className='password-help-text'>Required to update email address</small>
+						<p className='input-label'>Name</p>
+						<Inputs type='text' placeholder='Enter your name' value={name} onChange={(e) => setName(e.target.value)} />
 					</div>
-				)}
-
-				<div className='divider'></div>
+					<div className='full-width'>
+						<p className='input-label'>Email Address</p>
+						<Inputs
+							type='email'
+							placeholder='Enter your email'
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
+						/>
+					</div>
+					{showCurrentPasswordInput && (
+						<div className='full-width'>
+							<p className='input-label'>Current Password</p>
+							<Inputs
+								type='password'
+								icon={<FaRegEyeSlash />}
+								placeholder='Enter your current password'
+								value={currentPassword}
+								onChange={(e) => setCurrentPassword(e.target.value)}
+							/>
+							<small className='password-help-text'>Required to update email address</small>
+						</div>
+					)}
+				</div>
 
 				<div className='form-grid'>
 					<div className='form-column'>
