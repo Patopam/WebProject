@@ -2,17 +2,18 @@ import { Box, Typography } from '@mui/material';
 
 const Header = ({ Nombre, subtitle = true }) => {
 	return (
-		<Box sx={{ display: 'flex', flexDirection: 'column' }}>
+		<Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
 			<Typography
 				component='div'
 				sx={{
 					alignSelf: 'stretch',
 					color: 'var(--Neutral-1000, #333)',
 					fontFamily: 'Manrope, sans-serif',
-					fontSize: '46px',
+					fontSize: { xs: '32px', sm: '46px' },
 					fontStyle: 'normal',
 					fontWeight: 600,
-					lineHeight: 'normal',
+					lineHeight: '1.2',
+					wordBreak: 'break-word',
 					mb: 0.3,
 				}}
 			>
