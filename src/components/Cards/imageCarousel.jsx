@@ -36,9 +36,27 @@ const CarouselContainer = styled('div')(({ theme }) => ({
 	borderRadius: theme.spacing(2),
 	background: theme.palette.grey[200],
 	width: '100%',
-	maxWidth: '40rem',
+	maxWidth: '100%', // Cambiado de '40rem' a '100%'
 	overflow: 'hidden',
 	boxSizing: 'border-box',
+	// Asegurar altura consistente
+	minHeight: '200px',
+
+	// Media queries para responsive
+	'@media (max-width: 1024px)': {
+		maxWidth: '100%',
+		minHeight: '180px',
+	},
+
+	'@media (max-width: 767px)': {
+		maxWidth: '100%',
+		minHeight: '160px',
+	},
+
+	'@media (max-width: 425px)': {
+		maxWidth: '100%',
+		minHeight: '140px',
+	},
 }));
 
 const EmblaContainer = styled('div')({
@@ -57,14 +75,27 @@ const EmblaSlide = styled('div')({
 	position: 'relative',
 });
 
-const SlideImage = styled('img')({
+const SlideImage = styled('img')(({ theme }) => ({
 	width: '100%',
 	height: 'auto',
 	aspectRatio: '16/9',
 	maxHeight: '15rem',
 	objectFit: 'cover',
 	borderRadius: '0.75rem',
-});
+
+	// Media queries para responsive
+	'@media (max-width: 1024px)': {
+		maxHeight: '12rem',
+	},
+
+	'@media (max-width: 767px)': {
+		maxHeight: '10rem',
+	},
+
+	'@media (max-width: 425px)': {
+		maxHeight: '8rem',
+	},
+}));
 
 const AddButtonContainer = styled('div')({
 	position: 'absolute',
@@ -86,6 +117,17 @@ const ActionButtonCircle = styled(IconButton)(({ theme }) => ({
 	backgroundColor: theme.palette.grey[300],
 	'&:hover': {
 		backgroundColor: theme.palette.grey[400],
+	},
+
+	// Media queries para responsive - botones más pequeños en móvil
+	'@media (max-width: 767px)': {
+		width: '2rem',
+		height: '2rem',
+	},
+
+	'@media (max-width: 425px)': {
+		width: '1.75rem',
+		height: '1.75rem',
 	},
 }));
 
