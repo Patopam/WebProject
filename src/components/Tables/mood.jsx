@@ -191,7 +191,7 @@ const ScrollContent = styled(Box)(({ theme }) => ({
 	overflowY: 'auto',
 	flex: 1,
 	[theme.breakpoints.down('sm')]: {
-		minHeight: '30vh',
+		minHeight: '32vh',
 	},
 }));
 
