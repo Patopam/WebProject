@@ -1,38 +1,27 @@
-/* JournalForm.css - Estilos responsive para el componente JournalForm */
-
-/* Estilos responsivos para JournalForm */
 @media (max-width: 1024px) {
-	/* Para tablets y dispositivos móviles */
 	.MuiBox-root.journal-container {
 		padding: 20px !important;
 		max-width: 100% !important;
 	}
-
 	.feelings-section h3 {
 		font-size: 15px !important;
 	}
-
 	.emoji-wrapper {
 		padding: 8px 12px !important;
 	}
-
 	.emoji-button {
 		font-size: 24px !important;
 	}
-
 	.tag-wrapper {
 		gap: 6px !important;
 	}
-
 	.tag-button {
 		padding: 5px 10px !important;
 		font-size: 13px !important;
 	}
-
 	.entry-section {
 		padding: 12px !important;
 	}
-
 	.save-button {
 		width: 100%;
 		justify-content: center;
@@ -40,34 +29,28 @@
 }
 
 @media (max-width: 767px) {
-	/* Para dispositivos móviles */
+	/* For mobile devices */
 	.MuiBox-root.journal-container {
 		padding: 16px !important;
 		border-radius: 1.2rem !important;
 	}
-
 	.header-section {
 		margin-bottom: 12px !important;
 	}
-
 	.title-group p {
 		font-size: 16px !important;
 	}
-
 	.icon-circle {
 		width: 1.75rem !important;
 		height: 1.75rem !important;
 	}
-
 	.feelings-section {
 		margin-bottom: 12px !important;
 	}
-
 	.feelings-section h3 {
 		font-size: 14px !important;
 		margin-bottom: 8px !important;
 	}
-
 	.emoji-wrapper {
 		gap: 12px !important;
 		border-radius: 10px !important;
@@ -75,22 +58,20 @@
 		padding: 8px !important;
 		margin-bottom: 12px !important;
 	}
-
 	.emoji-button {
 		font-size: 22px !important;
 		flex-shrink: 0;
 	}
-
 	.tag-wrapper {
 		margin-bottom: 12px !important;
 		overflow-x: auto !important;
 		padding-bottom: 4px !important;
-		-ms-overflow-style: none !important; /* Para IE and Edge */
-		scrollbar-width: none !important; /* Para Firefox */
+		-ms-overflow-style: none !important; /* For IE and Edge */
+		scrollbar-width: none !important; /* For Firefox */
 	}
 
 	.tag-wrapper::-webkit-scrollbar {
-		display: none !important; /* Para Chrome, Safari y Opera */
+		display: none !important; /* For Chrome, Safari and Opera */
 	}
 
 	.tag-button {
@@ -126,7 +107,7 @@
 }
 
 @media (max-width: 425px) {
-	/* Para dispositivos móviles pequeños */
+	/* For small mobile devices */
 	.MuiBox-root.journal-container {
 		padding: 12px !important;
 		border-radius: 1rem !important;

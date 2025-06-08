@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useSnackbar } from 'notistack';
 import { Box, Typography, TextField, Button, IconButton, styled } from '@mui/material';
 import SentimentSatisfiedOutlinedIcon from '@mui/icons-material/SentimentSatisfiedOutlined';
 import OpenInFullOutlinedIcon from '@mui/icons-material/OpenInFullOutlined';
@@ -9,8 +10,10 @@ import { useNavigate } from 'react-router-dom';
 import { addJournal } from '../../services/firebaseUtils';
 import { useSelector } from 'react-redux';
 import './journalForms.css';
-export default function JournalForm({ compact = false }) {
+
+export default function JournalForm({ compact = false, redirectTo }) {
 	const navigate = useNavigate();
+	const { enqueueSnackbar } = useSnackbar();
 	const id = useSelector((state) => state.userId.id);
 	const [entryText, setEntryText] = useState('');
 	const [entryTitle, setEntryTitle] = useState('');
@@ -18,18 +21,12 @@ export default function JournalForm({ compact = false }) {
 	const [selectedTags, setSelectedTags] = useState([]);
 	const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
 
-	// Detectar cambios de tamaño de pantalla
 	useEffect(() => {
 		const handleResize = () => {
 			setIsMobile(window.innerWidth <= 767);
 		};
-
-		// Inicializar
 		handleResize();
-
-		// Añadir listener para cambios de tamaño
 		window.addEventListener('resize', handleResize);
-
 		return () => {
 			window.removeEventListener('resize', handleResize);
 		};
@@ -45,7 +42,6 @@ export default function JournalForm({ compact = false }) {
 	];
 
 	const tags = ['Reflection', 'Gratitude', 'Daily Intention', 'Release'];
-
 	const templates = {
 		Reflection: "Today I'm reflecting on...\n\nWhat went well:\n\nWhat could have gone better:\n\nWhat I learned:",
 		Gratitude: "Today I'm grateful for:\n\n1.\n2.\n3.\n\nWhy these matter to me:",
@@ -92,10 +88,14 @@ export default function JournalForm({ compact = false }) {
 		setEntryTitle('');
 		setEntryText('');
 		setSelectedTags([]);
-
-		alert('Journal saved successfully.');
+		enqueueSnackbar('Journal saved successfully', { variant: 'success' });
+		// If we are in expanded screen and a redirection route was passed
+		if (!compact && redirectTo) {
+			setTimeout(() => {
+				navigate(redirectTo);
+			}, 2500); // Wait 2.5s before redirecting
+		}
 	};
-
 	return (
 		<JournalContainer compact={compact} className='journal-container'>
 			<HeaderSection className='header-section'>
@@ -109,7 +109,6 @@ export default function JournalForm({ compact = false }) {
 					{compact ? <OpenInFullOutlinedIcon sx={{ color: '#000' }} /> : <CloseFullscreenIcon sx={{ color: '#000' }} />}
 				</IconButton>
 			</HeaderSection>
-
 			<FeelingsSection className='feelings-section'>
 				<Typography
 					variant='h3'
@@ -130,7 +129,6 @@ export default function JournalForm({ compact = false }) {
 					))}
 				</EmojiWrapper>
 			</FeelingsSection>
-
 			<TagWrapper className='tag-wrapper'>
 				{tags.map((tag, index) => (
 					<TagButton
@@ -143,7 +141,6 @@ export default function JournalForm({ compact = false }) {
 					</TagButton>
 				))}
 			</TagWrapper>
-
 			<EntrySection compact={compact} className='entry-section'>
 				<EntryTitle
 					fullWidth
@@ -166,7 +163,6 @@ export default function JournalForm({ compact = false }) {
 					className='entry-textarea'
 				/>
 			</EntrySection>
-
 			<SaveButtonWrapper>
 				<SaveButton onClick={send} className='save-button'>
 					<IconCircle bgcolor='#f6d776' className='icon-circle'>
@@ -184,7 +180,6 @@ export default function JournalForm({ compact = false }) {
 }
 
 const HOVER_COLOR = '#fcd48f';
-
 const JournalContainer = styled(Box, {
 	shouldForwardProp: (prop) => prop !== 'compact',
 })(({ compact }) => ({

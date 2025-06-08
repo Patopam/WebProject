@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { db } from '../../services/firebase';
+import { collection, getDocs } from 'firebase/firestore';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Tabs from '@mui/material/Tabs';
@@ -10,14 +13,171 @@ import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
 import Chip from '@mui/material/Chip';
 import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import IconButton from '@mui/material/IconButton';
-import EditIcon from '@mui/icons-material/Edit';
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
 import Modal from '@mui/material/Modal';
 import ButtonBase from '@mui/material/ButtonBase';
 
+const moods = [
+	{ id: 'happy', emoji: '😄' },
+	{ id: 'sad', emoji: '😭' },
+	{ id: 'nostalgic', emoji: '😢' },
+	{ id: 'angry', emoji: '😡' },
+	{ id: 'neutral', emoji: '😑' },
+	{ id: 'stressed', emoji: '😩' },
+];
+
+const getMoodEmoji = (moodId) => {
+	const mood = moods.find((m) => m.id === moodId);
+	return mood ? mood.emoji : '😐';
+};
+export default function MoodTracker() {
+	const uid = useSelector((state) => state.userId.id);
+	const [timeRange, setTimeRange] = useState(0);
+	const [moodData, setMoodData] = useState([]);
+	const [moodSelectorOpen, setMoodSelectorOpen] = useState(false);
+	const [currentEditingItemId, setCurrentEditingItemId] = useState(null);
+	const today = new Date();
+
+	useEffect(() => {
+		if (!uid) return;
+		const fetchJournals = async () => {
+			try {
+				const snapshot = await getDocs(collection(db, `users/${uid}/journals`));
+				const data = snapshot.docs.map((doc) => {
+					const item = doc.data();
+					const dateObj = item.date?.toDate?.() || new Date();
+
+					return {
+						id: doc.id,
+						title: item.emotion,
+						mood: item.emotion,
+						date: dateObj,
+						displayDate: dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+					};
+				});
+				setMoodData(data);
+			} catch (error) {
+				console.error('Error fetching journals:', error);
+			}
+		};
+		fetchJournals();
+	}, [uid]);
+
+	const handleTimeRangeChange = (event, newValue) => setTimeRange(newValue);
+	const openMoodSelector = (id) => {
+		setCurrentEditingItemId(id);
+		setMoodSelectorOpen(true);
+	};
+	const handleMoodSelect = (moodId) => {
+		setMoodData(moodData.map((item) => (item.id === currentEditingItemId ? { ...item, mood: moodId } : item)));
+		setMoodSelectorOpen(false);
+	};
+	//finamic filter
+	const filterDataByTimeRange = () => {
+		const oneDay = 24 * 60 * 60 * 1000;
+		const oneWeekAgo = new Date(today.getTime() - 7 * oneDay);
+		const oneMonthAgo = new Date(today.getTime() - 30 * oneDay);
+
+		switch (timeRange) {
+			case 0: {
+				const todayYear = today.getFullYear();
+				const todayMonth = today.getMonth();
+				const todayDate = today.getDate();
+
+				return moodData.filter((item) => {
+					const itemDate = item.date instanceof Date ? item.date : new Date(item.date);
+					return (
+						itemDate.getFullYear() === todayYear &&
+						itemDate.getMonth() === todayMonth &&
+						itemDate.getDate() === todayDate
+					);
+				});
+			}
+			case 1:
+				return moodData.filter((item) => item.date >= oneWeekAgo && item.date <= today);
+			case 2:
+				return moodData.filter((item) => item.date >= oneMonthAgo && item.date <= today);
+			default:
+				return moodData;
+		}
+	};
+	//filter organitation
+	const organizeByMonth = (data) => {
+		const organized = {};
+		data.forEach((item) => {
+			const date = item.date;
+			const monthYear = `${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()}`;
+			if (!organized[monthYear]) organized[monthYear] = [];
+			organized[monthYear].push(item);
+		});
+		Object.keys(organized).forEach((month) => organized[month].sort((a, b) => b.date - a.date));
+		return organized;
+	};
+
+	const filteredData = filterDataByTimeRange();
+	const organizedData = timeRange === 2 ? organizeByMonth(filteredData) : null;
+	const renderListItem = (item) => (
+		<StyledListItem key={item.id}>
+			<StyledAvatar onClick={() => openMoodSelector(item.id)}>{getMoodEmoji(item.mood)}</StyledAvatar>
+			<ListItemText
+				primary={item.title}
+				primaryTypographyProps={{
+					color: '#333',
+					fontFamily: 'Manrope, sans-serif',
+					fontSize: 'clamp(0.9rem, 1.5vw, 1.1rem)',
+					fontWeight: 400,
+				}}
+				sx={{ flexGrow: 1, marginRight: '2%' }}
+			/>
+			<StyledChip label={item.displayDate} />
+		</StyledListItem>
+	);
+
+	const renderContent = () => {
+		if (filteredData.length === 0)
+			return (
+				<Box textAlign='center' py='4%'>
+					No entries for this time period
+				</Box>
+			);
+		if (timeRange === 2) {
+			return (
+				<>
+					{Object.keys(organizedData).map((month) => (
+						<React.Fragment key={month}>
+							<MonthHeader variant='subtitle1'>{month}</MonthHeader>
+							<List disablePadding>{organizedData[month].map((item) => renderListItem(item))}</List>
+						</React.Fragment>
+					))}
+				</>
+			);
+		} else {
+			return <List>{filteredData.map((item) => renderListItem(item))}</List>;
+		}
+	};
+
+	return (
+		<StyledPaper elevation={3}>
+			<StyledTabs value={timeRange} onChange={handleTimeRangeChange} variant='fullWidth'>
+				<StyledTab label='Today' />
+				<StyledTab label='Week' />
+				<StyledTab label='Month' />
+			</StyledTabs>
+			<StyledDivider />
+			{renderContent()}
+			<MoodSelectorModal open={moodSelectorOpen} onClose={() => setMoodSelectorOpen(false)}>
+				<MoodSelectorContainer>
+					{moods.map((mood) => (
+						<MoodOption key={mood.id} onClick={() => handleMoodSelect(mood.id)}>
+							{mood.emoji}
+						</MoodOption>
+					))}
+				</MoodSelectorContainer>
+			</MoodSelectorModal>
+		</StyledPaper>
+	);
+}
+
+//
 const StyledPaper = styled(Paper)(({ theme }) => ({
 	backgroundColor: '#CBCBE7',
 	borderRadius: '20px',
@@ -73,9 +233,7 @@ const StyledChip = styled(Chip)(() => ({
 	color: 'var(--Neutral-1000, #333)',
 	fontFamily: 'Manrope, sans-serif',
 	fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
-	fontStyle: 'normal',
 	fontWeight: 400,
-	lineHeight: 'normal',
 }));
 
 const StyledDivider = styled('div')({
@@ -88,9 +246,7 @@ const MonthHeader = styled(Typography)(() => ({
 	color: 'var(--Neutral-1000, #333)',
 	fontFamily: 'Manrope, sans-serif',
 	fontSize: 'clamp(1rem, 1.8vw, 1.2rem)',
-	fontStyle: 'normal',
 	fontWeight: 700,
-	lineHeight: 'normal',
 	marginTop: '2%',
 	marginBottom: '1%',
 	paddingLeft: '1%',
@@ -129,221 +285,3 @@ const MoodOption = styled(ButtonBase)(() => ({
 		backgroundColor: 'rgba(255, 255, 255, 0.3)',
 	},
 }));
-
-// Dataset with one entry per day
-const initialMoodData = [
-	{ id: 1, title: 'Morning meditation complete', mood: 'happy', date: '2025-04-06', displayDate: 'Apr 6' },
-	{ id: 2, title: 'Work deadline stress', mood: 'angry', date: '2025-04-05', displayDate: 'Apr 5' },
-	{ id: 3, title: 'Great lunch with friends', mood: 'happy', date: '2025-04-04', displayDate: 'Apr 4' },
-	{ id: 4, title: 'Successful presentation', mood: 'happy', date: '2025-04-03', displayDate: 'Apr 3' },
-	{ id: 5, title: 'Argument with roommate', mood: 'angry', date: '2025-04-02', displayDate: 'Apr 2' },
-	{ id: 6, title: 'Completed project', mood: 'happy', date: '2025-04-01', displayDate: 'Apr 1' },
-	{ id: 7, title: 'Great movie night', mood: 'happy', date: '2025-03-31', displayDate: 'Mar 31' },
-	{ id: 8, title: 'Weekend hike', mood: 'happy', date: '2025-03-28', displayDate: 'Mar 28' },
-];
-
-const moods = [
-	{ id: 'happy', emoji: '😄' },
-	{ id: 'sad', emoji: '😭' },
-	{ id: 'nostalgic', emoji: '😢' },
-	{ id: 'angry', emoji: '😡' },
-	{ id: 'neutral', emoji: '😑' },
-	{ id: 'stressed', emoji: '😩' },
-];
-
-const getMoodEmoji = (moodId) => {
-	const mood = moods.find((m) => m.id === moodId);
-	return mood ? mood.emoji : '😐';
-};
-
-export default function MoodTracker() {
-	const [timeRange, setTimeRange] = useState(0);
-	const [moodData, setMoodData] = useState(initialMoodData);
-	const [editingId, setEditingId] = useState(null);
-	const [editValue, setEditValue] = useState('');
-	const [moodSelectorOpen, setMoodSelectorOpen] = useState(false);
-	const [currentEditingItemId, setCurrentEditingItemId] = useState(null);
-
-	const today = new Date('2025-04-06'); // Using the current date from your example
-
-	const handleTimeRangeChange = (event, newValue) => {
-		setTimeRange(newValue);
-	};
-
-	const startEditing = (id, title) => {
-		setEditingId(id);
-		setEditValue(title);
-	};
-
-	const saveEdit = (id) => {
-		setMoodData(moodData.map((item) => (item.id === id ? { ...item, title: editValue } : item)));
-		setEditingId(null);
-	};
-
-	const cancelEdit = () => {
-		setEditingId(null);
-	};
-
-	const openMoodSelector = (id) => {
-		setCurrentEditingItemId(id);
-		setMoodSelectorOpen(true);
-	};
-
-	const handleMoodSelect = (moodId) => {
-		setMoodData(moodData.map((item) => (item.id === currentEditingItemId ? { ...item, mood: moodId } : item)));
-		setMoodSelectorOpen(false);
-	};
-
-	const filterDataByTimeRange = () => {
-		const oneDay = 24 * 60 * 60 * 1000;
-		const oneWeekAgo = new Date(today.getTime() - 7 * oneDay);
-		const oneMonthAgo = new Date(today.getTime() - 30 * oneDay);
-
-		switch (timeRange) {
-			case 0: // Today
-				return moodData.filter((item) => {
-					const itemDate = new Date(item.date);
-					return itemDate.toDateString() === today.toDateString();
-				});
-			case 1: // Week
-				return moodData.filter((item) => {
-					const itemDate = new Date(item.date);
-					return itemDate >= oneWeekAgo && itemDate <= today;
-				});
-			case 2: // Month
-				return moodData.filter((item) => {
-					const itemDate = new Date(item.date);
-					return itemDate >= oneMonthAgo && itemDate <= today;
-				});
-			default:
-				return moodData;
-		}
-	};
-
-	const organizeByMonth = (data) => {
-		const organized = {};
-
-		data.forEach((item) => {
-			const date = new Date(item.date);
-			const monthYear = `${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()}`;
-
-			if (!organized[monthYear]) {
-				organized[monthYear] = [];
-			}
-
-			organized[monthYear].push(item);
-		});
-
-		// Sort entries within each month by date
-		Object.keys(organized).forEach((month) => {
-			organized[month].sort((a, b) => new Date(b.date) - new Date(a.date));
-		});
-
-		return organized;
-	};
-
-	const filteredData = filterDataByTimeRange();
-	const organizedData = timeRange === 2 ? organizeByMonth(filteredData) : null;
-
-	const renderListItem = (item) => (
-		<StyledListItem key={item.id}>
-			<StyledAvatar onClick={() => openMoodSelector(item.id)} sx={{ cursor: 'pointer' }}>
-				{getMoodEmoji(item.mood)}
-			</StyledAvatar>
-
-			{editingId === item.id ? (
-				<Box display='flex' alignItems='center' flexGrow={1} mr={1}>
-					<TextField
-						fullWidth
-						value={editValue}
-						onChange={(e) => setEditValue(e.target.value)}
-						size='small'
-						autoFocus
-					/>
-					<IconButton size='small' onClick={() => saveEdit(item.id)}>
-						<CheckIcon fontSize='small' />
-					</IconButton>
-					<IconButton size='small' onClick={cancelEdit}>
-						<CloseIcon fontSize='small' />
-					</IconButton>
-				</Box>
-			) : (
-				<>
-					<ListItemText
-						primary={item.title}
-						primaryTypographyProps={{
-							color: '#333',
-							fontFamily: 'Manrope, sans-serif',
-							fontSize: 'clamp(0.9rem, 1.5vw, 1.1rem)',
-							textTransform: 'none',
-							fontWeight: 400,
-						}}
-						sx={{ flexGrow: 1, marginRight: '2%' }}
-					/>
-					<IconButton size='medium' onClick={() => startEditing(item.id, item.title)} sx={{ mr: '2%' }}>
-						<EditIcon fontSize='medium' />
-					</IconButton>
-				</>
-			)}
-
-			<StyledChip label={item.displayDate} />
-		</StyledListItem>
-	);
-
-	const renderContent = () => {
-		if (filteredData.length === 0) {
-			return (
-				<Box textAlign='center' py='4%'>
-					{' '}
-					{/* Cambiado de py={4} */}
-					No entries for this time period
-				</Box>
-			);
-		}
-
-		if (timeRange === 2) {
-			// Month view with organization
-			return (
-				<>
-					{Object.keys(organizedData).map((month) => (
-						<React.Fragment key={month}>
-							<MonthHeader variant='subtitle1'>{month}</MonthHeader>
-							<List disablePadding>{organizedData[month].map((item) => renderListItem(item))}</List>
-						</React.Fragment>
-					))}
-				</>
-			);
-		} else {
-			// Today or Week view
-			return <List>{filteredData.map((item) => renderListItem(item))}</List>;
-		}
-	};
-
-	return (
-		<StyledPaper elevation={3}>
-			<StyledTabs value={timeRange} onChange={handleTimeRangeChange} variant='fullWidth'>
-				<StyledTab label='Today' />
-				<StyledTab label='Week' />
-				<StyledTab label='Month' />
-			</StyledTabs>
-
-			<StyledDivider />
-
-			{renderContent()}
-
-			<MoodSelectorModal
-				open={moodSelectorOpen}
-				onClose={() => setMoodSelectorOpen(false)}
-				aria-labelledby='mood-selector-modal'
-			>
-				<MoodSelectorContainer>
-					{moods.map((mood) => (
-						<MoodOption key={mood.id} onClick={() => handleMoodSelect(mood.id)}>
-							{mood.emoji}
-						</MoodOption>
-					))}
-				</MoodSelectorContainer>
-			</MoodSelectorModal>
-		</StyledPaper>
-	);
-}

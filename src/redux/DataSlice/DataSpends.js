@@ -1,21 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit";
-
+import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
-  data: [],
+	data: [],
 };
 
 export const DataSpendsSlice = createSlice({
-  name: "DataSpends",
-  initialState,
-  reducers: {
-    setDataSpends: (state, action) => {
-      state.data = action.payload;
-    },
-    clearUser: (state) => {
-      state.user = null;
-    },
-  },
+	name: 'DataSpends',
+	initialState,
+	reducers: {
+		setDataSpends: (state, action) => {
+			state.data = action.payload;
+		},
+		clearUser: (state) => {
+			state.data = null;
+		},
+	},
 });
-
 export const { setDataSpends, clearUser } = DataSpendsSlice.actions;
 export default DataSpendsSlice.reducer;

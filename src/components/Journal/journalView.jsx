@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Box } from '@mui/material';
 import { collection, doc, getDocs } from 'firebase/firestore';
 import { useSelector } from 'react-redux';
@@ -10,29 +10,37 @@ const JournalView = () => {
 	const uid = useSelector((state) => state.userId.id);
 	const [journals, setJournals] = useState([]);
 	const [selectedMonth, setSelectedMonth] = useState('All');
+	const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+	const [availableYears, setAvailableYears] = useState([]);
 
 	useEffect(() => {
 		const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Agu', 'Sep', 'Oct', 'Nov', 'Dic'];
 
 		const fetchJournals = async () => {
 			if (!uid) return;
-
 			try {
-				// ✅ Corregido: accedemos a la subcolección de un documento
 				const journalRef = collection(doc(db, 'users', uid), 'journals');
 				const snapshot = await getDocs(journalRef);
-
 				const data = snapshot.docs.map((doc) => {
 					const entry = doc.data();
 					const date = entry.date?.toDate ? entry.date.toDate() : new Date();
 					return {
+						id: doc.id,
 						...entry,
+						date: date,
 						month: monthNames[date.getMonth()],
-						day: date.toLocaleDateString('en-US', { weekday: 'long' }),
+						year: date.getFullYear(),
 					};
 				});
 
-				setJournals(data);
+				// Ordenamos de más reciente a más antiguo
+				const sortedData = data.sort((a, b) => b.date - a.date);
+
+				// Extraemos años únicos disponibles
+				const years = [...new Set(sortedData.map((j) => j.year))];
+
+				setJournals(sortedData);
+				setAvailableYears(years);
 			} catch (error) {
 				console.error('Error cargando journals:', error);
 			}
@@ -41,24 +49,23 @@ const JournalView = () => {
 		fetchJournals();
 	}, [uid]);
 
-	const groupedByWeek = journals.reduce((acc, entry, index) => {
-		const week = Math.floor(index / 7) + 1;
-		if (!acc[week]) acc[week] = [];
-		acc[week].push(entry);
-		return acc;
-	}, {});
-
-	const filteredData = Object.entries(groupedByWeek)
-		.map(([week, entries]) => ({
-			week,
-			entries: selectedMonth === 'All' ? entries : entries.filter((e) => e.month === selectedMonth),
-		}))
-		.filter((group) => group.entries.length > 0);
+	// Filtro por mes y año
+	const filteredJournals = journals.filter((entry) => {
+		const matchesMonth = selectedMonth === 'All' || entry.month === selectedMonth;
+		const matchesYear = entry.year === selectedYear;
+		return matchesMonth && matchesYear;
+	});
 
 	return (
 		<Box sx={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-			<MonthFilter selectedMonth={selectedMonth} setSelectedMonth={setSelectedMonth} />
-			<JournalCards journalData={filteredData} />
+			<MonthFilter
+				selectedMonth={selectedMonth}
+				setSelectedMonth={setSelectedMonth}
+				selectedYear={selectedYear}
+				setSelectedYear={setSelectedYear}
+				availableYears={availableYears}
+			/>
+			<JournalCards journalData={filteredJournals} />
 		</Box>
 	);
 };

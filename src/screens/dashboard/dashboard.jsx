@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import './style.css';
 import AddButton from '../../components/Buttons/add';
 import Header from '../../components/Header/header';
 import ReminderCard from '../../components/Cards/remainder';
@@ -7,107 +7,55 @@ import EmotionWeek from '../../components/Cards/emotionWeek';
 import CustomIconButton from '../../components/Buttons/icon';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
-import FeelingsCard from '../../components/Cards/FeelingsCard';
+import FeelingsCard from '../../components/Cards/feelingsCard';
 import Menu from '../../components/Menu/menu';
-import MobileNavBar from '../../components/Menu/mobileNavBar'; // Importamos la barra de navegación móvil
+import MobileNavBar from '../../components/Menu/mobileNavBar';
 import ExpensesTable from '../../components/Tables/expensesTable';
-import expensesData from '../../Data/expensesData';
-import './style.css';
-import { obtenerUsuario } from '../../utils/utils';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { fetchJournal } from '../../services/firebaseUtils';
+import { getEmotionSpendingStats } from '../../services/analysisUtils';
 
 function Dashboard() {
-	const id = useSelector((state) => state.userId.id);
+	const [Data, setData] = useState();
+	const [Loading, setLoading] = useState(true);
 	const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
-	const [showButtons, setShowButtons] = useState(true);
+	const [emotionStats, setEmotionStats] = useState(null);
 
-	console.log(id);
-	let navigate = useNavigate();
-	const goLogin = () => {
-		navigate('/log');
-	};
-	const goSettings = () => {
-		navigate('/settings');
-	};
+	const id = useSelector((state) => state.userId.id);
+	const userName = useSelector((state) => state.userName.name);
+	const navigate = useNavigate();
 
-	const [Nombre, setNombre] = useState('Evan');
 	useEffect(() => {
-		setNombre(obtenerUsuario());
+		if (id) {
+			fetchJournal({ uid: id })
+				.then((Emotion) => setData([...Emotion]))
+				.finally(() => setLoading(false));
 
-		// Función para actualizar el estado de isMobile cuando cambia el tamaño de la ventana
-		const handleResize = () => {
-			const mobile = window.innerWidth <= 1024;
-			setIsMobile(mobile);
-			setShowButtons(!mobile); // Siempre mostrar botones en desktop
-		};
-
-		// Llamar handleResize una vez para inicializar correctamente
-		handleResize();
-
-		// Agregar event listener para el cambio de tamaño
-		window.addEventListener('resize', handleResize);
-
-		// Definir un punto de entrada para el observador de intersección
-		const handleIntersection = (entries) => {
-			// Si la navbar está visible (intersecting), ocultar los botones
-			if (entries[0].isIntersecting) {
-				setShowButtons(false);
-			} else {
-				// Si estamos en móvil pero la navbar no es visible, mostrar los botones
-				setShowButtons(isMobile);
-			}
-		};
-
-		// Crear un observador para la barra de navegación móvil
-		if (isMobile) {
-			const navbarElement = document.querySelector('.mobile-navbar');
-			if (navbarElement) {
-				const observer = new IntersectionObserver(handleIntersection, {
-					threshold: 0.1, // Disparar cuando al menos el 10% de la navbar es visible
-				});
-				observer.observe(navbarElement);
-
-				// Limpiar observador
-				return () => {
-					observer.disconnect();
-				};
-			}
+			getEmotionSpendingStats(id).then(setEmotionStats);
 		}
 
-		// Limpiar event listener cuando el componente se desmonta
-		return () => {
-			window.removeEventListener('resize', handleResize);
+		const handleResize = () => {
+			setIsMobile(window.innerWidth <= 1024);
 		};
-	}, [isMobile]);
 
-	const handleJournalClick = () => {
-		console.log('Daily journal clicked');
-		navigate('/journal/write');
-	};
+		handleResize();
+		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
+	}, [id]);
 
-	const handleSpendClick = () => {
-		console.log('Add spend clicked');
-		navigate('/finance/add-spending');
-	};
+	const goLogin = () => navigate('/log');
+	const handleJournalClick = () => navigate('/journal/write', { state: { redirectTo: '/dashboard' } });
+	const handleSpendClick = () => navigate('/finance/add-spending', { state: { from: '/dashboard' } });
+	const goSettings = () => navigate('/settings');
 
 	return (
 		<div className='dashboard-container'>
-			{/* Mostrar el menú lateral solo en pantallas grandes */}
 			{!isMobile && <Menu />}
-
 			<div className='dashboard-content'>
-				{/* Mobile/iPad icons above header - solo mostrar si showButtons es true */}
-				{isMobile && showButtons && (
-					<div className='dashboard-mobile-icons'>
-						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
-						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={goLogin} />
-					</div>
-				)}
-
 				<div className='dashboard-header'>
-					<Header Nombre={Nombre} subtitle='How are you feeling today?' />
-					{/* Desktop icons - only show on non-mobile */}
+					<Header Nombre={userName} subtitle='How are you feeling today?' />
 					{!isMobile && (
 						<div className='dashboard-icons'>
 							<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
@@ -117,29 +65,34 @@ function Dashboard() {
 				</div>
 
 				<div className='dashboard-buttons'>
-					<AddButton onClick={handleJournalClick} text={'Daily journal'} />
+					<AddButton onClick={handleJournalClick} text={'Add journal'} />
 					<AddButton onClick={handleSpendClick} text={'Add spend'} />
 				</div>
 
-				{/* Top row with three equal cards */}
 				<div className='dashboard-cards-row'>
 					<ReminderCard />
-					<FeelingsCard />
+					{emotionStats ? (
+						<FeelingsCard emotion={emotionStats.emotion} percentage={emotionStats.percentage} />
+					) : (
+						<FeelingsCard emotion='none' percentage={0} />
+					)}
 					<GoalProgressCard />
 				</div>
 
-				{/* Bottom row with expenses table on left and emotion week on right */}
 				<div className='dashboard-bottom-row'>
 					<div className='expenses-container'>
-						<ExpensesTable data={expensesData} dashboard={true} />
+						<ExpensesTable dashboard={true} />
 					</div>
-					<div className='emotion-container'>
-						<EmotionWeek dashboard={true} />
-					</div>
+
+					{Loading ? (
+						<p>Loading</p>
+					) : (
+						<div className='emotion-container'>
+							<EmotionWeek dashboard={true} Data={Data} />
+						</div>
+					)}
 				</div>
 			</div>
-
-			{/* Mostrar la barra de navegación móvil solo en pantallas pequeñas y medianas */}
 			{isMobile && <MobileNavBar />}
 		</div>
 	);

@@ -1,4 +1,3 @@
-import React from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -82,7 +81,6 @@ const RecommendationCard = ({ showInfo, selectedCategory, recommendation, loadin
 						</IconButton>
 					)}
 				</Box>
-
 				<Typography
 					component='span'
 					sx={{
@@ -113,7 +111,6 @@ const RecommendationCard = ({ showInfo, selectedCategory, recommendation, loadin
 	);
 };
 
-// Helper functions for card styling
 function getCardColor(category) {
 	const colors = {
 		'Breathing exercise': '#B7D0EE',

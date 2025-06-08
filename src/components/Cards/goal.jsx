@@ -1,12 +1,61 @@
-import React from 'react';
-import { Box, Card, CardContent, Typography, LinearProgress } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Box, Card, CardContent, Typography, LinearProgress, Button } from '@mui/material';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import { useNavigate } from 'react-router-dom';
+import { getActiveGoalProgress } from '../../services/firebaseUtils';
 
-const GoalProgressCard = ({ spent = 150000, total = 200000, compact = false }) => {
-	// Calculate progress percentage
-	const progressPercentage = (spent / total) * 100;
+const GoalProgressCard = () => {
+	const uid = useSelector((state) => state.userId.id);
+	const [loading, setLoading] = useState(true);
+	const [goalData, setGoalData] = useState(null);
+	const navigate = useNavigate();
 
-	// Format currency values
+	useEffect(() => {
+		if (!uid) return;
+
+		getActiveGoalProgress({ uid }).then((data) => {
+			setGoalData(data);
+			setLoading(false);
+		});
+	}, [uid]);
+
+	const renderHeader = () => (
+		<Box sx={headerStyle}>
+			<Box sx={iconContainer}>
+				<TrendingUpIcon sx={{ color: '#333', fontSize: '1.125rem' }} />
+			</Box>
+			<Typography sx={titleStyle}>Goal progress</Typography>
+		</Box>
+	);
+
+	if (loading) {
+		return (
+			<Card sx={cardStyle}>
+				<CardContent sx={contentStyle}>
+					{renderHeader()}
+					<Typography sx={titleStyle}>Loading goal progress...</Typography>
+				</CardContent>
+			</Card>
+		);
+	}
+
+	if (!goalData) {
+		return (
+			<Card sx={cardStyle}>
+				<CardContent sx={contentStyle}>
+					{renderHeader()}
+					<Typography sx={mainValueStyle}>No active goal right now.</Typography>
+					<Button variant='contained' onClick={() => navigate('/finance/add-goal')} sx={addButtonStyle}>
+						Add new goal
+					</Button>
+				</CardContent>
+			</Card>
+		);
+	}
+
+	const { spent, total, percentage } = goalData;
+
 	const formattedSpent = new Intl.NumberFormat('en-US', {
 		style: 'currency',
 		currency: 'USD',
@@ -21,116 +70,40 @@ const GoalProgressCard = ({ spent = 150000, total = 200000, compact = false }) =
 		maximumFractionDigits: 0,
 	}).format(total);
 
-	return (
-		<Card
-			sx={{
-				borderRadius: '1.5rem', // 24px
-				background: '#FCE2A9',
-				width: '100%',
-				maxWidth: compact ? '19.375rem' : '40rem', // 310px o 427px
-				height: 'auto',
-				minHeight: compact ? '11.375rem' : '14.875rem', // 182px o 238px
-				boxShadow: 'none',
-				padding: '1.75rem', // 28px uniforme
-				boxSizing: 'border-box',
-			}}
-		>
-			<CardContent
-				sx={{
-					padding: '0px !important',
-					height: '100%',
-					display: 'flex',
-					flexDirection: 'column',
-				}}
-			>
-				<Box sx={{ display: 'flex', alignItems: 'center', gap: '0.625rem', marginBottom: '1.5rem' }}>
-					<Box
-						sx={{
-							display: 'flex',
-							justifyContent: 'center',
-							alignItems: 'center',
-							backgroundColor: '#FACD69',
-							borderRadius: '50%',
-							width: '2.31rem', // 37px
-							height: '2.31rem', // 37px
-							flexShrink: 0,
-						}}
-					>
-						<TrendingUpIcon sx={{ color: '#333', fontSize: '1.25rem' }} />
-					</Box>
-					<Typography
-						variant={compact ? 'h6' : 'h5'}
-						component='div'
-						sx={{
-							fontFamily: "'Manrope', sans-serif",
-							fontSize: '1.125rem', // 18px
-							fontWeight: 300,
-							color: '#333',
-							lineHeight: 'normal',
-							fontStyle: 'normal',
-						}}
-					>
-						Goal progress
-					</Typography>
-				</Box>
+	const limitText =
+		percentage >= 100
+			? 'Exceed the limit, add your new goal'
+			: percentage >= 80
+			? 'You are approaching the limit'
+			: 'Keep tracking your spending';
 
-				<Box
-					sx={{
-						display: 'flex',
-						flexDirection: 'column',
-						gap: '0px',
-						flexGrow: 1,
-						justifyContent: 'space-between',
-					}}
-				>
-					<Box sx={{ display: 'flex', flexDirection: 'column', gap: '0px' }}>
-						<Typography
-							variant={compact ? 'h6' : 'h5'}
-							component='div'
-							sx={{
-								fontWeight: 500,
-								fontSize: compact ? '1rem' : '1.125rem', // 16px o 18px
-								whiteSpace: 'nowrap',
-								overflow: 'hidden',
-								textOverflow: 'ellipsis',
-							}}
-						>
-							You have spent {formattedSpent}
-						</Typography>
-						<Typography
-							variant='body1'
-							color='text.secondary'
-							sx={{
-								fontSize: compact ? '0.875rem' : '1rem', // 14px o 16px
-							}}
-						>
-							of {formattedTotal}
-						</Typography>
+	return (
+		<Card sx={cardStyle}>
+			<CardContent sx={contentStyle}>
+				{renderHeader()}
+
+				<Box sx={progressContainer}>
+					<Box>
+						<Typography sx={mainValueStyle}>You have spent {formattedSpent}</Typography>
+						<Typography sx={subValueStyle}>of {formattedTotal}</Typography>
 					</Box>
+
 					<LinearProgress
 						variant='determinate'
-						value={progressPercentage}
+						value={percentage}
 						sx={{
-							height: '0.5rem', // 8px
-							borderRadius: '0.25rem', // 4px
-							backgroundColor: '#C8D39F',
+							height: '0.5rem',
+							borderRadius: '0.25rem',
+							backgroundColor: percentage >= 100 ? '#F1B0B7' : '#C8D39F',
 							'& .MuiLinearProgress-bar': {
-								backgroundColor: '#8C9F49',
-								borderRadius: '0.25rem', // 4px
+								backgroundColor: percentage >= 100 ? '#B00020' : '#8C9F49',
+								borderRadius: '0.25rem',
 							},
-							marginTop: '0.625rem', // 10px
-							marginBottom: '0.625rem', // 10px
+							margin: '0.4rem 0',
 						}}
 					/>
-					<Typography
-						variant='body2'
-						color='text.secondary'
-						sx={{
-							fontSize: compact ? '0.75rem' : '0.875rem', // 12px o 14px
-						}}
-					>
-						You are approaching the limit
-					</Typography>
+
+					<Typography sx={limitTextStyle}>{limitText}</Typography>
 				</Box>
 			</CardContent>
 		</Card>
@@ -139,12 +112,93 @@ const GoalProgressCard = ({ spent = 150000, total = 200000, compact = false }) =
 
 export default GoalProgressCard;
 
-{
-	/* Versión normal */
-}
-//<GoalProgressCard spent={150000} total={200000} />
+const cardStyle = {
+	display: 'flex',
+	flexDirection: 'column',
+	flex: '1 1 20rem',
+	width: '100%',
+	minHeight: '13rem',
+	height: '100%',
+	borderRadius: '1.5rem',
+	background: '#FCE2A9',
+	boxShadow: 'none',
+	padding: '1.5rem',
+	boxSizing: 'border-box',
+};
 
-{
-	/* Versión compacta */
-}
-//<GoalProgressCard spent={150000} total={200000} compact={true} />
+const contentStyle = {
+	display: 'flex',
+	flexDirection: 'column',
+	flexGrow: 1,
+	justifyContent: 'space-between',
+	padding: '0px !important',
+	gap: '1.3rem',
+};
+
+const headerStyle = {
+	display: 'flex',
+	alignItems: 'center',
+	gap: '0.5rem',
+};
+
+const iconContainer = {
+	backgroundColor: '#FACD69',
+	borderRadius: '50%',
+	width: '2rem',
+	height: '2rem',
+	display: 'flex',
+	justifyContent: 'center',
+	alignItems: 'center',
+};
+
+const titleStyle = {
+	fontFamily: "'Manrope', sans-serif",
+	fontSize: '1rem',
+	fontWeight: 400,
+	color: '#333',
+};
+
+const progressContainer = {
+	display: 'flex',
+	flexDirection: 'column',
+	gap: '0.5rem',
+	width: '100%',
+};
+
+const mainValueStyle = {
+	fontFamily: "'Manrope', sans-serif",
+	fontWeight: 600,
+	fontSize: '1.125rem',
+	color: '#000',
+	lineHeight: '120%',
+};
+
+const subValueStyle = {
+	fontSize: '1rem',
+	color: '#555',
+	fontFamily: "'Manrope', sans-serif",
+};
+
+const limitTextStyle = {
+	fontSize: '0.875rem',
+	color: '#666',
+	fontFamily: "'Manrope', sans-serif",
+};
+
+const addButtonStyle = {
+	backgroundColor: '#FACD69',
+	color: '#333',
+	textTransform: 'none',
+	borderRadius: '12px',
+	paddingX: '1.2rem',
+	paddingY: '0.5rem',
+	fontSize: '0.83rem',
+	fontWeight: 550,
+	fontFamily: "'Manrope', sans-serif",
+	boxShadow: '0px 3px 6px rgba(0, 0, 0, 0)',
+	transition: 'all 0.3s ease',
+	'&:hover': {
+		backgroundColor: '#F4BE4F',
+		boxShadow: '0px 3px 8px rgba(50, 50, 50, 0.06)',
+	},
+};
