@@ -29,7 +29,6 @@ import {
 	clearError,
 	resetState,
 } from '../../redux/cloudinarySlice/cloudinarySlice';
-
 const CarouselContainer = styled('div')(({ theme }) => ({
 	position: 'relative',
 	borderRadius: theme.spacing(2),
@@ -38,31 +37,30 @@ const CarouselContainer = styled('div')(({ theme }) => ({
 	maxWidth: '100%',
 	overflow: 'hidden',
 	boxSizing: 'border-box',
-	minHeight: '200px',
+	height: '230px', // altura fija
 
 	'@media (max-width: 1024px)': {
-		maxWidth: '100%',
-		minHeight: '180px',
+		height: '230px',
 	},
 
 	'@media (max-width: 767px)': {
-		maxWidth: '100%',
-		minHeight: '160px',
+		height: '230px',
 	},
 
 	'@media (max-width: 425px)': {
-		maxWidth: '100%',
-		minHeight: '140px',
+		height: '230px',
 	},
 }));
 
 const EmblaContainer = styled('div')({
 	overflow: 'hidden',
 	width: '100%',
+	height: '100%', // asegura que embla ocupe todo el alto disponible
 });
 
 const EmblaSlideContainer = styled('div')({
 	display: 'flex',
+	height: '100%', // asegura que los slides se alineen con el alto del contenedor
 });
 
 const EmblaSlide = styled('div')({
@@ -70,27 +68,14 @@ const EmblaSlide = styled('div')({
 	padding: '0.5rem',
 	boxSizing: 'border-box',
 	position: 'relative',
+	height: '100%', // importante para que la imagen se ajuste bien
 });
 
 const SlideImage = styled('img')(() => ({
 	width: '100%',
-	height: 'auto',
-	aspectRatio: '16/9',
-	maxHeight: '15rem',
+	height: '100%',
 	objectFit: 'cover',
 	borderRadius: '0.75rem',
-
-	'@media (max-width: 1024px)': {
-		maxHeight: '12rem',
-	},
-
-	'@media (max-width: 767px)': {
-		maxHeight: '10rem',
-	},
-
-	'@media (max-width: 425px)': {
-		maxHeight: '8rem',
-	},
 }));
 
 const EmptyStateContainer = styled('div')(({ theme }) => ({
@@ -99,7 +84,7 @@ const EmptyStateContainer = styled('div')(({ theme }) => ({
 	alignItems: 'center',
 	justifyContent: 'center',
 	height: '100%',
-	minHeight: '200px',
+	minHeight: '230px',
 	color: theme.palette.text.secondary,
 	textAlign: 'center',
 	padding: theme.spacing(2),
