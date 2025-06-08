@@ -8,6 +8,7 @@ import {
 	serverTimestamp,
 	getDocs,
 	updateDoc,
+	deleteDoc,
 	Timestamp,
 } from 'firebase/firestore';
 import {
@@ -136,6 +137,51 @@ export const updateUserPassword = async (newPassword) => {
 		throw error;
 	}
 };
+
+// ========== IMAGES FUNCTIONS ==========
+
+export const saveUserImage = async ({ uid, imageData }) => {
+	if (!uid || !imageData) return null;
+	try {
+		const imagesRef = collection(doc(db, 'users', uid), 'images');
+		const docRef = await addDoc(imagesRef, {
+			...imageData,
+			uploadedAt: serverTimestamp(),
+		});
+		return { id: docRef.id, ...imageData };
+	} catch (error) {
+		console.error('Error saving user image:', error);
+		throw error;
+	}
+};
+
+export const getUserImages = async ({ uid }) => {
+	if (!uid) return [];
+	try {
+		const imagesRef = collection(doc(db, 'users', uid), 'images');
+		const snapshot = await getDocs(imagesRef);
+		return snapshot.docs.map((doc) => ({
+			id: doc.id,
+			...doc.data()
+		}));
+	} catch (error) {
+		console.error('Error loading user images:', error);
+		return [];
+	}
+};
+
+export const deleteUserImage = async ({ uid, imageId }) => {
+	if (!uid || !imageId) return;
+	try {
+		const imageRef = doc(db, 'users', uid, 'images', imageId);
+		await deleteDoc(imageRef);
+	} catch (error) {
+		console.error('Error deleting user image:', error);
+		throw error;
+	}
+};
+
+// ========== EXISTING FUNCTIONS ==========
 
 export const addGoals = async ({ uid, startDate, endDate, amount, description }) => {
 	if (!uid) return;

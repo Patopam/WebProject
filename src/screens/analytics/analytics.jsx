@@ -4,7 +4,7 @@ import Header2 from '../../components/Header/header2';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CustomIconButton from '../../components/Buttons/icon';
-import FeelingsCard from '../../components/Cards/feelingsCard';
+import FeelingsCard from '../../components/Cards/FeelingsCard';
 import GoalProgressCard from '../../components/Cards/goal';
 import EmotionsLineChartCentered from '../../components/Charts/emotionChart';
 import ExpensesLineChart from '../../components/Charts/expenseChart';

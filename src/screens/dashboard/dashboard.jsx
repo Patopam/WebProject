@@ -7,7 +7,7 @@ import EmotionWeek from '../../components/Cards/emotionWeek';
 import CustomIconButton from '../../components/Buttons/icon';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
-import FeelingsCard from '../../components/Cards/feelingsCard';
+import FeelingsCard from '../../components/Cards/FeelingsCard';
 import Menu from '../../components/Menu/menu';
 import MobileNavBar from '../../components/Menu/mobileNavBar';
 import ExpensesTable from '../../components/Tables/expensesTable';
