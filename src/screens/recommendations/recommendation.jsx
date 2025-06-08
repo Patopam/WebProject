@@ -1,7 +1,6 @@
 import './recommendations.css';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { obtenerUsuario } from '../../utils/utils';
 import { getRecommendation } from '../../services/openaiService';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -36,11 +35,6 @@ function Recommendations() {
 	const goSettings = () => {
 		navigate('/settings');
 	};
-
-	const [Nombre, setNombre] = useState('Evan');
-	useEffect(() => {
-		setNombre(obtenerUsuario());
-	}, []);
 
 	useEffect(() => {
 		const handleResize = () => {
