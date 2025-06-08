@@ -105,7 +105,7 @@ const ExpenditureHistoryTable = () => {
 								{FilteredData.map((item) => (
 									<tr key={item.id}>
 										<td style={tdStyle}>{item.date?.toDate().toLocaleDateString()}</td>
-										<td style={tdStyle}>${item.amount}</td>
+										<td style={tdStyle}>${Number(item.amount).toLocaleString('es-CO')}</td>
 										<td style={tdStyle}>{item.category}</td>
 									</tr>
 								))}

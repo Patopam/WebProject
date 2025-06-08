@@ -56,19 +56,8 @@ const GoalProgressCard = () => {
 
 	const { spent, total, percentage } = goalData;
 
-	const formattedSpent = new Intl.NumberFormat('en-US', {
-		style: 'currency',
-		currency: 'USD',
-		minimumFractionDigits: 0,
-		maximumFractionDigits: 0,
-	}).format(spent);
-
-	const formattedTotal = new Intl.NumberFormat('en-US', {
-		style: 'currency',
-		currency: 'USD',
-		minimumFractionDigits: 0,
-		maximumFractionDigits: 0,
-	}).format(total);
+	const formattedSpent = `$${spent.toLocaleString('es-CO')}`;
+	const formattedTotal = `$${total.toLocaleString('es-CO')}`;
 
 	const limitText =
 		percentage >= 100

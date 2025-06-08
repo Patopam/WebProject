@@ -51,17 +51,18 @@ const ExpensesDay = () => {
 										<td style={{ ...tdStyle, maxWidth: '6rem' }}>{item.date?.toDate().toLocaleDateString()}</td>
 										<td style={tdStyle}>${Number(item.amount).toLocaleString('es-CO')}</td>
 										<td style={{ ...tdStyle, maxWidth: '7rem' }}>{item.category}</td>
-										<td style={tdStyle}>
+										<td style={iconTdStyle}>
 											<IconButton
 												onClick={() =>
 													navigate(`/finance/edit-spending/${item.id}`, {
-														state: {
-															redirectTo: '/dashboard',
-														},
+														state: { redirectTo: '/dashboard' },
 													})
 												}
+												sx={{
+													padding: '4px',
+												}}
 											>
-												<Edit fontSize='small' sx={{ color: '#333' }} />
+												<Edit sx={{ fontSize: 13, color: '#333' }} />
 											</IconButton>
 										</td>
 									</tr>
@@ -153,4 +154,11 @@ const tdStyle = {
 	overflow: 'hidden',
 	textOverflow: 'ellipsis',
 	maxWidth: '100%',
+};
+
+const iconTdStyle = {
+	...tdStyle,
+	display: 'flex',
+	alignItems: 'center',
+	justifyContent: 'center',
 };
