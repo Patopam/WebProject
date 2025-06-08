@@ -216,14 +216,19 @@ const JournalContainer = styled(Box, {
 	shouldForwardProp: (prop) => prop !== 'compact',
 })(({ compact }) => ({
 	backgroundColor: '#fde3a7',
-	padding: compact ? '24px' : '2.5rem 3.75rem',
+	padding: compact ? '24px' : '3rem 3rem',
 	borderRadius: '1.5rem',
 	width: '100%',
-	maxWidth: compact ? '100%' : '75rem',
+	maxWidth: compact ? '100%' : '50rem',
 	margin: '0 auto',
 	boxSizing: 'border-box',
 	display: 'flex',
 	flexDirection: 'column',
+
+	'@media (max-width: 767px)': {
+		padding: '25px',
+		maxWidth: '90%',
+	},
 }));
 
 const HeaderSection = styled(Box)({
@@ -251,18 +256,27 @@ const IconCircle = styled(Box)(({ bgcolor = '#FACD69' }) => ({
 
 const EmojiWrapper = styled(Box)({
 	display: 'flex',
-	gap: '16px',
+	gap: '12px',
 	backgroundColor: '#FACD69',
-	padding: '10px 16px',
+	padding: '8px 12px',
 	borderRadius: '12px',
 	marginBottom: '16px',
+	overflowX: 'auto',
+	scrollSnapType: 'x mandatory',
+	WebkitOverflowScrolling: 'touch',
+
+	'@media (max-width: 767px)': {
+		gap: '10px',
+		padding: '8px 8px',
+	},
 });
 
 const EmojiButton = styled(Box)(({ selected }) => ({
-	fontSize: '26px',
+	fontSize: '22px',
 	cursor: 'pointer',
 	transform: selected ? 'scale(1.3)' : 'scale(1)',
 	transition: 'transform 0.2s ease',
+	scrollSnapAlign: 'start',
 }));
 
 const TagWrapper = styled(Box)({
