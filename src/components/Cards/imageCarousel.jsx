@@ -36,13 +36,11 @@ const CarouselContainer = styled('div')(({ theme }) => ({
 	borderRadius: theme.spacing(2),
 	background: theme.palette.grey[200],
 	width: '100%',
-	maxWidth: '100%', // Cambiado de '40rem' a '100%'
+	maxWidth: '100%',
 	overflow: 'hidden',
 	boxSizing: 'border-box',
-	// Asegurar altura consistente
 	minHeight: '200px',
 
-	// Media queries para responsive
 	'@media (max-width: 1024px)': {
 		maxWidth: '100%',
 		minHeight: '180px',
@@ -83,7 +81,6 @@ const SlideImage = styled('img')(({ theme }) => ({
 	objectFit: 'cover',
 	borderRadius: '0.75rem',
 
-	// Media queries para responsive
 	'@media (max-width: 1024px)': {
 		maxHeight: '12rem',
 	},
@@ -119,7 +116,6 @@ const ActionButtonCircle = styled(IconButton)(({ theme }) => ({
 		backgroundColor: theme.palette.grey[400],
 	},
 
-	// Media queries para responsive - botones más pequeños en móvil
 	'@media (max-width: 767px)': {
 		width: '2rem',
 		height: '2rem',
