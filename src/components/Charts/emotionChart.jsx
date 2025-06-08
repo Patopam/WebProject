@@ -1,10 +1,9 @@
-//mejorar ingles
 import React, { useEffect, useState } from 'react';
 import { Typography, Box, useMediaQuery, useTheme } from '@mui/material';
 import { collection, getDocs } from 'firebase/firestore';
 import { useSelector } from 'react-redux';
 import { db } from '../../services/firebase';
-import PeriodFilter from '../Filters/PeriodFilter';
+import PeriodFilter from '../Filters/periodFilter';
 import { LabelList } from 'recharts';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 
