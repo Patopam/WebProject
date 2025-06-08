@@ -153,3 +153,30 @@
 		display: none;
 	}
 }
+
+@media screen and (max-width: 767px) {
+	.finance-scroll-cards {
+		display: flex;
+		flex-direction: row;
+		overflow-x: auto;
+		gap: 1rem;
+		margin-bottom: 1.5rem;
+		scroll-snap-type: x mandatory;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.finance-scroll-cards::-webkit-scrollbar {
+		display: none;
+	}
+
+	.finance-card {
+		flex: 0 0 80%;
+		scroll-snap-align: start;
+		min-width: 270px;
+		max-width: 320px;
+		min-height: 180px;
+		display: flex;
+		flex-direction: column;
+		justify-content: stretch;
+	}
+}

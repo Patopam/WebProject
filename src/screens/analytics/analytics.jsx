@@ -53,17 +53,22 @@ function Analytics() {
 						</div>
 					)}
 				</div>
-				<div className='main-layout'>
-					<div className='charts-section'>
-						<div className='chart-container'>
-							<div className='chart-Emocion'>
-								<EmotionsLineChartCentered />
-							</div>
-							<div className='chart-Expenses'>
-								<ExpensesLineChart />
-							</div>
+
+				{/* Carrusel para mobile */}
+				{isMobile ? (
+					<div className='analytics-scroll-cards'>
+						<div className='analytics-card'>
+							{emotionStats ? (
+								<FeelingsCard emotion={emotionStats.emotion} percentage={emotionStats.percentage} />
+							) : (
+								<FeelingsCard emotion='none' percentage={0} />
+							)}
+						</div>
+						<div className='analytics-card'>
+							<GoalProgressCard />
 						</div>
 					</div>
+				) : (
 					<div className='cards-section'>
 						<div className='card-item'>
 							{emotionStats ? (
@@ -74,6 +79,19 @@ function Analytics() {
 						</div>
 						<div className='card-item'>
 							<GoalProgressCard />
+						</div>
+					</div>
+				)}
+
+				<div className='main-layout'>
+					<div className='charts-section'>
+						<div className='chart-container'>
+							<div className='chart-Emocion'>
+								<EmotionsLineChartCentered />
+							</div>
+							<div className='chart-Expenses'>
+								<ExpensesLineChart />
+							</div>
 						</div>
 					</div>
 				</div>

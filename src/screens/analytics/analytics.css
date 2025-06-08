@@ -124,3 +124,28 @@
 		width: 100%;
 	}
 }
+
+@media screen and (max-width: 767px) {
+	.analytics-scroll-cards {
+		display: flex;
+		flex-direction: row;
+		gap: 1rem;
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		-webkit-overflow-scrolling: touch;
+		padding-left: 1rem;
+		padding-right: 1rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.analytics-scroll-cards::-webkit-scrollbar {
+		display: none;
+	}
+
+	.analytics-card {
+		flex: 0 0 80%;
+		scroll-snap-align: start;
+		min-width: 270px;
+		max-width: 320px;
+	}
+}

@@ -226,8 +226,9 @@ const JournalContainer = styled(Box, {
 	flexDirection: 'column',
 
 	'@media (max-width: 767px)': {
-		padding: '25px',
-		maxWidth: '90%',
+		padding: '22px',
+		maxWidth: '100vw',
+		margin: ' auto',
 	},
 }));
 
