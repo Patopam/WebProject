@@ -25,18 +25,15 @@ function Settings() {
 	const [successMessage, setSuccessMessage] = useState('');
 	const [errorMessage, setErrorMessage] = useState('');
 
-	// Estados originales para comparar cambios
 	const [originalName, setOriginalName] = useState('');
 	const [originalEmail, setOriginalEmail] = useState('');
 
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
-	// Obtener datos del usuario desde Redux
 	const userId = useSelector((state) => state.userId.id);
 	const userName = useSelector((state) => state.userName.name);
 
-	// Función para mostrar mensajes temporales
 	const showMessage = (message, isError = false) => {
 		if (isError) {
 			setErrorMessage(message);
@@ -62,7 +59,6 @@ function Settings() {
 		};
 	}, []);
 
-	// Cargar datos del usuario desde Firebase
 	useEffect(() => {
 		const loadUserData = async () => {
 			if (!userId) {
@@ -92,7 +88,6 @@ function Settings() {
 		loadUserData();
 	}, [userId]);
 
-	// Detectar cuando se cambia el email para mostrar el campo de contraseña
 	useEffect(() => {
 		const emailChanged = email.trim() !== originalEmail;
 		setShowCurrentPasswordInput(emailChanged);
@@ -102,7 +97,6 @@ function Settings() {
 	}, [email, originalEmail]);
 
 	const validateInputs = () => {
-		// Verificar si hay cambios para guardar
 		const nameChanged = name.trim() !== originalName;
 		const emailChanged = email.trim() !== originalEmail;
 		const passwordChanged = newPassword.trim() !== '';
@@ -112,7 +106,6 @@ function Settings() {
 			return false;
 		}
 
-		// Validar campos que han cambiado
 		if (nameChanged && !name.trim()) {
 			showMessage('Name cannot be empty', true);
 			return false;
@@ -123,13 +116,11 @@ function Settings() {
 			return false;
 		}
 
-		// Validar formato de email
 		if (emailChanged && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
 			showMessage('Please enter a valid email address', true);
 			return false;
 		}
 
-		// Requerir contraseña actual si se cambia el email
 		if (emailChanged && !currentPassword.trim()) {
 			setShowCurrentPasswordInput(true);
 			showMessage('Current password is required to update email', true);
@@ -167,7 +158,6 @@ function Settings() {
 			const emailChanged = email.trim() !== originalEmail;
 			const passwordChanged = newPassword.trim() !== '';
 
-			// Actualizar datos de perfil si han cambiado
 			if (nameChanged || emailChanged) {
 				await updateUserData({
 					uid: userId,
@@ -176,24 +166,20 @@ function Settings() {
 					currentPassword: emailChanged ? currentPassword : null,
 				});
 
-				// Actualizar el nombre en Redux si cambió
 				if (nameChanged) {
 					dispatch(setUserName(name.trim()));
 				}
 
-				// Actualizar estados originales
 				setOriginalName(name.trim());
 				setOriginalEmail(email.trim());
 			}
 
-			// Actualizar contraseña si ha cambiado
 			if (passwordChanged) {
 				await updateUserPassword(newPassword);
 				setNewPassword('');
 				setConfirmPassword('');
 			}
 
-			// Limpiar estados
 			setCurrentPassword('');
 			setShowCurrentPasswordInput(false);
 
@@ -201,7 +187,6 @@ function Settings() {
 		} catch (error) {
 			console.error('Error saving settings:', error);
 
-			// Mostrar mensaje de error específico
 			let errorMsg = 'Error saving settings: ';
 			if (error.message.includes('Current password is required')) {
 				setShowCurrentPasswordInput(true);
@@ -221,7 +206,6 @@ function Settings() {
 	};
 
 	const handleCancel = () => {
-		// Restaurar valores originales
 		setName(originalName);
 		setEmail(originalEmail);
 		setNewPassword('');
@@ -262,7 +246,6 @@ function Settings() {
 					)}
 				</div>
 
-				{/* Mensajes de éxito y error */}
 				{successMessage && <div className='message success-message'>{successMessage}</div>}
 				{errorMessage && <div className='message error-message'>{errorMessage}</div>}
 
@@ -290,7 +273,6 @@ function Settings() {
 					/>
 				</div>
 
-				{/* Campo de contraseña actual - solo se muestra si se va a cambiar el email */}
 				{showCurrentPasswordInput && (
 					<div className='full-width'>
 						<p className='input-label'>Current Password</p>
