@@ -29,6 +29,9 @@ const ExactButton = styled(Button)(() => ({
 	fontFamily: "'Manrope', sans-serif",
 	transition: 'none', // importante en mobile
 
+	touchAction: 'manipulation',
+	WebkitTapHighlightColor: 'transparent',
+
 	'&:hover': {
 		backgroundColor: '#8A8AC0',
 		boxShadow: 'none',
@@ -49,5 +52,10 @@ const ExactButton = styled(Button)(() => ({
 		display: 'flex',
 		justifyContent: 'center',
 		alignItems: 'center',
+	},
+	'@media (hover: hover)': {
+		'&:hover': {
+			backgroundColor: '#8A8AC0',
+		},
 	},
 }));
