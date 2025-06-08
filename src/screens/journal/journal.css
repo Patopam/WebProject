@@ -44,10 +44,7 @@
 	gap: 1.5rem;
 }
 
-.journal-reminder {
-	width: 100%;
-}
-
+.journal-reminder,
 .journal-carousel {
 	width: 100%;
 }
@@ -55,6 +52,28 @@
 .mobile-navbar {
 	display: none;
 }
+
+@media screen and (max-width: 767px) {
+	.journal-scroll-cards {
+		display: flex;
+		flex-direction: row;
+		gap: 1rem;
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		-webkit-overflow-scrolling: touch;
+		margin-bottom: 1rem;
+		margin-top: 0.7rem;
+	}
+
+	.journal-scroll-cards > * {
+		flex: 0 0 85%;
+		scroll-snap-align: start;
+		min-width: 270px;
+		max-width: 320px;
+	}
+}
+
+/*(<= 1024px) */
 
 @media screen and (max-width: 1024px) {
 	.journal-container {
@@ -71,6 +90,10 @@
 		gap: 1.5rem;
 	}
 
+	.journal-header {
+		margin-top: 4rem;
+	}
+
 	.mobile-navbar {
 		display: flex !important;
 		position: fixed;
@@ -84,10 +107,12 @@
 		display: none;
 	}
 
-	.journal-header {
-		margin-top: 4rem;
+	.mobile-navbar + .journal-mobile-icons {
+		display: none;
 	}
 }
+
+/* MOBILE (<= 767px) */
 
 @media screen and (max-width: 767px) {
 	.journal-content {
@@ -111,6 +136,8 @@
 	}
 }
 
+/* MOBILE SMALL (<= 425px)  */
+
 @media screen and (max-width: 425px) {
 	.journal-content {
 		padding: 0.75rem;
@@ -120,11 +147,5 @@
 	.journal-header {
 		margin-bottom: 1rem;
 		margin-top: 4rem;
-	}
-}
-
-@media screen and (max-width: 1024px) {
-	.mobile-navbar + .journal-mobile-icons {
-		display: none;
 	}
 }

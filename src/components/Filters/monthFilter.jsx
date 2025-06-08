@@ -13,7 +13,6 @@ const MonthFilter = ({ selectedMonth, setSelectedMonth, selectedYear, setSelecte
 				alignItems: 'center',
 			}}
 		>
-			{/* Selector de año como primer chip */}
 			<Select
 				value={selectedYear}
 				onChange={(e) => setSelectedYear(Number(e.target.value))}
@@ -21,7 +20,7 @@ const MonthFilter = ({ selectedMonth, setSelectedMonth, selectedYear, setSelecte
 				size='small'
 				sx={{
 					width: '5rem',
-					height: '2.813rem',
+					height: '2.5rem',
 					borderRadius: '999px',
 					background: '#5F5DA6',
 					color: '#fff',
@@ -35,6 +34,13 @@ const MonthFilter = ({ selectedMonth, setSelectedMonth, selectedYear, setSelecte
 						color: '#fff',
 						right: '10px',
 					},
+					'@media (max-width: 767px)': {
+						width: '3.8rem',
+						height: '1.8rem',
+						padding: '5px 3px',
+						fontSize: '13px',
+						borderRadius: '14px',
+					},
 				}}
 			>
 				{availableYears.map((year) => (
@@ -44,18 +50,16 @@ const MonthFilter = ({ selectedMonth, setSelectedMonth, selectedYear, setSelecte
 				))}
 			</Select>
 
-			{/* Botón All justo después del año */}
 			<Box
 				component='button'
 				onClick={() => setSelectedMonth('All')}
 				sx={{
 					display: 'flex',
 					width: '5rem',
-					height: '2.813rem',
+					height: '2.5rem',
 					padding: '6px 24px',
 					justifyContent: 'center',
 					alignItems: 'center',
-					gap: '24px',
 					borderRadius: '999px',
 					background: selectedMonth === 'All' ? '#4B4990' : '#5F5DA6',
 					color: '#fff',
@@ -67,12 +71,18 @@ const MonthFilter = ({ selectedMonth, setSelectedMonth, selectedYear, setSelecte
 					'&:hover': {
 						background: '#4B4990',
 					},
+					'@media (max-width: 767px)': {
+						width: '3.8rem',
+						height: '1.8rem',
+						padding: '5px 12px',
+						fontSize: '13px',
+						borderRadius: '14px',
+					},
 				}}
 			>
 				All
 			</Box>
 
-			{/* Resto de meses */}
 			{months.map((month) => (
 				<Box
 					key={month}
@@ -81,11 +91,10 @@ const MonthFilter = ({ selectedMonth, setSelectedMonth, selectedYear, setSelecte
 					sx={{
 						display: 'flex',
 						width: '5rem',
-						height: '2.813rem',
+						height: '2.5rem',
 						padding: '6px 24px',
 						justifyContent: 'center',
 						alignItems: 'center',
-						gap: '24px',
 						borderRadius: '999px',
 						background: selectedMonth === month ? '#4B4990' : '#5F5DA6',
 						color: '#fff',
@@ -96,6 +105,13 @@ const MonthFilter = ({ selectedMonth, setSelectedMonth, selectedYear, setSelecte
 						fontWeight: 500,
 						'&:hover': {
 							background: '#4B4990',
+						},
+						'@media (max-width: 767px)': {
+							width: '3.8rem',
+							height: '1.8rem',
+							padding: '5px 12px',
+							fontSize: '13px',
+							borderRadius: '14px',
 						},
 					}}
 				>

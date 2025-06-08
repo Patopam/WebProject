@@ -76,35 +76,67 @@ function Finance() {
 				<div className='finance-layout'>
 					<div className='finance-main'>
 						<div className='finance-left-column'>
+							{/* Carrusel solo en mobile, ahora bien ubicado */}
+							{isMobile && (
+								<div className='finance-scroll-cards'>
+									<div className='finance-card'>
+										<GoalProgressCard />
+									</div>
+									<div className='finance-card'>
+										<GoalStatsCard
+											title='Goals completed'
+											description='You have successfully completed a total of'
+											quantity={completedCount}
+											label='goals'
+											bgColor='#C7DDF9'
+											iconBg='#85A9E8'
+										/>
+									</div>
+									<div className='finance-card'>
+										<GoalStatsCard
+											title='Goals failed'
+											description='You have failed a total of'
+											quantity={failedCount}
+											label='goals'
+											bgColor='#F7C8B6'
+											iconBg='#E68067'
+										/>
+									</div>
+								</div>
+							)}
+
 							<GoalHistoryTable />
 							<ExpenditureHistoryTable />
 						</div>
 
-						<div className='finance-right-column'>
-							<div className='goal-progress-placeholder'>
-								<GoalProgressCard />
-							</div>
+						{/* Stats en desktop */}
+						{!isMobile && (
+							<div className='finance-right-column'>
+								<div className='goal-progress-placeholder'>
+									<GoalProgressCard />
+								</div>
 
-							<div className='stats-cards'>
-								<GoalStatsCard
-									title='Goals completed'
-									description='You have successfully completed a total of'
-									quantity={completedCount}
-									label='goals'
-									bgColor='#C7DDF9'
-									iconBg='#85A9E8'
-								/>
+								<div className='stats-cards'>
+									<GoalStatsCard
+										title='Goals completed'
+										description='You have successfully completed a total of'
+										quantity={completedCount}
+										label='goals'
+										bgColor='#C7DDF9'
+										iconBg='#85A9E8'
+									/>
 
-								<GoalStatsCard
-									title='Goals failed'
-									description='You have failed a total of'
-									quantity={failedCount}
-									label='goals'
-									bgColor='#F7C8B6'
-									iconBg='#E68067'
-								/>
+									<GoalStatsCard
+										title='Goals failed'
+										description='You have failed a total of'
+										quantity={failedCount}
+										label='goals'
+										bgColor='#F7C8B6'
+										iconBg='#E68067'
+									/>
+								</div>
 							</div>
-						</div>
+						)}
 					</div>
 				</div>
 			</div>

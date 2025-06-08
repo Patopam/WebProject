@@ -1,8 +1,6 @@
 import './recommendations.css';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { obtenerUsuario } from '../../utils/utils';
 import { getRecommendation } from '../../services/openaiService';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -14,7 +12,6 @@ import RecommendationCard from '../../components/Cards/recommendationCard';
 import MobileNavBar from '../../components/Menu/mobileNavBar';
 
 function Recommendations() {
-	const id = useSelector((state) => state.userId.id);
 	let navigate = useNavigate();
 	const [selectedCategory, setSelectedCategory] = useState('');
 	const [recommendation, setRecommendation] = useState('');
@@ -38,11 +35,6 @@ function Recommendations() {
 	const goSettings = () => {
 		navigate('/settings');
 	};
-
-	const [Nombre, setNombre] = useState('Evan');
-	useEffect(() => {
-		setNombre(obtenerUsuario());
-	}, []);
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -99,11 +91,13 @@ function Recommendations() {
 						</div>
 					)}
 				</div>
-				<CategoryMenu
-					categories={categories}
-					selectedCategory={selectedCategory}
-					onCategoryClick={handleCategoryClick}
-				/>
+				<div className='recommendations-categories'>
+					<CategoryMenu
+						categories={categories}
+						selectedCategory={selectedCategory}
+						onCategoryClick={handleCategoryClick}
+					/>
+				</div>
 				<RecommendationCard
 					showInfo={showInfo}
 					selectedCategory={selectedCategory}

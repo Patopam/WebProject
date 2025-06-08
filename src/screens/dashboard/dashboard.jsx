@@ -13,18 +13,20 @@ import MobileNavBar from '../../components/Menu/mobileNavBar';
 import ExpensesTable from '../../components/Tables/expensesTable';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { fetchJournal } from '../../services/firebaseUtils';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchJournal, getUserData } from '../../services/firebaseUtils';
 import { getEmotionSpendingStats } from '../../services/analysisUtils';
+import { setUserName } from '../../redux/UserSlice/NameSlice';
 
 function Dashboard() {
 	const [Data, setData] = useState();
 	const [Loading, setLoading] = useState(true);
-	const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
+	const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
 	const [emotionStats, setEmotionStats] = useState(null);
 
 	const id = useSelector((state) => state.userId.id);
 	const userName = useSelector((state) => state.userName.name);
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -34,16 +36,20 @@ function Dashboard() {
 				.finally(() => setLoading(false));
 
 			getEmotionSpendingStats(id).then(setEmotionStats);
+
+			getUserData(id).then((data) => {
+				if (data?.name) dispatch(setUserName(data.name));
+			});
 		}
 
 		const handleResize = () => {
-			setIsMobile(window.innerWidth <= 1024);
+			setIsMobile(window.innerWidth <= 767);
 		};
 
 		handleResize();
 		window.addEventListener('resize', handleResize);
 		return () => window.removeEventListener('resize', handleResize);
-	}, [id]);
+	}, [id, dispatch]);
 
 	const goLogin = () => navigate('/log');
 	const handleJournalClick = () => navigate('/journal/write', { state: { redirectTo: '/dashboard' } });
@@ -55,7 +61,7 @@ function Dashboard() {
 			{!isMobile && <Menu />}
 			<div className='dashboard-content'>
 				<div className='dashboard-header'>
-					<Header Nombre={userName} subtitle='How are you feeling today?' />
+					<Header Nombre={userName || '...'} subtitle='How are you feeling today?' />
 					{!isMobile && (
 						<div className='dashboard-icons'>
 							<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
@@ -87,13 +93,16 @@ function Dashboard() {
 							) : (
 								<FeelingsCard emotion='none' percentage={0} />
 							)}
+							<GoalProgressCard />
 						</>
 					)}
+				</div>
 
-					<div className='goal-progress-wrapper'>
+				{isMobile && (
+					<div className='goal-container'>
 						<GoalProgressCard />
 					</div>
-				</div>
+				)}
 
 				<div className='dashboard-bottom-row'>
 					<div className='expenses-container'>
