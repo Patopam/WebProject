@@ -70,12 +70,26 @@ function Dashboard() {
 				</div>
 
 				<div className='dashboard-cards-row'>
-					<ReminderCard />
-					{emotionStats ? (
-						<FeelingsCard emotion={emotionStats.emotion} percentage={emotionStats.percentage} />
+					{isMobile ? (
+						<div className='dashboard-scroll-cards'>
+							<ReminderCard />
+							{emotionStats ? (
+								<FeelingsCard emotion={emotionStats.emotion} percentage={emotionStats.percentage} />
+							) : (
+								<FeelingsCard emotion='none' percentage={0} />
+							)}
+						</div>
 					) : (
-						<FeelingsCard emotion='none' percentage={0} />
+						<>
+							<ReminderCard />
+							{emotionStats ? (
+								<FeelingsCard emotion={emotionStats.emotion} percentage={emotionStats.percentage} />
+							) : (
+								<FeelingsCard emotion='none' percentage={0} />
+							)}
+						</>
 					)}
+
 					<GoalProgressCard />
 				</div>
 

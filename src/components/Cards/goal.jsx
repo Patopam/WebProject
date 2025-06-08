@@ -113,6 +113,11 @@ const cardStyle = {
 	boxShadow: 'none',
 	padding: '1.5rem',
 	boxSizing: 'border-box',
+
+	'@media screen and (max-width: 767px)': {
+		minHeight: '10rem',
+		flex: '0 0 auto',
+	},
 };
 
 const contentStyle = {

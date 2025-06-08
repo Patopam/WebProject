@@ -183,4 +183,20 @@
 	.expenses-container td {
 		padding: 0.5rem;
 	}
+	.dashboard-scroll-cards {
+		display: flex;
+		flex-direction: row;
+		gap: 1rem;
+		overflow-x: auto;
+		padding-bottom: 1rem;
+		scroll-snap-type: x mandatory;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.dashboard-scroll-cards > * {
+		flex: 0 0 80%;
+		scroll-snap-align: start;
+		min-width: 270px;
+		max-width: 320px;
+	}
 }
