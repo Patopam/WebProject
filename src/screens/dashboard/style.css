@@ -42,6 +42,7 @@
 	display: flex;
 	gap: 1rem;
 	margin-bottom: 2rem;
+	width: 100%;
 }
 
 .dashboard-cards-row {

@@ -11,6 +11,7 @@ export default function AddButton({ onClick, text }) {
 }
 
 const CustomAddIcon = () => <AddIcon sx={{ fontSize: '20px', color: '#000000' }} />;
+
 const ExactButton = styled(Button)(() => ({
 	height: '46px',
 	borderRadius: '12px',
@@ -27,10 +28,16 @@ const ExactButton = styled(Button)(() => ({
 	fontSize: '16px',
 	fontWeight: 500,
 	fontFamily: "'Manrope', sans-serif",
-	transition: 'none', // importante en mobile
+	transition: 'none',
 
 	touchAction: 'manipulation',
 	WebkitTapHighlightColor: 'transparent',
+	width: 'auto',
+
+	'@media (max-width: 768px)': {
+		width: '100%',
+		minWidth: 0,
+	},
 
 	'&:hover': {
 		backgroundColor: '#8A8AC0',
@@ -40,7 +47,7 @@ const ExactButton = styled(Button)(() => ({
 	'&:active': {
 		transform: 'none',
 		boxShadow: 'none',
-		backgroundColor: '#CBCBE7', // mantener color estático al hacer tap
+		backgroundColor: '#CBCBE7',
 	},
 
 	'& .MuiButton-startIcon': {
@@ -53,6 +60,7 @@ const ExactButton = styled(Button)(() => ({
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
+
 	'@media (hover: hover)': {
 		'&:hover': {
 			backgroundColor: '#8A8AC0',
