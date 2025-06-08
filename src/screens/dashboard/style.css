@@ -59,12 +59,13 @@
 	gap: 2.2rem;
 	align-items: start;
 }
+
 .expenses-container,
 .emotion-container {
 	width: 100%;
 }
 
-/* Tablets- 768px a 1024px */
+/* Tablets - 768px a 1024px */
 @media screen and (max-width: 1024px) {
 	.dashboard-container {
 		flex-direction: column;
@@ -92,6 +93,7 @@
 	.dashboard-mobile-icons {
 		padding: 0.5rem 0;
 	}
+
 	.dashboard-header {
 		margin-top: 4rem;
 	}
@@ -133,8 +135,39 @@
 	.emotion-container {
 		width: 100%;
 	}
+
+	.dashboard-scroll-cards {
+		display: flex;
+		flex-direction: row;
+		gap: 1rem;
+		overflow-x: auto;
+		padding-bottom: 1rem;
+		scroll-snap-type: x mandatory;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.dashboard-scroll-cards > * {
+		flex: 0 0 80%;
+		scroll-snap-align: start;
+		min-width: 270px;
+		max-width: 320px;
+	}
+
+	/* ✅ NUEVO: Goal fuera del carrusel, centrado */
+	.goal-progress-wrapper {
+		margin-top: 1rem;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+	}
+
+	.goal-progress-wrapper > * {
+		width: 100%;
+		max-width: 320px;
+	}
 }
 
+/* Móvil - 425px o menos */
 @media screen and (max-width: 425px) {
 	.dashboard-content {
 		padding: 0.75rem;
@@ -156,47 +189,17 @@
 	}
 }
 
-/* Móvil - < 426px */
-@media screen and (max-width: 425px) {
-	.dashboard-cards-row {
-		grid-template-columns: 1fr;
-		gap: 1rem;
-	}
-
-	.dashboard-bottom-row {
-		gap: 1rem;
-	}
-
-	.dashboard-header {
-		margin-top: 4rem;
-	}
-}
-
 @media screen and (max-width: 767px) {
 	.dashboard-header {
 		margin-top: 4rem;
 	}
+
 	.expenses-container table {
 		font-size: 0.9rem;
 	}
+
 	.expenses-container th,
 	.expenses-container td {
 		padding: 0.5rem;
-	}
-	.dashboard-scroll-cards {
-		display: flex;
-		flex-direction: row;
-		gap: 1rem;
-		overflow-x: auto;
-		padding-bottom: 1rem;
-		scroll-snap-type: x mandatory;
-		-webkit-overflow-scrolling: touch;
-	}
-
-	.dashboard-scroll-cards > * {
-		flex: 0 0 80%;
-		scroll-snap-align: start;
-		min-width: 270px;
-		max-width: 320px;
 	}
 }

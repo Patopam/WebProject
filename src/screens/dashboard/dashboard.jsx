@@ -90,7 +90,9 @@ function Dashboard() {
 						</>
 					)}
 
-					<GoalProgressCard />
+					<div className='goal-progress-wrapper'>
+						<GoalProgressCard />
+					</div>
 				</div>
 
 				<div className='dashboard-bottom-row'>
