@@ -153,21 +153,15 @@
 		max-width: 320px;
 	}
 
-	/* ✅ NUEVO: Goal fuera del carrusel, centrado */
 	.goal-progress-wrapper {
+		width: 100%;
 		margin-top: 1rem;
-		width: 100%;
-		display: flex;
-		justify-content: center;
-	}
-
-	.goal-progress-wrapper > * {
-		width: 100%;
-		max-width: 320px;
+		padding: 0 1rem;
+		box-sizing: border-box;
 	}
 }
 
-/* Móvil - 425px o menos */
+/* Móvil - 425px or - */
 @media screen and (max-width: 425px) {
 	.dashboard-content {
 		padding: 0.75rem;
