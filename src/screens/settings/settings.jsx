@@ -35,7 +35,6 @@ function Settings() {
 	const userId = useSelector((state) => state.userId.id);
 	const userName = useSelector((state) => state.userName.name);
 
-	// Función para generar avatar con iniciales
 	const generateAvatar = (name) => {
 		if (!name) return '';
 		const initials = name
@@ -45,7 +44,6 @@ function Settings() {
 			.toUpperCase()
 			.slice(0, 2);
 
-		// Colores de fondo para el avatar
 		const colors = ['#33336F'];
 
 		const colorIndex = name.charCodeAt(0) % colors.length;

@@ -184,7 +184,7 @@
 	border-radius: 16px;
 	padding: 0.75rem 2rem;
 	font-weight: 500;
-	font-size: 1rem !important; /* Forzar tamaño de fuente consistente */
+	font-size: 1rem !important;
 	border: none;
 	cursor: pointer;
 	font-family: 'Manrope', sans-serif;
@@ -198,7 +198,7 @@
 	flex-shrink: 0;
 	box-sizing: border-box;
 	white-space: nowrap;
-	line-height: 1.2 !important; /* Consistencia en altura de línea */
+	line-height: 1.2 !important;
 	text-align: center;
 }
 
@@ -278,7 +278,7 @@
 		height: 48px;
 		padding: 0.75rem 1rem;
 		flex: 0 0 auto;
-		font-size: 1rem !important; /* Mantener tamaño consistente */
+		font-size: 1rem !important;
 	}
 }
 
@@ -327,7 +327,7 @@
 
 	.cancel-button,
 	.save-button {
-		font-size: 1rem !important; /* Mantener tamaño consistente en tablets */
+		font-size: 1rem !important;
 	}
 }
 
@@ -346,7 +346,7 @@
 		height: 48px;
 		padding: 0.75rem 1rem;
 		max-width: none;
-		font-size: 1rem !important; /* Mantener tamaño consistente en móviles */
+		font-size: 1rem !important;
 	}
 }
 
@@ -389,6 +389,6 @@
 
 	.cancel-button,
 	.save-button {
-		font-size: 1rem !important; /* Mantener tamaño consistente incluso en dispositivos muy pequeños */
+		font-size: 1rem !important;
 	}
 }
