@@ -246,8 +246,10 @@ function Settings() {
 					)}
 				</div>
 
-				{successMessage && <div className='message success-message'>{successMessage}</div>}
-				{errorMessage && <div className='message error-message'>{errorMessage}</div>}
+				<div className='messages-container'>
+					{successMessage && <div className='message success-message'>{successMessage}</div>}
+					{errorMessage && <div className='message error-message'>{errorMessage}</div>}
+				</div>
 
 				<div className='profile-section'>
 					<div className='profile-info'>
@@ -283,7 +285,7 @@ function Settings() {
 							value={currentPassword}
 							onChange={(e) => setCurrentPassword(e.target.value)}
 						/>
-						<small style={{ color: '#666', fontSize: '12px', marginTop: '4px', display: 'block' }}>
+						<small className='password-help-text'>
 							Required to update email address
 						</small>
 					</div>
