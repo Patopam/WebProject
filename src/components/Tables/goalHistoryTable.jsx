@@ -87,6 +87,7 @@ const GoalHistoryCard = () => {
                     display: "flex",
                     alignItems: "center",
                     gap: "2px",
+                    whiteSpace: "nowrap",
                   }}
                 >
                   {option} <ArrowDropDown fontSize="small" />
@@ -106,6 +107,7 @@ const GoalHistoryCard = () => {
                     textDecoration:
                       selectedStatus === option ? "underline" : "none",
                     cursor: "pointer",
+                    whiteSpace: "nowrap",
                   }}
                 >
                   {option}
@@ -190,19 +192,25 @@ const headerTitleStyle = {
 const filterWrapperStyle = {
   display: "flex",
   justifyContent: "space-between",
-  alignItems: "center",
+  alignItems: "flex-start",
   backgroundColor: "#FBD788",
   borderRadius: "0.75rem",
   padding: "0.4rem 1rem",
   marginBottom: "0.8rem",
-  fontSize: "clamp(0.8rem, 1.3vw, 0.9rem)",
+  fontSize: "clamp(0.65rem, 1.3vw, 0.85rem)",
+  flexWrap: "wrap",
+  gap: "0.5rem",
+  minHeight: "2.5rem",
 };
 
 const filterGroupStyle = {
   display: "flex",
-  gap: "0.8rem",
+  gap: "clamp(0.3rem, 1vw, 0.6rem)",
   fontWeight: 600,
   color: "#333",
+  flexWrap: "wrap",
+  alignItems: "center",
+  flex: "0 1 auto",
 };
 
 const scrollWrapperStyle = {
