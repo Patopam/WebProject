@@ -78,16 +78,16 @@ The application will be available at: [http://localhost:5173](http://localhost:5
 
 ## Technologies and Libraries Used
 
-| Category                   | Libraries                                  |
-| -------------------------- | ------------------------------------------ |
-| **Frontend**               | React, React Router DOM, Redux Toolkit     |
-| **UI/UX**                  | Material UI (MUI), PrimeReact, React Icons |
-| **Data Visualization**     | Recharts, MUI Charts, ECharts              |
-| **Animations & Carousels** | Embla Carousel, Notistack                  |
-| **Date Management**        | Day.js, Date-fns                           |
-| **Auth & Database**        | Firebase (Auth + Firestore)                |
-| **External APIs**          | OpenAI API, Pexels API                     |
-| **Other Tools**            | Cloudinary (images), React Hot Toast       |
+| Category                     | Libraries                                  |
+| ---------------------------- | ------------------------------------------ |
+| **Frontend**                 | React, React Router DOM, Redux Toolkit     |
+| **UI/UX**                    | Material UI (MUI), PrimeReact, React Icons |
+| **Data visualization**       | Recharts, MUI Charts, ECharts              |
+| **Animations and carousels** | Embla Carousel, Notistack                  |
+| **Date management**          | Day.js, Date-fns                           |
+| **Auth & database**          | Firebase (Auth + Firestore)                |
+| **External APIs**            | OpenAI API, Pexels API                     |
+| **Other tools**              | Cloudinary (images), React Hot Toast       |
 
 ---
 
