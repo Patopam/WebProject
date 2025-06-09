@@ -1,4 +1,5 @@
 import './allJournal.css';
+
 import { useEffect, useState } from 'react';
 import Menu from '../../components/Menu/menu';
 import Header2 from '../../components/Header/header2';

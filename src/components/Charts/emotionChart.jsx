@@ -17,6 +17,7 @@ import {
   Bar,
 } from "recharts";
 
+
 const emotionMap = {
   happy: { emoji: "😄", value: 5 },
   sad: { emoji: "😭", value: 1 },

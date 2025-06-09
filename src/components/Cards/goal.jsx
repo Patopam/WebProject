@@ -110,6 +110,7 @@ const GoalProgressCard = () => {
       </CardContent>
     </Card>
   );
+
 };
 
 export default GoalProgressCard;

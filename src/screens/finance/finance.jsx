@@ -19,6 +19,7 @@ import {
 } from "../../services/firebaseUtils";
 import "./finance.css";
 
+
 function Finance() {
   const navigate = useNavigate();
   const location = useLocation();
