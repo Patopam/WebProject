@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AttachMoney, ArrowDropDown, CalendarToday } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
+
 import { fetchSpends } from '../../services/firebaseUtils';
 
 const ExpenditureHistoryTable = () => {

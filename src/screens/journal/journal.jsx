@@ -1,5 +1,6 @@
 import './journal.css';
 import { useEffect, useState } from 'react';
+
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Menu from '../../components/Menu/menu';

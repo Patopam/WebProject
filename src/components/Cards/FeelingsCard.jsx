@@ -4,6 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import FlashOnOutlinedIcon from "@mui/icons-material/FlashOnOutlined";
 
+
 const FeelingsCard = ({ emotion = "none", percentage = 0 }) => {
   return (
     <Card

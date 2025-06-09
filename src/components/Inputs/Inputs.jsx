@@ -2,6 +2,7 @@ import { useState, useEffect, useState as ReactUseState } from 'react';
 import RemoveRedEyeRoundedIcon from '@mui/icons-material/RemoveRedEyeRounded';
 import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
 
+
 function Inputs({ type, placeholder, value, onChange }) {
 	const [showPassword, setShowPassword] = useState(false);
 	const isPassword = type === 'password';

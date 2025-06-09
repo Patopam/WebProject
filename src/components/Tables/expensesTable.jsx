@@ -1,4 +1,5 @@
 import { AttachMoney, Edit } from '@mui/icons-material';
+
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { fetchSpends } from '../../services/firebaseUtils';

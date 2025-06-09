@@ -1,5 +1,6 @@
 import './style.css';
 import AddButton from '../../components/Buttons/add';
+
 import Header from '../../components/Header/header';
 import ReminderCard from '../../components/Cards/remainder';
 import GoalProgressCard from '../../components/Cards/goal';
@@ -17,6 +18,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchJournal, getUserData } from '../../services/firebaseUtils';
 import { getEmotionSpendingStats } from '../../services/analysisUtils';
 import { setUserName } from '../../redux/UserSlice/NameSlice';
+
 
 function Dashboard() {
 	const [Data, setData] = useState();
