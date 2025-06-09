@@ -34,12 +34,29 @@ export default function JournalForm({ compact = false, redirectTo }) {
 		{ emoji: '😩', value: 'stressed' },
 	];
 
-	const tags = ['Reflection', 'Gratitude', 'Daily Intention', 'Release'];
+	const tags = [
+		'Reflection',
+		'Gratitude',
+		'Daily Intention',
+		'Release',
+		'Mind Dump',
+		'Creative Spark',
+		'Morning Focus',
+		'Energy Tracker',
+	];
 	const templates = {
 		Reflection: "Today I'm reflecting on...\n\nWhat went well:\n\nWhat could have gone better:\n\nWhat I learned:",
 		Gratitude: "Today I'm grateful for:\n\n1.\n2.\n3.\n\nWhy these matter to me:",
 		'Daily Intention': 'My intention for today is:\n\nHow I plan to achieve this:\n\nHow I will measure success:',
 		Release: "What I need to let go of:\n\nWhy I'm holding onto it:\n\nHow I will release it:",
+		'Mind Dump':
+			"Right now, my mind is full of...\n\nThings that are worrying me:\n\nThings I can control vs. can't control:\n\nOne action to take:",
+		'Creative Spark':
+			'Something that inspired me today:\n\nWhy it sparked something in me:\n\nWhat I want to create as a result:',
+		'Morning Focus':
+			"What I'm looking forward to today:\n\nOne thing I want to accomplish:\n\nWhat might get in the way and how I’ll handle it:",
+		'Energy Tracker':
+			'My energy level today (1–10):\n\nWhat boosted my energy:\n\nWhat drained me:\n\nHow I’ll adjust tomorrow:',
 	};
 
 	useEffect(() => {

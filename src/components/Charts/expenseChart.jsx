@@ -18,7 +18,6 @@ export default function ExpensesChart() {
   const [isMobile, setIsMobile] = useState(false);
   const uid = useSelector((state) => state.userId.id);
 
-  // Detectar si estamos en móvil
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768);
@@ -86,7 +85,6 @@ export default function ExpensesChart() {
     fetchData();
   }, [uid, isMobile]);
 
-  // Tooltip personalizado mejorado
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
@@ -105,7 +103,6 @@ export default function ExpensesChart() {
     return null;
   };
 
-  // Configuración dinámica basada en el tamaño de pantalla
   const getChartConfig = () => {
     if (window.innerWidth <= 480) {
       return {
