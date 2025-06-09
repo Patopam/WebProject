@@ -36,44 +36,52 @@ function Journal() {
 	}, []);
 
 	return (
-		<div className='journal-container'>
-			{!isMobile && <Menu />}
+		<div className='journal-container' role='main' aria-label='Página principal del diario personal'>
+			{!isMobile && <Menu role='navigation' aria-label='Menú principal de navegación' />}
 			<div className='journal-content'>
 				<div className='journal-header'>
-					<Header2 title='My journal' subtitle='Write your thoughts of the day.' />
+					<Header2
+						title='My journal'
+						subtitle='Write your thoughts of the day.'
+						role='banner'
+						aria-label='Encabezado de la sección de diario'
+					/>
 					{!isMobile && (
-						<div className='journal-icons'>
-							<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
-							<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={goLogin} />
+						<div className='journal-icons' role='toolbar' aria-label='Herramientas de usuario'>
+							<CustomIconButton
+								icon={<AccountCircleIcon />}
+								ariaLabel='Ir a configuración del perfil de usuario'
+								onClick={goSettings}
+							/>
+							<CustomIconButton icon={<LogoutIcon />} ariaLabel='Cerrar sesión y regresar al login' onClick={goLogin} />
 						</div>
 					)}
 				</div>
 
-				<div className='journal-main-grid'>
+				<div className='journal-main-grid' role='region' aria-label='Contenido principal del diario'>
 					{isMobile && (
-						<div className='journal-scroll-cards'>
-							<ReminderCard />
-							<ImageCarousel />
+						<div className='journal-scroll-cards' role='complementary' aria-label='Tarjetas de recordatorios'>
+							<ReminderCard aria-label='Tarjeta con recordatorios importantes' />
 						</div>
 					)}
 
-					<div className='journal-left'>
-						<JournalForm compact />
+					<div className='journal-left' role='region' aria-label='Formulario de entrada del diario'>
+						<JournalForm compact aria-label='Formulario para escribir nueva entrada en el diario personal' />
 					</div>
 
 					{!isMobile && (
-						<div className='journal-right'>
-							<div className='journal-reminder'>
-								<ReminderCard />
+						<div className='journal-right' role='complementary' aria-label='Panel lateral con información adicional'>
+							<div className='journal-reminder' role='region' aria-label='Sección de recordatorios'>
+								<ReminderCard aria-label='Tarjeta con recordatorios y consejos diarios' />
 							</div>
-							<div className='journal-carousel'>
-								<ImageCarousel />
+							<div className='journal-carousel' role='region' aria-label='Galería de imágenes inspiracionales'>
+								<ImageCarousel aria-label='Carrusel de imágenes motivacionales para inspirar tu escritura' />
 							</div>
 						</div>
 					)}
 				</div>
 			</div>
-			{isMobile && <MobileNavBar className='mobile-navbar' />}
+			{isMobile && <MobileNavBar className='mobile-navbar' role='navigation' aria-label='Barra de navegación móvil' />}
 		</div>
 	);
 }
