@@ -12,6 +12,7 @@ import { saveUserData } from "../../services/firebaseUtils";
 import { useDispatch } from "react-redux";
 import { setUserId } from "../../redux/UserSlice/UserSlice";
 import { setUserName } from "../../redux/UserSlice/NameSlice";
+
 function Start() {
   const navigate = useNavigate();
   const dispatch = useDispatch();

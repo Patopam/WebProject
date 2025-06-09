@@ -15,6 +15,7 @@ import CustomIconButton from "../../components/Buttons/icon";
 import MobileNavBar from "../../components/Menu/mobileNavBar";
 import { useNavigate } from "react-router-dom";
 
+
 function Emotions() {
   const [ultimaEmocion, setUltimaEmocion] = useState("");
   const uid = useSelector((state) => state.userId.id);

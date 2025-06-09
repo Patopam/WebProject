@@ -30,7 +30,6 @@
 	display: none;
 }
 
-/* Tablet/Móvil - <= 1024px */
 @media screen and (max-width: 1024px) {
 	.journal-container {
 		flex-direction: column;
@@ -55,7 +54,6 @@
 	}
 }
 
-/* Móvil - <= 767px */
 @media screen and (max-width: 767px) {
 	.journal-content {
 		padding: 1rem;
@@ -69,7 +67,6 @@
 	}
 }
 
-/* Móvil Pequeño - <= 425px */
 @media screen and (max-width: 425px) {
 	.journal-content {
 		padding: 0.75rem;

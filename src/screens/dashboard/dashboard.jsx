@@ -1,5 +1,6 @@
 import './style.css';
 import AddButton from '../../components/Buttons/add';
+
 import Header from '../../components/Header/header';
 import ReminderCard from '../../components/Cards/remainder';
 import GoalProgressCard from '../../components/Cards/goal';
@@ -57,97 +58,97 @@ function Dashboard() {
 	const goSettings = () => navigate('/settings');
 
 	return (
-		<div className='dashboard-container' role='main' aria-label='Panel de control principal'>
-			{!isMobile && <Menu role='navigation' aria-label='Menú principal' />}
+		<div className='dashboard-container' role='main' aria-label='Main dashboard panel'>
+			{!isMobile && <Menu role='navigation' aria-label='main menu' />}
 			<div className='dashboard-content'>
 				<div className='dashboard-header'>
 					<Header
 						Nombre={userName || '...'}
 						subtitle='How are you feeling today?'
 						role='banner'
-						aria-label='Encabezado del dashboard'
+						aria-label='Header with user name and subtitle'
 					/>
 					{!isMobile && (
-						<div className='dashboard-icons' role='toolbar' aria-label='Herramientas de usuario'>
+						<div className='dashboard-icons' role='toolbar' aria-label='user actions'>
 							<CustomIconButton
 								icon={<AccountCircleIcon />}
-								ariaLabel='Ir a configuración de perfil de usuario'
+								ariaLabel='settings and user profile'
 								onClick={goSettings}
 							/>
-							<CustomIconButton icon={<LogoutIcon />} ariaLabel='Cerrar sesión y volver al inicio' onClick={goLogin} />
+							<CustomIconButton icon={<LogoutIcon />} ariaLabel='log-out' onClick={goLogin} />
 						</div>
 					)}
 				</div>
 
-				<div className='dashboard-buttons' role='group' aria-label='Botones de acciones principales'>
-					<AddButton
-						onClick={handleJournalClick}
-						text={'Add journal'}
-						aria-label='Agregar nueva entrada al diario emocional'
-					/>
-					<AddButton onClick={handleSpendClick} text={'Add spend'} aria-label='Registrar nuevo gasto financiero' />
+				<div className='dashboard-buttons' role='group' aria-label='action buttons'>
+					<AddButton onClick={handleJournalClick} text={'Add journal'} aria-label='add new journal entry' />
+					<AddButton onClick={handleSpendClick} text={'Add spend'} aria-label='add new spend' />
 				</div>
 
-				<div className='dashboard-cards-row' role='region' aria-label='Tarjetas de resumen'>
+				<div className='dashboard-cards-row' role='region' aria-label='cards with important information'>
 					{isMobile ? (
-						<div className='dashboard-scroll-cards' role='group' aria-label='Tarjetas deslizables'>
-							<ReminderCard aria-label='Tarjeta de recordatorios' />
+						<div className='dashboard-scroll-cards' role='group' aria-label='cards'>
+							<ReminderCard aria-label='cards remainder' />
 							{emotionStats ? (
 								<FeelingsCard
 									emotion={emotionStats.emotion}
 									percentage={emotionStats.percentage}
-									aria-label={`Estado emocional actual: ${emotionStats.emotion} con ${emotionStats.percentage}% de frecuencia`}
-								/>
-							) : (
-								<FeelingsCard emotion='none' percentage={0} aria-label='Estado emocional: sin datos disponibles' />
-							)}
-						</div>
-					) : (
-						<>
-							<ReminderCard aria-label='Tarjeta de recordatorios diarios' />
-							{emotionStats ? (
-								<FeelingsCard
-									emotion={emotionStats.emotion}
-									percentage={emotionStats.percentage}
-									aria-label={`Estado emocional predominante: ${emotionStats.emotion} con ${emotionStats.percentage}% de frecuencia`}
+									aria-label={`emotional resume: ${emotionStats.emotion} is your emotion ${emotionStats.percentage}% of frecuency`}
 								/>
 							) : (
 								<FeelingsCard
 									emotion='none'
 									percentage={0}
-									aria-label='Estado emocional: sin datos disponibles para mostrar'
+									aria-label='resume of emotions not available yet, please wait'
 								/>
 							)}
-							<GoalProgressCard aria-label='Tarjeta de progreso de metas financieras' />
+						</div>
+					) : (
+						<>
+							<ReminderCard aria-label='Cards remainder' />
+							{emotionStats ? (
+								<FeelingsCard
+									emotion={emotionStats.emotion}
+									percentage={emotionStats.percentage}
+									aria-label={`emotional resume: ${emotionStats.emotion} is your emotion ${emotionStats.percentage}% of frecuency`}
+								/>
+							) : (
+								<FeelingsCard
+									emotion='none'
+									percentage={0}
+									aria-label='resume of emotions not available yet, please wait'
+								/>
+							)}
+							<GoalProgressCard aria-label='card' />
 						</>
 					)}
 				</div>
 
 				{isMobile && (
-					<div className='goal-container' role='region' aria-label='Progreso de metas'>
-						<GoalProgressCard aria-label='Progreso de metas financieras personales' />
+					<div className='goal-container' role='region' aria-label='goal progress card'>
+						<GoalProgressCard aria-label='progress card' />
 					</div>
 				)}
 
-				<div className='dashboard-bottom-row' role='region' aria-label='Datos detallados'>
-					<div className='expenses-container' role='region' aria-label='Tabla de gastos'>
-						<ExpensesTable dashboard={true} aria-label='Tabla con el resumen de gastos recientes' />
+				<div className='dashboard-bottom-row' role='region' aria-label='deta display area'>
+					<div className='expenses-container' role='region' aria-label='table with recent expenses'>
+						<ExpensesTable dashboard={true} aria-label='table with recent expenses' />
 					</div>
 
 					{Loading ? (
-						<p role='status' aria-live='polite' aria-label='Cargando datos emocionales'>
+						<p role='status' aria-live='polite' aria-label='loadin'>
 							Loading
 						</p>
 					) : (
-						<div className='emotion-container' role='region' aria-label='Análisis emocional semanal'>
-							<EmotionWeek dashboard={true} Data={Data} aria-label='Gráfico del análisis emocional de la semana' />
+						<div className='emotion-container' role='region' aria-label='analysis of emotions over the week'>
+							<EmotionWeek dashboard={true} Data={Data} aria-label='graph analysis' />
 						</div>
 					)}
 				</div>
 			</div>
-			{isMobile && <MobileNavBar role='navigation' aria-label='Barra de navegación móvil' />}
+			{isMobile && <MobileNavBar role='navigation' aria-label='navigation bar' />}
 
-			{window.innerWidth <= 1024 && <MobileNavBar role='navigation' aria-label='Barra de navegación para tablet' />}
+			{window.innerWidth <= 1024 && <MobileNavBar role='navigation' aria-label='navgation bar' />}
 		</div>
 	);
 }
