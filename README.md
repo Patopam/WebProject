@@ -1,6 +1,6 @@
 # Sense: Feel, track and grow.
 
-An app that connects your emotions with your financial decisions to help you live more consciously.
+An app that connects emotions with financial decisions to help you live more consciously.
 
 ---
 
@@ -67,11 +67,11 @@ The application will be available at: [http://localhost:5173](http://localhost:5
 
 ## Key Features
 
-- Log daily emotions in a journal, with optional guided templates.
-- Track daily expenses.
-- Set maximum spending goals per date.
-- Receive AI-generated activity recommendations based on emotional input.
-- View emotion-to-spending ratio and trend patterns.
+- Record daily emotions in a journal, with optional guided templates.
+- Monitor daily spending.
+- Set maximum spending goals by date.
+- Receive AI-generated activity recommendations based on your daily emotions.
+- View the relationship between emotions and spending.
 - Access emotional and financial statistics over time.
 
 ---
@@ -124,9 +124,9 @@ src/
 
 ## Developers
 
-- **Maira Alejandra Hurtado Martínez**
-- **María del Mar Ramírez Tabares**
 - **David Cardona Betancur**
+- **María del Mar Ramírez Tabares**
+- **Maira Alejandra Hurtado Martínez**
 
 ---
 
