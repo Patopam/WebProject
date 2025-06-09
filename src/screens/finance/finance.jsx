@@ -18,9 +18,9 @@ import './finance.css';
 function Finance() {
 	const navigate = useNavigate();
 	const location = useLocation();
-	const [isMobile, setIsMobile] = useState(window.innerWidth <= 768); // Cambiado a 768px
+	const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+	const [isSmallMobile, setIsSmallMobile] = useState(window.innerWidth <= 480);
 	const [isTablet, setIsTablet] = useState(window.innerWidth > 768 && window.innerWidth <= 1024);
-	const [showScrollCards, setShowScrollCards] = useState(window.innerWidth <= 480); // Solo en móviles muy pequeños
 	const uid = useSelector((state) => state.userId.id);
 	const [completedCount, setCompletedCount] = useState(0);
 	const [failedCount, setFailedCount] = useState(0);
@@ -29,8 +29,8 @@ function Finance() {
 		const handleResize = () => {
 			const width = window.innerWidth;
 			setIsMobile(width <= 768);
+			setIsSmallMobile(width <= 480);
 			setIsTablet(width > 768 && width <= 1024);
-			setShowScrollCards(width <= 480); // Solo mostrar scroll en pantallas muy pequeñas
 		};
 
 		handleResize();
@@ -103,8 +103,8 @@ function Finance() {
 				<div className='finance-layout'>
 					<div className='finance-main'>
 						<div className='finance-left-column'>
-							{/* Scroll cards solo para móviles muy pequeños */}
-							{showScrollCards && (
+							{/* Scroll cards solo para móviles muy pequeños (≤480px) */}
+							{isSmallMobile && (
 								<div className='finance-scroll-cards'>
 									<div className='finance-card'>
 										<GoalProgressCard />
@@ -132,12 +132,22 @@ function Finance() {
 								</div>
 							)}
 
+							{/* Cards section para móviles medianos (481px-768px) */}
+							{isMobile && !isSmallMobile && (
+								<div className='finance-cards-section'>
+									<div className='finance-goal-progress'>
+										<GoalProgressCard />
+									</div>
+									<div className='finance-stats-mobile'>{renderStatsCards()}</div>
+								</div>
+							)}
+
 							<GoalHistoryTable />
 							<ExpenditureHistoryTable />
 						</div>
 
-						{/* Columna derecha - siempre visible excepto en móviles muy pequeños */}
-						{!showScrollCards && (
+						{/* Columna derecha - solo para desktop y tablet */}
+						{!isMobile && (
 							<div className='finance-right-column'>
 								<div className='goal-progress-placeholder'>
 									<GoalProgressCard />

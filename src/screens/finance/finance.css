@@ -75,6 +75,11 @@
 	display: none;
 }
 
+/* Sección de cards responsiva - oculta por defecto */
+.finance-cards-section {
+	display: none;
+}
+
 /* Tablet y pantallas más pequeñas */
 @media screen and (max-width: 1024px) {
 	.finance-container {
@@ -152,39 +157,33 @@
 		gap: 1rem;
 	}
 
-	/* Mostrar scroll cards horizontal en mobile */
-	.finance-scroll-cards {
+	/* Cards responsivas arriba de las tablas */
+	.finance-cards-section {
 		display: flex;
-		flex-direction: row;
-		overflow-x: auto;
+		flex-direction: column;
 		gap: 1rem;
 		margin-bottom: 1.5rem;
-		scroll-snap-type: x mandatory;
-		-webkit-overflow-scrolling: touch;
-		padding: 0.5rem 0;
+		order: -1; /* Asegurar que aparezca antes que las tablas */
 	}
 
-	.finance-scroll-cards::-webkit-scrollbar {
+	.finance-goal-progress {
+		width: 100%;
+	}
+
+	.finance-stats-mobile {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	/* Ocultar scroll cards horizontal en esta resolución */
+	.finance-scroll-cards {
 		display: none;
 	}
 
-	.finance-scroll-cards {
-		-ms-overflow-style: none;
-		scrollbar-width: none;
-	}
-
-	.finance-card {
-		flex: 0 0 auto;
-		scroll-snap-align: start;
-		width: 280px;
-		min-width: 280px;
-		max-width: 320px;
-		min-height: 160px;
-	}
-
-	/* En lugar de ocultar completamente, cambiar la columna derecha a formato compacto */
+	/* Ocultar columna derecha original */
 	.finance-right-column {
-		display: none; /* Mantenemos oculta porque las cards están en scroll-cards */
+		display: none;
 	}
 
 	.stats-cards {
@@ -204,15 +203,40 @@
 		margin-top: 4rem;
 	}
 
+	/* Mostrar scroll cards horizontal solo en pantallas muy pequeñas */
+	.finance-scroll-cards {
+		display: flex;
+		flex-direction: row;
+		overflow-x: auto;
+		gap: 0.75rem;
+		margin-bottom: 1.5rem;
+		scroll-snap-type: x mandatory;
+		-webkit-overflow-scrolling: touch;
+		padding: 0.5rem 0;
+		order: -1; /* Asegurar que aparezca antes que las tablas */
+	}
+
+	.finance-scroll-cards::-webkit-scrollbar {
+		display: none;
+	}
+
+	.finance-scroll-cards {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
+
 	.finance-card {
+		flex: 0 0 auto;
+		scroll-snap-align: start;
 		width: 260px;
 		min-width: 260px;
 		max-width: 300px;
 		min-height: 150px;
 	}
 
-	.finance-scroll-cards {
-		gap: 0.75rem;
+	/* Ocultar las cards section en móviles muy pequeños */
+	.finance-cards-section {
+		display: none;
 	}
 }
 
@@ -274,16 +298,23 @@
 /* Media query adicional para asegurar visibilidad en rangos específicos */
 @media screen and (min-width: 481px) and (max-width: 768px) {
 	.finance-right-column {
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
+		display: none; /* Ocultar columna derecha original */
 	}
 
 	.finance-scroll-cards {
-		display: none;
+		display: none; /* No mostrar scroll cards */
 	}
 
-	.stats-cards {
+	/* Mostrar cards section arriba de las tablas */
+	.finance-cards-section {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		margin-bottom: 1.5rem;
+		order: -1;
+	}
+
+	.finance-stats-mobile {
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
