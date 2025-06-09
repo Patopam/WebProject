@@ -1,151 +1,149 @@
 .journal-container {
-	display: flex;
-	height: 100vh;
-	width: 100%;
-	background-color: #ffffff;
-	font-family: 'Manrope', sans-serif;
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  background-color: #ffffff;
+  font-family: "Manrope", sans-serif;
 }
 
 .journal-content {
-	flex: 1;
-	padding: 2rem;
-	display: flex;
-	flex-direction: column;
-	overflow-y: auto;
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
 }
 
 .journal-header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
 }
 
 .journal-icons {
-	display: flex;
-	gap: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
 }
 
 .journal-main-grid {
-	display: grid;
-	grid-template-columns: 2fr 1fr;
-	gap: 2rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
 }
 
 .journal-left {
-	display: flex;
-	flex-direction: column;
-	gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .journal-right {
-	display: flex;
-	flex-direction: column;
-	gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .journal-reminder,
 .journal-carousel {
-	width: 100%;
+  width: 100%;
 }
 
 .mobile-navbar {
-	display: none;
+  display: none;
 }
 
 @media screen and (max-width: 767px) {
-	.journal-scroll-cards {
-		display: flex;
-		flex-direction: row;
-		gap: 1rem;
-		overflow-x: auto;
-		scroll-snap-type: x mandatory;
-		-webkit-overflow-scrolling: touch;
-		margin-bottom: 1rem;
-		margin-top: 0.7rem;
-	}
+  .journal-scroll-cards {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 1rem;
+    margin-top: 0.7rem;
+  }
 
-	.journal-scroll-cards > * {
-		flex: 0 0 85%;
-		scroll-snap-align: start;
-		min-width: 270px;
-		max-width: 320px;
-	}
+  .journal-scroll-cards > * {
+    flex: 0 0 85%;
+    scroll-snap-align: start;
+    min-width: 270px;
+    max-width: 400px;
+  }
 }
 
-/*(<= 1024px) */
-
 @media screen and (max-width: 1024px) {
-	.journal-container {
-		flex-direction: column;
-	}
+  .journal-container {
+    flex-direction: column;
+  }
 
-	.journal-content {
-		padding: 1.5rem;
-		padding-bottom: 90px;
-	}
+  .journal-content {
+    padding: 1.5rem;
+    padding-bottom: 90px;
+  }
 
-	.journal-main-grid {
-		grid-template-columns: 1fr;
-		gap: 1.5rem;
-	}
+  .journal-main-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
 
-	.journal-header {
-		margin-top: 4rem;
-	}
+  .journal-header {
+    margin-top: 4rem;
+  }
 
-	.mobile-navbar {
-		display: flex !important;
-		position: fixed;
-		bottom: 0;
-		left: 0;
-		width: 100%;
-		z-index: 1000;
-	}
+  .mobile-navbar {
+    display: flex !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+  }
 
-	.menu-container {
-		display: none;
-	}
+  .menu-container {
+    display: none;
+  }
 
-	.mobile-navbar + .journal-mobile-icons {
-		display: none;
-	}
+  .mobile-navbar + .journal-mobile-icons {
+    display: none;
+  }
 }
 
 /* MOBILE (<= 767px) */
 
 @media screen and (max-width: 767px) {
-	.journal-content {
-		padding: 1rem;
-		padding-bottom: 80px;
-	}
+  .journal-content {
+    padding: 1rem;
+    padding-bottom: 80px;
+  }
 
-	.journal-header {
-		flex-direction: column;
-		align-items: flex-start;
-		margin-bottom: 1.5rem;
-		margin-top: 4rem;
-	}
+  .journal-header {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    margin-top: 4rem;
+  }
 
-	.journal-main-grid {
-		gap: 1rem;
-	}
+  .journal-main-grid {
+    gap: 1rem;
+  }
 
-	.journal-right {
-		gap: 1rem;
-	}
+  .journal-right {
+    gap: 1rem;
+  }
 }
 
 /* MOBILE SMALL (<= 425px)  */
 
 @media screen and (max-width: 425px) {
-	.journal-content {
-		padding: 0.75rem;
-		padding-bottom: 80px;
-	}
+  .journal-content {
+    padding: 0.75rem;
+    padding-bottom: 80px;
+  }
 
-	.journal-header {
-		margin-bottom: 1rem;
-		margin-top: 4rem;
-	}
+  .journal-header {
+    margin-bottom: 1rem;
+    margin-top: 4rem;
+  }
 }
