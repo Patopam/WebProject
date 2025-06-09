@@ -94,7 +94,7 @@ export default function ExpensesChart() {
         <div className="tooltip">
           <p className="tooltip-label">{displayDay}</p>
           <p className="tooltip-value">
-            Gastos:{" "}
+            Spends:{" "}
             <span className="amount">${payload[0].value.toLocaleString()}</span>
           </p>
         </div>
@@ -209,5 +209,4 @@ export default function ExpensesChart() {
       </div>
     </div>
   );
-
 }

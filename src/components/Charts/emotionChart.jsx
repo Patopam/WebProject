@@ -17,7 +17,6 @@ import {
   Bar,
 } from "recharts";
 
-
 const emotionMap = {
   happy: { emoji: "😄", value: 5 },
   sad: { emoji: "😭", value: 1 },
@@ -153,7 +152,7 @@ export default function EmotionChart() {
               fontSize: isSmallMobile ? "14px" : isMobile ? "16px" : "18px",
             }}
           >
-            {`Emoción: ${data.emotion || "😐"}`}
+            {`Emotion: ${data.emotion || "😐"}`}
           </p>
         </div>
       );
@@ -371,8 +370,8 @@ export default function EmotionChart() {
               <XAxis dataKey="emotion" fontSize={config.fontSize} />
               <YAxis fontSize={config.fontSize} />
               <Tooltip
-                formatter={(value) => [`${value}`, "Conteo"]}
-                labelFormatter={(label) => `Emoción: ${label}`}
+                formatter={(value) => [`${value}`, "counts"]}
+                labelFormatter={(label) => `Emotion: ${label}`}
                 contentStyle={{
                   fontSize: config.fontSize,
                   padding: isSmallMobile ? "6px 8px" : "8px 12px",
@@ -411,7 +410,7 @@ export default function EmotionChart() {
                 formatter={(value) => [`${value}`, "Intensidad"]}
                 labelFormatter={(label, payload) => {
                   const emotion = payload?.[0]?.payload?.emotion || "";
-                  return `Mes: ${label} | Emoción: ${emotion}`;
+                  return `Mes: ${label} | Emotion: ${emotion}`;
                 }}
                 contentStyle={{
                   fontSize: config.fontSize,
