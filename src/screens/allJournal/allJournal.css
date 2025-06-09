@@ -26,9 +26,8 @@
 	gap: 0.5rem;
 }
 
-/* Barra de navegación móvil */
 .mobile-navbar {
-	display: none; /* Oculta por defecto */
+	display: none;
 }
 
 /* Tablet/Móvil - <= 1024px */
@@ -39,10 +38,9 @@
 
 	.journal-content {
 		padding: 1.5rem;
-		padding-bottom: 90px; /* Espacio para la barra de navegación móvil */
+		padding-bottom: 90px;
 	}
 
-	/* Mostrar navbar móvil */
 	.mobile-navbar {
 		display: flex !important;
 		position: fixed;
@@ -52,7 +50,6 @@
 		z-index: 1000;
 	}
 
-	/* Ocultar menú lateral */
 	.menu-container {
 		display: none;
 	}

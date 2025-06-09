@@ -10,6 +10,8 @@ const EmotionWeek = ({ Data }) => {
 		neutral: '😑',
 	};
 
+	const isMobile = window.innerWidth <= 767;
+
 	const today = new Date();
 	const dayOfWeek = today.getDay();
 	const monday = new Date(today);
@@ -46,12 +48,13 @@ const EmotionWeek = ({ Data }) => {
 	}
 
 	const transformedWeekData = dayNames.map((day) => weekMap[day]);
+
 	const containerStyle = {
 		display: 'flex',
 		flexDirection: 'column',
 		width: '100%',
-		height: '320px',
-		minHeight: '320px',
+		height: isMobile ? '280px' : '320px',
+		minHeight: isMobile ? '280px' : '320px',
 		padding: '1.5rem',
 		borderRadius: '1.5rem',
 		background: '#E3E9CF',
@@ -97,8 +100,8 @@ const EmotionWeek = ({ Data }) => {
 
 	const dayColumnStyle = {
 		width: '13%',
-		minWidth: '2.4rem',
-		padding: '4.2rem 0.6rem',
+		minWidth: isMobile ? '2.2rem' : '2.4rem',
+		padding: isMobile ? '3.2rem 0.4rem' : '4.2rem 0.6rem',
 		borderRadius: '1.5rem',
 		backgroundColor: '#C8D39F',
 		display: 'flex',
@@ -110,21 +113,21 @@ const EmotionWeek = ({ Data }) => {
 	};
 
 	const dayTextStyle = {
-		fontSize: '0.75rem',
+		fontSize: isMobile ? '0.65rem' : '0.75rem',
 		fontWeight: 500,
 		color: '#333',
 		marginBottom: '0.2rem',
 	};
 
 	const dayNumberStyle = {
-		fontSize: '1rem',
+		fontSize: isMobile ? '0.85rem' : '1rem',
 		fontWeight: 500,
 		color: '#333',
 		marginBottom: '0.2rem',
 	};
 
 	const emojiStyle = {
-		fontSize: '1.4rem',
+		fontSize: isMobile ? '1.15rem' : '1.4rem',
 	};
 
 	return (

@@ -23,7 +23,6 @@ const GoalStatsCard = ({ title, description, quantity, label, bgColor, iconBg })
 					flexDirection: 'column',
 					justifyContent: 'flex-start',
 					gap: '1rem',
-					marginBottom: '1rem',
 				}}
 			>
 				<Box

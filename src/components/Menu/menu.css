@@ -5,20 +5,25 @@
 	height: 100vh;
 	display: flex;
 	flex-direction: column;
-	padding: 2rem 1rem;
+	padding: 1.5rem 1rem;
 	box-sizing: border-box;
 	font-family: 'Manrope', sans-serif;
+	overflow-y: auto;
+	scrollbar-width: none;
 }
 
+.menu-container::-webkit-scrollbar {
+	display: none;
+}
 .menu-logo {
 	display: flex;
 	justify-content: center;
 	margin-bottom: 0.5rem;
-	padding-top: 0.7rem;
+	padding-top: 0.8rem;
 }
 
 .menu-logo-img {
-	width: 133px !important;
+	width: 128px !important;
 	height: auto;
 	object-fit: contain;
 }
@@ -28,10 +33,10 @@
 }
 
 .section-title {
-	font-size: 1rem;
+	font-size: 0.9rem;
 	font-weight: 500;
 	color: #cfcfcf;
-	margin-bottom: 0.5rem;
+	margin-bottom: 0.1rem;
 	padding-left: 0.5rem;
 }
 
@@ -52,7 +57,7 @@
 	border-radius: 0.5rem;
 	cursor: pointer;
 	transition: background 0.3s;
-	font-size: 0.95rem;
+	font-size: 0.9rem;
 }
 
 .menu-section li:hover {
@@ -73,6 +78,6 @@
 }
 
 .menu-item-link span {
-	font-size: 0.88rem;
+	font-size: 0.87rem;
 	font-weight: 500;
 }

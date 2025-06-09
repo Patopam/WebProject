@@ -5,8 +5,11 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const RecommendationCard = ({ showInfo, selectedCategory, recommendation, loading, onRefresh }) => {
+	const isMobile = useMediaQuery('(max-width:767px)');
+
 	return (
 		<Card
 			sx={{
@@ -62,7 +65,7 @@ const RecommendationCard = ({ showInfo, selectedCategory, recommendation, loadin
 						<Typography
 							sx={{
 								fontFamily: "'Manrope', sans-serif",
-								fontSize: '1.125rem',
+								fontSize: isMobile ? '1rem' : '1.125rem',
 								fontWeight: 300,
 								color: '#333',
 							}}
@@ -81,6 +84,7 @@ const RecommendationCard = ({ showInfo, selectedCategory, recommendation, loadin
 						</IconButton>
 					)}
 				</Box>
+
 				<Typography
 					component='span'
 					sx={{
@@ -89,14 +93,14 @@ const RecommendationCard = ({ showInfo, selectedCategory, recommendation, loadin
 						justifyContent: showInfo ? 'flex-start' : 'center',
 						color: '#333',
 						fontFamily: "'Manrope', sans-serif",
-						fontSize: showInfo ? '1.25rem' : '1.75rem',
-						fontWeight: showInfo ? 500 : 700,
+						fontSize: showInfo ? (isMobile ? '1rem' : '1.125rem') : isMobile ? '1.125rem' : '1.25rem',
+						fontWeight: showInfo ? 500 : 600,
 						lineHeight: '125%',
 						alignSelf: 'stretch',
 						alignItems: 'center',
 						overflow: 'hidden',
 						wordWrap: 'break-word',
-						textAlign: showInfo ? 'left' : 'left',
+						textAlign: 'left',
 						padding: '0 0.5rem',
 					}}
 				>

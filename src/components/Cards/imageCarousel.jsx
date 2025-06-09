@@ -29,7 +29,6 @@ import {
 	clearError,
 	resetState,
 } from '../../redux/cloudinarySlice/cloudinarySlice';
-
 const CarouselContainer = styled('div')(({ theme }) => ({
 	position: 'relative',
 	borderRadius: theme.spacing(2),
@@ -38,31 +37,30 @@ const CarouselContainer = styled('div')(({ theme }) => ({
 	maxWidth: '100%',
 	overflow: 'hidden',
 	boxSizing: 'border-box',
-	minHeight: '200px',
+	height: '230px', // altura fija
 
 	'@media (max-width: 1024px)': {
-		maxWidth: '100%',
-		minHeight: '180px',
+		height: '230px',
 	},
 
 	'@media (max-width: 767px)': {
-		maxWidth: '100%',
-		minHeight: '160px',
+		height: '230px',
 	},
 
 	'@media (max-width: 425px)': {
-		maxWidth: '100%',
-		minHeight: '140px',
+		height: '230px',
 	},
 }));
 
 const EmblaContainer = styled('div')({
 	overflow: 'hidden',
 	width: '100%',
+	height: '100%',
 });
 
 const EmblaSlideContainer = styled('div')({
 	display: 'flex',
+	height: '100%',
 });
 
 const EmblaSlide = styled('div')({
@@ -70,27 +68,14 @@ const EmblaSlide = styled('div')({
 	padding: '0.5rem',
 	boxSizing: 'border-box',
 	position: 'relative',
+	height: '100%',
 });
 
-const SlideImage = styled('img')(({ theme }) => ({
+const SlideImage = styled('img')(() => ({
 	width: '100%',
-	height: 'auto',
-	aspectRatio: '16/9',
-	maxHeight: '15rem',
+	height: '100%',
 	objectFit: 'cover',
 	borderRadius: '0.75rem',
-
-	'@media (max-width: 1024px)': {
-		maxHeight: '12rem',
-	},
-
-	'@media (max-width: 767px)': {
-		maxHeight: '10rem',
-	},
-
-	'@media (max-width: 425px)': {
-		maxHeight: '8rem',
-	},
 }));
 
 const EmptyStateContainer = styled('div')(({ theme }) => ({
@@ -99,7 +84,7 @@ const EmptyStateContainer = styled('div')(({ theme }) => ({
 	alignItems: 'center',
 	justifyContent: 'center',
 	height: '100%',
-	minHeight: '200px',
+	minHeight: '230px',
 	color: theme.palette.text.secondary,
 	textAlign: 'center',
 	padding: theme.spacing(2),
@@ -143,11 +128,9 @@ const UploadInput = styled('input')({
 });
 
 export default function ImageCarousel() {
-	// Auth
 	const auth = getAuth();
 	const [user, loading] = useAuthState(auth);
 
-	// Local state
 	const [openSnackbar, setOpenSnackbar] = useState(false);
 	const [snackbarMessage, setSnackbarMessage] = useState('');
 	const [snackbarSeverity, setSnackbarSeverity] = useState('success');
@@ -162,7 +145,6 @@ export default function ImageCarousel() {
 	const error = useSelector(selectCloudinaryError);
 	const userImages = useSelector(selectCloudinaryImages);
 
-	// Embla Carousel
 	const [emblaRef, emblaApi] = useEmblaCarousel(
 		{ loop: userImages.length > 0 },
 		userImages.length > 0 ? [Autoplay({ delay: 3000 })] : []
@@ -176,7 +158,6 @@ export default function ImageCarousel() {
 		}
 	}, [user?.uid, dispatch]);
 
-	// Reset state when user logs out
 	useEffect(() => {
 		if (!user && !loading) {
 			dispatch(resetState());
@@ -209,7 +190,6 @@ export default function ImageCarousel() {
 		};
 	}, [emblaApi, userImages.length]);
 
-	// Reset carousel when images change
 	useEffect(() => {
 		if (emblaApi && userImages.length > 0) {
 			emblaApi.reInit({ loop: userImages.length > 1 });
@@ -295,7 +275,6 @@ export default function ImageCarousel() {
 		setOpenSnackbar(false);
 	};
 
-	// Show loading state while checking authentication
 	if (loading) {
 		return (
 			<CarouselContainer>
@@ -309,7 +288,6 @@ export default function ImageCarousel() {
 		);
 	}
 
-	// Show login prompt if user is not authenticated
 	if (!user) {
 		return (
 			<CarouselContainer>
@@ -339,7 +317,6 @@ export default function ImageCarousel() {
 		);
 	}
 
-	// Show empty state if no images
 	if (userImages.length === 0) {
 		return (
 			<>
@@ -349,7 +326,7 @@ export default function ImageCarousel() {
 							No images yet
 						</Typography>
 						<Typography variant='body2' color='text.secondary' sx={{ mb: 2 }}>
-							Upload your first image to get started with your personal carousel.
+							Upload your first image to get started <br /> with your personal carousel.
 						</Typography>
 						<ActionButtonCircle onClick={handleAddButtonClick} disabled={isUploading}>
 							{isUploading ? (
@@ -361,7 +338,6 @@ export default function ImageCarousel() {
 					</EmptyStateContainer>
 					<UploadInput ref={fileInputRef} accept='image/*' type='file' onChange={handleFileUpload} />
 				</CarouselContainer>
-				{/* Snackbar for notifications */}
 				<Snackbar
 					open={openSnackbar}
 					autoHideDuration={6000}
@@ -414,30 +390,76 @@ export default function ImageCarousel() {
 				<UploadInput ref={fileInputRef} accept='image/*' type='file' onChange={handleFileUpload} />
 			</CarouselContainer>
 
-			{/* Confirmation dialog for deletion */}
 			<Dialog
 				open={deleteDialogOpen}
 				onClose={handleCancelDelete}
 				aria-labelledby='alert-dialog-title'
 				aria-describedby='alert-dialog-description'
+				PaperProps={{
+					sx: {
+						borderRadius: '24px',
+						backgroundColor: '#eeeeee',
+						color: '#333',
+						padding: '2rem',
+						fontFamily: 'Manrope, sans-serif',
+						boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
+						maxWidth: '400px',
+						width: '90%',
+					},
+				}}
 			>
-				<DialogTitle id='alert-dialog-title'>Delete Image?</DialogTitle>
+				<DialogTitle
+					id='alert-dialog-title'
+					sx={{
+						fontWeight: 700,
+						fontSize: '20px',
+						fontFamily: 'Manrope, sans-serif',
+						color: '#000',
+					}}
+				>
+					Delete Image?
+				</DialogTitle>
+
 				<DialogContent>
-					<DialogContentText id='alert-dialog-description'>
+					<DialogContentText
+						id='alert-dialog-description'
+						sx={{
+							fontSize: '16px',
+							color: '#555',
+							fontFamily: 'Manrope, sans-serif',
+							marginTop: '0.5rem',
+						}}
+					>
 						Are you sure you want to remove this image from your carousel? This action cannot be undone.
 					</DialogContentText>
 				</DialogContent>
-				<DialogActions>
-					<Button onClick={handleCancelDelete} color='primary'>
+
+				<DialogActions sx={{ justifyContent: 'flex-end', marginTop: '1rem' }}>
+					<Button
+						onClick={handleCancelDelete}
+						sx={{
+							color: '#555',
+							fontWeight: 500,
+							fontFamily: 'Manrope, sans-serif',
+							textTransform: 'none',
+						}}
+					>
 						Cancel
 					</Button>
-					<Button onClick={handleConfirmDelete} color='error' autoFocus>
+					<Button
+						onClick={handleConfirmDelete}
+						sx={{
+							color: '#d32f2f',
+							fontWeight: 600,
+							fontFamily: 'Manrope, sans-serif',
+							textTransform: 'none',
+						}}
+					>
 						Delete
 					</Button>
 				</DialogActions>
 			</Dialog>
 
-			{/* Notifications */}
 			<Snackbar
 				open={openSnackbar}
 				autoHideDuration={6000}
