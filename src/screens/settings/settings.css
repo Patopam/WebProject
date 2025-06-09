@@ -28,16 +28,75 @@
 	gap: 0.5rem;
 }
 
+.messages-container {
+	margin-bottom: 1rem;
+	min-height: 20px;
+}
+
+.message {
+	padding: 12px 16px;
+	border-radius: 8px;
+	font-size: 0.9rem;
+	font-weight: 500;
+	margin-bottom: 8px;
+	text-align: center;
+	transition: all 0.3s ease;
+}
+
+.success-message {
+	background-color: #d4edda;
+	color: #155724;
+	border: 1px solid #c3e6cb;
+}
+
+.error-message {
+	background-color: #f8d7da;
+	color: #721c24;
+	border: 1px solid #f5c6cb;
+}
+
 .profile-section {
 	display: flex;
 	align-items: center;
 	margin-bottom: 2rem;
 }
 
+.avatar-container {
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+	overflow: hidden;
+	flex-shrink: 0;
+	position: relative;
+}
+
 .avatar-image {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
+}
+
+.avatar-initials {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: white;
+	font-weight: 600;
+	font-size: 1.5rem;
+	text-transform: uppercase;
+}
+
+.avatar-placeholder {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #f0f0f0;
+	color: #999;
+	font-size: 3rem;
 }
 
 .profile-info {
@@ -87,6 +146,13 @@
 	color: #333333;
 }
 
+.password-help-text {
+	color: #666;
+	font-size: 12px;
+	margin-top: 4px;
+	display: block;
+}
+
 .input-with-icon {
 	position: relative;
 	display: flex;
@@ -109,41 +175,57 @@
 	gap: 1rem;
 	margin-top: auto;
 	padding-top: 2rem;
+	flex-wrap: nowrap;
+	width: 100%;
+}
+
+.cancel-button,
+.save-button {
+	border-radius: 16px;
+	padding: 0.75rem 2rem;
+	font-weight: 500;
+	font-size: 1rem !important;
+	border: none;
+	cursor: pointer;
+	font-family: 'Manrope', sans-serif;
+	transition: all 0.2s ease;
+	min-width: 120px;
+	max-width: 200px;
+	height: 48px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	box-sizing: border-box;
+	white-space: nowrap;
+	line-height: 1.2 !important;
+	text-align: center;
 }
 
 .cancel-button {
 	background-color: #cbcbe7;
 	color: #333333;
-	border-radius: 16px;
-	padding: 0.75rem 2rem;
-	font-weight: 500;
-	font-size: 1rem;
-	border: none;
-	cursor: pointer;
-	font-family: 'Manrope', sans-serif;
 }
 
-.cancel-button:hover {
+.cancel-button:hover:not(:disabled) {
 	background-color: #b8b8d9;
 }
 
 .save-button {
 	background-color: #33336f;
 	color: #ffffff;
-	border-radius: 16px;
-	padding: 0.75rem 2rem;
-	font-weight: 500;
-	font-size: 1rem;
-	border: none;
-	cursor: pointer;
-	font-family: 'Manrope', sans-serif;
 }
 
-.save-button:hover {
+.save-button:hover:not(:disabled) {
 	background-color: #22224a;
 }
 
-/* Fixed styling for inputs */
+.cancel-button:disabled,
+.save-button:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
 .input-field {
 	width: 100% !important;
 	height: 48px !important;
@@ -159,51 +241,158 @@
 	padding-left: 40px !important;
 }
 
-/* Estilos responsivos para el boton de logout en móvil */
+.loading-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 200px;
+	font-size: 1.1rem;
+	color: #666;
+}
+
+/* Responsive Design */
 @media screen and (max-width: 1024px) {
 	.settings-content {
 		padding: 1.5rem;
-		padding-bottom: 90px; /* Espacio para la barra de navegación móvil */
+		padding-bottom: 120px;
 	}
 
-	/* Ajuste para cuando el contenido no cabe bien en pantallas más pequeñas */
+	.settings-header {
+		margin-top: 4rem;
+	}
+
 	.form-grid {
 		grid-template-columns: 1fr;
 		gap: 1.5rem;
+	}
+
+	.buttons-container {
+		gap: 0.75rem;
+		justify-content: center;
+	}
+
+	.cancel-button,
+	.save-button {
+		min-width: 120px;
+		max-width: 160px;
+		height: 48px;
+		padding: 0.75rem 1rem;
+		flex: 0 0 auto;
+		font-size: 1rem !important;
 	}
 }
 
 @media screen and (max-width: 767px) {
 	.settings-content {
 		padding: 1rem;
-		padding-bottom: 80px;
+		padding-bottom: 120px;
 	}
 
-	.buttons-container {
-		flex-direction: column-reverse;
-		gap: 0.75rem;
-	}
-
-	.save-button,
-	.cancel-button {
-		width: 100%;
-		padding: 0.75rem 1rem;
+	.settings-header {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 1rem;
+		margin-bottom: 0.5rem;
+		margin-top: 4rem;
 	}
 
 	.profile-section {
 		flex-direction: column;
 		text-align: center;
+		align-items: center;
+	}
+
+	.avatar-container {
+		width: 80px;
+		height: 80px;
+	}
+
+	.avatar-initials {
+		font-size: 1.8rem;
+	}
+
+	.avatar-placeholder {
+		font-size: 3.5rem;
 	}
 
 	.profile-info {
 		margin-left: 0;
 		margin-top: 1rem;
 	}
+
+	.message {
+		font-size: 0.85rem;
+		padding: 10px 14px;
+	}
+
+	.cancel-button,
+	.save-button {
+		font-size: 1rem !important;
+	}
+	.buttons-container {
+		padding-top: 1rem;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.buttons-container {
+		flex-direction: column-reverse;
+		gap: 0.75rem;
+		align-items: stretch;
+		justify-content: center;
+		padding-top: 1rem;
+	}
+
+	.save-button,
+	.cancel-button {
+		width: 100%;
+		min-width: 120px;
+		height: 48px;
+		padding: 0.75rem 1rem;
+		max-width: none;
+		font-size: 1rem !important;
+	}
 }
 
 @media screen and (max-width: 425px) {
 	.settings-content {
 		padding: 0.75rem;
-		padding-bottom: 80px;
+		padding-bottom: 110px;
+	}
+
+	.settings-header {
+		margin-bottom: 0.5rem;
+		margin-top: 4rem;
+	}
+
+	.avatar-container {
+		width: 80px;
+		height: 80px;
+	}
+
+	.avatar-initials {
+		font-size: 1.6rem;
+	}
+
+	.avatar-placeholder {
+		font-size: 3.2rem;
+	}
+
+	.profile-subtitle {
+		font-size: 0.85rem;
+	}
+
+	.input-label {
+		font-size: 0.9rem;
+	}
+
+	.message {
+		font-size: 0.8rem;
+		padding: 8px 12px;
+	}
+
+	.cancel-button,
+	.save-button {
+		font-size: 1rem !important;
 	}
 }

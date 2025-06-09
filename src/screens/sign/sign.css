@@ -1,6 +1,7 @@
-/* Base styles */
-body {
+body.sign-mode {
 	background-color: #f3f3f3;
+	overflow: hidden;
+	height: 100dvh;
 }
 
 .Container-sign {
@@ -8,58 +9,106 @@ body {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	height: 98vh;
 	width: 100%;
 	max-width: 500px;
 	margin: 0 auto;
 	padding: 2rem;
 	box-sizing: border-box;
 	font-family: 'Manrope', sans-serif;
+	min-height: 100vh;
 }
 
-/* Form styles */
-.Container-sign form {
+.Sign-header {
+	text-align: center;
+	margin-bottom: 1rem;
+}
+
+.Sign-title {
+	font-size: clamp(1.8rem, 4vw, 2.5rem);
+	font-weight: 800;
+	margin-bottom: 0.5rem;
+}
+
+.Sign-subtitle {
+	font-size: clamp(1rem, 2.7vw, 1.3rem);
+	line-height: 1.4;
+	margin-bottom: 1.5rem;
+	color: #333;
+	text-wrap: balance;
+	text-align: center;
+}
+
+.Sign-form {
 	width: 100%;
 }
 
-/* Responsive styles */
-
-/* Tablet (iPad) - 768px to 1024px */
-@media screen and (max-width: 1024px) {
-	.Container-sign {
-		padding: 1.5rem;
-		height: 100vh;
-	}
+.Sign-buttons {
+	width: 100%;
+	margin: 1.5rem auto 0 auto;
 }
 
-/* Mobile Large - 426px to 767px */
-@media screen and (max-width: 767px) {
-	.Container-sign {
-		padding: 1rem;
-		justify-content: flex-start;
-		padding-top: 3rem;
-	}
-
-	/* Stack button container for mobile */
-	.Container-sign .MuiStack-root {
-		width: 100%;
-	}
-
-	/* Adjust button widths for mobile */
-	.Container-sign button {
-		width: 100%;
-	}
+.Sign-loginlink {
+	text-align: center;
+	margin-top: 1rem;
+	color: #5e35b1;
+	font-size: 0.95rem;
+	padding-top: 1rem;
 }
 
-/* Mobile Small - < 426px */
+/* Mobile (max 425px) */
 @media screen and (max-width: 425px) {
 	.Container-sign {
-		padding: 0.75rem;
-		padding-top: 2rem;
+		padding: 1rem;
 	}
 
-	/* Additional spacing adjustments */
-	.Container-sign .MuiStack-root {
-		gap: 1rem !important;
+	.Sign-subtitle {
+		font-size: 1rem;
+		margin-bottom: 1rem;
+	}
+
+	.Sign-buttons {
+		margin-top: 1rem;
+	}
+}
+
+/* Mobile M/L (426px – 767px) */
+@media screen and (min-width: 426px) and (max-width: 767px) {
+	.Container-sign {
+		padding: 1.25rem;
+		padding-top: 2rem;
+		padding-inline: 1.75rem;
+	}
+
+	.Sign-title {
+		font-size: 2rem;
+	}
+
+	.Sign-buttons {
+		max-width: 100%;
+	}
+}
+
+/* Laptop & Desktop (1025px ->) */
+@media screen and (min-width: 1025px) {
+	.Sign-form .MuiStack-root,
+	.Sign-buttons {
+		max-width: 400px;
+		width: 100%;
+		margin: 0 auto;
+	}
+}
+
+/* Desktop */
+@media screen and (min-width: 1441px) {
+	.Container-sign {
+		padding: 4rem 3rem;
+	}
+
+	.Sign-title {
+		font-size: 2.6rem;
+	}
+
+	.Sign-subtitle {
+		font-size: 1.4rem;
 	}
 }

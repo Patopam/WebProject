@@ -26,21 +26,9 @@
 	gap: 0.5rem;
 }
 
-/* Iconos móviles encima del header */
-.journal-mobile-icons {
-	display: flex;
-	gap: 0.5rem;
-	justify-content: flex-end;
-	margin-bottom: 1rem;
-	transition: opacity 0.3s ease;
-}
-
-/* Barra de navegación móvil */
 .mobile-navbar {
-	display: none; /* Oculta por defecto */
+	display: none;
 }
-
-/* ===== RESPONSIVE STYLES ===== */
 
 /* Tablet/Móvil - <= 1024px */
 @media screen and (max-width: 1024px) {
@@ -50,10 +38,9 @@
 
 	.journal-content {
 		padding: 1.5rem;
-		padding-bottom: 90px; /* Espacio para la barra de navegación móvil */
+		padding-bottom: 90px;
 	}
 
-	/* Mostrar navbar móvil */
 	.mobile-navbar {
 		display: flex !important;
 		position: fixed;
@@ -63,14 +50,8 @@
 		z-index: 1000;
 	}
 
-	/* Ocultar menú lateral */
 	.menu-container {
 		display: none;
-	}
-
-	/* Estilo para los iconos móviles */
-	.journal-mobile-icons {
-		padding: 0.5rem 0;
 	}
 }
 
@@ -97,9 +78,5 @@
 
 	.journal-header {
 		margin-bottom: 1rem;
-	}
-
-	.journal-mobile-icons {
-		margin-bottom: 0.5rem;
 	}
 }

@@ -1,5 +1,13 @@
 import { Box, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+
 const JournalCards = ({ journalData }) => {
+	const navigate = useNavigate();
+
+	const handleClick = (journalId) => {
+		navigate(`/journal/edit/${journalId}`);
+	};
+
 	if (journalData.length === 0) {
 		return (
 			<Typography
@@ -18,98 +26,79 @@ const JournalCards = ({ journalData }) => {
 	}
 
 	return (
-		<Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-			{journalData.map((week) => (
-				<Box key={week.week} sx={{ marginBottom: '1.5rem' }}>
-					<Typography
-						sx={{
-							fontFamily: "'Manrope', sans-serif",
-							fontSize: '2rem',
-							fontWeight: 700,
-							color: '#333',
-							marginBottom: '1rem',
-						}}
-					>
-						Week {week.week}
-					</Typography>
-					<Box
-						sx={{
-							display: 'flex',
-							flexWrap: 'wrap',
-							gap: '1rem',
-							justifyContent: 'flex-start',
-						}}
-					>
-						{week.entries.map((entry, index) => (
-							<Box
-								key={index}
-								sx={{
-									display: 'flex',
-									flexDirection: 'column',
-									width: {
-										xs: '100%',
-										sm: 'calc(50% - 0.5rem)',
-										md: 'calc(33.33% - 0.67rem)',
-										lg: 'calc(25% - 0.75rem)',
-									},
-									height: '0',
-									paddingBottom: {
-										xs: '100%',
-										sm: 'calc(50% - 0.5rem)',
-										md: 'calc(33.33% - 0.67rem)',
-										lg: 'calc(25% - 0.75rem)',
-									},
-									position: 'relative',
-									borderRadius: '1rem',
-									background: entry.color || '#FDE3A7',
-									overflow: 'hidden',
-								}}
-							>
-								<Box
-									sx={{
-										position: 'absolute',
-										top: 0,
-										left: 0,
-										right: 0,
-										bottom: 0,
-										padding: '1.5rem',
-										display: 'flex',
-										flexDirection: 'column',
-									}}
-								>
-									<Typography
-										sx={{
-											fontFamily: "'Manrope', sans-serif",
-											fontSize: {
-												xs: '1.5rem',
-												sm: '1.75rem',
-											},
-											fontWeight: 700,
-											color: '#33356B',
-											marginBottom: '1rem',
-										}}
-									>
-										{entry.day || 'Unknown Day'}
-									</Typography>
+		<Box
+			sx={{
+				display: 'flex',
+				flexWrap: 'wrap',
+				gap: '1.5rem',
+				justifyContent: 'flex-start',
+			}}
+		>
+			{journalData.map((entry) => {
+				const formattedDate = entry.date?.toDateString?.() || 'No date';
 
-									<Typography
-										sx={{
-											fontFamily: "'Manrope', sans-serif",
-											fontSize: '1rem',
-											fontWeight: 400,
-											color: '#33356B',
-											lineHeight: 1.5,
-											overflow: 'auto',
-										}}
-									>
-										{entry.description || 'No content available.'}
-									</Typography>
-								</Box>
-							</Box>
-						))}
+				return (
+					<Box
+						key={entry.id}
+						onClick={() => handleClick(entry.id)}
+						aria-label={`Edit journal ${entry.title}`}
+						sx={{
+							cursor: 'pointer',
+							width: {
+								xs: '100%',
+								sm: 'calc(50% - 0.75rem)',
+								md: 'calc(33.33% - 1rem)',
+								lg: 'calc(25% - 1.25rem)',
+							},
+							padding: '1rem',
+							borderRadius: '1rem',
+							background: '#F5F5F5',
+							boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+							display: 'flex',
+							flexDirection: 'column',
+							gap: '0.5rem',
+							transition: 'transform 0.2s ease',
+							'&:hover': {
+								transform: 'scale(1.02)',
+							},
+						}}
+					>
+						<Typography
+							sx={{
+								fontSize: '0.8rem',
+								color: '#777',
+								fontFamily: "'Manrope', sans-serif",
+							}}
+						>
+							{formattedDate}
+						</Typography>
+						<Typography
+							sx={{
+								fontSize: '1.1rem',
+								fontWeight: 600,
+								color: '#33356B',
+								fontFamily: "'Manrope', sans-serif",
+							}}
+						>
+							{entry.title || 'Untitled'}
+						</Typography>
+						<Typography
+							sx={{
+								fontSize: '0.95rem',
+								color: '#333',
+								fontFamily: "'Manrope', sans-serif",
+								overflow: 'hidden',
+								textOverflow: 'ellipsis',
+								display: '-webkit-box',
+								WebkitLineClamp: 3,
+								WebkitBoxOrient: 'vertical',
+							}}
+						>
+							{entry.description || 'No content available.'}
+						</Typography>
 					</Box>
-				</Box>
-			))}
+				);
+			})}
 		</Box>
 	);
 };

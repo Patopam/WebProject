@@ -1,159 +1,216 @@
-import { Typography, Box, useTheme, useMediaQuery } from '@mui/material';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../services/firebase";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+import "./expenseChart.css";
 
-export default function ExpensesLineChart() {
-	const theme = useTheme();
-	const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-	const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
-	const styleText = {
-		Linea: {
-			color: 'var(--Neutral-1000, #333)',
-			fontFamily: 'Manrope, sans-serif',
-			fontSize: '1rem',
-			fontStyle: 'normal',
-			fontWeight: 400,
-			lineHeight: 'normal',
-			color: '#000000',
-			marginTop: '1.25rem',
-			textAlign: 'center',
-		},
-		Titulo: {
-			color: 'var(--Neutral-1000, #333)',
-			fontFamily: 'Manrope, sans-serif',
-			fontSize: {
-				xs: '1.5rem', // Smaller on mobile
-				sm: '1.75rem', // Medium on tablets
-				md: '2rem', // Normal on desktop
-			},
-			fontWeight: 400,
-			color: '#000000',
-			marginTop: '1.25rem',
-			marginBottom: '1rem',
-			textAlign: 'center',
-		},
-	};
+export default function ExpensesChart() {
+  const [expensesData, setExpensesData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+  const uid = useSelector((state) => state.userId.id);
 
-	// Burned-in expense data for the week
-	const expensesData = [
-		{ day: 'Lunes', expense: 51 },
-		{ day: 'Martes', expense: 13 },
-		{ day: 'Miércoles', expense: 8 },
-		{ day: 'Jueves', expense: 70 },
-		{ day: 'Viernes', expense: 34 },
-		{ day: 'Sábado', expense: 22 },
-		{ day: 'Domingo', expense: 18 },
-	];
+  // Detectar si estamos en móvil
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
 
-	// Customizing the tooltip
-	const CustomTooltip = ({ active, payload }) => {
-		if (active && payload && payload.length) {
-			return (
-				<Box
-					sx={{
-						backgroundColor: 'white',
-						padding: '0.5rem',
-						border: '1px solid #ccc',
-						borderRadius: '0.25rem',
-						boxShadow: '0 2px 5px rgba(0,0,0,0.15)',
-					}}
-				>
-					<Typography sx={{ fontSize: '0.875rem' }}>
-						{`${payload[0].payload.day}: $${payload[0].payload.expense}`}
-					</Typography>
-				</Box>
-			);
-		}
-		return null;
-	};
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
-	// Custom point
-	const CustomDot = (props) => {
-		const { cx, cy } = props;
-		const radius = isMobile ? 5 : isTablet ? 6 : 7; // Size adjusted according to device
-		return <circle cx={cx} cy={cy} r={radius} fill='#49499D' stroke='white' strokeWidth={isMobile ? 1.5 : 2} />;
-	};
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!uid) return;
 
-	// Determine chart height based on screen size
-	const chartHeight = {
-		xs: 220, // Height movile
-		sm: 280, // Height tablets
-		md: 320, // Height desktop
-	};
+      setIsLoading(true);
+      try {
+        const SpendsRef = collection(db, "users", uid, "Spends");
+        const querySnapshot = await getDocs(SpendsRef);
 
-	const getYAxisTicks = () => {
-		if (isMobile) {
-			return [0, 20, 40, 60, 80]; // Menos ticks  movile
-		}
-		return [0, 10, 20, 30, 40, 50, 60, 70, 80]; // All ticks on desktop
-	};
+        const weekDays = [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+        ];
 
-	return (
-		<Box
-			sx={{
-				width: '100%',
-				padding: { xs: '0.5rem', sm: '1rem', md: '1.5rem' },
-				backgroundColor: '#CECAE4',
-				borderRadius: '1rem',
-			}}
-		>
-			<Typography variant='h4' sx={styleText.Titulo}>
-				Weekly Expenses
-			</Typography>
+        const weekDaysShort = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-			<ResponsiveContainer
-				width='100%'
-				height={
-					theme.breakpoints.values.xs ? chartHeight.xs : theme.breakpoints.values.sm ? chartHeight.sm : chartHeight.md
-				}
-				style={{ marginBottom: '2rem' }}
-			>
-				<LineChart
-					data={expensesData}
-					margin={{
-						top: 20,
-						right: isMobile ? 20 : 40,
-						left: isMobile ? 20 : 40,
-						bottom: 30,
-					}}
-					style={styleText.Linea}
-				>
-					<CartesianGrid strokeDasharray='3 3' />
-					<XAxis
-						dataKey='day'
-						height={40}
-						fontSize={isMobile ? '0.75rem' : '0.875rem'}
-						tick={{ fill: '#666' }}
-						tickMargin={15}
-						angle={isMobile && expensesData.some((d) => d.day.length > 6) ? -30 : 0}
-						textAnchor={isMobile && expensesData.some((d) => d.day.length > 6) ? 'end' : 'middle'}
-					/>
-					<YAxis
-						domain={[0, 80]}
-						ticks={getYAxisTicks()}
-						tickFormatter={(value) => `$${value}`}
-						fontSize={isMobile ? '0.75rem' : '0.875rem'}
-						tick={{ fill: '#666' }}
-						width={isMobile ? 35 : 45}
-					/>
-					<Tooltip content={<CustomTooltip />} />
-					<Legend
-						wrapperStyle={{
-							fontSize: isMobile ? '0.75rem' : '0.875rem',
-							marginTop: '1rem',
-							paddingTop: '0.5rem',
-						}}
-					/>
-					<Line
-						type='monotone'
-						dataKey='expense'
-						name='Gasto'
-						stroke='#49499D'
-						strokeWidth={isMobile ? 3 : 4}
-						dot={<CustomDot />}
-						activeDot={{ r: isMobile ? 6 : 8 }}
-					/>
-				</LineChart>
-			</ResponsiveContainer>
-		</Box>
-	);
+        const expensesMap = {
+          Sunday: 0,
+          Monday: 0,
+          Tuesday: 0,
+          Wednesday: 0,
+          Thursday: 0,
+          Friday: 0,
+          Saturday: 0,
+        };
+
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          if (data.date && data.amount) {
+            const date = data.date.toDate();
+            const day = weekDays[date.getDay()];
+            expensesMap[day] += data.amount;
+          }
+        });
+
+        const processedData = weekDays.map((day, index) => ({
+          day: isMobile ? weekDaysShort[index] : day,
+          fullDay: day,
+          expense: expensesMap[day],
+        }));
+
+        setExpensesData(processedData);
+      } catch (error) {
+        console.error("Error fetching expenses data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [uid, isMobile]);
+
+  // Tooltip personalizado mejorado
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      const data = payload[0].payload;
+      const displayDay = data.fullDay || label;
+
+      return (
+        <div className="tooltip">
+          <p className="tooltip-label">{displayDay}</p>
+          <p className="tooltip-value">
+            Gastos:{" "}
+            <span className="amount">${payload[0].value.toLocaleString()}</span>
+          </p>
+        </div>
+      );
+    }
+    return null;
+  };
+
+  // Configuración dinámica basada en el tamaño de pantalla
+  const getChartConfig = () => {
+    if (window.innerWidth <= 480) {
+      return {
+        margin: { top: 10, right: 10, left: 10, bottom: 10 },
+        fontSize: 10,
+        strokeWidth: 2,
+        dotSize: 3,
+        activeDotSize: 5,
+      };
+    } else if (window.innerWidth <= 768) {
+      return {
+        margin: { top: 15, right: 15, left: 15, bottom: 15 },
+        fontSize: 12,
+        strokeWidth: 2.5,
+        dotSize: 4,
+        activeDotSize: 6,
+      };
+    } else {
+      return {
+        margin: { top: 20, right: 30, left: 20, bottom: 20 },
+        fontSize: 16,
+        strokeWidth: 3,
+        dotSize: 5,
+        activeDotSize: 7,
+      };
+    }
+  };
+
+  const chartConfig = getChartConfig();
+
+  if (isLoading) {
+    return (
+      <div className="chart-container-Spends">
+        <div className="chart-header">
+          <h3 className="chart-title">Weekly Expenses</h3>
+        </div>
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
+          <p className="loading-text">Loading data...</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="chart-container-Spends">
+      <div className="chart-header">
+        <h3 className="chart-title">Weekly Expenses</h3>
+        <p className="chart-subtitle">Tracking expenses by day of the week</p>
+      </div>
+      <div className="chart-wrapper">
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={expensesData} margin={chartConfig.margin}>
+            <defs>
+              <linearGradient id="colorExpense" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#49499d" stopOpacity={0.1} />
+                <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <XAxis
+              dataKey="day"
+              stroke="#666"
+              fontSize={chartConfig.fontSize}
+              tickLine={false}
+              axisLine={false}
+              tick={{ fill: "#666", fontSize: chartConfig.fontSize }}
+              interval={0}
+            />
+            <YAxis
+              stroke="#666"
+              fontSize={chartConfig.fontSize}
+              tickLine={false}
+              axisLine={false}
+              tick={{ fill: "#666", fontSize: chartConfig.fontSize }}
+              tickFormatter={(value) =>
+                isMobile && value >= 1000
+                  ? `$${(value / 1000).toFixed(0)}k`
+                  : `$${value.toLocaleString()}`
+              }
+              width={isMobile ? 40 : 60}
+            />
+            <Tooltip content={<CustomTooltip />} />
+            <Line
+              type="monotone"
+              dataKey="expense"
+              stroke="#49499d"
+              strokeWidth={chartConfig.strokeWidth}
+              dot={{
+                r: chartConfig.dotSize,
+                fill: "#49499d",
+                strokeWidth: 2,
+                stroke: "#ffffff",
+              }}
+              activeDot={{
+                r: chartConfig.activeDotSize,
+                fill: "#49499d",
+                strokeWidth: 2,
+                stroke: "#ffffff",
+                filter: "drop-shadow(0 2px 4px rgba(59, 130, 246, 0.3))",
+              }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
+  );
+
 }

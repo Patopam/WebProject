@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
 import Dashboard from '../screens/dashboard/dashboard';
 import Emotions from '../screens/emotions/emotions';
 import Finance from '../screens/finance/finance';
@@ -14,25 +13,41 @@ import Settings from '../screens/settings/settings';
 import AddGoal from '../screens/finance/addGoal';
 import AddSpending from '../screens/finance/addSpending';
 import Recommendations from '../screens/recommendations/recommendation';
-import ProtectedRoute from '../components/Protector/Protector';
-import { useEffect } from 'react';
+import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
+import EditJournal from '../screens/journal/editJournal';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { auth } from '../services/firebase';
+import { auth, db } from '../services/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import { clearUser, setUserid } from '../redux/UserSlice/UserSlice';
+import { clearUser, setUserId } from '../redux/UserSlice/UserSlice';
+import { setUserName } from '../redux/UserSlice/NameSlice';
+import { doc, getDoc } from 'firebase/firestore';
+
 function Router() {
 	const dispatch = useDispatch();
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		const unsubscribe = onAuthStateChanged(auth, (user) => {
+		const unsubscribe = onAuthStateChanged(auth, async (user) => {
 			if (user) {
-				dispatch(setUserid(user.uid));
+				dispatch(setUserId(user.uid));
+
+				const userRef = doc(db, 'users', user.uid);
+				const userSnap = await getDoc(userRef);
+				const name = userSnap.exists() ? userSnap.data().name : '';
+
+				dispatch(setUserName(name || ''));
 			} else {
 				dispatch(clearUser());
+				dispatch(setUserName(''));
 			}
+			setLoading(false);
 		});
+
 		return () => unsubscribe();
 	}, [dispatch]);
+
+	if (loading) return null;
 
 	return (
 		<BrowserRouter>
@@ -97,7 +112,24 @@ function Router() {
 					}
 				/>
 				<Route
+					path='/journal/edit/:id'
+					element={
+						<ProtectedRoute>
+							<EditJournal />
+						</ProtectedRoute>
+					}
+				/>
+
+				<Route
 					path='/finance/add-spending'
+					element={
+						<ProtectedRoute>
+							<AddSpending />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path='/finance/edit-spending/:id'
 					element={
 						<ProtectedRoute>
 							<AddSpending />

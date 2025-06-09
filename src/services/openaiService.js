@@ -21,7 +21,6 @@ export async function getMotivationalQuote() {
 		});
 
 		const data = await response.json();
-
 		if (data?.choices?.[0]?.message?.content) {
 			return data.choices[0].message.content.trim();
 		} else {
@@ -65,13 +64,10 @@ Do NOT include any explanation. Do NOT add text outside the JSON. Respond ONLY w
 			console.warn(' OpenAI Rate limit hit (429)');
 			throw new Error('Rate limit exceeded (429)');
 		}
-
 		const data = await response.json();
 		const rawText = data?.choices?.[0]?.message?.content?.trim();
-
 		const jsonMatch = rawText?.match(/\{[\s\S]*\}/);
 		if (!jsonMatch) throw new Error('No valid JSON in OpenAI response');
-
 		const recommendation = JSON.parse(jsonMatch[0]);
 		return recommendation;
 	} catch (error) {
@@ -100,7 +96,6 @@ export async function getRecommendation(category) {
 		};
 
 		const prompt = promptMap[category] || 'Give me a brief wellbeing tip (max 2 sentences).';
-
 		const response = await fetch('https://api.openai.com/v1/chat/completions', {
 			method: 'POST',
 			headers: {
@@ -121,7 +116,6 @@ export async function getRecommendation(category) {
 		});
 
 		const data = await response.json();
-
 		if (data?.choices?.[0]?.message?.content) {
 			return data.choices[0].message.content.trim();
 		} else {

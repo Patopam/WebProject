@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { getAuth } from 'firebase/auth';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import { styled } from '@mui/material/styles';
@@ -15,40 +17,50 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
-
+import Typography from '@mui/material/Typography';
 import {
 	uploadImageToCloudinary,
-	removeImage,
+	loadUserImages,
+	deleteImage,
 	selectIsUploading,
+	selectIsLoadingImages,
 	selectCloudinaryError,
 	selectCloudinaryImages,
 	clearError,
+	resetState,
 } from '../../redux/cloudinarySlice/cloudinarySlice';
-
-// Initial images
-const initialImages = [
-	'https://i.pinimg.com/736x/c8/52/9c/c8529c9071cc20f4a642dbbb189d3496.jpg',
-	'https://i.pinimg.com/736x/5d/24/d0/5d24d0e1423ee5b4073217e5f2c4465d.jpg',
-	'https://i.pinimg.com/736x/f5/f7/b4/f5f7b4bba64a48dac65f2ccfd8afe239.jpg',
-];
-
 const CarouselContainer = styled('div')(({ theme }) => ({
 	position: 'relative',
 	borderRadius: theme.spacing(2),
 	background: theme.palette.grey[200],
 	width: '100%',
-	maxWidth: '40rem',
+	maxWidth: '100%',
 	overflow: 'hidden',
 	boxSizing: 'border-box',
+	height: '230px', // altura fija
+
+	'@media (max-width: 1024px)': {
+		height: '230px',
+	},
+
+	'@media (max-width: 767px)': {
+		height: '230px',
+	},
+
+	'@media (max-width: 425px)': {
+		height: '230px',
+	},
 }));
 
 const EmblaContainer = styled('div')({
 	overflow: 'hidden',
 	width: '100%',
+	height: '100%',
 });
 
 const EmblaSlideContainer = styled('div')({
 	display: 'flex',
+	height: '100%',
 });
 
 const EmblaSlide = styled('div')({
@@ -56,16 +68,27 @@ const EmblaSlide = styled('div')({
 	padding: '0.5rem',
 	boxSizing: 'border-box',
 	position: 'relative',
+	height: '100%',
 });
 
-const SlideImage = styled('img')({
+const SlideImage = styled('img')(() => ({
 	width: '100%',
-	height: 'auto',
-	aspectRatio: '16/9',
-	maxHeight: '15rem',
+	height: '100%',
 	objectFit: 'cover',
 	borderRadius: '0.75rem',
-});
+}));
+
+const EmptyStateContainer = styled('div')(({ theme }) => ({
+	display: 'flex',
+	flexDirection: 'column',
+	alignItems: 'center',
+	justifyContent: 'center',
+	height: '100%',
+	minHeight: '230px',
+	color: theme.palette.text.secondary,
+	textAlign: 'center',
+	padding: theme.spacing(2),
+}));
 
 const AddButtonContainer = styled('div')({
 	position: 'absolute',
@@ -88,6 +111,16 @@ const ActionButtonCircle = styled(IconButton)(({ theme }) => ({
 	'&:hover': {
 		backgroundColor: theme.palette.grey[400],
 	},
+
+	'@media (max-width: 767px)': {
+		width: '2rem',
+		height: '2rem',
+	},
+
+	'@media (max-width: 425px)': {
+		width: '1.75rem',
+		height: '1.75rem',
+	},
 }));
 
 const UploadInput = styled('input')({
@@ -95,8 +128,9 @@ const UploadInput = styled('input')({
 });
 
 export default function ImageCarousel() {
-	// Local state for initial images + Cloudinary images
-	const [allImages, setAllImages] = useState(initialImages);
+	const auth = getAuth();
+	const [user, loading] = useAuthState(auth);
+
 	const [openSnackbar, setOpenSnackbar] = useState(false);
 	const [snackbarMessage, setSnackbarMessage] = useState('');
 	const [snackbarSeverity, setSnackbarSeverity] = useState('success');
@@ -107,45 +141,68 @@ export default function ImageCarousel() {
 	// Redux
 	const dispatch = useDispatch();
 	const isUploading = useSelector(selectIsUploading);
+	const isLoadingImages = useSelector(selectIsLoadingImages);
 	const error = useSelector(selectCloudinaryError);
-	const cloudinaryImages = useSelector(selectCloudinaryImages);
+	const userImages = useSelector(selectCloudinaryImages);
 
-	// Embla Carousel
-	const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 3000 })]);
+	const [emblaRef, emblaApi] = useEmblaCarousel(
+		{ loop: userImages.length > 0 },
+		userImages.length > 0 ? [Autoplay({ delay: 3000 })] : []
+	);
 	const fileInputRef = useRef(null);
 
-	// Effect to update images when Cloudinary images change
+	// Load user images when user is authenticated
 	useEffect(() => {
-		// Update images when Cloudinary images change
-		const cloudinaryUrls = cloudinaryImages.map((img) => img.secure_url);
-		setAllImages([...initialImages, ...cloudinaryUrls]);
-	}, [cloudinaryImages]);
+		if (user?.uid) {
+			dispatch(loadUserImages(user.uid));
+		}
+	}, [user?.uid, dispatch]);
 
+	useEffect(() => {
+		if (!user && !loading) {
+			dispatch(resetState());
+		}
+	}, [user, loading, dispatch]);
+
+	// Handle errors
 	useEffect(() => {
 		if (error) {
 			setSnackbarMessage(error);
 			setSnackbarSeverity('error');
 			setOpenSnackbar(true);
-			// clean the error after displaying it
 			dispatch(clearError());
 		}
 	}, [error, dispatch]);
 
-	// Effect to follow the index of the current slide
+	// Track current slide
 	useEffect(() => {
-		if (!emblaApi) return;
+		if (!emblaApi || userImages.length === 0) return;
+
 		const onSelect = () => {
 			setCurrentSlideIndex(emblaApi.selectedScrollSnap());
 		};
 
 		emblaApi.on('select', onSelect);
 		onSelect();
+
 		return () => {
 			emblaApi.off('select', onSelect);
 		};
-	}, [emblaApi]);
+	}, [emblaApi, userImages.length]);
+
+	useEffect(() => {
+		if (emblaApi && userImages.length > 0) {
+			emblaApi.reInit({ loop: userImages.length > 1 });
+		}
+	}, [emblaApi, userImages.length]);
 
 	const handleAddButtonClick = () => {
+		if (!user) {
+			setSnackbarMessage('Please log in to upload images');
+			setSnackbarSeverity('error');
+			setOpenSnackbar(true);
+			return;
+		}
 		fileInputRef.current.click();
 	};
 
@@ -153,49 +210,55 @@ export default function ImageCarousel() {
 		const file = event.target.files[0];
 		if (!file || !file.type.match('image.*')) return;
 
+		if (!user?.uid) {
+			setSnackbarMessage('Please log in to upload images');
+			setSnackbarSeverity('error');
+			setOpenSnackbar(true);
+			event.target.value = '';
+			return;
+		}
+
 		try {
-			// Upload image to Cloudinary using Redux
-			await dispatch(uploadImageToCloudinary(file)).unwrap();
+			await dispatch(uploadImageToCloudinary({ file, uid: user.uid })).unwrap();
 			setSnackbarMessage('Image uploaded successfully');
 			setSnackbarSeverity('success');
 			setOpenSnackbar(true);
-			// Clear input to allow selecting the same file again
 			event.target.value = '';
 		} catch (err) {
-			console.error('Error al subir la imagen:', err);
-			// Clear input to allow selecting the same file again
+			console.error('Error uploading image:', err);
 			event.target.value = '';
 		}
 	};
 
 	const handleDeleteButtonClick = () => {
+		if (!user) {
+			setSnackbarMessage('Please log in to delete images');
+			setSnackbarSeverity('error');
+			setOpenSnackbar(true);
+			return;
+		}
 		setImageToDeleteIndex(currentSlideIndex);
 		setDeleteDialogOpen(true);
 	};
 
-	const handleConfirmDelete = () => {
-		if (imageToDeleteIndex >= 0) {
-			// Determine whether the image to delete is an initial image or a Cloudinary image
-			if (imageToDeleteIndex < initialImages.length) {
-				// It is an initial image, we can only delete it from the local state
-				const newInitialImages = [...initialImages];
-				newInitialImages.splice(imageToDeleteIndex, 1);
-				const newAllImages = [...newInitialImages, ...cloudinaryImages.map((img) => img.secure_url)];
-				setAllImages(newAllImages);
+	const handleConfirmDelete = async () => {
+		if (imageToDeleteIndex >= 0 && user?.uid) {
+			const imageToDelete = userImages[imageToDeleteIndex];
 
-				setSnackbarMessage('Imagen eliminada correctamente');
+			try {
+				await dispatch(
+					deleteImage({
+						uid: user.uid,
+						imageId: imageToDelete.id,
+						publicId: imageToDelete.public_id,
+					})
+				).unwrap();
+
+				setSnackbarMessage('Image deleted successfully');
 				setSnackbarSeverity('success');
 				setOpenSnackbar(true);
-			} else {
-				// It's an image from Cloudinary
-				const cloudinaryIndex = imageToDeleteIndex - initialImages.length;
-				if (cloudinaryIndex >= 0 && cloudinaryIndex < cloudinaryImages.length) {
-					const imageToDelete = cloudinaryImages[cloudinaryIndex];
-					dispatch(removeImage(imageToDelete.public_id));
-					setSnackbarMessage('Image deleted successfully');
-					setSnackbarSeverity('success');
-					setOpenSnackbar(true);
-				}
+			} catch (err) {
+				console.error('Error deleting image:', err);
 			}
 		}
 		setDeleteDialogOpen(false);
@@ -212,33 +275,102 @@ export default function ImageCarousel() {
 		setOpenSnackbar(false);
 	};
 
-	const getCurrentImageSource = () => {
-		if (currentSlideIndex >= 0 && currentSlideIndex < allImages.length) {
-			return allImages[currentSlideIndex];
-		}
-		return null;
-	};
+	if (loading) {
+		return (
+			<CarouselContainer>
+				<EmptyStateContainer>
+					<CircularProgress />
+					<Typography variant='body1' sx={{ mt: 2 }}>
+						Loading...
+					</Typography>
+				</EmptyStateContainer>
+			</CarouselContainer>
+		);
+	}
+
+	if (!user) {
+		return (
+			<CarouselContainer>
+				<EmptyStateContainer>
+					<Typography variant='h6' gutterBottom>
+						Please log in to view your images
+					</Typography>
+					<Typography variant='body2' color='text.secondary'>
+						You need to be logged in to upload and manage your personal image carousel.
+					</Typography>
+				</EmptyStateContainer>
+			</CarouselContainer>
+		);
+	}
+
+	// Show loading state while fetching images
+	if (isLoadingImages) {
+		return (
+			<CarouselContainer>
+				<EmptyStateContainer>
+					<CircularProgress />
+					<Typography variant='body1' sx={{ mt: 2 }}>
+						Loading your images...
+					</Typography>
+				</EmptyStateContainer>
+			</CarouselContainer>
+		);
+	}
+
+	if (userImages.length === 0) {
+		return (
+			<>
+				<CarouselContainer>
+					<EmptyStateContainer>
+						<Typography variant='h6' gutterBottom>
+							No images yet
+						</Typography>
+						<Typography variant='body2' color='text.secondary' sx={{ mb: 2 }}>
+							Upload your first image to get started <br /> with your personal carousel.
+						</Typography>
+						<ActionButtonCircle onClick={handleAddButtonClick} disabled={isUploading}>
+							{isUploading ? (
+								<CircularProgress size={20} color='inherit' />
+							) : (
+								<AddIcon style={{ fontSize: '1.25rem', color: '#000000' }} />
+							)}
+						</ActionButtonCircle>
+					</EmptyStateContainer>
+					<UploadInput ref={fileInputRef} accept='image/*' type='file' onChange={handleFileUpload} />
+				</CarouselContainer>
+				<Snackbar
+					open={openSnackbar}
+					autoHideDuration={6000}
+					onClose={handleSnackbarClose}
+					anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+				>
+					<Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
+						{snackbarMessage}
+					</Alert>
+				</Snackbar>
+			</>
+		);
+	}
 
 	return (
 		<>
 			<CarouselContainer>
 				<EmblaContainer ref={emblaRef}>
 					<EmblaSlideContainer>
-						{allImages.map((src, index) => (
-							<EmblaSlide key={`slide-${index}-${src}`}>
+						{userImages.map((image, index) => (
+							<EmblaSlide key={`slide-${index}-${image.id}`}>
 								<SlideImage
-									src={src}
+									src={image.secure_url}
 									alt={`slide-${index}`}
 									onError={(e) => {
-										console.error(`Error loading image: ${src}`);
-										e.target.src = 'https://via.placeholder.com/400x225?text=Error+de+carga';
+										console.error(`Error loading image: ${image.secure_url}`);
+										e.target.src = 'https://via.placeholder.com/400x225?text=Error+loading+image';
 									}}
 								/>
 							</EmblaSlide>
 						))}
 					</EmblaSlideContainer>
 				</EmblaContainer>
-
 				<AddButtonContainer>
 					<ActionButtonCircle onClick={handleAddButtonClick} disabled={isUploading}>
 						{isUploading ? (
@@ -248,40 +380,86 @@ export default function ImageCarousel() {
 						)}
 					</ActionButtonCircle>
 				</AddButtonContainer>
-
-				<DeleteButtonContainer>
-					<ActionButtonCircle onClick={handleDeleteButtonClick} disabled={isUploading || allImages.length <= 1}>
-						<DeleteIcon style={{ fontSize: '1.25rem', color: '#000000' }} />
-					</ActionButtonCircle>
-				</DeleteButtonContainer>
-
+				{userImages.length > 0 && (
+					<DeleteButtonContainer>
+						<ActionButtonCircle onClick={handleDeleteButtonClick} disabled={isUploading || userImages.length === 0}>
+							<DeleteIcon style={{ fontSize: '1.25rem', color: '#000000' }} />
+						</ActionButtonCircle>
+					</DeleteButtonContainer>
+				)}
 				<UploadInput ref={fileInputRef} accept='image/*' type='file' onChange={handleFileUpload} />
 			</CarouselContainer>
 
-			{/* Confirmation dialog to delete */}
 			<Dialog
 				open={deleteDialogOpen}
 				onClose={handleCancelDelete}
 				aria-labelledby='alert-dialog-title'
 				aria-describedby='alert-dialog-description'
+				PaperProps={{
+					sx: {
+						borderRadius: '24px',
+						backgroundColor: '#eeeeee',
+						color: '#333',
+						padding: '2rem',
+						fontFamily: 'Manrope, sans-serif',
+						boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
+						maxWidth: '400px',
+						width: '90%',
+					},
+				}}
 			>
-				<DialogTitle id='alert-dialog-title'>{'¿Eliminar imagen?'}</DialogTitle>
+				<DialogTitle
+					id='alert-dialog-title'
+					sx={{
+						fontWeight: 700,
+						fontSize: '20px',
+						fontFamily: 'Manrope, sans-serif',
+						color: '#000',
+					}}
+				>
+					Delete Image?
+				</DialogTitle>
+
 				<DialogContent>
-					<DialogContentText id='alert-dialog-description'>
-						Are you sure you want to remove this image from the carousel?
+					<DialogContentText
+						id='alert-dialog-description'
+						sx={{
+							fontSize: '16px',
+							color: '#555',
+							fontFamily: 'Manrope, sans-serif',
+							marginTop: '0.5rem',
+						}}
+					>
+						Are you sure you want to remove this image from your carousel? This action cannot be undone.
 					</DialogContentText>
 				</DialogContent>
-				<DialogActions>
-					<Button onClick={handleCancelDelete} color='primary'>
+
+				<DialogActions sx={{ justifyContent: 'flex-end', marginTop: '1rem' }}>
+					<Button
+						onClick={handleCancelDelete}
+						sx={{
+							color: '#555',
+							fontWeight: 500,
+							fontFamily: 'Manrope, sans-serif',
+							textTransform: 'none',
+						}}
+					>
 						Cancel
 					</Button>
-					<Button onClick={handleConfirmDelete} color='error' autoFocus>
-						Eliminate
+					<Button
+						onClick={handleConfirmDelete}
+						sx={{
+							color: '#d32f2f',
+							fontWeight: 600,
+							fontFamily: 'Manrope, sans-serif',
+							textTransform: 'none',
+						}}
+					>
+						Delete
 					</Button>
 				</DialogActions>
 			</Dialog>
 
-			{/* Notificaciones */}
 			<Snackbar
 				open={openSnackbar}
 				autoHideDuration={6000}

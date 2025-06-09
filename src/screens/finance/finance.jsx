@@ -1,151 +1,164 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Menu from '../../components/Menu/menu';
-import AddButton from '../../components/Buttons/addButton';
-import Header2 from '../../components/Header/header2';
-import LogoutIcon from '@mui/icons-material/Logout';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import CustomIconButton from '../../components/Buttons/icon';
-import GoalStatsCard from '../../components/Cards/goalStatsCard ';
-import GoalHistoryTable from '../../components/Tables/goalHistoryTable';
-import GoalProgressCard from '../../components/Cards/goal';
-import ExpenditureHistoryTable from '../../components/Tables/expenditureHistoryTable';
-import MobileNavBar from '../../components/Menu/mobileNavBar'; // Importamos la barra de navegación móvil
-import { goalsSummary } from '../../Data/goalData';
-import './finance.css';
+import { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Menu from "../../components/Menu/menu";
+import AddButton from "../../components/Buttons/add";
+import Header2 from "../../components/Header/header2";
+import LogoutIcon from "@mui/icons-material/Logout";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import CustomIconButton from "../../components/Buttons/icon";
+import GoalStatsCard from "../../components/Cards/goalStatsCard ";
+import GoalHistoryTable from "../../components/Tables/goalHistoryTable";
+import GoalProgressCard from "../../components/Cards/goal";
+import ExpenditureHistoryTable from "../../components/Tables/expenditureHistoryTable";
+import MobileNavBar from "../../components/Menu/mobileNavBar";
+import {
+  evaluateGoalsStatus,
+  getCompletedGoals,
+  getFailedGoals,
+} from "../../services/firebaseUtils";
+import "./finance.css";
+
 
 function Finance() {
-	const navigate = useNavigate();
-	const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
-	const [showButtons, setShowButtons] = useState(true);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
+  const [useCarousel, setUseCarousel] = useState(window.innerWidth <= 1024);
+  const uid = useSelector((state) => state.userId.id);
+  const [completedCount, setCompletedCount] = useState(0);
+  const [failedCount, setFailedCount] = useState(0);
 
-	useEffect(() => {
-		// Función para actualizar el estado de isMobile cuando cambia el tamaño de la ventana
-		const handleResize = () => {
-			const mobile = window.innerWidth <= 1024;
-			setIsMobile(mobile);
-			setShowButtons(!mobile); // Siempre mostrar botones en desktop
-		};
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      setIsMobile(width <= 1024);
+      setUseCarousel(width > 1024);
+    };
 
-		// Llamar handleResize una vez para inicializar correctamente
-		handleResize();
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
-		// Agregar event listener para el cambio de tamaño
-		window.addEventListener('resize', handleResize);
+  useEffect(() => {
+    if (!uid) return;
 
-		// Definir un punto de entrada para el observador de intersección
-		const handleIntersection = (entries) => {
-			// Si la navbar está visible (intersecting), ocultar los botones
-			if (entries[0].isIntersecting) {
-				setShowButtons(false);
-			} else {
-				// Si estamos en móvil pero la navbar no es visible, mostrar los botones
-				setShowButtons(isMobile);
-			}
-		};
+    evaluateGoalsStatus({ uid }).then(() => {
+      getCompletedGoals({ uid }).then((goals) =>
+        setCompletedCount(goals.length)
+      );
+      getFailedGoals({ uid }).then((goals) => setFailedCount(goals.length));
+    });
+  }, [uid, location]);
 
-		// Crear un observador para la barra de navegación móvil
-		if (isMobile) {
-			const navbarElement = document.querySelector('.mobile-navbar');
-			if (navbarElement) {
-				const observer = new IntersectionObserver(handleIntersection, {
-					threshold: 0.1, // Disparar cuando al menos el 10% de la navbar es visible
-				});
-				observer.observe(navbarElement);
+  const goLogin = () => navigate("/log");
+  const goSettings = () => navigate("/settings");
+  const handleSpendClick = () => {
+    navigate("/finance/add-spending", { state: { from: "/finance" } });
+  };
 
-				// Limpiar observador
-				return () => {
-					observer.disconnect();
-				};
-			}
-		}
+  const handleGoalClick = () => {
+    navigate("/finance/add-goal");
+  };
 
-		// Limpiar event listener cuando el componente se desmonta
-		return () => {
-			window.removeEventListener('resize', handleResize);
-		};
-	}, [isMobile]);
+  return (
+    <div className="finance-container">
+      {!isMobile && <Menu />}
+      <div className="finance-content">
+        <div className="finance-header">
+          <Header2 title="Finance" subtitle="Here you will find your stats." />
+          {!isMobile && (
+            <div className="finance-icons">
+              <CustomIconButton
+                icon={<AccountCircleIcon />}
+                ariaLabel="user"
+                onClick={goSettings}
+              />
+              <CustomIconButton
+                icon={<LogoutIcon />}
+                ariaLabel="logout"
+                onClick={goLogin}
+              />
+            </div>
+          )}
+        </div>
 
-	const goLogin = () => {
-		navigate('/log');
-	};
+        <div className="finance-buttons">
+          <AddButton onClick={handleGoalClick} text={"Set new goal"} />
+          <AddButton onClick={handleSpendClick} text={"Add spend"} />
+        </div>
 
-	const goSettings = () => {
-		navigate('/settings');
-	};
+        <div className="finance-layout">
+          <div className="finance-main">
+            <div className="finance-left-column">
+              {isMobile && (
+                <div className="finance-scroll-cards">
+                  <div className="finance-card">
+                    <GoalProgressCard />
+                  </div>
+                  <div className="finance-card">
+                    <GoalStatsCard
+                      title="Goals completed"
+                      description="You have successfully completed a total of"
+                      quantity={completedCount}
+                      label="goals"
+                      bgColor="#C7DDF9"
+                      iconBg="#85A9E8"
+                    />
+                  </div>
+                  <div className="finance-card">
+                    <GoalStatsCard
+                      title="Goals failed"
+                      description="You have failed a total of"
+                      quantity={failedCount}
+                      label="goals"
+                      bgColor="#F7C8B6"
+                      iconBg="#E68067"
+                    />
+                  </div>
+                </div>
+              )}
 
-	const handleSpendClick = () => {
-		navigate('/finance/add-spending');
-	};
+              <GoalHistoryTable />
+              <ExpenditureHistoryTable />
+            </div>
 
-	const handleGoalClick = () => {
-		navigate('/finance/add-goal');
-	};
+            {!isMobile && (
+              <div className="finance-right-column">
+                <div className="goal-progress-placeholder">
+                  <GoalProgressCard />
+                </div>
 
-	return (
-		<div className='finance-container'>
-			{/* Mostrar el menú lateral solo en pantallas grandes */}
-			{!isMobile && <Menu />}
+                <div className="stats-cards">
+                  <GoalStatsCard
+                    title="Goals completed"
+                    description="You have successfully completed a total of"
+                    quantity={completedCount}
+                    label="goals"
+                    bgColor="#C7DDF9"
+                    iconBg="#85A9E8"
+                  />
 
-			<div className='finance-content'>
-				{/* Mobile/iPad icons above header - solo mostrar si showButtons es true */}
-				{isMobile && showButtons && (
-					<div className='finance-mobile-icons'>
-						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
-						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={goLogin} />
-					</div>
-				)}
-
-				<div className='finance-header'>
-					<Header2 title='Finance' subtitle='Here you will find your stats.' />
-					{/* Desktop icons - only show on non-mobile */}
-					{!isMobile && (
-						<div className='finance-icons'>
-							<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
-							<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={goLogin} />
-						</div>
-					)}
-				</div>
-
-				<div className='finance-buttons'>
-					<AddButton onClick={handleGoalClick} text={'Set new goal'} />
-					<AddButton onClick={handleSpendClick} text={'Add spend'} />
-				</div>
-
-				<div className='finance-layout'>
-					<div className='finance-main'>
-						<div className='finance-left-column'>
-							<GoalHistoryTable />
-							<ExpenditureHistoryTable />
-						</div>
-
-						<div className='finance-right-column'>
-							<div className='goal-progress-placeholder'>
-								<GoalProgressCard spent={150000} total={200000} />
-							</div>
-
-							<div className='stats-cards'>
-								{goalsSummary.map((goal, index) => (
-									<GoalStatsCard
-										key={index}
-										title={goal.title}
-										description={goal.description}
-										quantity={goal.quantity}
-										label={goal.label}
-										bgColor={goal.bgColor}
-										iconBg={goal.iconBg}
-									/>
-								))}
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			{/* Mostrar la barra de navegación móvil solo en pantallas pequeñas y medianas */}
-			{isMobile && <MobileNavBar />}
-		</div>
-	);
+                  <GoalStatsCard
+                    title="Goals failed"
+                    description="You have failed a total of"
+                    quantity={failedCount}
+                    label="goals"
+                    bgColor="#F7C8B6"
+                    iconBg="#E68067"
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+      {isMobile && <MobileNavBar />}
+    </div>
+  );
 }
 
 export default Finance;

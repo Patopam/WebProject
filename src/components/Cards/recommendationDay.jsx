@@ -5,6 +5,7 @@ import { getRecommendationFromEmotion } from '../../services/openaiService';
 import { getImageFromKeyword } from '../../services/pexelsService';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAiLoading } from '../../redux/aiStatusSlice';
+// ... (imports siguen igual)
 
 const RecommendationDay = ({ emotion }) => {
 	const [recommendation, setRecommendation] = useState(null);
@@ -44,7 +45,6 @@ const RecommendationDay = ({ emotion }) => {
 					data: finalData,
 				})
 			);
-
 			setRecommendation(finalData);
 		} catch (error) {
 			console.error('Error loading recommendation:', error);
@@ -58,13 +58,13 @@ const RecommendationDay = ({ emotion }) => {
 		<CardContainer>
 			<SectionTitle>
 				<IconCircle>
-					<LightbulbOutlinedIcon sx={{ color: '#333', fontSize: '1.23rem' }} />
+					<LightbulbOutlinedIcon sx={{ color: '#333', fontSize: '1.125rem' }} />
 				</IconCircle>
 				<Typography
 					sx={{
 						fontFamily: "'Manrope', sans-serif",
-						fontSize: '1.125rem',
-						fontWeight: 300,
+						fontSize: '1rem',
+						fontWeight: 400,
 						color: '#333',
 					}}
 				>
@@ -74,7 +74,7 @@ const RecommendationDay = ({ emotion }) => {
 
 			{recommendation && (
 				<SectionEmotion>
-					<Typography sx={{ fontSize: '1.35rem', color: '#333', lineHeight: 1.4 }}>{recommendation.intro}</Typography>
+					<Typography sx={{ fontSize: '1.14rem', color: '#333', lineHeight: 1.3 }}>{recommendation.intro}</Typography>
 				</SectionEmotion>
 			)}
 
@@ -90,6 +90,15 @@ const RecommendationDay = ({ emotion }) => {
 						fontWeight: 'bold',
 						fontFamily: "'Manrope', sans-serif",
 						alignSelf: 'start',
+						borderRadius: '9px',
+						boxShadow: '0px 3px 8px rgba(80, 80, 80, 0.08)',
+						paddingX: '1.2rem',
+						paddingY: '0.5rem',
+						fontSize: '0.85rem',
+						'&:hover': {
+							backgroundColor: '#E49B79',
+							boxShadow: '0px 3px 10px rgba(101, 101, 101, 0.08)',
+						},
 					}}
 				>
 					{localLoading ? 'Loading...' : 'Find out what we have for you'}
@@ -100,14 +109,21 @@ const RecommendationDay = ({ emotion }) => {
 						<Typography
 							sx={{
 								fontWeight: 600,
-								fontSize: '1.25rem',
-								marginBottom: '0.4rem',
+								fontSize: '1.12rem',
+								marginBottom: '0.8rem',
 								lineHeight: 1.2,
 							}}
 						>
 							{recommendation.title}
 						</Typography>
-						<Typography sx={{ fontSize: '1.25rem', color: '#333', lineHeight: 1.2 }}>
+						<Typography
+							sx={{
+								fontSize: '1.1rem',
+								color: '#333',
+								lineHeight: 1.3,
+								fontWeight: 400,
+							}}
+						>
 							{recommendation.description}
 						</Typography>
 					</LeftText>
@@ -124,7 +140,7 @@ export default RecommendationDay;
 
 const CardContainer = styled(Box)(() => ({
 	backgroundColor: '#fdd1bc',
-	padding: '1.8rem',
+	padding: '1.7rem',
 	borderRadius: '1.5rem',
 	fontFamily: '"Manrope", sans-serif',
 	width: '100%',
@@ -133,8 +149,8 @@ const CardContainer = styled(Box)(() => ({
 	boxSizing: 'border-box',
 	display: 'flex',
 	flexDirection: 'column',
-	gap: '1.5rem',
-	minHeight: '24.9rem',
+	gap: '1.35rem',
+	minHeight: '23.5rem',
 	maxHeight: '14.875rem',
 	overflow: 'hidden',
 }));
@@ -142,42 +158,41 @@ const CardContainer = styled(Box)(() => ({
 const SectionTitle = styled(Box)(() => ({
 	display: 'flex',
 	alignItems: 'center',
-	gap: '0.625rem',
+	gap: '0.5rem',
 }));
 
 const IconCircle = styled(Box)(() => ({
 	backgroundColor: '#F69F77',
 	borderRadius: '50%',
-	width: '2.31rem',
-	height: '2.31rem',
+	width: '2rem',
+	height: '2rem',
 	display: 'flex',
 	justifyContent: 'center',
 	alignItems: 'center',
 }));
 
 const SectionEmotion = styled(Box)(() => ({}));
-
 const SectionRecommendation = styled(Box)(() => ({
 	display: 'flex',
 	justifyContent: 'space-between',
 	alignItems: 'flex-start',
-	gap: '2rem',
+	gap: '1.5rem',
 	flexWrap: 'nowrap',
+	maxWidth: '100%',
+	overflowX: 'auto',
 }));
 
 const LeftText = styled(Box)(() => ({
 	flex: 1,
 	display: 'flex',
 	flexDirection: 'column',
-	maxHeight: '8rem',
-	overflow: 'hidden',
 }));
 
 const ImageBox = styled(Box)(() => ({
-	width: '145px',
-	height: '180px',
+	width: '125px',
+	height: '170px',
 	borderRadius: '12px',
-	overflow: 'hidden',
+	flexShrink: 0,
 	img: {
 		width: '100%',
 		height: '100%',

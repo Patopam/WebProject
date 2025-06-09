@@ -1,78 +1,114 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { saveUserImage, getUserImages, deleteUserImage } from '../../services/firebaseUtils'; // Ajusta la ruta según tu estructura
 
-// Thunk para subir imágenes a Cloudinary
-export const uploadImageToCloudinary = createAsyncThunk('cloudinary/uploadImage', async (file, { rejectWithValue }) => {
-	const cloudName = 'dwkycobbx';
-
-	const uploadPreset = 'my_unsigned_preset';
-
-	const formData = new FormData();
-	formData.append('file', file);
-	formData.append('upload_preset', uploadPreset);
-
-	formData.append('timestamp', Math.floor(Date.now() / 1000).toString());
-
-	try {
-		console.log('Enviando imagen a Cloudinary con preset:', uploadPreset);
-		const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
-			method: 'POST',
-			body: formData,
-		});
-
-		if (!response.ok) {
-			const errorData = await response.json();
-			console.error('Error de Cloudinary:', errorData);
-			const errorMessage =
-				errorData.error?.message ||
-				(typeof errorData.error === 'string' ? errorData.error : 'Error al subir la imagen');
-			return rejectWithValue(errorMessage);
+export const uploadImageToCloudinary = createAsyncThunk(
+	'cloudinary/uploadImage',
+	async ({ file, uid }, { rejectWithValue }) => {
+		if (!uid) {
+			return rejectWithValue('User ID is required');
 		}
 
-		const data = await response.json();
-		console.log('Respuesta de Cloudinary:', data);
-		return data;
+		const cloudName = 'dwkycobbx';
+		const uploadPreset = 'my_unsigned_preset';
+		const formData = new FormData();
+		formData.append('file', file);
+		formData.append('upload_preset', uploadPreset);
+		formData.append('timestamp', Math.floor(Date.now() / 1000).toString());
+
+		try {
+			const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+				method: 'POST',
+				body: formData,
+			});
+
+			if (!response.ok) {
+				const errorData = await response.json();
+				console.error('Error of Cloudinary:', errorData);
+				const errorMessage =
+					errorData.error?.message || (typeof errorData.error === 'string' ? errorData.error : 'Error uploading image');
+				return rejectWithValue(errorMessage);
+			}
+
+			const cloudinaryData = await response.json();
+
+			// save firebase
+			const imageData = {
+				public_id: cloudinaryData.public_id,
+				secure_url: cloudinaryData.secure_url,
+				original_filename: cloudinaryData.original_filename || 'image',
+				format: cloudinaryData.format,
+				width: cloudinaryData.width,
+				height: cloudinaryData.height,
+				bytes: cloudinaryData.bytes,
+			};
+
+			const savedImage = await saveUserImage({ uid, imageData });
+			return savedImage;
+		} catch (error) {
+			console.error('Error in the request:', error);
+			return rejectWithValue(error.message || 'Upload error');
+		}
+	}
+);
+
+export const loadUserImages = createAsyncThunk('cloudinary/loadUserImages', async (uid, { rejectWithValue }) => {
+	if (!uid) {
+		return rejectWithValue('User ID is required');
+	}
+
+	try {
+		const images = await getUserImages({ uid });
+		return images;
 	} catch (error) {
-		console.error('Error en la solicitud:', error);
-		return rejectWithValue(error.message || 'Error en la subida');
+		console.error('Error loading user images:', error);
+		return rejectWithValue(error.message || 'Error loading images');
 	}
 });
 
-// Estado inicial
+export const deleteImage = createAsyncThunk(
+	'cloudinary/deleteImage',
+	async ({ uid, imageId, publicId }, { rejectWithValue }) => {
+		if (!uid || !imageId) {
+			return rejectWithValue('User ID and Image ID are required');
+		}
+
+		try {
+			await deleteUserImage({ uid, imageId });
+
+			return { imageId, publicId };
+		} catch (error) {
+			console.error('Error deleting image:', error);
+			return rejectWithValue(error.message || 'Error deleting image');
+		}
+	}
+);
+
 const initialState = {
 	images: [],
 	currentUpload: null,
 	isLoading: false,
 	error: null,
 	lastUploadedUrl: null,
+	isLoadingImages: false,
 };
 
 const cloudinarySlice = createSlice({
 	name: 'cloudinary',
 	initialState,
 	reducers: {
-		// Agregar una imagen a la lista (sin subir)
-		addImage: (state, action) => {
-			state.images.push(action.payload);
-		},
-
-		// Remover una imagen de la lista
-		removeImage: (state, action) => {
-			state.images = state.images.filter((image) => image.public_id !== action.payload);
-		},
-
-		// Limpiar la lista de imágenes
 		clearImages: (state) => {
 			state.images = [];
 		},
-
-		// Limpiar el error
 		clearError: (state) => {
 			state.error = null;
+		},
+		resetState: (state) => {
+			return initialState;
 		},
 	},
 	extraReducers: (builder) => {
 		builder
-			// Manejo de la subida de imagen
+			// Upload image
 			.addCase(uploadImageToCloudinary.pending, (state) => {
 				state.isLoading = true;
 				state.error = null;
@@ -85,15 +121,36 @@ const cloudinarySlice = createSlice({
 			})
 			.addCase(uploadImageToCloudinary.rejected, (state, action) => {
 				state.isLoading = false;
-				state.error = typeof action.payload === 'string' ? action.payload : 'Error desconocido al subir la imagen';
+				state.error = typeof action.payload === 'string' ? action.payload : 'Unknown error uploading image';
+			})
+			// Load user images
+			.addCase(loadUserImages.pending, (state) => {
+				state.isLoadingImages = true;
+			})
+			.addCase(loadUserImages.fulfilled, (state, action) => {
+				state.isLoadingImages = false;
+				state.images = action.payload;
+			})
+			.addCase(loadUserImages.rejected, (state, action) => {
+				state.isLoadingImages = false;
+				state.error = typeof action.payload === 'string' ? action.payload : 'Error loading images';
+			})
+			// Delete image
+			.addCase(deleteImage.fulfilled, (state, action) => {
+				state.images = state.images.filter((image) => image.id !== action.payload.imageId);
+			})
+			.addCase(deleteImage.rejected, (state, action) => {
+				state.error = typeof action.payload === 'string' ? action.payload : 'Error deleting image';
 			});
 	},
 });
 
-export const { addImage, removeImage, clearImages, clearError } = cloudinarySlice.actions;
+export const { clearImages, clearError, resetState } = cloudinarySlice.actions;
 
+// Selectors
 export const selectCloudinaryImages = (state) => state.cloudinary.images;
 export const selectIsUploading = (state) => state.cloudinary.isLoading;
+export const selectIsLoadingImages = (state) => state.cloudinary.isLoadingImages;
 export const selectCloudinaryError = (state) => state.cloudinary.error;
 export const selectLastUploadedUrl = (state) => state.cloudinary.lastUploadedUrl;
 export const selectCurrentUpload = (state) => state.cloudinary.currentUpload;

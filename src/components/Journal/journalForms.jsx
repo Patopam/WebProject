@@ -1,34 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useSnackbar } from 'notistack';
+import { doc, getDoc } from 'firebase/firestore';
+import { addJournal, updateJournal } from '../../services/firebaseUtils';
+import { db } from '../../services/firebase';
 import { Box, Typography, TextField, Button, IconButton, styled } from '@mui/material';
 import SentimentSatisfiedOutlinedIcon from '@mui/icons-material/SentimentSatisfiedOutlined';
 import OpenInFullOutlinedIcon from '@mui/icons-material/OpenInFullOutlined';
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
 import TurnedInNotOutlinedIcon from '@mui/icons-material/TurnedInNotOutlined';
 import SendIcon from '@mui/icons-material/Send';
-import { useNavigate } from 'react-router-dom';
-import { addJournal } from '../../services/firebaseUtils';
-import { useSelector } from 'react-redux';
-import './journalForms.css';
 
-export default function JournalForm({ compact = false }) {
+export default function JournalForm({ compact = false, redirectTo }) {
+	const { id: journalId } = useParams();
+	const uid = useSelector((state) => state.userId.id);
 	const navigate = useNavigate();
-	const id = useSelector((state) => state.userId.id);
+	const { enqueueSnackbar } = useSnackbar();
+
 	const [entryText, setEntryText] = useState('');
 	const [entryTitle, setEntryTitle] = useState('');
 	const [selectedFeeling, setSelectedFeeling] = useState(null);
 	const [selectedTags, setSelectedTags] = useState([]);
+	const [originalData, setOriginalData] = useState({});
 	const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
-
-	useEffect(() => {
-		const handleResize = () => {
-			setIsMobile(window.innerWidth <= 767);
-		};
-		handleResize();
-		window.addEventListener('resize', handleResize);
-		return () => {
-			window.removeEventListener('resize', handleResize);
-		};
-	}, []);
 
 	const emojis = [
 		{ emoji: '😄', value: 'happy' },
@@ -47,9 +42,40 @@ export default function JournalForm({ compact = false }) {
 		Release: "What I need to let go of:\n\nWhy I'm holding onto it:\n\nHow I will release it:",
 	};
 
+	useEffect(() => {
+		const handleResize = () => {
+			setIsMobile(window.innerWidth <= 767);
+		};
+		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
+	}, []);
+
+	useEffect(() => {
+		if (journalId && uid) {
+			const fetchJournal = async () => {
+				const docRef = doc(db, 'users', uid, 'journals', journalId);
+				const snapshot = await getDoc(docRef);
+				if (snapshot.exists()) {
+					const data = snapshot.data();
+					setEntryTitle(data.title || '');
+					setEntryText(data.description || '');
+					const emotion = emojis.find((e) => e.value === data.emotion);
+					setSelectedFeeling(emotion || null);
+					setOriginalData({
+						title: data.title,
+						description: data.description,
+						emotion: data.emotion,
+					});
+				}
+			};
+			fetchJournal();
+		}
+	}, [journalId, uid]);
+
 	const handleTagClick = (tag) => {
+		if (journalId) return;
 		if (selectedTags.includes(tag)) {
-			setSelectedTags(selectedTags.filter((t) => t !== tag));
+			setSelectedTags([]);
 			setEntryText('');
 		} else {
 			setSelectedTags([tag]);
@@ -61,88 +87,110 @@ export default function JournalForm({ compact = false }) {
 	};
 
 	const toggleExpand = () => {
-		navigate(compact ? '/journal/write' : -1);
-	};
+		const hasChanges =
+			entryTitle !== originalData.title ||
+			entryText !== originalData.description ||
+			selectedFeeling?.value !== originalData.emotion;
 
-	const send = async () => {
-		if (!selectedFeeling || !entryTitle || !entryText) {
-			alert('Please complete the journal before saving.');
+		if (journalId && hasChanges) {
+			enqueueSnackbar('You have unsaved changes. Please save first.', { variant: 'warning' });
 			return;
 		}
 
-		if (!id) {
+		navigate(compact ? '/journal/write' : -1);
+	};
+
+	const save = async () => {
+		if (!entryTitle || !entryText || !selectedFeeling) {
+			alert('Please complete the journal before saving.');
+			return;
+		}
+		if (!uid) {
 			alert('User ID missing. Please log in again.');
 			return;
 		}
 
-		await addJournal({
-			uid: id,
-			emotion: selectedFeeling.value,
-			title: entryTitle,
-			description: entryText,
-		});
+		if (journalId) {
+			await updateJournal({ uid, journalId, title: entryTitle, description: entryText });
+			enqueueSnackbar('Journal updated successfully', { variant: 'success' });
+		} else {
+			await addJournal({ uid, emotion: selectedFeeling.value, title: entryTitle, description: entryText });
+			enqueueSnackbar('Journal saved successfully', { variant: 'success' });
+		}
 
-		setSelectedFeeling(null);
-		setEntryTitle('');
-		setEntryText('');
-		setSelectedTags([]);
-		alert('Journal saved successfully.');
+		setTimeout(() => {
+			navigate(redirectTo || '/Alljournal');
+		}, 1500);
 	};
 
 	return (
-		<JournalContainer compact={compact} className='journal-container'>
-			<HeaderSection className='header-section'>
-				<TitleGroup className='title-group'>
-					<IconCircle className='icon-circle'>
+		<JournalContainer compact={compact}>
+			<HeaderSection>
+				<TitleGroup>
+					<IconCircle>
 						<SentimentSatisfiedOutlinedIcon sx={{ color: '#000', fontSize: isMobile ? 18 : 20 }} />
 					</IconCircle>
-					<Typography sx={{ fontSize: isMobile ? 16 : 18, fontWeight: 600 }}>Write what you feel</Typography>
+					<Typography sx={{ fontSize: isMobile ? 16 : 18, fontWeight: 600 }}>
+						{journalId ? 'Edit your journal' : 'Write what you feel'}
+					</Typography>
 				</TitleGroup>
-				<IconButton onClick={toggleExpand}>
-					{compact ? <OpenInFullOutlinedIcon sx={{ color: '#000' }} /> : <CloseFullscreenIcon sx={{ color: '#000' }} />}
+				<IconButton
+					onClick={toggleExpand}
+					sx={{
+						display: 'flex',
+						alignSelf: 'flex-start',
+						p: isMobile ? '4px' : '8px',
+						width: isMobile ? '32px' : 'auto',
+						height: isMobile ? '32px' : 'auto',
+					}}
+				>
+					{compact ? (
+						<OpenInFullOutlinedIcon sx={{ color: '#000', fontSize: isMobile ? 20 : 24 }} />
+					) : (
+						<CloseFullscreenIcon sx={{ color: '#000', fontSize: isMobile ? 20 : 24 }} />
+					)}
 				</IconButton>
 			</HeaderSection>
-			<FeelingsSection className='feelings-section'>
-				<Typography
-					variant='h3'
-					sx={{ fontSize: isMobile ? 14 : 16, marginBottom: isMobile ? '8px' : '12px', fontWeight: 600 }}
-				>
-					How do you feel today?
-				</Typography>
-				<EmojiWrapper className='emoji-wrapper'>
-					{emojis.map((item, index) => (
-						<EmojiButton
-							key={index}
-							selected={selectedFeeling?.emoji === item.emoji}
-							onClick={() => setSelectedFeeling(item)}
-							className='emoji-button'
-						>
-							{item.emoji}
-						</EmojiButton>
-					))}
-				</EmojiWrapper>
-			</FeelingsSection>
-			<TagWrapper className='tag-wrapper'>
-				{tags.map((tag, index) => (
+
+			<Typography sx={{ fontSize: 16, fontWeight: 600, mb: 1 }}>How do you feel today?</Typography>
+			<EmojiWrapper>
+				{emojis.map((item) => (
+					<EmojiButton
+						key={item.value}
+						selected={selectedFeeling?.value === item.value}
+						onClick={() => {
+							if (!journalId) setSelectedFeeling(item);
+						}}
+						sx={{
+							cursor: journalId ? 'default' : 'pointer',
+							opacity: journalId && selectedFeeling?.value !== item.value ? 0.4 : 1,
+						}}
+					>
+						{item.emoji}
+					</EmojiButton>
+				))}
+			</EmojiWrapper>
+
+			<TagWrapper>
+				{tags.map((tag) => (
 					<TagButton
-						key={index}
-						selected={selectedTags.includes(tag)}
+						key={tag}
+						selected={selectedTags.includes(tag) || entryText.startsWith(templates[tag])}
 						onClick={() => handleTagClick(tag)}
-						className='tag-button'
+						sx={{ pointerEvents: journalId ? 'none' : 'auto', opacity: journalId ? 0.6 : 1 }}
 					>
 						{tag}
 					</TagButton>
 				))}
 			</TagWrapper>
-			<EntrySection compact={compact} className='entry-section'>
+
+			<EntrySection compact={compact}>
 				<EntryTitle
 					fullWidth
-					variant='standard'
 					placeholder='Title'
 					value={entryTitle}
 					onChange={(e) => setEntryTitle(e.target.value)}
 					InputProps={{ disableUnderline: true }}
-					className='entry-title'
 				/>
 				<EntryTextArea
 					fullWidth
@@ -151,18 +199,16 @@ export default function JournalForm({ compact = false }) {
 					minRows={compact ? 5 : isMobile ? 8 : 10}
 					value={entryText}
 					onChange={(e) => setEntryText(e.target.value)}
-					variant='outlined'
-					compact={compact}
-					className='entry-textarea'
 				/>
 			</EntrySection>
+
 			<SaveButtonWrapper>
-				<SaveButton onClick={send} className='save-button'>
-					<IconCircle bgcolor='#f6d776' className='icon-circle'>
-						{compact ? (
-							<TurnedInNotOutlinedIcon sx={{ color: '#000', fontSize: isMobile ? 18 : 20 }} />
+				<SaveButton onClick={save}>
+					<IconCircle bgcolor={journalId ? '#f6d776' : '#f6d776'}>
+						{journalId ? (
+							<SendIcon sx={{ color: '#000', fontSize: 20 }} />
 						) : (
-							<SendIcon sx={{ color: '#000', fontSize: isMobile ? 18 : 20 }} />
+							<TurnedInNotOutlinedIcon sx={{ color: '#000', fontSize: 20 }} />
 						)}
 					</IconCircle>
 					<span>Save</span>
@@ -177,30 +223,34 @@ const JournalContainer = styled(Box, {
 	shouldForwardProp: (prop) => prop !== 'compact',
 })(({ compact }) => ({
 	backgroundColor: '#fde3a7',
-	padding: compact ? '24px' : '2.5rem 3.75rem',
-	fontFamily: '"Manrope", sans-serif',
+	padding: compact ? '24px' : '3rem 3rem',
 	borderRadius: '1.5rem',
 	width: '100%',
-	maxWidth: compact ? '100%' : '75rem',
+	maxWidth: compact ? '100%' : '50rem',
 	margin: '0 auto',
 	boxSizing: 'border-box',
-	height: compact ? 'auto' : '100%',
 	display: 'flex',
 	flexDirection: 'column',
+
+	'@media (max-width: 767px)': {
+		padding: '22px',
+		maxWidth: '100vw',
+		margin: ' auto',
+	},
 }));
 
-const HeaderSection = styled(Box)(() => ({
+const HeaderSection = styled(Box)({
 	display: 'flex',
 	justifyContent: 'space-between',
 	alignItems: 'center',
 	marginBottom: '1rem',
-}));
+});
 
-const TitleGroup = styled(Box)(() => ({
+const TitleGroup = styled(Box)({
 	display: 'flex',
 	alignItems: 'center',
 	gap: '0.75rem',
-}));
+});
 
 const IconCircle = styled(Box)(({ bgcolor = '#FACD69' }) => ({
 	backgroundColor: bgcolor,
@@ -212,32 +262,37 @@ const IconCircle = styled(Box)(({ bgcolor = '#FACD69' }) => ({
 	justifyContent: 'center',
 }));
 
-const FeelingsSection = styled(Box)(() => ({
-	marginBottom: '16px',
-}));
-
-const EmojiWrapper = styled(Box)(() => ({
+const EmojiWrapper = styled(Box)({
 	display: 'flex',
-	gap: '16px',
+	gap: '12px',
 	backgroundColor: '#FACD69',
-	padding: '10px 16px',
+	padding: '8px 12px',
 	borderRadius: '12px',
 	marginBottom: '16px',
-}));
+	overflowX: 'auto',
+	scrollSnapType: 'x mandatory',
+	WebkitOverflowScrolling: 'touch',
+
+	'@media (max-width: 767px)': {
+		gap: '10px',
+		padding: '8px 8px',
+	},
+});
 
 const EmojiButton = styled(Box)(({ selected }) => ({
-	fontSize: '26px',
+	fontSize: '22px',
 	cursor: 'pointer',
-	transition: 'transform 0.2s ease',
 	transform: selected ? 'scale(1.3)' : 'scale(1)',
+	transition: 'transform 0.2s ease',
+	scrollSnapAlign: 'start',
 }));
 
-const TagWrapper = styled(Box)(() => ({
+const TagWrapper = styled(Box)({
 	display: 'flex',
 	gap: '8px',
 	marginBottom: '16px',
 	flexWrap: 'wrap',
-}));
+});
 
 const TagButton = styled(Button)(({ selected }) => ({
 	backgroundColor: selected ? '#F69F77' : '#FACD69',
@@ -267,21 +322,23 @@ const EntrySection = styled(Box, {
 	flex: compact ? 'none' : 1,
 }));
 
-const EntryTitle = styled(TextField)(() => ({
+const EntryTitle = styled(TextField)({
 	'& .MuiInputBase-root': {
 		fontFamily: '"Manrope", sans-serif',
 		fontSize: '16px',
 		fontWeight: 600,
 		color: '#000',
-		borderBottom: '1px solid rgba(216, 164, 65, 0.4)',
-		'&:before, &:after': {
-			display: 'none',
-		},
 	},
 	'& .MuiInputBase-input': {
 		padding: '4px 0',
 	},
-}));
+	'& .MuiOutlinedInput-notchedOutline': {
+		border: 'none',
+	},
+	'& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+		border: 'none',
+	},
+});
 
 const EntryTextArea = styled(TextField, {
 	shouldForwardProp: (prop) => prop !== 'compact',
@@ -290,24 +347,20 @@ const EntryTextArea = styled(TextField, {
 		fontFamily: '"Manrope", sans-serif',
 		fontSize: '14px',
 		color: '#333',
-		'&:before, &:after': {
-			display: 'none',
-		},
 		height: compact ? 'auto' : '100%',
 	},
 	'& .MuiOutlinedInput-notchedOutline': {
 		border: 'none',
 	},
 	flex: compact ? 'none' : 1,
-	display: 'flex',
 }));
 
-const SaveButtonWrapper = styled(Box)(() => ({
+const SaveButtonWrapper = styled(Box)({
 	display: 'flex',
 	justifyContent: 'center',
-}));
+});
 
-const SaveButton = styled(Button)(() => ({
+const SaveButton = styled(Button)({
 	display: 'flex',
 	alignItems: 'center',
 	gap: '12px',
@@ -324,4 +377,4 @@ const SaveButton = styled(Button)(() => ({
 		backgroundColor: HOVER_COLOR,
 		opacity: 0.9,
 	},
-}));
+});

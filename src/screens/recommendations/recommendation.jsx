@@ -1,29 +1,23 @@
+import './recommendations.css';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getRecommendation } from '../../services/openaiService';
+import LogoutIcon from '@mui/icons-material/Logout';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Header2 from '../../components/Header/header2';
 import CustomIconButton from '../../components/Buttons/icon';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import LogoutIcon from '@mui/icons-material/Logout';
 import Menu from '../../components/Menu/menu';
-import './recommendations.css';
-import { obtenerUsuario } from '../../utils/utils';
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import CategoryMenu from '../../components/Filters/categoryMenu';
 import RecommendationCard from '../../components/Cards/recommendationCard';
 import MobileNavBar from '../../components/Menu/mobileNavBar';
 
-import { getRecommendation } from '../../services/openaiService';
-
 function Recommendations() {
-	const id = useSelector((state) => state.userId.id);
 	let navigate = useNavigate();
-
 	const [selectedCategory, setSelectedCategory] = useState('');
 	const [recommendation, setRecommendation] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [showInfo, setShowInfo] = useState(true);
 	const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
-	const [showButtons, setShowButtons] = useState(true);
 
 	const categories = [
 		'Breathing exercise',
@@ -42,62 +36,21 @@ function Recommendations() {
 		navigate('/settings');
 	};
 
-	const [Nombre, setNombre] = useState('Evan');
-	useEffect(() => {
-		setNombre(obtenerUsuario());
-	}, []);
-
 	useEffect(() => {
 		const handleResize = () => {
-			const mobile = window.innerWidth <= 1024;
-			setIsMobile(mobile);
-
-			if (!mobile) {
-				setShowButtons(false);
-			} else {
-				setShowButtons(true);
-			}
+			setIsMobile(window.innerWidth <= 1024);
 		};
-		// Inicializar
 		handleResize();
 		window.addEventListener('resize', handleResize);
-
 		return () => {
 			window.removeEventListener('resize', handleResize);
 		};
 	}, []);
 
-	useEffect(() => {
-		if (!isMobile) return;
-
-		const handleIntersection = (entries) => {
-			if (entries[0].isIntersecting) {
-				setShowButtons(false);
-			} else {
-				setShowButtons(true);
-			}
-		};
-
-		const timer = setTimeout(() => {
-			const navbarElement = document.querySelector('.mobile-navbar');
-			if (navbarElement) {
-				const observer = new IntersectionObserver(handleIntersection, {
-					threshold: 0.1,
-				});
-				observer.observe(navbarElement);
-
-				return () => observer.disconnect();
-			}
-		}, 500);
-
-		return () => clearTimeout(timer);
-	}, [isMobile]);
-
 	const handleCategoryClick = async (category) => {
 		setSelectedCategory(category);
 		setLoading(true);
 		setShowInfo(false);
-
 		try {
 			const newRecommendation = await getRecommendation(category);
 			setRecommendation(newRecommendation);
@@ -129,13 +82,6 @@ function Recommendations() {
 			{!isMobile && <Menu />}
 
 			<div className='recommendations-content'>
-				{isMobile && showButtons && (
-					<div className='recommendations-mobile-icons'>
-						<CustomIconButton icon={<AccountCircleIcon />} ariaLabel='user' onClick={goSettings} />
-						<CustomIconButton icon={<LogoutIcon />} ariaLabel='logout' onClick={goLogin} />
-					</div>
-				)}
-
 				<div className='recommendations-header'>
 					<Header2 title='For you' subtitle='Recommendation for you' />
 					{!isMobile && (
@@ -145,13 +91,13 @@ function Recommendations() {
 						</div>
 					)}
 				</div>
-
-				<CategoryMenu
-					categories={categories}
-					selectedCategory={selectedCategory}
-					onCategoryClick={handleCategoryClick}
-				/>
-
+				<div className='recommendations-categories'>
+					<CategoryMenu
+						categories={categories}
+						selectedCategory={selectedCategory}
+						onCategoryClick={handleCategoryClick}
+					/>
+				</div>
 				<RecommendationCard
 					showInfo={showInfo}
 					selectedCategory={selectedCategory}
@@ -160,10 +106,8 @@ function Recommendations() {
 					onRefresh={handleRefresh}
 				/>
 			</div>
-
 			{isMobile && <MobileNavBar className='mobile-navbar' />}
 		</div>
 	);
 }
-
 export default Recommendations;

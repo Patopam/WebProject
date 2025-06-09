@@ -17,7 +17,7 @@ const ReminderCard = () => {
 
 	const fetchPhrase = async () => {
 		setLoading(true);
-		dispatch(setAiLoading(true)); //si ocupa la IA
+		dispatch(setAiLoading(true));
 		try {
 			const newQuote = await getMotivationalQuote();
 			setCurrentPhrase(newQuote);
@@ -39,30 +39,30 @@ const ReminderCard = () => {
 		<Card
 			sx={{
 				display: 'flex',
+				flexDirection: 'column',
+				flex: '1 1 20rem',
 				width: '100%',
-				maxWidth: '40rem',
-				height: 'auto',
-				minHeight: '14.875rem',
-				justifyContent: 'center',
-				alignItems: 'center',
+				minHeight: '13rem',
+				height: '100%',
+				justifyContent: 'flex-start',
+				alignItems: 'stretch',
 				borderRadius: '1.5rem',
 				background: '#B7D0EE',
 				boxShadow: 'none',
-				padding: '1.75rem',
+				padding: '1.5rem',
 				boxSizing: 'border-box',
 			}}
 		>
 			<CardContent
 				sx={{
 					display: 'flex',
-					width: '100%',
-					maxWidth: '28rem',
-					minHeight: '10.875rem',
 					flexDirection: 'column',
-					alignItems: 'flex-end',
-					gap: '1.25rem',
+					flexGrow: 1,
+					justifyContent: 'flex-start',
+					width: '100%',
 					padding: 0,
 					'&:last-child': { paddingBottom: 0 },
+					gap: '1.3rem',
 				}}
 			>
 				<Box
@@ -70,7 +70,6 @@ const ReminderCard = () => {
 						display: 'flex',
 						justifyContent: 'space-between',
 						alignItems: 'center',
-						alignSelf: 'stretch',
 						width: '100%',
 					}}
 				>
@@ -79,57 +78,61 @@ const ReminderCard = () => {
 							sx={{
 								backgroundColor: '#70A1DE',
 								borderRadius: '50%',
-								width: '2.31rem',
-								height: '2.31rem',
+								width: '2rem',
+								height: '2rem',
 								display: 'flex',
 								justifyContent: 'center',
 								alignItems: 'center',
-								marginRight: '0.625rem',
+								marginRight: '0.5rem',
 							}}
 						>
-							<FavoriteBorderIcon sx={{ color: '#333', fontSize: '1.25rem' }} />
+							<FavoriteBorderIcon sx={{ color: '#333', fontSize: '1.125rem' }} />
 						</Box>
+
 						<Typography
 							sx={{
 								fontFamily: "'Manrope', sans-serif",
-								fontSize: '1.125rem',
-								fontWeight: 300,
+								fontSize: '1rem',
+								fontWeight: 400,
 								color: '#333',
 							}}
 						>
 							Reminder
 						</Typography>
 					</Box>
+
 					<IconButton
 						aria-label='refresh'
 						onClick={handleRefresh}
-						sx={{ color: '#333', padding: '0.5rem' }}
+						sx={{ color: '#333', padding: '0.4rem' }}
 						disabled={loading}
 					>
-						<RefreshIcon sx={{ fontSize: '1.25rem' }} />
+						<RefreshIcon sx={{ fontSize: '1.125rem' }} />
 					</IconButton>
 				</Box>
-				<Typography
-					component='span'
-					sx={{
-						display: 'flex',
-						minHeight: '5.625rem',
-						justifyContent: 'center',
-						color: '#333',
-						fontFamily: "'Manrope', sans-serif",
-						fontSize: '1.75rem',
-						fontWeight: 700,
-						lineHeight: '125%',
-						alignSelf: 'stretch',
-						overflow: 'hidden',
-						wordWrap: 'break-word',
-					}}
-				>
-					{loading ? 'Loading inspiration...' : currentPhrase}
-				</Typography>
+
+				{/* phrase */}
+				<Box sx={{ width: '100%' }}>
+					<Typography
+						component='span'
+						sx={{
+							color: '#333',
+							fontFamily: "'Manrope', sans-serif",
+							fontSize: '1.35rem',
+							fontWeight: 600,
+							lineHeight: '120%',
+							textAlign: 'left',
+							wordWrap: 'break-word',
+							'@media (max-width: 767px)': {
+								fontSize: '1.24rem',
+							},
+						}}
+					>
+						{loading ? 'Loading inspiration...' : currentPhrase}
+					</Typography>
+				</Box>
 			</CardContent>
 		</Card>
 	);
 };
-
 export default ReminderCard;

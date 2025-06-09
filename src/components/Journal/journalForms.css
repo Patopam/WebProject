@@ -1,5 +1,4 @@
 @media (max-width: 1024px) {
-	/* For tablets and mobile devices */
 	.MuiBox-root.journal-container {
 		padding: 20px !important;
 		max-width: 100% !important;
