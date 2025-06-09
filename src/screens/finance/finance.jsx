@@ -93,7 +93,6 @@ function Finance() {
         <div className="finance-layout">
           <div className="finance-main">
             <div className="finance-left-column">
-              {/* Carrusel SOLO para mobile/tablet (≤ 1024px) */}
               {isMobile && (
                 <div className="finance-scroll-cards">
                   <div className="finance-card">
@@ -126,7 +125,6 @@ function Finance() {
               <ExpenditureHistoryTable />
             </div>
 
-            {/* Stats SOLO en desktop (> 1024px) */}
             {!isMobile && (
               <div className="finance-right-column">
                 <div className="goal-progress-placeholder">
