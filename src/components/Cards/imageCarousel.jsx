@@ -37,7 +37,7 @@ const CarouselContainer = styled('div')(({ theme }) => ({
 	maxWidth: '100%',
 	overflow: 'hidden',
 	boxSizing: 'border-box',
-	height: '230px', // altura fija
+	height: '230px',
 
 	'@media (max-width: 1024px)': {
 		height: '230px',

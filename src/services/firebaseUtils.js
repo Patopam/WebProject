@@ -138,8 +138,6 @@ export const updateUserPassword = async (newPassword) => {
 	}
 };
 
-// ========== IMAGES FUNCTIONS ==========
-
 export const saveUserImage = async ({ uid, imageData }) => {
 	if (!uid || !imageData) return null;
 	try {
