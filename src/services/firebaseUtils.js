@@ -138,8 +138,6 @@ export const updateUserPassword = async (newPassword) => {
 	}
 };
 
-// ========== IMAGES FUNCTIONS ==========
-
 export const saveUserImage = async ({ uid, imageData }) => {
 	if (!uid || !imageData) return null;
 	try {
@@ -162,7 +160,7 @@ export const getUserImages = async ({ uid }) => {
 		const snapshot = await getDocs(imagesRef);
 		return snapshot.docs.map((doc) => ({
 			id: doc.id,
-			...doc.data()
+			...doc.data(),
 		}));
 	} catch (error) {
 		console.error('Error loading user images:', error);
@@ -180,8 +178,6 @@ export const deleteUserImage = async ({ uid, imageId }) => {
 		throw error;
 	}
 };
-
-// ========== EXISTING FUNCTIONS ==========
 
 export const addGoals = async ({ uid, startDate, endDate, amount, description }) => {
 	if (!uid) return;

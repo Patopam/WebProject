@@ -135,7 +135,7 @@ const cloudinarySlice = createSlice({
 				state.isLoadingImages = false;
 				state.error = typeof action.payload === 'string' ? action.payload : 'Error loading images';
 			})
-			// Delete image
+
 			.addCase(deleteImage.fulfilled, (state, action) => {
 				state.images = state.images.filter((image) => image.id !== action.payload.imageId);
 			})
@@ -147,7 +147,6 @@ const cloudinarySlice = createSlice({
 
 export const { clearImages, clearError, resetState } = cloudinarySlice.actions;
 
-// Selectors
 export const selectCloudinaryImages = (state) => state.cloudinary.images;
 export const selectIsUploading = (state) => state.cloudinary.isLoading;
 export const selectIsLoadingImages = (state) => state.cloudinary.isLoadingImages;
