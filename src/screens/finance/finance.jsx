@@ -59,7 +59,6 @@ function Finance() {
 		navigate('/finance/add-goal');
 	};
 
-	// Componente para renderizar las stats cards
 	const renderStatsCards = () => (
 		<>
 			<GoalStatsCard
@@ -103,7 +102,6 @@ function Finance() {
 				<div className='finance-layout'>
 					<div className='finance-main'>
 						<div className='finance-left-column'>
-							{/* Scroll cards solo para móviles muy pequeños (≤480px) */}
 							{isSmallMobile && (
 								<div className='finance-scroll-cards'>
 									<div className='finance-card'>
@@ -132,7 +130,6 @@ function Finance() {
 								</div>
 							)}
 
-							{/* Cards section para móviles medianos (481px-768px) */}
 							{isMobile && !isSmallMobile && (
 								<div className='finance-cards-section'>
 									<div className='finance-goal-progress'>
@@ -146,7 +143,6 @@ function Finance() {
 							<ExpenditureHistoryTable />
 						</div>
 
-						{/* Columna derecha - solo para desktop y tablet */}
 						{!isMobile && (
 							<div className='finance-right-column'>
 								<div className='goal-progress-placeholder'>
