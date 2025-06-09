@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { saveUserImage, getUserImages, deleteUserImage } from '../../services/firebaseUtils'; // Ajusta la ruta según tu estructura
+import { saveUserImage, getUserImages, deleteUserImage } from '../../services/firebaseUtils';
 
 export const uploadImageToCloudinary = createAsyncThunk(
 	'cloudinary/uploadImage',
