@@ -41,66 +41,62 @@ function Analytics() {
 	}, [uid]);
 
 	return (
-		<div className='analytics-container' role='main' aria-label='Página de análisis y estadísticas personales'>
-			{!isMobile && <Menu role='navigation' aria-label='Menú principal de navegación' />}
+		<div className='analytics-container' role='main' aria-label='page data analytics'>
+			{!isMobile && <Menu role='navigation' aria-label='menu' />}
 			<div className='analytics-content'>
 				<div className='analytics-header'>
 					<Header2
 						title='Analytics'
 						subtitle='Set goals and look at your track record.'
 						role='banner'
-						aria-label='Encabezado de la sección de análisis'
+						aria-label='header with title and subtitle'
 					/>
 					{!isMobile && (
-						<div className='analytics-icons' role='toolbar' aria-label='Herramientas de usuario'>
+						<div className='analytics-icons' role='toolbar' aria-label='section with user actions'>
 							<CustomIconButton
 								icon={<AccountCircleIcon />}
-								ariaLabel='Ir a configuración del perfil de usuario'
+								ariaLabel='configurations and user settings'
 								onClick={goSettings}
 							/>
-							<CustomIconButton icon={<LogoutIcon />} ariaLabel='Cerrar sesión y regresar al login' onClick={goLogin} />
+							<CustomIconButton icon={<LogoutIcon />} ariaLabel='log-out' onClick={goLogin} />
 						</div>
 					)}
 				</div>
 
-				<div className='main-layout' role='region' aria-label='Panel principal de análisis de datos'>
-					<div className='charts-section' role='region' aria-label='Sección de gráficos y visualizaciones'>
-						<div className='chart-container' role='group' aria-label='Contenedor de gráficos analíticos'>
-							<div
-								className='chart-Emocion'
-								role='img'
-								aria-label='Gráfico de análisis emocional a lo largo del tiempo'
-							>
-								<EmotionsLineChartCentered aria-label='Gráfico de línea que muestra la evolución de las emociones registradas' />
+				<div className='main-layout' role='region' aria-label='data analytics main content area'>
+					<div className='charts-section' role='region' aria-label='graphical data representation'>
+						<div className='chart-container' role='group' aria-label='graphs and charts'>
+							<div className='chart-Emocion' role='img' aria-label='emotion analysis chart'>
+								<EmotionsLineChartCentered aria-label='line graph analysis' />
 							</div>
-							<div className='chart-Expenses' role='img' aria-label='Gráfico de análisis de gastos financieros'>
-								<ExpensesLineChart aria-label='Gráfico de línea que muestra la evolución de los gastos a lo largo del tiempo' />
+							<div className='chart-Expenses' role='img' aria-label='graph showing expenses over time'>
+								<ExpensesLineChart aria-label='graph showeing expenses' />
 							</div>
 						</div>
 					</div>
-					<div className='cards-section' role='complementary' aria-label='Panel de resumen con tarjetas informativas'>
-						<div className='card-item' role='region' aria-label='Tarjeta de estado emocional'>
+					<div className='cards-section' role='complementary' aria-label='resume cards with key information'>
+						<div className='card-item' role='region' aria-label='card with emotional summary'>
 							{emotionStats ? (
 								<FeelingsCard
 									emotion={emotionStats.emotion}
 									percentage={emotionStats.percentage}
-									aria-label={`Resumen emocional: ${emotionStats.emotion} es tu emoción predominante con ${emotionStats.percentage}% de frecuencia`}
+									aria-label={`emotional resume: ${emotionStats.emotion} is your emotion ${emotionStats.percentage}% of frecuency`}
 								/>
 							) : (
 								<FeelingsCard
 									emotion='none'
 									percentage={0}
-									aria-label='Resumen emocional: sin datos disponibles para mostrar'
+									aria-label='resume of emotions not available yet, please wait'
 								/>
 							)}
 						</div>
-						<div className='card-item' role='region' aria-label='Tarjeta de progreso de metas'>
-							<GoalProgressCard aria-label='Tarjeta mostrando el progreso actual de tus metas financieras establecidas' />
+						<div className='card-item' role='region' aria-label='progress card with financial goals'>
+							<GoalProgressCard aria-label='goals' />
 						</div>
 					</div>
 				</div>
 			</div>
-			{isMobile && <MobileNavBar role='navigation' aria-label='Barra de navegación móvil' />}
+			{isMobile && <MobileNavBar role='navigation' aria-label='navigation bar' />}
 		</div>
 	);
 }

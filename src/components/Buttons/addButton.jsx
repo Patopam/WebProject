@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 
 export default function AddButton({ onClick, text }) {
 	return (
-		<ExactButton variant='contained' startIcon={<CustomAddIcon />} onClick={onClick}>
+		<ExactButton variant='contained' startIcon={<CustomAddIcon />} onClick={onClick} aria-label='add-button'>
 			{text}
 		</ExactButton>
 	);

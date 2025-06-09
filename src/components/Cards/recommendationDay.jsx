@@ -5,7 +5,6 @@ import { getRecommendationFromEmotion } from '../../services/openaiService';
 import { getImageFromKeyword } from '../../services/pexelsService';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAiLoading } from '../../redux/aiStatusSlice';
-// ... (imports siguen igual)
 
 const RecommendationDay = ({ emotion }) => {
 	const [recommendation, setRecommendation] = useState(null);
