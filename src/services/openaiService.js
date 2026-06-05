@@ -1,37 +1,39 @@
 export async function getMotivationalQuote() {
-	try {
-		const response = await fetch('https://api.openai.com/v1/chat/completions', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
-			},
-			body: JSON.stringify({
-				model: 'gpt-3.5-turbo',
-				messages: [
-					{
-						role: 'user',
-						content:
-							'Give me a very short motivational quote in English, gender-neutral, related to personal well-being and conscious financial habits. Avoid technical terms or direct mentions of money. Make it inspiring, calm, and mindful.',
-					},
-				],
-				temperature: 0.8,
-				max_tokens: 60,
-			}),
-		});
+  try {
+    const response = await fetch(
+      "https://api.openai.com/v1/chat/completions",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
+        },
+        body: JSON.stringify({
+  model: "gpt-4o-mini",
+  messages: [
+    {
+      role: "user",
+      content: "Give me a unique motivational quote in English. Do not repeat common quotes.",
+    },
+  ],
+  temperature: 1.2,
+  max_tokens: 30,
+})
+      }
+    );
 
-		const data = await response.json();
-		if (data?.choices?.[0]?.message?.content) {
-			return data.choices[0].message.content.trim();
-		} else {
-			return 'Trust your process. Every step matters.';
-		}
-	} catch (error) {
-		console.error('Error fetching motivational quote:', error);
-		return 'You are allowed to grow slowly.';
-	}
+    const data = await response.json();
+
+    // 👇 Agrega esto
+    console.log("STATUS:", response.status);
+    console.log("DATA:", data);
+console.log(data.choices[0].message.content);
+    return data?.choices?.[0]?.message?.content?.trim();
+  } catch (error) {
+    console.error(error);
+    return "Fallback quote";
+  }
 }
-
 export async function getRecommendationFromEmotion(emotion) {
 	try {
 		const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -41,39 +43,67 @@ export async function getRecommendationFromEmotion(emotion) {
 				Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
 			},
 			body: JSON.stringify({
-				model: 'gpt-3.5-turbo',
+				model: 'gpt-4o-mini',
 				messages: [
 					{
 						role: 'user',
-						content: `Given the emotion "${emotion}", respond ONLY with a JSON object with the following keys:
+						content: `Given the emotion "${emotion}", return ONLY a valid JSON object with this exact structure:
+
 {
-  "intro": "Today you feel ${emotion}, that's why we recommend... [brief reflection or context]",
-  "title": "[short activity title]",
-  "description": "[very brief activity suggestion, max 11 words]",
-  "imageKeyword": "[related image keyword like 'yoga', 'sunset walk', etc.]"
+  "intro": "Brief reflection about the emotion",
+  "title": "Short activity title",
+  "description": "Very brief activity suggestion, max 11 words",
+ "imageKeyword": "ONE simple keyword only"
+
+Examples:
+- yoga
+- meditation
+- nature
+- walking
+- sunset
+- forest
+- beach
+- breathing
 }
-Do NOT include any explanation. Do NOT add text outside the JSON. Respond ONLY with valid JSON.`,
+
+Rules:
+- Return ONLY JSON.
+- No markdown.
+- No explanation.
+- No extra text before or after the JSON.
+- The activity should help someone feeling ${emotion}.`,
 					},
 				],
-				temperature: 0.7,
+				temperature: 1,
 				max_tokens: 200,
 			}),
 		});
 
-		if (response.status === 429) {
-			console.warn(' OpenAI Rate limit hit (429)');
-			throw new Error('Rate limit exceeded (429)');
-		}
 		const data = await response.json();
+
+		if (!response.ok) {
+			console.error(data);
+			throw new Error(`OpenAI Error: ${response.status}`);
+		}
+
 		const rawText = data?.choices?.[0]?.message?.content?.trim();
-		const jsonMatch = rawText?.match(/\{[\s\S]*\}/);
-		if (!jsonMatch) throw new Error('No valid JSON in OpenAI response');
-		const recommendation = JSON.parse(jsonMatch[0]);
-		return recommendation;
+
+		if (!rawText) {
+			throw new Error('Empty response from OpenAI');
+		}
+
+		const jsonMatch = rawText.match(/\{[\s\S]*\}/);
+
+		if (!jsonMatch) {
+			throw new Error('No valid JSON found');
+		}
+
+		return JSON.parse(jsonMatch[0]);
 	} catch (error) {
 		console.error('Error fetching recommendation from OpenAI:', error);
+
 		return {
-			intro: 'The AI ​​is currently resting...',
+			intro: 'The AI is currently resting...',
 			title: 'Take a deep breath',
 			description: 'Please try again later when you are ready.',
 			imageKeyword: 'calm nature',
@@ -81,50 +111,66 @@ Do NOT include any explanation. Do NOT add text outside the JSON. Respond ONLY w
 	}
 }
 
+const PROMPTS = {
+  "Breathing exercise":
+    "Suggest a breathing exercise in maximum 2 sentences.",
+
+  "Yoga class":
+    "Suggest a simple yoga routine in maximum 2 sentences.",
+
+  "Healthy habits":
+    "Suggest a healthy habit in maximum 2 sentences.",
+
+  "Money mindset":
+    "Suggest a mindful financial habit in maximum 2 sentences.",
+
+  "Self-care tip":
+    "Suggest a self-care practice in maximum 2 sentences.",
+
+  "Gratitude practice":
+    "Suggest a gratitude exercise in maximum 2 sentences.",
+};
+
 export async function getRecommendation(category) {
-	try {
-		const promptMap = {
-			'Breathing exercise':
-				'Give me a very short breathing exercise technique (max 2 sentences) that can reduce stress and anxiety.',
-			'Yoga class':
-				'Suggest a simple yoga practice (max 2 sentences) that can be done at home without special equipment.',
-			'Healthy habits': 'Provide a very brief health habit tip (max 2 sentences) that improves overall wellbeing.',
-			'Money mindset':
-				'Share a concise mindful money tip (max 2 sentences) for developing better relationship with finances.',
-			'Self-care tip': 'Recommend a brief self-care practice (max 2 sentences) that promotes mental wellbeing.',
-			'Gratitude practice': 'Suggest a simple gratitude exercise (max 2 sentences) that can be practiced daily.',
-		};
+  try {
+    const response = await fetch(
+      "https://api.openai.com/v1/chat/completions",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: "gpt-4o-mini",
+          messages: [
+            {
+              role: "user",
+              content:
+                PROMPTS[category] ??
+                "Suggest a wellbeing tip in maximum 2 sentences.",
+            },
+          ],
+          temperature: 1,
+          max_tokens: 80,
+        }),
+      }
+    );
 
-		const prompt = promptMap[category] || 'Give me a brief wellbeing tip (max 2 sentences).';
-		const response = await fetch('https://api.openai.com/v1/chat/completions', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
-			},
-			body: JSON.stringify({
-				model: 'gpt-3.5-turbo',
-				messages: [
-					{
-						role: 'user',
-						content: prompt,
-					},
-				],
-				temperature: 0.7,
-				max_tokens: 60,
-			}),
-		});
+    const data = await response.json();
 
-		const data = await response.json();
-		if (data?.choices?.[0]?.message?.content) {
-			return data.choices[0].message.content.trim();
-		} else {
-			return getFallbackRecommendation(category);
-		}
-	} catch (error) {
-		console.error(`Error fetching ${category} recommendation:`, error);
-		return getFallbackRecommendation(category);
-	}
+    return (
+      data?.choices?.[0]?.message?.content?.trim() ||
+      getFallbackRecommendation(category)
+    );
+  } catch (error) {
+    console.error(
+      `Error fetching ${category} recommendation:`,
+      error
+    );
+
+    return getFallbackRecommendation(category);
+  }
 }
 
 // Fallback recommendations if the API call fails
